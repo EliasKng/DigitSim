@@ -1,0 +1,19 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+.mainFxmlClass {
+
+-fx-background-color: #1d1d1d;
+}
+.button {
+  -fx-background-color: red;
+  -fx-text-fill: white;
+  /*-fx-background-radius: 16px;*/
+  -fx-border-radius: 0px;
+  -fx-background-radius: 16px;
+}
+.button:hover {
+    -fx-text-fill: orange;
+    -fx-background-radius: 3px;
+}

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.input.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="digitsim.DigitSimController">
+  <children>
+    <MenuBar prefWidth="800.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <menus>
+        <Menu mnemonicParsing="false" text="Datei">
+          <items>
+            <MenuItem mnemonicParsing="false" text="Neu">
+              <accelerator>
+                <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+              </accelerator>
+            </MenuItem>
+            <MenuItem mnemonicParsing="false" onAction="#mItemOpenFileAction" text="Öffnen" fx:id="mItemOpenFile">
+              <accelerator>
+                <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+              </accelerator>
+            </MenuItem>
+            <MenuItem disable="false" mnemonicParsing="false" text="Speichern" visible="true">
+              <accelerator>
+                <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+              </accelerator>
+            </MenuItem>
+          </items>
+        </Menu>
+      </menus>
+    </MenuBar>
+    <ListView fx:id="listview" layoutX="586.0" layoutY="40.0" prefHeight="200.0" prefWidth="200.0" />
+  </children>
+  <stylesheets>
+    <URL value="@digitsim.css" />
+  </stylesheets>
+</AnchorPane>
