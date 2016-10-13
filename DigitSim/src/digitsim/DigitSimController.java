@@ -10,6 +10,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  * FXML Controller class
@@ -27,12 +29,9 @@ public class DigitSimController{
     public void mItemOpenFileAction(ActionEvent event) {
         
         FileChooser fc = new FileChooser();
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("DigitSimFiles (*.dgs)", "*.dgs");
+        fc.getExtensionFilters().add(extFilter);
         File selectedFile = fc.showOpenDialog(null);
         
-        if (selectedFile != null) {
-            listview.getItems().add(selectedFile.getName());
-        } else {
-            System.out.println("Datei ist nicht vorhanden!");
-        }
     }
 }

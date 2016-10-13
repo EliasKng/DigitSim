@@ -4,16 +4,11 @@
 
 .mainFxmlClass {
 
--fx-background-color: #1d1d1d;
+-fx-background-color: #777777;
 }
-.button {
-  -fx-background-color: red;
-  -fx-text-fill: white;
-  /*-fx-background-radius: 16px;*/
-  -fx-border-radius: 0px;
-  -fx-background-radius: 16px;
-}
-.button:hover {
-    -fx-text-fill: orange;
-    -fx-background-radius: 3px;
+:focused {
+  -fx-background-color: transparent,-fx-box-border,-fx-control-inner-background;
+  -fx-background-insets: -1.4, 0, 1;
+  -fx-background-radius: 1.4, 0, 0;
+  -fx-padding: 1;
 }
