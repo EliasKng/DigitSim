@@ -65,8 +65,10 @@
     <Pane layoutX="0.0" layoutY="23.0" prefHeight="577.0" prefWidth="130.0">
       <children>
         <Label font="$x1" layoutX="14.0" layoutY="14.0" text="Bausteine" />
-        <ToggleButton layoutX="14.0" layoutY="38.0" minWidth="21.0" mnemonicParsing="false" prefWidth="63.0" text="ToggleButton" />
-        <ToggleButton layoutX="14.0" layoutY="59.0" minWidth="21.0" mnemonicParsing="false" prefWidth="63.0" text="ToggleButton" />
+        <Button layoutX="2.0" layoutY="49.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="63.0" text="AND" />
+        <Button layoutX="67.0" layoutY="49.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="63.0" text="OR" />
+        <Button layoutX="2.0" layoutY="117.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="63.0" text="NOT" />
+        <Button layoutX="67.0" layoutY="117.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="63.0" text="XOR" />
       </children>
     </Pane>
   </children>
