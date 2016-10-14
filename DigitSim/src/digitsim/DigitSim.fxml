@@ -11,7 +11,7 @@
 
 <AnchorPane id="AnchorPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="digitsim.DigitSimController">
   <children>
-    <MenuBar prefWidth="800.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <MenuBar minWidth="-Infinity" prefWidth="800.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <menus>
         <Menu mnemonicParsing="false" text="Datei">
           <items>
@@ -32,10 +32,25 @@
             </MenuItem>
           </items>
         </Menu>
+        <Menu mnemonicParsing="false" text="Bearbeiten">
+          <items>
+            <MenuItem mnemonicParsing="false" text="Action 1" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Ansicht">
+          <items>
+            <MenuItem mnemonicParsing="false" text="Action 1" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Hilfe">
+          <items>
+            <MenuItem mnemonicParsing="false" text="Action 1" />
+          </items>
+        </Menu>
       </menus>
     </MenuBar>
     <Separator orientation="VERTICAL" prefHeight="577.0" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="130.0" AnchorPane.topAnchor="24.0" />
-    <SplitPane dividerPositions="0.8834782608695653" focusTraversable="true" orientation="VERTICAL" prefHeight="577.0" prefWidth="669.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="131.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="23.0">
+    <SplitPane dividerPositions="0.8850174216027874" focusTraversable="true" orientation="VERTICAL" prefHeight="576.0" prefWidth="669.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="131.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="24.0">
       <items>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="348.0" prefWidth="667.0">
           <children>
@@ -62,13 +77,23 @@
         </AnchorPane>
       </items>
     </SplitPane>
-    <Pane layoutX="0.0" layoutY="23.0" prefHeight="577.0" prefWidth="130.0">
+    <Pane prefHeight="64.0" prefWidth="128.0" AnchorPane.bottomAnchor="-2.0" AnchorPane.leftAnchor="2.0">
+      <children>
+        <Button layoutX="14.0" layoutY="8.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="49.0" text="Stop" />
+        <Button layoutX="65.0" layoutY="8.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="49.0" text="Start" />
+      </children>
+    </Pane>
+    <Pane prefHeight="515.0" prefWidth="130.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="23.0">
       <children>
         <Label font="$x1" layoutX="14.0" layoutY="14.0" text="Bausteine" />
-        <Button layoutX="2.0" layoutY="49.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="63.0" text="AND" />
-        <Button layoutX="67.0" layoutY="49.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="63.0" text="OR" />
-        <Button layoutX="2.0" layoutY="117.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="63.0" text="NOT" />
-        <Button layoutX="67.0" layoutY="117.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="63.0" text="XOR" />
+        <Group id="Group" layoutX="2.0" layoutY="49.0">
+          <children>
+            <Button layoutX="0.0" layoutY="0.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="63.0" text="AND" />
+            <Button layoutX="65.0" layoutY="0.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="63.0" text="OR" />
+            <Button layoutX="0.0" layoutY="68.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="63.0" text="NOT" />
+            <Button layoutX="65.0" layoutY="68.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="63.0" text="XOR" />
+          </children>
+        </Group>
       </children>
     </Pane>
   </children>

@@ -13,5 +13,8 @@
   -fx-padding: 1;
 }
 .button {
-    -fx-background-radius: 0px;
+  -fx-background-radius: 0px;
+}
+.simInterface {
+    -fx-background-color: lightgrey;
 }
