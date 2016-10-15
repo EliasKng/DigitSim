@@ -5,16 +5,9 @@
  */
 package digitsim;
 
-import java.io.File;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
-import javafx.scene.paint.Color;
-import javafx.stage.FileChooser;
-import javax.swing.filechooser.FileFilter;
-import javax.swing.filechooser.FileNameExtensionFilter;
+import javafx.scene.layout.AnchorPane;
 
 /**
  * FXML Controller class
@@ -29,12 +22,8 @@ public class DigitSimController{
     @FXML
     private ListView listview;
     
-    public void mItemOpenFileAction(ActionEvent event) {
-        
-        FileChooser fc = new FileChooser();
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("DigitSimFiles (*.dgs)", "*.dgs");
-        fc.getExtensionFilters().add(extFilter);
-        File selectedFile = fc.showOpenDialog(null);
-        
-    }
+    @FXML
+    private AnchorPane simPane;
+   
+
 }

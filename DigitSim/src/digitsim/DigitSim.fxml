@@ -9,93 +9,110 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane id="AnchorPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="digitsim.DigitSimController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
   <children>
-    <MenuBar minWidth="-Infinity" prefWidth="800.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <Separator layoutX="212.0" layoutY="14.0" orientation="VERTICAL" prefHeight="768.0" prefWidth="0.0" />
+    <MenuBar layoutY="0.0" prefHeight="24.0" prefWidth="1024.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
       <menus>
+        <Menu mnemonicParsing="false" text="Seminator">
+          <items>
+            <MenuItem mnemonicParsing="false" text="Über den Seminator" />
+          </items>
+        </Menu>
         <Menu mnemonicParsing="false" text="Datei">
           <items>
-            <MenuItem mnemonicParsing="false" text="Neu">
-              <accelerator>
-                <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-              </accelerator>
-            </MenuItem>
-            <MenuItem mnemonicParsing="false" onAction="#mItemOpenFileAction" text="Öffnen" fx:id="mItemOpenFile">
+            <MenuItem mnemonicParsing="false" text="Öffnen" fx:id="mItemOpenFile">
               <accelerator>
                 <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
               </accelerator>
             </MenuItem>
-            <MenuItem disable="false" mnemonicParsing="false" text="Speichern" visible="true">
-              <accelerator>
-                <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-              </accelerator>
-            </MenuItem>
+            <MenuItem mnemonicParsing="false" text="Close" />
           </items>
         </Menu>
         <Menu mnemonicParsing="false" text="Bearbeiten">
           <items>
-            <MenuItem mnemonicParsing="false" text="Action 1" />
-          </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="Ansicht">
-          <items>
-            <MenuItem mnemonicParsing="false" text="Action 1" />
+            <MenuItem mnemonicParsing="false" text="Delete" />
           </items>
         </Menu>
         <Menu mnemonicParsing="false" text="Hilfe">
           <items>
-            <MenuItem mnemonicParsing="false" text="Action 1" />
+            <MenuItem mnemonicParsing="false" text="About" />
           </items>
         </Menu>
       </menus>
     </MenuBar>
-    <Separator orientation="VERTICAL" prefHeight="577.0" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="130.0" AnchorPane.topAnchor="24.0" />
-    <SplitPane dividerPositions="0.8850174216027874" focusTraversable="true" orientation="VERTICAL" prefHeight="576.0" prefWidth="669.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="131.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="24.0">
-      <items>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="348.0" prefWidth="667.0">
-          <children>
-            <ScrollPane prefHeight="284.0" prefWidth="667.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <Pane prefHeight="744.0" prefWidth="212.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="24.0">
+      <children>
+        <Accordion layoutX="5.0" layoutY="14.0">
+          <panes>
+            <TitledPane animated="false" text="Elementare Grundbausteine">
               <content>
-                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="8000.0" prefWidth="8000.0" visible="true">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="378.0" prefWidth="206.0">
                   <children>
-                    <Label layoutX="14.0" layoutY="14.0" text="Simulationsoberfläche">
-                      <font>
-                        <Font size="18.0" fx:id="x1" />
-                      </font>
-                    </Label>
+                    <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" text="AND" />
+                    <Button layoutX="83.0" layoutY="14.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" text="OR" />
+                    <Button layoutX="14.0" layoutY="103.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" text="NOT" />
+                    <Button layoutX="84.0" layoutY="190.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" text="XOR" />
+                    <Button layoutX="14.0" layoutY="190.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" text="NOR" />
+                    <Button layoutX="14.0" layoutY="277.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" text="NAND" />
+                    <Label alignment="CENTER" layoutX="14.0" layoutY="74.0" prefHeight="27.0" prefWidth="60.0" text="AND" />
+                    <Label alignment="CENTER" layoutX="83.0" layoutY="74.0" prefHeight="27.0" prefWidth="60.0" text="AND" />
+                    <Label alignment="CENTER" layoutX="14.0" layoutY="163.0" prefHeight="27.0" prefWidth="60.0" text="NOT" />
+                    <Label alignment="CENTER" layoutX="14.0" layoutY="250.0" prefHeight="27.0" prefWidth="60.0" text="NOR" />
+                    <Label alignment="CENTER" layoutX="83.0" layoutY="250.0" prefHeight="27.0" prefWidth="60.0" text="XOR" />
+                    <Label alignment="CENTER" layoutX="14.0" layoutY="337.0" prefHeight="27.0" prefWidth="60.0" text="NAND" />
                   </children>
                 </AnchorPane>
               </content>
-            </ScrollPane>
-          </children>
-        </AnchorPane>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="348.0" prefWidth="667.0">
-          <children>
-            <ListView prefHeight="285.0" prefWidth="667.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-            <Label font="$x1" layoutX="14.0" layoutY="14.0" text="Fehlerbereich" />
-          </children>
-        </AnchorPane>
-      </items>
-    </SplitPane>
-    <Pane prefHeight="64.0" prefWidth="128.0" AnchorPane.bottomAnchor="-2.0" AnchorPane.leftAnchor="2.0">
-      <children>
-        <Button layoutX="14.0" layoutY="8.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="49.0" text="Stop" />
-        <Button layoutX="65.0" layoutY="8.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="49.0" text="Start" />
+            </TitledPane>
+            <TitledPane animated="false" text="Elemente">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                  <children>
+                    <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="85.0" text="SUB" />
+                    <Label alignment="CENTER" layoutX="14.0" layoutY="104.0" prefHeight="27.0" prefWidth="85.0" text="SUBCIRCUIT" />
+                    <Button layoutX="114.0" layoutY="14.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="69.0" text="TEXT" />
+                    <Label alignment="CENTER" layoutX="106.0" layoutY="104.0" prefHeight="27.0" prefWidth="85.0" text="TEXTFELD" />
+                  </children>
+                </AnchorPane>
+              </content>
+            </TitledPane>
+            <TitledPane animated="false" text="weitere Bausteine">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                  <children>
+                    <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="102.0" prefWidth="101.0" text="VA" />
+                    <Label alignment="CENTER" layoutX="18.0" layoutY="116.0" prefHeight="27.0" prefWidth="100.0" text="VOLLADDIERER" />
+                  </children>
+                </AnchorPane>
+              </content>
+            </TitledPane>
+          </panes>
+        </Accordion>
       </children>
     </Pane>
-    <Pane prefHeight="515.0" prefWidth="130.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="23.0">
+    <AnchorPane prefHeight="744.0" prefWidth="813.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="215.0" AnchorPane.rightAnchor="-4.0" AnchorPane.topAnchor="24.0">
       <children>
-        <Label font="$x1" layoutX="14.0" layoutY="14.0" text="Bausteine" />
-        <Group id="Group" layoutX="2.0" layoutY="49.0">
-          <children>
-            <Button layoutX="0.0" layoutY="0.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="63.0" text="AND" />
-            <Button layoutX="65.0" layoutY="0.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="63.0" text="OR" />
-            <Button layoutX="0.0" layoutY="68.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="63.0" text="NOT" />
-            <Button layoutX="65.0" layoutY="68.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="63.0" text="XOR" />
-          </children>
-        </Group>
+        <SplitPane dividerPositions="0.7762803234501348" focusTraversable="true" orientation="VERTICAL" prefHeight="744.0" prefWidth="813.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+          <items>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+              <children>
+                <ScrollPane prefHeight="573.0" prefWidth="811.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <content>
+                    <AnchorPane id="Content" fx:id="simPane" minHeight="0.0" minWidth="0.0" prefHeight="836.0" prefWidth="986.0" />
+                  </content>
+                </ScrollPane>
+              </children>
+            </AnchorPane>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+              <children>
+                <ListView prefHeight="163.0" prefWidth="811.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+              </children>
+            </AnchorPane>
+          </items>
+        </SplitPane>
       </children>
-    </Pane>
+    </AnchorPane>
   </children>
   <stylesheets>
     <URL value="@digitsim.css" />

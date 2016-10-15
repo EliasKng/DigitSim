@@ -5,10 +5,6 @@
  */
 package digitsim;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
 
 
 
@@ -31,7 +27,7 @@ public class DigitSim extends Application {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("DigitSim.fxml"));
             Parent root1 = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
-            stage.setTitle("Digital Simulator");
+            stage.setTitle("Seminator");
             stage.setScene(new Scene(root1));  
             stage.show();
             stage.setMinWidth(800);
