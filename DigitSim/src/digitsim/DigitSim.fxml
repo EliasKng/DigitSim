@@ -4,6 +4,8 @@
 <?import java.net.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.input.*?>
 <?import javafx.scene.layout.*?>
@@ -99,7 +101,7 @@
               <children>
                 <ScrollPane prefHeight="573.0" prefWidth="811.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                   <content>
-                    <Pane fx:id="simPane" prefHeight="812.0" prefWidth="912.0" />
+                    <Canvas id="simPane" fx:id="simCanvas" height="1080.0" width="1920.0" />
                   </content>
                 </ScrollPane>
               </children>

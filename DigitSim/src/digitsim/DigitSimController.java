@@ -8,6 +8,8 @@ package digitsim;
 import java.io.File;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -15,30 +17,38 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 
+
+
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
+
 /**
  * FXML Controller class
  *
  * @author Elias
  */
-public class DigitSimController{
+public class DigitSimController extends Pane{
     
     @FXML
     public void initialize() {
-        Circle circle = new Circle(50,Color.BLUE);
-        circle.relocate(20, 20);
-        Rectangle rectangle = new Rectangle(100,100,Color.RED);
-        rectangle.relocate(70,70);
-        simPane.getChildren().addAll(circle,rectangle);
+        System.out.println("Gridadding");
+        addGrid();
     }
 
-    @FXML
-    private Pane simPane;
+
     
     @FXML
     private MenuItem mItemOpenFile;
     
     @FXML
     private ListView listview;
+    
+    @FXML
+    private Canvas simCanvas;
     
     public void mItemOpenFileAction(ActionEvent event) {
         
@@ -47,6 +57,36 @@ public class DigitSimController{
         fc.getExtensionFilters().add(extFilter);
         File selectedFile = fc.showOpenDialog(null);
         
+    }
+    
+    /**
+    * Animiert Karo auf simCanvas
+    *
+    * @author Elias
+    */
+    public void addGrid() {
+
+        double w = simCanvas.getWidth();
+        double h = simCanvas.getHeight();
+
+
+        simCanvas.setMouseTransparent(true);
+
+        GraphicsContext gc = simCanvas.getGraphicsContext2D();
+
+        gc.setStroke(Color.DARKSEAGREEN);
+        gc.setLineWidth(0.7);
+
+        // Karomuster malen
+        double offset = 21;
+        for( double i=offset; i < w; i+=offset) {
+            gc.strokeLine( i, 0, i, h);
+            gc.strokeLine( 0, i, w, i);
+        }
+
+        getChildren().add( simCanvas);
+
+        simCanvas.toBack();
     }
     
 }
