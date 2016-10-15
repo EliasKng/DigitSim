@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="digitsim.DigitSimController">
   <children>
     <Separator layoutX="212.0" layoutY="14.0" orientation="VERTICAL" prefHeight="768.0" prefWidth="0.0" />
     <MenuBar layoutY="0.0" prefHeight="24.0" prefWidth="1024.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
@@ -21,7 +21,7 @@
         </Menu>
         <Menu mnemonicParsing="false" text="Datei">
           <items>
-            <MenuItem mnemonicParsing="false" text="Öffnen" fx:id="mItemOpenFile">
+            <MenuItem id="mItemOpenFile" mnemonicParsing="false" onAction="#mItemOpenFileAction" text="Öffnen" fx:id="mItemOpenFile">
               <accelerator>
                 <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
               </accelerator>
@@ -51,7 +51,7 @@
                   <children>
                     <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" text="AND" />
                     <Button layoutX="83.0" layoutY="14.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" text="OR" />
-                    <Button layoutX="14.0" layoutY="103.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" text="NOT" />
+                    <Button id="gridbuild" layoutX="14.0" layoutY="103.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" text="NOT" />
                     <Button layoutX="84.0" layoutY="190.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" text="XOR" />
                     <Button layoutX="14.0" layoutY="190.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" text="NOR" />
                     <Button layoutX="14.0" layoutY="277.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" text="NAND" />
@@ -99,7 +99,7 @@
               <children>
                 <ScrollPane prefHeight="573.0" prefWidth="811.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                   <content>
-                    <AnchorPane id="Content" fx:id="simPane" minHeight="0.0" minWidth="0.0" prefHeight="836.0" prefWidth="986.0" />
+                    <Pane fx:id="simPane" prefHeight="812.0" prefWidth="912.0" />
                   </content>
                 </ScrollPane>
               </children>

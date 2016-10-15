@@ -32,6 +32,7 @@ public class DigitSim extends Application {
             stage.show();
             stage.setMinWidth(800);
             stage.setMinHeight(600);
+            
         } catch(Exception e) {
             e.printStackTrace();
         }
