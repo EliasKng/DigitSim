@@ -27,7 +27,7 @@ public class DigitSimController extends Pane{
     
     @FXML
     public void initialize() {
-        System.out.println("Gridadding");
+        System.out.printf("Tim war auch da!\nGridadding");
         addGrid();
     }
 
@@ -50,10 +50,24 @@ public class DigitSimController extends Pane{
         
     }
     
-    /**
+
+        /**
+    * Gescheitere funktion zum Linien zeichnen
+    *
+    * @author Tim
+    */
+    public static void gcDrawLine(GraphicsContext gc, double x, double y, double w, double h, double mul)
+    { 
+        gc.setLineWidth(gc.getLineWidth()* mul);
+        gc.strokeLine( x, y, w, h);
+        gc.strokeLine( x, y, w, h);
+        gc.setLineWidth(gc.getLineWidth()/ mul);
+    }
+        /**
     * Animiert Karo auf simCanvas
     *
     * @author Elias
+    * Bearbeitet von Tim 16.10.16
     */
     public void addGrid() {
 
@@ -61,27 +75,26 @@ public class DigitSimController extends Pane{
         double h = simCanvas.getHeight();
 
 
-        simCanvas.setMouseTransparent(true);
+        simCanvas.setMouseTransparent(false);
 
         GraphicsContext gc = simCanvas.getGraphicsContext2D();
 
-        gc.setStroke(Color.DARKSEAGREEN);
+        gc.setStroke(Color.AQUA);
         gc.setLineWidth(0.7);
 
         // Karomuster malen
+        // offset = linien abstand
         double offset = 21;
+        double mul;
         for( double i=offset; i < w; i+=offset) {
-            gc.strokeLine( i, 0, i, h);
-            gc.strokeLine( 0, i, w, i);
-        }
-        //Jede 5. Linie dicker malen
-        gc.setLineWidth(gc.getLineWidth()*2);
-        for( double i=offset; i < w; i+=offset*5) {
-            gc.strokeLine( i, 0, i, h);
-            gc.strokeLine( 0, i, w, i);
+                if(i % 5 == 0) mul = 2;
+                else mul = 1;
+                                
+                gcDrawLine(gc, i, 0, i, h, mul);
+                gcDrawLine(gc, 0, i, w, i, mul);
         }
 
-        getChildren().add( simCanvas);
+        getChildren().add(simCanvas);
 
         simCanvas.toBack();
     }
