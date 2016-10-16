@@ -5,15 +5,12 @@
  */
 package digitsim;
 
-
-
-
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
 
 /**
  *
@@ -23,14 +20,14 @@ public class DigitSim extends Application {
     
     @Override
     public void start(Stage primaryStage) {
-        try{
+        try{ //Beschreibung des Designs per XML-Datei
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("DigitSim.fxml"));
             Parent root1 = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
             stage.setTitle("Seminator");
             stage.setScene(new Scene(root1));  
             stage.show();
-            stage.setMinWidth(800);
+            stage.setMinWidth(800); 
             stage.setMinHeight(600);
             
         } catch(Exception e) {

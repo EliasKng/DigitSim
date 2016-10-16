@@ -12,7 +12,6 @@ import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 
 
-
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.Pane;
@@ -27,7 +26,6 @@ public class DigitSimController extends Pane{
     
     @FXML
     public void initialize() {
-        System.out.printf("Tim war auch da!\nGridadding");
         addGrid();
     }
 
@@ -52,7 +50,7 @@ public class DigitSimController extends Pane{
     
 
         /**
-    * Gescheitere funktion zum Linien zeichnen
+    * Funktion zum Linien zeichnen
     *
     * @author Tim
     */
@@ -79,8 +77,8 @@ public class DigitSimController extends Pane{
 
         GraphicsContext gc = simCanvas.getGraphicsContext2D();
 
-        gc.setStroke(Color.AQUA);
-        gc.setLineWidth(0.7);
+        gc.setStroke(Color.LIGHTGREY);
+        gc.setLineWidth(1.0);
 
         // Karomuster malen
         // offset = linien abstand
