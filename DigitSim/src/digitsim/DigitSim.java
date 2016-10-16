@@ -9,6 +9,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 
@@ -24,9 +25,11 @@ public class DigitSim extends Application {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("DigitSim.fxml"));
             Parent root1 = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
-            stage.setTitle("Seminator");
+            stage.setTitle("eminator");
             stage.setScene(new Scene(root1));  
+            
             stage.show();
+            stage.getIcons().add(new Image(DigitSim.class.getResourceAsStream( "icon.png" )));
             stage.setMinWidth(800);
             stage.setMinHeight(600);
             
