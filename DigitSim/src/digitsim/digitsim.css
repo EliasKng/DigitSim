@@ -2,14 +2,28 @@
 
 -fx-background-color: #777777;
 }
-:focused {
-  -fx-background-color: transparent,-fx-box-border,-fx-control-inner-background;
+:focused { 
   -fx-background-insets: -1.4, 0, 1;
   -fx-background-radius: 1.4, 0, 0;
   -fx-padding: 1;
 }
 .button {
   -fx-background-radius: 0px;
+}
+
+.button:hover {
+    -fx-background-color: #4295d5;
+}
+.button:active{
+    -fx-background-color: #3F875F;
+}
+
+.menuItem:hover {
+    -fx-background-color: #4295d5;
+}
+
+.menuItem:focused {
+    -fx-background-color: #4295d5;
 }
 
 :focused {
