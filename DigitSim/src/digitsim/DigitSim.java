@@ -25,7 +25,7 @@ public class DigitSim extends Application {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("DigitSim.fxml"));
             Parent root1 = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
-            stage.setTitle("eminator");
+            stage.setTitle("Seminator");
             stage.setScene(new Scene(root1));  
             
             stage.show();
