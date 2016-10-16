@@ -27,7 +27,7 @@ public class DigitSim extends Application {
             stage.setTitle("Seminator");
             stage.setScene(new Scene(root1));  
             stage.show();
-            stage.setMinWidth(800); 
+            stage.setMinWidth(800);
             stage.setMinHeight(600);
             
         } catch(Exception e) {

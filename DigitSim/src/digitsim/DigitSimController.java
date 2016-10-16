@@ -29,13 +29,9 @@ public class DigitSimController extends Pane{
         addGrid();
     }
 
-
-    
     @FXML
     private MenuItem mItemOpenFile;
-    
 
-    
     @FXML
     private Canvas simCanvas;
     
@@ -48,8 +44,7 @@ public class DigitSimController extends Pane{
         
     }
     
-
-        /**
+    /**
     * Funktion zum Linien zeichnen
     *
     * @author Tim
@@ -61,7 +56,8 @@ public class DigitSimController extends Pane{
         gc.strokeLine( x, y, w, h);
         gc.setLineWidth(gc.getLineWidth()/ mul);
     }
-        /**
+    
+    /**
     * Animiert Karo auf simCanvas
     *
     * @author Elias
@@ -85,15 +81,14 @@ public class DigitSimController extends Pane{
         double offset = 21;
         double mul;
         for( double i=offset; i < w; i+=offset) {
-                if(i % 5 == 0) mul = 2;
+                if(i % 5 == 0) mul = 2; //Jede 5. Linie mit doppelter Dicke zeichnen
                 else mul = 1;
                                 
                 gcDrawLine(gc, i, 0, i, h, mul);
                 gcDrawLine(gc, 0, i, w, i, mul);
         }
-
+        
         getChildren().add(simCanvas);
-
         simCanvas.toBack();
     }
     
