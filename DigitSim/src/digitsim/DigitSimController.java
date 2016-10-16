@@ -98,5 +98,16 @@ public class DigitSimController extends Pane{
         simCanvas.toBack();
     }
     
+    /**
+    * Lädt die Icons der Buttons
+    * !!!Geht noch nicht!!!
+    * 
+    * @author Elias
+    * 
+    */
+    public void loadImages() {
+        Image imageAND = new Image(DigitSim.class.getResourceAsStream( "UND.png" ));
+        buttonAnd.setGraphic(new ImageView(imageAND));
+    }
     
 }

@@ -1,16 +1,14 @@
-.mainFxmlClass {
-
--fx-background-color: #777777;
-}
+/*---Pseudo---*/
 :focused { 
   -fx-background-insets: -1.4, 0, 1;
   -fx-background-radius: 1.4, 0, 0;
-  -fx-padding: 1;
-}
-.button {
-  -fx-background-radius: 0px;
+  -fx-focus-color: transparent;
 }
 
+/*---Buttons---*/
+.button {
+  -fx-background-radius: 0px; 
+}
 .button:hover {
     -fx-background-color: #4295d5;
 }
@@ -18,19 +16,10 @@
     -fx-background-color: #3F875F;
 }
 
+/*---Menü---*/
 .menuItem:hover {
     -fx-background-color: #4295d5;
 }
-
 .menuItem:focused {
     -fx-background-color: #4295d5;
-}
-
-:focused {
-    -fx-focus-color: transparent;
-}
-
-.titled-pane {
-    -fx-border-color: transparent;
-    -fx-border-width: 0px;
 }
