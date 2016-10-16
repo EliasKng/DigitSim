@@ -8,13 +8,7 @@ package digitsim;
 import java.io.File;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 
 
@@ -23,8 +17,6 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
 
 /**
  * FXML Controller class
@@ -44,8 +36,7 @@ public class DigitSimController extends Pane{
     @FXML
     private MenuItem mItemOpenFile;
     
-    @FXML
-    private ListView listview;
+
     
     @FXML
     private Canvas simCanvas;
@@ -80,6 +71,12 @@ public class DigitSimController extends Pane{
         // Karomuster malen
         double offset = 21;
         for( double i=offset; i < w; i+=offset) {
+            gc.strokeLine( i, 0, i, h);
+            gc.strokeLine( 0, i, w, i);
+        }
+        //Jede 5. Linie dicker malen
+        gc.setLineWidth(gc.getLineWidth()*2);
+        for( double i=offset; i < w; i+=offset*5) {
             gc.strokeLine( i, 0, i, h);
             gc.strokeLine( 0, i, w, i);
         }

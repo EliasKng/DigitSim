@@ -15,6 +15,12 @@
 .button {
   -fx-background-radius: 0px;
 }
-.simInterface {
-    -fx-background-color: lightgrey;
+
+:focused {
+    -fx-border-width: 0px;
+}
+
+.titled-pane {
+    -fx-border-color: transparent;
+    -fx-border-width: 0px;
 }

@@ -101,7 +101,7 @@
               <children>
                 <ScrollPane prefHeight="573.0" prefWidth="811.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                   <content>
-                    <Canvas id="simPane" fx:id="simCanvas" height="1080.0" width="1920.0" />
+                    <Canvas id="simPane" fx:id="simCanvas" height="1080.0" style="-fx-background-color: lightgrey;" styleClass="simCanvas" width="1920.0" />
                   </content>
                 </ScrollPane>
               </children>
