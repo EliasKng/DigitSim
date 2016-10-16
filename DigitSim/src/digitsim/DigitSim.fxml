@@ -98,14 +98,14 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="378.0" prefWidth="206.0">
                   <children>
-                    <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" text="AND" />
+                    <Button fx:id="buttonAnd" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" text="AND" />
                     <Button layoutX="83.0" layoutY="14.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" text="OR" />
                     <Button id="gridbuild" layoutX="14.0" layoutY="103.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" text="NOT" />
                     <Button layoutX="84.0" layoutY="190.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" text="XOR" />
                     <Button layoutX="14.0" layoutY="190.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" text="NOR" />
                     <Button layoutX="14.0" layoutY="277.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" text="NAND" />
                     <Label alignment="CENTER" layoutX="14.0" layoutY="74.0" prefHeight="27.0" prefWidth="60.0" text="AND" />
-                    <Label alignment="CENTER" layoutX="83.0" layoutY="74.0" prefHeight="27.0" prefWidth="60.0" text="AND" />
+                    <Label alignment="CENTER" layoutX="83.0" layoutY="74.0" prefHeight="27.0" prefWidth="60.0" text="OR" />
                     <Label alignment="CENTER" layoutX="14.0" layoutY="163.0" prefHeight="27.0" prefWidth="60.0" text="NOT" />
                     <Label alignment="CENTER" layoutX="14.0" layoutY="250.0" prefHeight="27.0" prefWidth="60.0" text="NOR" />
                     <Label alignment="CENTER" layoutX="83.0" layoutY="250.0" prefHeight="27.0" prefWidth="60.0" text="XOR" />

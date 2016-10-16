@@ -14,6 +14,8 @@ import javafx.stage.FileChooser;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
@@ -27,6 +29,7 @@ public class DigitSimController extends Pane{
     @FXML
     public void initialize() {
         addGrid();
+        
     }
 
     @FXML
@@ -34,6 +37,9 @@ public class DigitSimController extends Pane{
 
     @FXML
     private Canvas simCanvas;
+    
+    @FXML
+    private Button buttonAnd;
     
     public void mItemOpenFileAction(ActionEvent event) {
         
@@ -91,5 +97,6 @@ public class DigitSimController extends Pane{
         getChildren().add(simCanvas);
         simCanvas.toBack();
     }
+    
     
 }
