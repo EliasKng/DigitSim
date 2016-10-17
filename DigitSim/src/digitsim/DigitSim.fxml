@@ -147,6 +147,12 @@
             </TitledPane>
           </panes>
         </Accordion>
+        <Button layoutX="17.0" layoutY="646.0" mnemonicParsing="false" prefHeight="84.0" prefWidth="84.0" style="-fx-background-image: url('/digitsim/data/START.png')">
+          <font>
+            <Font name="System Bold" size="22.0" fx:id="x1" />
+          </font>
+        </Button>
+        <Button disable="true" font="$x1" layoutX="111.0" layoutY="646.0" mnemonicParsing="false" prefHeight="84.0" prefWidth="84.0" style="-fx-background-image: url('/digitsim/data/STOP.png')" />
       </children>
     </Pane>
     <AnchorPane prefHeight="744.0" prefWidth="813.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="215.0" AnchorPane.rightAnchor="-4.0" AnchorPane.topAnchor="24.0">
@@ -164,13 +170,7 @@
             </AnchorPane>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
               <children>
-                <ListView prefHeight="163.0" prefWidth="723.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="84.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                <Button layoutX="0.0" layoutY="1.0" mnemonicParsing="false" prefHeight="84.0" prefWidth="84.0" style="-fx-background-image: url('/digitsim/data/START.png')">
-                  <font>
-                    <Font name="System Bold" size="22.0" fx:id="x1" />
-                  </font>
-                </Button>
-                <Button disable="true" font="$x1" layoutX="0.0" layoutY="85.0" mnemonicParsing="false" prefHeight="84.0" prefWidth="84.0" style="-fx-background-image: url('/digitsim/data/STOP.png')" />
+                <ListView prefHeight="169.0" prefWidth="807.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
               </children>
             </AnchorPane>
           </items>
