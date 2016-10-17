@@ -28,8 +28,7 @@ public class DigitSimController extends Pane{
     
     @FXML
     public void initialize() {
-        addGrid();
-        
+        addGrid();   
     }
 
     @FXML
@@ -39,7 +38,16 @@ public class DigitSimController extends Pane{
     private Canvas simCanvas;
     
     @FXML
-    private Button buttonAnd;
+    private ToggleButton btnAND;
+    
+    @FXML
+    private ToggleButton btnOR;
+    
+    @FXML
+    private ToggleButton btnNOT;
+    private ToggleButton btnNOR;
+    private ToggleButton btnXOR;
+    private ToggleButton btnNAND;
     
     public void mItemOpenFileAction(ActionEvent event) {
         
@@ -99,15 +107,13 @@ public class DigitSimController extends Pane{
     }
     
     /**
-    * Lädt die Icons der Buttons
-    * !!!Geht noch nicht!!!
+    * Bildet nötige Gruppen für Togglebuttons (damit immer nur einer Selected sein kann)
     * 
     * @author Elias
     * 
     */
-    public void loadImages() {
-        Image imageAND = new Image(DigitSim.class.getResourceAsStream( "UND.png" ));
-        buttonAnd.setGraphic(new ImageView(imageAND));
+    public void loadBtnGroup() {
+        ToggleGroup group = new ToggleGroup();
+        
     }
-    
 }

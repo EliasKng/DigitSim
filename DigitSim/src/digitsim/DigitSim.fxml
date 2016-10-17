@@ -3,6 +3,7 @@
 <?import java.lang.*?>
 <?import java.net.*?>
 <?import java.net.URL?>
+<?import javafx.scene.*?>
 <?import javafx.scene.canvas.*?>
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.*?>
@@ -98,18 +99,26 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="378.0" prefWidth="206.0">
                   <children>
-                    <Button fx:id="buttonAnd" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0"  style="-fx-background-image: url('/digitsim/UND.png')" />
-                    <Button layoutX="83.0" layoutY="14.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-image: url('/digitsim/OR.png')" />
-                    <Button id="gridbuild" layoutX="14.0" layoutY="103.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-image: url('/digitsim/NOT_1.png')" />
-                    <Button layoutX="84.0" layoutY="190.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-image: url('/digitsim/XOR.png')" />
-                    <Button layoutX="14.0" layoutY="190.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-image: url('/digitsim/NOR.png')" />
-                    <Button layoutX="14.0" layoutY="277.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-image: url('/digitsim/NAND_2.png')" />
-                    <Label alignment="CENTER" layoutX="14.0" layoutY="74.0" prefHeight="27.0" prefWidth="60.0" text="AND" />
-                    <Label alignment="CENTER" layoutX="83.0" layoutY="74.0" prefHeight="27.0" prefWidth="60.0" text="OR" />
-                    <Label alignment="CENTER" layoutX="14.0" layoutY="163.0" prefHeight="27.0" prefWidth="60.0" text="NOT" />
-                    <Label alignment="CENTER" layoutX="14.0" layoutY="250.0" prefHeight="27.0" prefWidth="60.0" text="NOR" />
-                    <Label alignment="CENTER" layoutX="83.0" layoutY="250.0" prefHeight="27.0" prefWidth="60.0" text="XOR" />
-                    <Label alignment="CENTER" layoutX="14.0" layoutY="337.0" prefHeight="27.0" prefWidth="60.0" text="NAND" />
+                    <Group id="Group" layoutX="14.0" layoutY="14.0">
+                      <children>
+                        <ToggleButton fx:id="btnAND" layoutX="0.0" layoutY="0.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-image: url('/digitsim/UND.png')" />
+                        <ToggleButton fx:id="btnOR" layoutX="69.0" layoutY="0.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-image: url('/digitsim/OR.png')" />
+                        <ToggleButton fx:id="btnNOT" layoutX="0.0" layoutY="89.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-image: url('/digitsim/NOT_1.png')" />
+                        <ToggleButton fx:id="btnXOR" layoutX="70.0" layoutY="176.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-image: url('/digitsim/XOR.png')" />
+                        <ToggleButton fx:id="btnNOR" layoutX="0.0" layoutY="176.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-image: url('/digitsim/NOR.png')" />
+                        <ToggleButton fx:id="btnNAND" layoutX="0.0" layoutY="263.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-image: url('/digitsim/NAND_2.png')" />
+                      </children>
+                    </Group>
+                    <Group id="Group" layoutX="10.0" layoutY="62.0">
+                      <children>
+                        <Label alignment="CENTER" layoutX="0.0" layoutY="0.0" prefHeight="27.0" prefWidth="60.0" text="AND" />
+                        <Label alignment="CENTER" layoutX="70.0" layoutY="0.0" prefHeight="27.0" prefWidth="60.0" text="OR" />
+                        <Label alignment="CENTER" layoutX="0.0" layoutY="91.0" prefHeight="27.0" prefWidth="60.0" text="NOT" />
+                        <Label alignment="CENTER" layoutX="0.0" layoutY="188.0" prefHeight="27.0" prefWidth="60.0" text="NOR" />
+                        <Label alignment="CENTER" layoutX="69.0" layoutY="188.0" prefHeight="27.0" prefWidth="60.0" text="XOR" />
+                        <Label alignment="CENTER" layoutX="0.0" layoutY="270.0" prefHeight="27.0" prefWidth="60.0" text="NAND" />
+                      </children>
+                    </Group>
                   </children>
                 </AnchorPane>
               </content>
@@ -155,13 +164,13 @@
             </AnchorPane>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
               <children>
-                <ListView prefHeight="163.0" prefWidth="722.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="89.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                <Button layoutY="-3.0" mnemonicParsing="false" prefHeight="84.0" prefWidth="88.0" text="RUN">
+                <ListView prefHeight="163.0" prefWidth="723.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="84.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                <Button layoutX="0.0" layoutY="-3.0" mnemonicParsing="false" prefHeight="84.0" prefWidth="84" text="RUN">
                   <font>
                     <Font name="System Bold" size="22.0" fx:id="x1" />
                   </font>
                 </Button>
-                <Button disable="true" font="$x1" layoutY="78.0" mnemonicParsing="false" prefHeight="84.0" prefWidth="88.0" text="STOP" />
+                <Button disable="true" font="$x1" layoutX="0.0" layoutY="78.0" mnemonicParsing="false" prefHeight="84.0" prefWidth="83.9998779296875" text="STOP" />
               </children>
             </AnchorPane>
           </items>

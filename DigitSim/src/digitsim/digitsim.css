@@ -1,3 +1,4 @@
+
 /*---Pseudo---*/
 :focused { 
   -fx-background-insets: -1.4, 0, 1;
@@ -5,17 +6,18 @@
   -fx-focus-color: transparent;
 }
 
-/*---Buttons---*/
-.button {
+/*---Toggle-Buttons---*/
+.toggle-button {
   -fx-background-color: transparent;
-  -fx-background-radius: 4px;
+  -fx-background-radius: 7px;
 }
-.button:hover {
+.toggle-button:hover {
     -fx-background-color: #4295d5;
 }
-.button:active{
+.toggle-button:selected {
     -fx-background-color: #3F875F;
 }
+
 
 /*---Menü---*/
 .menuItem:hover {
