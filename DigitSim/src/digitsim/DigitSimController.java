@@ -26,10 +26,17 @@ import javafx.scene.paint.Color;
  */
 public class DigitSimController extends Pane{
     
+    public DigitSimController() {
+    }
+    
     @FXML
     public void initialize() {
-        addGrid();   
+        addGrid();
+        GraphicsContext gc = simCanvas.getGraphicsContext2D();
+        AND and0 = new AND(gc);
     }
+    
+    
 
     @FXML
     private MenuItem mItemOpenFile;
@@ -86,7 +93,7 @@ public class DigitSimController extends Pane{
         simCanvas.setMouseTransparent(false);
 
         GraphicsContext gc = simCanvas.getGraphicsContext2D();
-
+        
         gc.setStroke(Color.LIGHTGREY);
         gc.setLineWidth(1.0);
 
@@ -101,7 +108,6 @@ public class DigitSimController extends Pane{
                 gcDrawLine(gc, i, 0, i, h, mul);
                 gcDrawLine(gc, 0, i, w, i, mul);
         }
-        
         getChildren().add(simCanvas);
         simCanvas.toBack();
     }
