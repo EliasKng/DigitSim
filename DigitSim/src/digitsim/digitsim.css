@@ -21,7 +21,7 @@
 
 /*---Menü---*/
 .menuItem:hover {
-    -fx-background-color: #4295d5;
+    -fx-background-color: inerit;
 }
 .menuItem:focused {
     -fx-background-color: #4295d5;
