@@ -101,12 +101,12 @@
                   <children>
                     <Group id="Group" layoutX="14.0" layoutY="14.0">
                       <children>
-                        <ToggleButton fx:id="btnAND" layoutX="0.0" layoutY="0.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-image: url('/digitsim/UND.png')" />
-                        <ToggleButton fx:id="btnOR" layoutX="69.0" layoutY="0.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-image: url('/digitsim/OR.png')" />
-                        <ToggleButton fx:id="btnNOT" layoutX="0.0" layoutY="89.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-image: url('/digitsim/NOT_2.png')" />
-                        <ToggleButton fx:id="btnXOR" layoutX="70.0" layoutY="176.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-image: url('/digitsim/XOR.png')" />
-                        <ToggleButton fx:id="btnNOR" layoutX="0.0" layoutY="176.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/NOR_3.png')" />
-                        <ToggleButton fx:id="btnNAND" layoutX="0.0" layoutY="263.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/NAND_3.png')" />
+                        <ToggleButton fx:id="btnAND" layoutX="0.0" layoutY="0.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-image: url('/digitsim/data/UND.png')" />
+                        <ToggleButton fx:id="btnOR" layoutX="69.0" layoutY="0.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-image: url('/digitsim/data/OR.png')" />
+                        <ToggleButton fx:id="btnNOT" layoutX="0.0" layoutY="89.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/NOT_3.png')" />
+                        <ToggleButton fx:id="btnXOR" layoutX="70.0" layoutY="176.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-image: url('/digitsim/data/XOR.png')" />
+                        <ToggleButton fx:id="btnNOR" layoutX="0.0" layoutY="176.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/NOR_3.png')" />
+                        <ToggleButton fx:id="btnNAND" layoutX="0.0" layoutY="263.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/NAND_3.png')" />
                       </children>
                     </Group>
                     <Group id="Group" layoutX="10.0" layoutY="62.0">
@@ -127,9 +127,9 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                   <children>
-                    <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="85.0" text="SUB" />
+                    <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="75.0" style="-fx-background-image: url('/digitsim/data/SUBCIRCUIT.png')" />
                     <Label alignment="CENTER" layoutX="14.0" layoutY="104.0" prefHeight="27.0" prefWidth="85.0" text="SUBCIRCUIT" />
-                    <Button layoutX="114.0" layoutY="14.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="69.0" text="TEXT" />
+                    <Button layoutX="114.0" layoutY="14.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="50.0" style="-fx-background-image: url('/digitsim/data/Textfeld.png')" />
                     <Label alignment="CENTER" layoutX="106.0" layoutY="104.0" prefHeight="27.0" prefWidth="85.0" text="TEXTFELD" />
                   </children>
                 </AnchorPane>
@@ -151,7 +151,7 @@
     </Pane>
     <AnchorPane prefHeight="744.0" prefWidth="813.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="215.0" AnchorPane.rightAnchor="-4.0" AnchorPane.topAnchor="24.0">
       <children>
-        <SplitPane dividerPositions="0.7762803234501348" focusTraversable="true" orientation="VERTICAL" prefHeight="744.0" prefWidth="809.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="0.0">
+        <SplitPane dividerPositions="0.7681940700808625" focusTraversable="true" orientation="VERTICAL" prefHeight="744.0" prefWidth="809.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="0.0">
           <items>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="573.0" prefWidth="674.0">
               <children>
@@ -165,12 +165,12 @@
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
               <children>
                 <ListView prefHeight="163.0" prefWidth="723.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="84.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                <Button layoutX="0.0" layoutY="-3.0" mnemonicParsing="false" prefHeight="84.0" prefWidth="84.0" text="RUN">
+                <Button layoutX="0.0" layoutY="1.0" mnemonicParsing="false" prefHeight="84.0" prefWidth="84.0" style="-fx-background-image: url('/digitsim/data/START.png')">
                   <font>
                     <Font name="System Bold" size="22.0" fx:id="x1" />
                   </font>
                 </Button>
-                <Button disable="true" font="$x1" layoutX="0.0" layoutY="78.0" mnemonicParsing="false" prefHeight="84.0" prefWidth="83.9998779296875" text="STOP" />
+                <Button disable="true" font="$x1" layoutX="0.0" layoutY="85.0" mnemonicParsing="false" prefHeight="84.0" prefWidth="84.0" style="-fx-background-image: url('/digitsim/data/STOP.png')" />
               </children>
             </AnchorPane>
           </items>
