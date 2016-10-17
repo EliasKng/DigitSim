@@ -103,10 +103,10 @@
                       <children>
                         <ToggleButton fx:id="btnAND" layoutX="0.0" layoutY="0.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-image: url('/digitsim/UND.png')" />
                         <ToggleButton fx:id="btnOR" layoutX="69.0" layoutY="0.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-image: url('/digitsim/OR.png')" />
-                        <ToggleButton fx:id="btnNOT" layoutX="0.0" layoutY="89.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-image: url('/digitsim/NOT_1.png')" />
+                        <ToggleButton fx:id="btnNOT" layoutX="0.0" layoutY="89.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-image: url('/digitsim/NOT_2.png')" />
                         <ToggleButton fx:id="btnXOR" layoutX="70.0" layoutY="176.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-image: url('/digitsim/XOR.png')" />
-                        <ToggleButton fx:id="btnNOR" layoutX="0.0" layoutY="176.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-image: url('/digitsim/NOR.png')" />
-                        <ToggleButton fx:id="btnNAND" layoutX="0.0" layoutY="263.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-image: url('/digitsim/NAND_2.png')" />
+                        <ToggleButton fx:id="btnNOR" layoutX="0.0" layoutY="176.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/NOR_3.png')" />
+                        <ToggleButton fx:id="btnNAND" layoutX="0.0" layoutY="263.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/NAND_3.png')" />
                       </children>
                     </Group>
                     <Group id="Group" layoutX="10.0" layoutY="62.0">
@@ -165,7 +165,7 @@
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
               <children>
                 <ListView prefHeight="163.0" prefWidth="723.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="84.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                <Button layoutX="0.0" layoutY="-3.0" mnemonicParsing="false" prefHeight="84.0" prefWidth="84" text="RUN">
+                <Button layoutX="0.0" layoutY="-3.0" mnemonicParsing="false" prefHeight="84.0" prefWidth="84.0" text="RUN">
                   <font>
                     <Font name="System Bold" size="22.0" fx:id="x1" />
                   </font>
