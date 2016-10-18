@@ -34,6 +34,7 @@ public class DigitSimController extends Pane{
         addGrid();
         GraphicsContext gc = simCanvas.getGraphicsContext2D();
         AND and0 = new AND(gc);
+        loadBtnGroup();
     }
     
     
@@ -52,8 +53,14 @@ public class DigitSimController extends Pane{
     
     @FXML
     private ToggleButton btnNOT;
+
+    @FXML
     private ToggleButton btnNOR;
+    
+    @FXML
     private ToggleButton btnXOR;
+    
+    @FXML
     private ToggleButton btnNAND;
     
     public void mItemOpenFileAction(ActionEvent event) {
@@ -120,6 +127,12 @@ public class DigitSimController extends Pane{
     */
     public void loadBtnGroup() {
         ToggleGroup group = new ToggleGroup();
+        btnAND.setToggleGroup(group);
+        btnOR.setToggleGroup(group);
+        btnNOT.setToggleGroup(group);
+        btnNAND.setToggleGroup(group);
+        btnNOR.setToggleGroup(group);
+        btnXOR.setToggleGroup(group);
         
     }
 }
