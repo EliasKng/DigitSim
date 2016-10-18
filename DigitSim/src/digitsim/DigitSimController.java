@@ -33,7 +33,7 @@ public class DigitSimController extends Pane{
     public void initialize() {
         addGrid();
         GraphicsContext gc = simCanvas.getGraphicsContext2D();
-        AND and0 = new AND(gc);
+        //AND and0 = new AND(gc);
         loadBtnGroup();
     }
     
