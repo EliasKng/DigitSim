@@ -18,7 +18,6 @@ import javafx.stage.Stage;
  * @author Elias
  */
 public class DigitSim extends Application {
-    
     @Override
     public void start(Stage primaryStage) {
         try{ //Beschreibung des Designs per XML-Datei
@@ -36,8 +35,9 @@ public class DigitSim extends Application {
         } catch(Exception e) {
             e.printStackTrace();
         }
+        
     }
-
+    
     /**
      * @param args the command line arguments
      */

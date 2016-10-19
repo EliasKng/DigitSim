@@ -29,13 +29,8 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="digitsim.DigitSimController">
   <children>
     <Separator layoutX="216.0" layoutY="14.0" orientation="VERTICAL" prefHeight="754.0" prefWidth="6.0" />
-    <MenuBar layoutY="0.0" prefHeight="24.0" prefWidth="1024.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+    <MenuBar layoutY="-1.0" prefHeight="24.0" prefWidth="1024.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
       <menus>
-        <Menu mnemonicParsing="false" text="Seminator">
-          <items>
-            <MenuItem mnemonicParsing="false" text="Über den Seminator" />
-          </items>
-        </Menu>
         <Menu mnemonicParsing="false" text="Datei">
           <items>
             <MenuItem mnemonicParsing="false" text="Neu">
@@ -68,6 +63,11 @@
                 <KeyCodeCombination alt="UP" code="DELETE" control="UP" meta="UP" shift="UP" shortcut="ANY" />
               </accelerator>
             </MenuItem>
+            <MenuItem mnemonicParsing="false" onAction="#mItemPropertiesOnAction" text="Einstellungen" fx:id="mItemProperties">
+              <accelerator>
+                <KeyCodeCombination alt="UP" code="P" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+              </accelerator>
+            </MenuItem>
           </items>
         </Menu>
         <Menu mnemonicParsing="false" text="Simulation">
@@ -86,6 +86,7 @@
         </Menu>
         <Menu mnemonicParsing="false" text="Hilfe">
           <items>
+            <MenuItem mnemonicParsing="false" text="Über den Seminator" />
             <MenuItem mnemonicParsing="false" text="Hilfe" />
           </items>
         </Menu>

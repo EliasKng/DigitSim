@@ -8,16 +8,18 @@ package digitsim;
 import java.io.File;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
-
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -33,7 +35,7 @@ public class DigitSimController extends Pane{
     public void initialize() {
         addGrid();
         GraphicsContext gc = simCanvas.getGraphicsContext2D();
-        //AND and0 = new AND(gc);
+        AND and0 = new AND(gc);
         loadBtnGroup();
     }
     
@@ -63,26 +65,18 @@ public class DigitSimController extends Pane{
     @FXML
     private ToggleButton btnNAND;
     
-    public void mItemOpenFileAction(ActionEvent event) {
-        
-        FileChooser fc = new FileChooser();
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("DigitSimFiles (*.dgs)", "*.dgs");
-        fc.getExtensionFilters().add(extFilter);
-        File selectedFile = fc.showOpenDialog(null);
-        
-    }
+    
     
     /**
     * Funktion zum Linien zeichnen
     *
     * @author Tim
     */
-    public static void gcDrawLine(GraphicsContext gc, double x, double y, double w, double h, double mul)
+    public static void gcDrawLine(GraphicsContext gc, double x, double y, double w, double h, double size)
     { 
-        gc.setLineWidth(gc.getLineWidth()* mul);
+        gc.setLineWidth(size);
         gc.strokeLine( x, y, w, h);
-        gc.strokeLine( x, y, w, h);
-        gc.setLineWidth(gc.getLineWidth()/ mul);
+        gc.setLineWidth(size);
     }
     
     /**
@@ -107,14 +101,15 @@ public class DigitSimController extends Pane{
         // Karomuster malen
         // offset = linien abstand
         double offset = 21;
-        double mul;
+        double d;
         for( double i=offset; i < w; i+=offset) {
-                if(i % 5 == 0) mul = 2; //Jede 5. Linie mit doppelter Dicke zeichnen
-                else mul = 1;
+                if(i % 4 == 0) d = 2; //Jede 5. Linie mit doppelter Dicke zeichnen
+                else d = 1;
                                 
-                gcDrawLine(gc, i, 0, i, h, mul);
-                gcDrawLine(gc, 0, i, w, i, mul);
+                gcDrawLine(gc, i, 0, i, h, d);
+                gcDrawLine(gc, 0, i, w, i, d);
         }
+       
         getChildren().add(simCanvas);
         simCanvas.toBack();
     }
@@ -134,5 +129,36 @@ public class DigitSimController extends Pane{
         btnNOR.setToggleGroup(group);
         btnXOR.setToggleGroup(group);
         
+    }
+    
+    /**
+    * Öffnet das Datei Öffnen DialogFenster
+    * 
+    * @author Elias
+    */
+    public void mItemOpenFileAction(ActionEvent event) {
+        
+        FileChooser fc = new FileChooser();
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("DigitSimFiles (*.dgs)", "*.dgs");
+        fc.getExtensionFilters().add(extFilter);
+        File selectedFile = fc.showOpenDialog(null);   
+    }
+    public void mItemPropertiesOnAction(ActionEvent event) {
+        System.out.println("Niklas stinkt stark nah Maggi!");
+        try{ //Beschreibung des Designs per XML-Datei
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Properties.fxml"));
+            Parent root1 = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Properties");
+            stage.setScene(new Scene(root1));  
+            
+            stage.show();
+            stage.getIcons().add(new Image(DigitSim.class.getResourceAsStream( "icon.png" )));
+            stage.setMinWidth(400);
+            stage.setMinHeight(200);
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 }
