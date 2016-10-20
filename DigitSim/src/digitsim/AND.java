@@ -35,7 +35,6 @@ public class AND {
         {
             allY[i] = i * 20;
         }
-        
-        Draw.gcLineFromArray(gc, allX, allY, 10, 10, Color.BLACK);
+        Draw.gcLineFromArray(gc, allX, allY, 10, Color.BLACK);
     }
 }

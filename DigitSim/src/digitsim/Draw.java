@@ -63,16 +63,23 @@ public class Draw {
         simCanvas.toBack();
     }
 
-    /*
+    /**
     * Line zeichnen, die aus mehreren koordinaten als 2 besteht
     * @author Tim
     */
-    public static void gcLineFromArray(GraphicsContext gc, double dx[], double dy[], int points, double lineWidth, Color color)
+    public static void gcLineFromArray(GraphicsContext gc, double dx[], double dy[], double lineWidth, Color color)
     { 
-       gcDrawLine(gc, dx[0], dy[0], dx[1], dy[1], lineWidth, color);
+       int points = 0;
+       if(dx.length != dy.length) {
+           System.out.println("linie Wurde nicht gezeichnet weil: array Länge stimmt nicht");
+       }
+       else{
+           points = dx.length;
+       }
+       
        if(points > 1)
        {
-            for(int i = 2; i < points; i++)
+            for(int i = 1; i < points; i++)
             {
                 gcDrawLine(gc, dx[i], dy[i], dx[i - 1], dy[i - 1], lineWidth, color);   
             }
