@@ -57,10 +57,10 @@ public class DigitSimController extends Pane{
     *
     * @author Tim
     */
-    public static void gcDrawLine(GraphicsContext gc, double x, double y, double w, double h, double size)
+    public static void gcDrawLine(GraphicsContext gc, double x1, double y1, double x2, double y2, double size)
     { 
         gc.setLineWidth(size);
-        gc.strokeLine( x, y, w, h);
+        gc.strokeLine( x1, y1, x2, y2);
     }
     
     /**
