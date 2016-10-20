@@ -148,7 +148,6 @@
             </TitledPane>
           </panes>
         </Accordion>
-        <Button fx:id="btnZoom" layoutX="73.0" layoutY="515.0" mnemonicParsing="false" onAction="#btnZoomOnAction" text="Zoom" />
       </children>
     </Pane>
     <AnchorPane prefHeight="744.0" prefWidth="813.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="215.0" AnchorPane.rightAnchor="-4.0" AnchorPane.topAnchor="24.0">
