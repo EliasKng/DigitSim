@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package digitsim;
 
 import java.io.File;
@@ -13,59 +8,49 @@ import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-
 /**
- * FXML Controller class
+ * Digitsim.fxml Controller class
  *
  * @author Elias
  */
 public class DigitSimController extends Pane{
-    
     public DigitSimController() {
     }
     
     @FXML
-    public void initialize() {
-        addGrid();
+    public void initialize() {//initialize Funktion: wird direkt beim Starten der FXML aufgerufen.
         GraphicsContext gc = simCanvas.getGraphicsContext2D();
+        addGrid(simCanvas,gc);
         AND and0 = new AND(gc);
         loadBtnGroup();
     }
     
-    
-
-    @FXML
+    /**
+     * FXML OBJEKT-Erstellungs-Bereich:
+     * Jedes Element, welches in der DigitSim.FXML verwendet wird, muss in folgendem wege im Code noch erstellt werden.
+     */
+    @FXML 
     private MenuItem mItemOpenFile;
-
-    @FXML
+    @FXML 
     private Canvas simCanvas;
-    
+    @FXML 
+    private ToggleButton btnAND;    
     @FXML
-    private ToggleButton btnAND;
-    
-    @FXML
-    private ToggleButton btnOR;
-    
+    private ToggleButton btnOR;    
     @FXML
     private ToggleButton btnNOT;
-
     @FXML
-    private ToggleButton btnNOR;
-    
+    private ToggleButton btnNOR;    
     @FXML
-    private ToggleButton btnXOR;
-    
+    private ToggleButton btnXOR;    
     @FXML
     private ToggleButton btnNAND;
-    
-    
     
     /**
     * Funktion zum Linien zeichnen
@@ -76,7 +61,6 @@ public class DigitSimController extends Pane{
     { 
         gc.setLineWidth(size);
         gc.strokeLine( x, y, w, h);
-        gc.setLineWidth(size);
     }
     
     /**
@@ -85,7 +69,7 @@ public class DigitSimController extends Pane{
     * @author Elias
     * Bearbeitet von Tim 16.10.16
     */
-    public void addGrid() {
+    public void addGrid(Canvas simCanvas, GraphicsContext gc) {
 
         double w = simCanvas.getWidth();
         double h = simCanvas.getHeight();
@@ -93,7 +77,7 @@ public class DigitSimController extends Pane{
 
         simCanvas.setMouseTransparent(false);
 
-        GraphicsContext gc = simCanvas.getGraphicsContext2D();
+        gc = simCanvas.getGraphicsContext2D();
         
         gc.setStroke(Color.LIGHTGREY);
         gc.setLineWidth(1.0);
@@ -109,11 +93,10 @@ public class DigitSimController extends Pane{
                 gcDrawLine(gc, i, 0, i, h, d);
                 gcDrawLine(gc, 0, i, w, i, d);
         }
-       
-        getChildren().add(simCanvas);
+       //Setzt simCanvas in den Hintergrund
         simCanvas.toBack();
     }
-    
+
     /**
     * Bildet nötige Gruppen für Togglebuttons (damit immer nur einer Selected sein kann)
     * 
@@ -130,7 +113,7 @@ public class DigitSimController extends Pane{
         btnXOR.setToggleGroup(group);
         
     }
-    
+    //*************************************ON ACTION bereich: wird verwendet um z.B. Buttonclicks auszuwerten***********************************************
     /**
     * Öffnet das Datei Öffnen DialogFenster
     * 
@@ -144,7 +127,6 @@ public class DigitSimController extends Pane{
         File selectedFile = fc.showOpenDialog(null);   
     }
     public void mItemPropertiesOnAction(ActionEvent event) {
-        System.out.println("Niklas stinkt stark nah Maggi!");
         try{ //Beschreibung des Designs per XML-Datei
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Properties.fxml"));
             Parent root1 = (Parent) fxmlLoader.load();

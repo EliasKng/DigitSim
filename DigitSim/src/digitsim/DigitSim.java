@@ -20,7 +20,7 @@ import javafx.stage.Stage;
 public class DigitSim extends Application {
     @Override
     public void start(Stage primaryStage) {
-        try{ //Beschreibung des Designs per XML-Datei
+        try{ //Erstellen eines Fensters mit dem Design der DigitSim.fxml-Datei
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("DigitSim.fxml"));
             Parent root1 = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
