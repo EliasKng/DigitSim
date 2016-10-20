@@ -26,7 +26,7 @@ public class DigitSimController extends Pane{
     @FXML
     public void initialize() {//initialize Funktion: wird direkt beim Starten der FXML aufgerufen.
         GraphicsContext gc = simCanvas.getGraphicsContext2D();
-        addGrid(simCanvas,gc);
+        Draw.addGrid(simCanvas,gc);
         AND and0 = new AND(gc);
         loadBtnGroup();
     }
@@ -53,37 +53,8 @@ public class DigitSimController extends Pane{
     private ToggleButton btnNAND;
     
     
-    /**
-    * Animiert Karo auf simCanvas
-    *
-    * @author Elias
-    * Bearbeitet von Tim 16.10.16
-    */
-    public void addGrid(Canvas simCanvas, GraphicsContext gc) {
-
-        double w = simCanvas.getWidth();
-        double h = simCanvas.getHeight();
-
-
-        simCanvas.setMouseTransparent(false);
-
-        gc = simCanvas.getGraphicsContext2D();
-        
-
-        // Karomuster malen
-        // offset = linien abstand
-        double offset = 21;
-        double d;
-        for( double i=offset; i < w; i+=offset) {
-                if(i % 4 == 0) d = 2; //Jede 5. Linie mit doppelter Dicke zeichnen
-                else d = 1;
-                                
-                Draw.gcDrawLine(gc, i, 0, i, h, d, Color.LIGHTGREY);
-                Draw.gcDrawLine(gc, 0, i, w, i, d, Color.LIGHTGREY);
-        }
-       //Setzt simCanvas in den Hintergrund
-        simCanvas.toBack();
-    }
+    
+    
 
     /**
     * Bildet nötige Gruppen für Togglebuttons (damit immer nur einer Selected sein kann)
