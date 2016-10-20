@@ -15,5 +15,15 @@ import javafx.scene.paint.Color;
  */
 public class Draw {
     
-    
+    /**
+    * Funktion zum Linien zeichnen
+    *
+    * @author Tim
+    */
+    public static void gcDrawLine(GraphicsContext gc, double x1, double y1, double x2, double y2, double size, Color color)
+    { 
+        gc.setStroke(color);
+        gc.setLineWidth(size);
+        gc.strokeLine( x1, y1, x2, y2);
+    }
 }

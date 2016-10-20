@@ -19,16 +19,19 @@ import javafx.scene.layout.Pane;
  */
 public class AND {
     public AND(GraphicsContext gc) {
-        gc.setFill(Color.GREEN);
-        gc.setStroke(Color.BLUE);
-        gc.setLineWidth(5);
-        gc.strokeLine(40, 10, 10, 40);
+        gc.setFill(Color.RED);
+       // gc.setStroke(Color.YELLOW);
+       // gc.setLineWidth(20);
+       // gc.strokeLine(40, 10, 10, 40);
         gc.fillOval(10, 60, 30, 30);
         
-        Rectangle rect1 = new Rectangle(100,100);
+        Draw.gcDrawLine(gc, 0, 0 ,50, 200, 1d, Color.YELLOW);
+        
+        /*Rectangle rect1 = new Rectangle(100,100);
         rect1.setTranslateX(450);
         rect1.setTranslateY(450);
         rect1.setStroke(Color.BLUE);
-        rect1.setFill(Color.BLUE.deriveColor(1, 1, 1, 0.5));
+        rect1.setFill(Color.BLUE.deriveColor(1, 1, 1, 0.5));'*/
     }
+
 }

@@ -52,16 +52,6 @@ public class DigitSimController extends Pane{
     @FXML
     private ToggleButton btnNAND;
     
-    /**
-    * Funktion zum Linien zeichnen
-    *
-    * @author Tim
-    */
-    public static void gcDrawLine(GraphicsContext gc, double x1, double y1, double x2, double y2, double size)
-    { 
-        gc.setLineWidth(size);
-        gc.strokeLine( x1, y1, x2, y2);
-    }
     
     /**
     * Animiert Karo auf simCanvas
@@ -79,8 +69,6 @@ public class DigitSimController extends Pane{
 
         gc = simCanvas.getGraphicsContext2D();
         
-        gc.setStroke(Color.LIGHTGREY);
-        gc.setLineWidth(1.0);
 
         // Karomuster malen
         // offset = linien abstand
@@ -90,8 +78,8 @@ public class DigitSimController extends Pane{
                 if(i % 4 == 0) d = 2; //Jede 5. Linie mit doppelter Dicke zeichnen
                 else d = 1;
                                 
-                gcDrawLine(gc, i, 0, i, h, d);
-                gcDrawLine(gc, 0, i, w, i, d);
+                Draw.gcDrawLine(gc, i, 0, i, h, d, Color.LIGHTGREY);
+                Draw.gcDrawLine(gc, 0, i, w, i, d, Color.LIGHTGREY);
         }
        //Setzt simCanvas in den Hintergrund
         simCanvas.toBack();
