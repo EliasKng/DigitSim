@@ -22,12 +22,16 @@ public class Draw {
     */
     public static void gcDrawLine(GraphicsContext gc, double x1, double y1, double x2, double y2, double size, Color color)
     { 
-        gc.setStroke(color);
+        if(gc.getStroke() != color)
+        {
+            gc.setStroke(color);
+        }
         gc.setLineWidth(size);
         gc.strokeLine( x1, y1, x2, y2);
     }
     
     /**
+<<<<<<< Upstream, based on origin/master
     * Animiert Karo auf simCanvas
     *
     * @author Elias
@@ -58,4 +62,35 @@ public class Draw {
        //Setzt simCanvas in den Hintergrund
         simCanvas.toBack();
     }
+
+    /*
+    * Line zeichnen, die aus mehreren koordinaten als 2 besteht
+    * @author Tim
+    */
+    public static void gcLineFromArray(GraphicsContext gc, double dx[], double dy[], int points, double lineWidth, Color color)
+    { 
+       gcDrawLine(gc, dx[0], dy[0], dx[1], dy[1], lineWidth, color);
+       if(points > 1)
+       {
+            for(int i = 2; i < points; i++)
+            {
+                gcDrawLine(gc, dx[i], dy[i], dx[i - 1], dy[i - 1], lineWidth, color);   
+            }
+        }
+    }
+    
+    /**
+    * Funktion zum Kreise zeichnen
+    *
+    * @author Tim
+    */
+    public static void gcDrawCircle(GraphicsContext gc, double x, double y, double r, Color color)
+    { 
+        if(gc.getFill() != color)
+        {
+            gc.setFill(color);
+        }
+        gc.fillOval(x - r, y - r, 2 * r, 2 * r);
+    }
+    
 }
