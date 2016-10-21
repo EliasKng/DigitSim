@@ -32,5 +32,21 @@ public class AND {
         v.sub(25, 15);
         System.out.printf("*SUBTRACTED VEC2*\n%.1f\n%.1f\n", v.x, v.y);
        // Draw.gcLineFromArray(gc, allX, allY, 10, Color.BLACK);
+       
+       
+       
+       
+        double bX = 350;
+        double bY = 350;
+        
+        double aX[] = new double[3];
+        double aY[] = new double[3];
+        aX[0] = 0;
+        aY[0] = 0;
+        aX[1] = 20;
+        aY[1] = 30;
+        aX[2] = 20;
+        aY[2] = 0;
+        Draw.gcLineFromArrayBaseCoords(gc, aX, aY, 5,Color.RED, bX, bY);
     }
 }

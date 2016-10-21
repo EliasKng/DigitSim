@@ -31,7 +31,6 @@ public class Draw {
     }
     
     /**
-<<<<<<< Upstream, based on origin/master
     * Animiert Karo auf simCanvas
     *
     * @author Elias
@@ -65,7 +64,14 @@ public class Draw {
 
     /**
     * Line zeichnen, die aus mehreren koordinaten als 2 besteht
+    * 
     * @author Tim
+    * 
+    * @param gc GraphicsContent
+    * @param dx Array mit X - Koordinaten, jedoch nur die differenz zum LinienUrsprung
+    * @param dy Array mit Y - Koordinaten, jedoch nur die differenz zum LinienUrsprung
+    * @param lineWidth Liniendicke
+    * @param color Linienfarbe
     */
     public static void gcLineFromArray(GraphicsContext gc, double dx[], double dy[], double lineWidth, Color color)
     { 
@@ -98,6 +104,29 @@ public class Draw {
             gc.setFill(color);
         }
         gc.fillOval(x - r, y - r, 2 * r, 2 * r);
+    }
+    
+    /**
+    * Funktion zum Linien zeichnen, im Array jedoch wird nur die Differenz zum Linienursprung angegeben
+    * 
+    * @author Elias
+    * 
+    * @param gc GraphicsContent
+    * @param dx Array mit X - Koordinaten, jedoch nur die differenz zum LinienUrsprung
+    * @param dy Array mit Y - Koordinaten, jedoch nur die differenz zum LinienUrsprung
+    * @param lineWidth Liniendicke
+    * @param color Linienfarbe
+    * @param baseX X-Startkoordinate der Linie
+    * @param baseY Y-Startkoordinate der Linie
+    * 
+    */
+    public static void gcLineFromArrayBaseCoords(GraphicsContext gc, double dx[], double dy[], double lineWidth, Color color, double baseX, double baseY)
+    {        
+       for(int i = 0; i < dx.length; i++) {
+           dx[i] = dx[i] + baseX;
+           dy[i] = dy[i] + baseY;
+       }
+       gcLineFromArray(gc,dx,dy,lineWidth,color);
     }
     
 }
