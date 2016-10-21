@@ -41,10 +41,22 @@ public class vec2 {
        this.y += v.y;
    }
    
+   public void add(double dx, double dy)
+   {
+       this.x += dx;
+       this.y += dy;
+   }
+   
    public void sub(vec2 v)
    {
        this.x -= v.x;
        this.y -= v.y;
+   }
+   
+   public void sub(double dx, double dy)
+   {
+       this.x -= dx;
+       this.y -= dy;
    }
 }
 

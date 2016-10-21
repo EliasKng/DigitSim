@@ -23,18 +23,14 @@ public class AND {
         Draw.gcDrawCircle(gc, 50, 50, 20, Color.RED);
         Draw.gcDrawLine(gc, 0, 0 ,50, 200, 1d, Color.YELLOW);
 
-      
-        double allX[] = new double[10];
-        double allY[] = new double[10];
-        
-        for(int i = 0; i < 10; i++)
-        {
-            allX[i] = i * 20;
-        }
-        for(int i = 0; i < 10; i++)
-        {
-            allY[i] = i * 20;
-        }
-        Draw.gcLineFromArray(gc, allX, allY, 10, Color.BLACK);
+
+        vec2 v = new vec2();
+        v.set(10, 20);   
+        System.out.printf("*DEFAULT VEC2*\n%.1f\n%.1f\n", v.x, v.y);
+        v.add(new vec2(15, 5));     
+        System.out.printf("*ADDED VEC2*\n%.1f\n%.1f\n", v.x, v.y);
+        v.sub(25, 15);
+        System.out.printf("*SUBTRACTED VEC2*\n%.1f\n%.1f\n", v.x, v.y);
+       // Draw.gcLineFromArray(gc, allX, allY, 10, Color.BLACK);
     }
 }
