@@ -154,13 +154,9 @@ public class DigitSimController extends Pane{
      * @return Returnd die Koordinaten der Maus
      * 
      */
-    public double[] getMouseCoordinates(MouseEvent event) {
-        //Coords[0] = x coordinate
-        //Coords[1] = y Coordinate
-        double coords[] = new double[2];
-        coords[0] = event.getX();
-        coords[1] = event.getY();
-        return coords;
+    public vec2 getMouseCoordinates(MouseEvent event) {
+        // erstelle neuen vektor mit maus koordinaten und gebe ihn zurück
+        return new vec2(event.getX(), event.getY());
     }
 }
       
