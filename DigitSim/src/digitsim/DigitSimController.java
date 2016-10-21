@@ -1,5 +1,6 @@
 package digitsim;
 
+import java.awt.MouseInfo;
 import java.io.File;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,8 +12,8 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 /**
  * Digitsim.fxml Controller class
@@ -23,13 +24,20 @@ public class DigitSimController extends Pane{
     public DigitSimController() {
     }
     
+    
     @FXML
     public void initialize() {//initialize Funktion: wird direkt beim Starten der FXML aufgerufen.
         GraphicsContext gc = simCanvas.getGraphicsContext2D();
         Draw.addGrid(simCanvas,gc);
         AND and0 = new AND(gc);
         loadBtnGroup();
+        MouseEvent event;
+        
+        
+       
     }
+    
+    
     
     /**
      * FXML OBJEKT-Erstellungs-Bereich:
@@ -102,4 +110,22 @@ public class DigitSimController extends Pane{
             e.printStackTrace();
         }
     }
+    
+    /**
+     * 
+     * @param event 
+     * @return Returnd die Koordinaten der Maus
+     * 
+     */
+    public double[] getMouseCoordinates(MouseEvent event) {
+        //Coords[0] = x coordinate
+        //Coords[1] = y Coordinate
+        double coords[] = new double[2];
+        coords[0] = event.getX();
+        coords[1] = event.getY();
+        return coords;
+    }
+    
+    
 }
+      
