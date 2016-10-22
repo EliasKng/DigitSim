@@ -20,22 +20,10 @@ import javafx.stage.Stage;
 public class DigitSim extends Application {
     @Override
     public void start(Stage primaryStage) {
-        try{ //Erstellen eines Fensters mit dem Design der DigitSim.fxml-Datei
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("DigitSim.fxml"));
-            Parent root1 = (Parent) fxmlLoader.load();
-            Stage stage = new Stage();
-            stage.setTitle("Seminator");
-            stage.setScene(new Scene(root1));  
-            
-            stage.show();
-            stage.getIcons().add(new Image(DigitSim.class.getResourceAsStream( "icon.png" )));
-            stage.setMinWidth(800);
-            stage.setMinHeight(600);
-            
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-        
+        Stage stage;
+        stage = GenFunctions.openFXML("DigitSim.fxml", "Seminator", "icon.png");
+        stage.setMinWidth(800);
+        stage.setMinHeight(600);       
     }
     
     /**
