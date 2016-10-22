@@ -31,7 +31,7 @@ public class DigitSimController extends Pane{
     public void initialize() {//initialize Funktion: wird direkt beim Starten der FXML aufgerufen.
         addSimCanvas();
         //AND and0 = new AND(gc);
-        simCanvas.addGrid();
+        simCanvas.addGrid((simCanvas.getPrefWidth()*5),(simCanvas.getPrefHeight()*5));
         loadBtnGroup();     
         
         

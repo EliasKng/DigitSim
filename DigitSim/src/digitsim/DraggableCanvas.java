@@ -24,7 +24,7 @@ public class DraggableCanvas extends Pane {
     DoubleProperty myScale = new SimpleDoubleProperty(1.0);
 
     public DraggableCanvas() {
-        setPrefSize(700, 700);
+        setPrefSize(800, 550);
         setStyle("-fx-background-color: white; -fx-border-color: blue;");
 
         // add scale transform
@@ -36,13 +36,15 @@ public class DraggableCanvas extends Pane {
     * Animiert Karo auf simGrid
     *
     * @author Elias
-    * Bearbeitet von Tim 16.10.16
+    * 
+    * @param width Weite des Karohintergrundes
+    * @param heigth Höhe des Karohintergrundes
     */
-    public void addGrid() {
+    public void addGrid(double width, double heigth) {
         Canvas simGrid = new Canvas();
         GraphicsContext gc = simGrid.getGraphicsContext2D();
-        simGrid.setWidth(700);
-        simGrid.setHeight(700);
+        simGrid.setWidth(width);
+        simGrid.setHeight(heigth);
         double w = simGrid.getWidth();
         double h = simGrid.getHeight();
 
@@ -61,8 +63,10 @@ public class DraggableCanvas extends Pane {
                                 
                 Draw.gcDrawLine(gc, i, 0, i, h, d, Color.LIGHTGREY);
                 Draw.gcDrawLine(gc, 0, i, w, i, d, Color.LIGHTGREY);
-        }        
+        }    
         
+        simGrid.translateXProperty().set(-(simGrid.getWidth()/2));
+        simGrid.translateYProperty().set(-(simGrid.getHeight()/2));
 
         getChildren().add(simGrid);
 
@@ -164,8 +168,8 @@ class NodeGestures {
  */
 class SceneGestures {
 
-    private static final double MAX_SCALE = 10.0d;
-    private static final double MIN_SCALE = .1d;
+    private static final double MAX_SCALE = 4.0d;
+    private static final double MIN_SCALE = .5d;
 
     private DragContext sceneDragContext = new DragContext();
 
