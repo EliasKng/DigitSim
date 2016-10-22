@@ -8,8 +8,12 @@ import javafx.stage.FileChooser;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 /**
  * Digitsim.fxml Controller class
@@ -28,7 +32,49 @@ public class DigitSimController extends Pane{
         addSimCanvas();
         //AND and0 = new AND(gc);
         simCanvas.addGrid();
-        loadBtnGroup();        
+        loadBtnGroup();     
+        
+        
+        NodeGestures nodeGestures = new NodeGestures( simCanvas);
+
+        Label label1 = new Label("Draggable node 1");
+        label1.setTranslateX(10);
+        label1.setTranslateY(10);
+        label1.addEventFilter( MouseEvent.MOUSE_PRESSED, nodeGestures.getOnMousePressedEventHandler());
+        label1.addEventFilter( MouseEvent.MOUSE_DRAGGED, nodeGestures.getOnMouseDraggedEventHandler());
+
+        Label label2 = new Label("Draggable node 2");
+        label2.setTranslateX(100);
+        label2.setTranslateY(100);
+        label2.addEventFilter( MouseEvent.MOUSE_PRESSED, nodeGestures.getOnMousePressedEventHandler());
+        label2.addEventFilter( MouseEvent.MOUSE_DRAGGED, nodeGestures.getOnMouseDraggedEventHandler());
+
+        Label label3 = new Label("Draggable node 3");
+        label3.setTranslateX(200);
+        label3.setTranslateY(200);
+        label3.addEventFilter( MouseEvent.MOUSE_PRESSED, nodeGestures.getOnMousePressedEventHandler());
+        label3.addEventFilter( MouseEvent.MOUSE_DRAGGED, nodeGestures.getOnMouseDraggedEventHandler());
+
+        Circle circle1 = new Circle( 300, 300, 50);
+        circle1.setStroke(Color.ORANGE);
+        circle1.setFill(Color.ORANGE.deriveColor(1, 1, 1, 0.5));
+        circle1.addEventFilter( MouseEvent.MOUSE_PRESSED, nodeGestures.getOnMousePressedEventHandler());
+        circle1.addEventFilter( MouseEvent.MOUSE_DRAGGED, nodeGestures.getOnMouseDraggedEventHandler());
+
+        Rectangle rect1 = new Rectangle(100,100);
+        rect1.setTranslateX(450);
+        rect1.setTranslateY(450);
+        rect1.setStroke(Color.BLUE);
+        rect1.setFill(Color.BLUE.deriveColor(1, 1, 1, 0.5));
+        rect1.addEventFilter( MouseEvent.MOUSE_PRESSED, nodeGestures.getOnMousePressedEventHandler());
+        rect1.addEventFilter( MouseEvent.MOUSE_DRAGGED, nodeGestures.getOnMouseDraggedEventHandler());
+
+        simCanvas.getChildren().addAll(label1, label2, label3, circle1, rect1);
+        
+        SceneGestures sceneGestures = new SceneGestures(simCanvas);
+        simPane.addEventFilter( MouseEvent.MOUSE_PRESSED, sceneGestures.getOnMousePressedEventHandler());
+        simPane.addEventFilter( MouseEvent.MOUSE_DRAGGED, sceneGestures.getOnMouseDraggedEventHandler());
+        simPane.addEventFilter( ScrollEvent.ANY, sceneGestures.getOnScrollEventHandler());
     }
     
     
