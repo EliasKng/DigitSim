@@ -87,7 +87,7 @@
         <Menu mnemonicParsing="false" text="Hilfe">
           <items>
             <MenuItem mnemonicParsing="false" text="Über den Seminator" />
-            <MenuItem mnemonicParsing="false" text="Hilfe" />
+            <MenuItem mnemonicParsing="false" onAction="#mItemHelpOnAction" text="Hilfe" fx:id="mItemHelp" />
           </items>
         </Menu>
       </menus>
@@ -156,7 +156,7 @@
           <items>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="573.0" prefWidth="674.0">
               <children>
-                <ScrollPane prefHeight="572.9999000000025" prefWidth="807.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <ScrollPane fx:id="scrollPane" prefHeight="572.9999000000025" prefWidth="807.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                   <content>
                     <Canvas id="simPane" fx:id="simCanvas" height="1080.0" scaleX="1.0010416666666666" scaleY="1.000925925925926" style="-fx-background-color: lightgrey;" styleClass="simCanvas" width="1920.0" />
                   </content>

@@ -59,6 +59,8 @@ public class DigitSimController extends Pane{
     private ToggleButton btnXOR;    
     @FXML
     private ToggleButton btnNAND;
+    @FXML
+    private ScrollPane scrollPane;
     
     
     
@@ -105,6 +107,23 @@ public class DigitSimController extends Pane{
             stage.getIcons().add(new Image(DigitSim.class.getResourceAsStream( "icon.png" )));
             stage.setMinWidth(400);
             stage.setMinHeight(200);
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void mItemHelpOnAction(ActionEvent event) {
+        try{ //Beschreibung des Designs per XML-Datei
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Help.fxml"));
+            Parent root1 = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Hilfe");
+            stage.setScene(new Scene(root1));  
+            
+            stage.show();
+            stage.getIcons().add(new Image(DigitSim.class.getResourceAsStream( "icon.png" )));
+            
+            stage.setResizable(false);
             
         } catch(Exception e) {
             e.printStackTrace();
