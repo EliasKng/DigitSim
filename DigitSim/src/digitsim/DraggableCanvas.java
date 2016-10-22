@@ -46,8 +46,7 @@ public class DraggableCanvas extends Pane {
         double w = simGrid.getWidth();
         double h = simGrid.getHeight();
 
-
-        simGrid.setMouseTransparent(false);
+        simGrid.setMouseTransparent(true);
 
         gc = simGrid.getGraphicsContext2D();
         
@@ -67,6 +66,7 @@ public class DraggableCanvas extends Pane {
 
         getChildren().add(simGrid);
 
+        //Verschiebt simGrid in den Hintergrund
         simGrid.toBack();
     }
 
@@ -83,8 +83,9 @@ public class DraggableCanvas extends Pane {
         setTranslateY(getTranslateY()-y);
     }
 }
+
 /**
- * Mouse drag context used for scene and nodes.
+ * Maus drag context wird für nodes & scene gestures benötigt
  */
 class DragContext {
 
@@ -122,7 +123,7 @@ class NodeGestures {
 
         public void handle(MouseEvent event) {
 
-            // left mouse button => dragging
+            // linker Mausknopf -> Verschieben
             if( !event.isPrimaryButtonDown())
                 return;
 
@@ -168,10 +169,10 @@ class SceneGestures {
 
     private DragContext sceneDragContext = new DragContext();
 
-    DraggableCanvas canvas;
+    DraggableCanvas simCanvas;
 
-    public SceneGestures( DraggableCanvas canvas) {
-        this.canvas = canvas;
+    public SceneGestures( DraggableCanvas simCanvas) {
+        this.simCanvas = simCanvas;
     }
 
     public EventHandler<MouseEvent> getOnMousePressedEventHandler() {
@@ -197,8 +198,8 @@ class SceneGestures {
             sceneDragContext.mouseAnchorX = event.getSceneX();
             sceneDragContext.mouseAnchorY = event.getSceneY();
 
-            sceneDragContext.translateAnchorX = canvas.getTranslateX();
-            sceneDragContext.translateAnchorY = canvas.getTranslateY();
+            sceneDragContext.translateAnchorX = simCanvas.getTranslateX();
+            sceneDragContext.translateAnchorY = simCanvas.getTranslateY();
 
         }
 
@@ -211,8 +212,8 @@ class SceneGestures {
             if( !event.isSecondaryButtonDown())
                 return;
 
-            canvas.setTranslateX(sceneDragContext.translateAnchorX + event.getSceneX() - sceneDragContext.mouseAnchorX);
-            canvas.setTranslateY(sceneDragContext.translateAnchorY + event.getSceneY() - sceneDragContext.mouseAnchorY);
+            simCanvas.setTranslateX(sceneDragContext.translateAnchorX + event.getSceneX() - sceneDragContext.mouseAnchorX);
+            simCanvas.setTranslateY(sceneDragContext.translateAnchorY + event.getSceneY() - sceneDragContext.mouseAnchorY);
 
             event.consume();
         }
@@ -226,9 +227,9 @@ class SceneGestures {
         @Override
         public void handle(ScrollEvent event) {
 
-            double delta = 1.2;
+            double delta = 1.15;
 
-            double scale = canvas.getScale(); // currently we only use Y, same value is used for X
+            double scale = simCanvas.getScale(); // currently we only use Y, same value is used for X
             double oldScale = scale;
 
             if (event.getDeltaY() < 0)
@@ -240,13 +241,13 @@ class SceneGestures {
 
             double f = (scale / oldScale)-1;
 
-            double dx = (event.getSceneX() - (canvas.getBoundsInParent().getWidth()/2 + canvas.getBoundsInParent().getMinX()));
-            double dy = (event.getSceneY() - (canvas.getBoundsInParent().getHeight()/2 + canvas.getBoundsInParent().getMinY()));
+            double dx = (event.getSceneX() - (simCanvas.getBoundsInParent().getWidth()/2 + simCanvas.getBoundsInParent().getMinX()));
+            double dy = (event.getSceneY() - (simCanvas.getBoundsInParent().getHeight()/2 + simCanvas.getBoundsInParent().getMinY()));
 
-            canvas.setScale( scale);
+            simCanvas.setScale( scale);
 
             // note: pivot value must be untransformed, i. e. without scaling
-            canvas.setPivot(f*dx, f*dy);
+            simCanvas.setPivot(f*dx, f*dy);
 
             event.consume();
 

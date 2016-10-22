@@ -72,9 +72,9 @@ public class DigitSimController extends Pane{
         simCanvas.getChildren().addAll(label1, label2, label3, circle1, rect1);
         
         SceneGestures sceneGestures = new SceneGestures(simCanvas);
-        simPane.addEventFilter( MouseEvent.MOUSE_PRESSED, sceneGestures.getOnMousePressedEventHandler());
-        simPane.addEventFilter( MouseEvent.MOUSE_DRAGGED, sceneGestures.getOnMouseDraggedEventHandler());
-        simPane.addEventFilter( ScrollEvent.ANY, sceneGestures.getOnScrollEventHandler());
+        simCanvas.addEventFilter( MouseEvent.MOUSE_PRESSED, sceneGestures.getOnMousePressedEventHandler());
+        simCanvas.addEventFilter( MouseEvent.MOUSE_DRAGGED, sceneGestures.getOnMouseDraggedEventHandler());
+        simCanvas.addEventFilter( ScrollEvent.ANY, sceneGestures.getOnScrollEventHandler());
     }
     
     
@@ -102,7 +102,6 @@ public class DigitSimController extends Pane{
     
     @FXML
     private void addSimCanvas() {
-        
         simPane.getChildren().addAll(simCanvas);
     }
     
