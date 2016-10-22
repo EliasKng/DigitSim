@@ -19,13 +19,14 @@ import javafx.scene.paint.Color;
 /**
  *
  * @author Elias
+ * -Überarbeitet von Dominik 22.10.2016 (Zoom verbessert, Das Sichtfenster in die Mitte gesetzt, Größe der Fläche angepasst)
  */
 public class DraggableCanvas extends Pane {
     DoubleProperty myScale = new SimpleDoubleProperty(1.0);
 
     public DraggableCanvas() {
-        setPrefSize(800, 550);
-        setStyle("-fx-background-color: white; -fx-border-color: blue;");
+        setPrefSize(8000, 8000);
+        setStyle("-fx-background-color: white; -fx-border-color: grey;");
 
         // add scale transform
         scaleXProperty().bind(myScale);
@@ -36,9 +37,7 @@ public class DraggableCanvas extends Pane {
     * Animiert Karo auf simGrid
     *
     * @author Elias
-    * 
-    * @param width Weite des Karohintergrundes
-    * @param heigth Höhe des Karohintergrundes
+    * Bearbeitet von Tim 16.10.16
     */
     public void addGrid(double width, double heigth) {
         Canvas simGrid = new Canvas();
@@ -51,8 +50,7 @@ public class DraggableCanvas extends Pane {
         simGrid.setMouseTransparent(true);
 
         gc = simGrid.getGraphicsContext2D();
-        
-
+       
         // Karomuster malen
         // offset = linien abstand
         double offset = 21;
@@ -63,10 +61,8 @@ public class DraggableCanvas extends Pane {
                                 
                 Draw.gcDrawLine(gc, i, 0, i, h, d, Color.LIGHTGREY);
                 Draw.gcDrawLine(gc, 0, i, w, i, d, Color.LIGHTGREY);
-        }    
+        }        
         
-        simGrid.translateXProperty().set(-(simGrid.getWidth()/2));
-        simGrid.translateYProperty().set(-(simGrid.getHeight()/2));
 
         getChildren().add(simGrid);
 
@@ -102,7 +98,7 @@ class DragContext {
 }
 
 /**
- * Listeners for making the nodes draggable via left mouse button. Considers if parent is zoomed.
+ * Listener die eine Drag & Drop - Funktin mit der linken Maustaste ermöglichen. Bedenkt auch den Zoom.
  */
 class NodeGestures {
 
@@ -112,7 +108,6 @@ class NodeGestures {
 
     public NodeGestures( DraggableCanvas canvas) {
         this.canvas = canvas;
-
     }
 
     public EventHandler<MouseEvent> getOnMousePressedEventHandler() {
@@ -165,18 +160,25 @@ class NodeGestures {
 
 /**
  * Listeners for making the scene's canvas draggable and zoomable
+ * -Überarbeitet von Dominik 22.10.2016 (Zoom verbessert, Das Sichtfenster in die Mitte gesetzt, Größe der Fläche angepasst)
  */
 class SceneGestures {
 
-    private static final double MAX_SCALE = 4.0d;
-    private static final double MIN_SCALE = .5d;
+    private static final double MAX_SCALE = 2.0d;
+    private static final double MIN_SCALE = 0.4d;
 
     private DragContext sceneDragContext = new DragContext();
 
     DraggableCanvas simCanvas;
 
+    private void placeCanvasMiddle(){//Sichtbereich in die Mitte setzen
+         simCanvas.setTranslateX(sceneDragContext.translateAnchorX - (simCanvas.getPrefWidth() / 2));
+         simCanvas.setTranslateY(sceneDragContext.translateAnchorY - (simCanvas.getPrefHeight() / 2));
+    }
+    
     public SceneGestures( DraggableCanvas simCanvas) {
         this.simCanvas = simCanvas;
+        placeCanvasMiddle(); //Sichtbereich in die Mitte setzen
     }
 
     public EventHandler<MouseEvent> getOnMousePressedEventHandler() {
@@ -225,6 +227,7 @@ class SceneGestures {
 
     /**
      * Mouse wheel handler: zoom to pivot point
+     * -Überarbeitet von Dominik 22.10.2016 (Zoom verbessert, Das Sichtfenster in die Mitte gesetzt, Größe der Fläche angepasst)
      */
     private EventHandler<ScrollEvent> onScrollEventHandler = new EventHandler<ScrollEvent>() {
 
