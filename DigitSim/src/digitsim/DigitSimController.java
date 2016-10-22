@@ -3,7 +3,6 @@ package digitsim;
 import java.io.File;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Group;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.scene.canvas.Canvas;
@@ -11,8 +10,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 /**
  * Digitsim.fxml Controller class
@@ -20,6 +17,7 @@ import javafx.stage.Stage;
  * @author Elias
  */
 public class DigitSimController extends Pane{
+    DraggableCanvas simCanvas = new DraggableCanvas();
     public DigitSimController() {
     }
     
@@ -27,14 +25,10 @@ public class DigitSimController extends Pane{
     
     @FXML
     public void initialize() {//initialize Funktion: wird direkt beim Starten der FXML aufgerufen.
-        Canvas simCanvas = addSimCanvas();
-        GraphicsContext gc = simCanvas.getGraphicsContext2D();
+        addSimCanvas();
         //AND and0 = new AND(gc);
-        
-        AND and0 = new AND(gc);
-        loadBtnGroup();
-        
-        
+        simCanvas.addGrid();
+        loadBtnGroup();        
     }
     
     
@@ -61,13 +55,9 @@ public class DigitSimController extends Pane{
     private AnchorPane simPane;
     
     @FXML
-    private Canvas addSimCanvas() {
-        Canvas simCanvas = new Canvas(1920,1080);
-        GraphicsContext gc = simCanvas.getGraphicsContext2D();
-        Draw.addGrid(simCanvas, gc);
-        simPane.getChildren().add(simCanvas);
-        return simCanvas;
+    private void addSimCanvas() {
         
+        simPane.getChildren().addAll(simCanvas);
     }
     
     
