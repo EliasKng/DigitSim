@@ -154,15 +154,7 @@
       <children>
         <SplitPane dividerPositions="0.7681940700808625" focusTraversable="true" orientation="VERTICAL" prefHeight="744.0" prefWidth="809.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="0.0">
           <items>
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="573.0" prefWidth="674.0">
-              <children>
-                <ScrollPane fx:id="scrollPane" prefHeight="572.9999000000025" prefWidth="807.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                  <content>
-                    <Canvas id="simPane" fx:id="simCanvas" height="1080.0" scaleX="1.0010416666666666" scaleY="1.000925925925926" style="-fx-background-color: lightgrey;" styleClass="simCanvas" width="1920.0" />
-                  </content>
-                </ScrollPane>
-              </children>
-            </AnchorPane>
+            <AnchorPane fx:id="simPane" minHeight="0.0" minWidth="0.0" prefHeight="573.0" prefWidth="674.0" />
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
               <children>
                 <ListView prefHeight="169.0" prefWidth="807.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />

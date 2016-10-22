@@ -1,19 +1,18 @@
 package digitsim;
 
-import java.awt.MouseInfo;
 import java.io.File;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
+import javafx.scene.Group;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 /**
  * Digitsim.fxml Controller class
@@ -25,16 +24,17 @@ public class DigitSimController extends Pane{
     }
     
     
+    
     @FXML
     public void initialize() {//initialize Funktion: wird direkt beim Starten der FXML aufgerufen.
+        Canvas simCanvas = addSimCanvas();
         GraphicsContext gc = simCanvas.getGraphicsContext2D();
-        Draw.addGrid(simCanvas,gc);
+        //AND and0 = new AND(gc);
+        
         AND and0 = new AND(gc);
         loadBtnGroup();
-        MouseEvent event;
         
         
-       
     }
     
     
@@ -45,8 +45,6 @@ public class DigitSimController extends Pane{
      */
     @FXML 
     private MenuItem mItemOpenFile;
-    @FXML 
-    private Canvas simCanvas;
     @FXML 
     private ToggleButton btnAND;    
     @FXML
@@ -60,7 +58,17 @@ public class DigitSimController extends Pane{
     @FXML
     private ToggleButton btnNAND;
     @FXML
-    private ScrollPane scrollPane;
+    private AnchorPane simPane;
+    
+    @FXML
+    private Canvas addSimCanvas() {
+        Canvas simCanvas = new Canvas(1920,1080);
+        GraphicsContext gc = simCanvas.getGraphicsContext2D();
+        Draw.addGrid(simCanvas, gc);
+        simPane.getChildren().add(simCanvas);
+        return simCanvas;
+        
+    }
     
     
     
@@ -121,7 +129,5 @@ public class DigitSimController extends Pane{
         coords[1] = event.getY();
         return coords;
     }
-    
-    
 }
       
