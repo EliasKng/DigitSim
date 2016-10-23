@@ -221,11 +221,7 @@ class SceneGestures {
             simCanvas.setTranslateX(sceneDragContext.translateAnchorX + event.getSceneX() - sceneDragContext.mouseAnchorX);
             simCanvas.setTranslateY(sceneDragContext.translateAnchorY + event.getSceneY() - sceneDragContext.mouseAnchorY);
             
-            /*
-            if(simCanvas.getTranslateX()>simCanvas.getWidth()*(-simCanvas.getScale())+25) {simCanvas.setTranslateX(25);} //Canvas kann nicht komplett aus dem Bild geschoben werden
-            if(simCanvas.getTranslateY()>25) {simCanvas.setTranslateY(25);} //Canvas kann nicht komplett aus dem Bild geschoben werden
-            if(simCanvas.getTranslateX()>simCanvas.getWidth()) {simCanvas.setTranslateX(simCanvas.getWidth());}
-            */
+            holdCanvasInVisibleArea(simCanvas);
             event.consume();
         }
     };
@@ -260,6 +256,8 @@ class SceneGestures {
 
             // note: pivot value must be untransformed, i. e. without scaling
             simCanvas.setPivot(f*dx, f*dy);
+            
+            holdCanvasInVisibleArea(simCanvas);
 
             event.consume();
 
@@ -277,5 +275,65 @@ class SceneGestures {
             return max;
 
         return value;
+    }
+    
+    /**
+     * Da sich beim Zoomen die Größe des ursprünglichen Canvas nicht verändert, verschiebt sich translateX & Y
+     * diese passen dann nicht mehr zum sichtbaren Canvas. Diese Funktion gibt jedoch das TransLateX aus, welches zu dem sichtbaren Canvas passt.
+     * @Autor Elias
+     * @param canvas simCanvas
+     * @return 
+     */
+    public double getRealTranslateX(DraggableCanvas canvas) {
+        double transX;
+        double falseTransX = canvas.getTranslateX();
+        double scale = canvas.getScale();
+        transX = (canvas.getWidth()*0.5) * scale - (canvas.getWidth()*0.5);
+        transX = falseTransX - transX;
+        
+        return transX;
+    }
+    
+    /**
+     * Da sich beim Zoomen die Größe des ursprünglichen Canvas nicht verändert, verschiebt sich translateX & Y
+     * diese passen dann nicht mehr zum sichtbaren Canvas. Diese Funktion gibt jedoch das TransLateY aus, welches zu dem sichtbaren Canvas passt.
+     * @Autor Elias
+     * @param canvas simCanvas
+     * @return 
+     */
+    public double getRealTranslateY(DraggableCanvas canvas) {
+        double transY;
+        double falseTransY = canvas.getTranslateY();
+        Double scale = canvas.getScale();
+        transY = (canvas.getHeight()*0.5) * scale - (canvas.getHeight()*0.5);
+        transY =  falseTransY - transY;
+        
+        return transY;
+    }
+    
+    public void setRealTranslateX(DraggableCanvas canvas, double transX) {
+        double falseTransX = canvas.getTranslateX();
+        double scale = canvas.getScale();
+        double X = (canvas.getWidth()*0.5) * scale - (canvas.getWidth()*0.5);
+        falseTransX = transX + X;
+        
+        canvas.setTranslateX(falseTransX);
+    }
+    
+    public void setRealTranslateY(DraggableCanvas canvas, double transY) {
+        double falseTransY = canvas.getTranslateY();
+        double scale = canvas.getScale();
+        double Y = (canvas.getHeight()*0.5) * scale - (canvas.getHeight()*0.5);
+        falseTransY = transY + Y;
+        
+        canvas.setTranslateY(falseTransY);
+    }
+    
+    public void holdCanvasInVisibleArea(DraggableCanvas canvas) {
+        double transX = getRealTranslateX(canvas);
+        double transY = getRealTranslateY(canvas);
+        
+        if(transX>25){setRealTranslateX(canvas, 25);}
+        if(transY>25){setRealTranslateY(canvas, 25);}
     }
 }
