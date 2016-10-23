@@ -59,27 +59,11 @@ public class DigitSimController extends Pane{
         NodeGestures nodeGestures = new NodeGestures( simCanvas);
 
         //Zeichnen von Objekten
-        Label label1 = new Label("Draggable node 1");
-        label1.setTranslateX(10);
-        label1.setTranslateY(10);
-        label1.addEventFilter( MouseEvent.MOUSE_PRESSED, nodeGestures.getOnMousePressedEventHandler());
-        label1.addEventFilter( MouseEvent.MOUSE_DRAGGED, nodeGestures.getOnMouseDraggedEventHandler());
+        Label label1 = Draw.drawLabel(5010, 5010, "Draggable node 1", Color.BLACK, true, 30, nodeGestures);
 
-        Circle circle1 = new Circle( 300, 300, 50);
-        circle1.setTranslateX(50);
-        circle1.setTranslateY(50);
-        circle1.setStroke(Color.ORANGE);
-        circle1.setFill(Color.ORANGE.deriveColor(1, 1, 1, 0.5));
-        circle1.addEventFilter( MouseEvent.MOUSE_PRESSED, nodeGestures.getOnMousePressedEventHandler());
-        circle1.addEventFilter( MouseEvent.MOUSE_DRAGGED, nodeGestures.getOnMouseDraggedEventHandler());
+        Circle circle1 = Draw.drawCircle(5300, 5300, 50, Color.CORAL, 0.5, nodeGestures);
 
-        Rectangle rect1 = new Rectangle(100,100);
-        rect1.setTranslateX(450);
-        rect1.setTranslateY(450);
-        rect1.setStroke(Color.BLUE);
-        rect1.setFill(Color.BLUE.deriveColor(1, 1, 1, 0.5));
-        rect1.addEventFilter( MouseEvent.MOUSE_PRESSED, nodeGestures.getOnMousePressedEventHandler());
-        rect1.addEventFilter( MouseEvent.MOUSE_DRAGGED, nodeGestures.getOnMouseDraggedEventHandler());
+        Rectangle rect1 = Draw.drawRectangle(5450, 5450, 100, 100, 25, 25, Color.BLUE, 0.5, nodeGestures);
 
         simCanvas.getChildren().addAll(label1, circle1, rect1); //Gezeichnete Objekte hinzufügen
         
@@ -139,6 +123,7 @@ public class DigitSimController extends Pane{
         System.out.printf("simCanvas Höhe: %.1f\n", simCanvas.getHeight());
         System.out.printf("simCanvas TranslateX: %.1f\n", simCanvas.getTranslateX());
         System.out.printf("simCanvas TranslateY: %.1f\n", simCanvas.getTranslateY());
+        System.out.printf("simCanvas Scale: %.1f\n", simCanvas.getScale());
     }
     
     public File chooseFile(String description, String extension){ //Die Funktion öffnet einen Filebrowser um eine Datei auszuwählen und lädt dise anschließend.

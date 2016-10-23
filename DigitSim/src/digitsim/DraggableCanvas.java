@@ -25,7 +25,7 @@ public class DraggableCanvas extends Pane {
     DoubleProperty myScale = new SimpleDoubleProperty(1.0);
 
     public DraggableCanvas() {
-        setPrefSize(8000, 8000);
+        setPrefSize(10000, 10000);
         setStyle("-fx-background-color: white; -fx-border-color: grey;");
 
         // add scale transform
@@ -171,14 +171,14 @@ class SceneGestures {
 
     DraggableCanvas simCanvas;
 
-    /*private void placeCanvasMiddle(){//Sichtbereich in die Mitte setzen
+    private void placeCanvasMiddle(){//Sichtbereich in die Mitte setzen
          simCanvas.setTranslateX(sceneDragContext.translateAnchorX - (simCanvas.getPrefWidth() / 2));
          simCanvas.setTranslateY(sceneDragContext.translateAnchorY - (simCanvas.getPrefHeight() / 2));
-    }*/
+    }
     
     public SceneGestures( DraggableCanvas simCanvas) {
         this.simCanvas = simCanvas;
-        //placeCanvasMiddle(); //Sichtbereich in die Mitte setzen
+        placeCanvasMiddle(); //Sichtbereich in die Mitte setzen
     }
 
     public EventHandler<MouseEvent> getOnMousePressedEventHandler() {
