@@ -117,9 +117,10 @@ public class DigitSimController extends Pane{
     * 
     * @author Elias
     * -Bearbeitet von Dominik 22.10.16
+    * -Bearbeitet von Tim 23.10.16
     */
     public void mItemOpenFileAction(ActionEvent event) {        
-        File selectedFile = chooseFile();  //Datei Auswählen
+        File selectedFile = chooseFile("DigitSimFiles (*.dgs)", "*.dgs");  //Datei Auswählen
         //Öffnen der Datei (comming)
     }
     public void mItemPropertiesOnAction(ActionEvent event) {
@@ -134,15 +135,15 @@ public class DigitSimController extends Pane{
         stage.setResizable(false);
     }
     public void btnStartOnAction(ActionEvent event) {
-        System.out.println("simCanvas Weite: " +simCanvas.getWidth());
-        System.out.println("simCanvas Höhe: " +simCanvas.getHeight());
-        System.out.println("simCanvas TranslateX: " +simCanvas.getTranslateX());
-        System.out.println("simCanvas TranslateY: " +simCanvas.getTranslateY());
+        System.out.printf("simCanvas Weite: %.1f\n", simCanvas.getWidth());
+        System.out.printf("simCanvas Höhe: %.1f\n", simCanvas.getHeight());
+        System.out.printf("simCanvas TranslateX: %.1f\n", simCanvas.getTranslateX());
+        System.out.printf("simCanvas TranslateY: %.1f\n", simCanvas.getTranslateY());
     }
     
-    public File chooseFile(){ //Die Funktion öffnet einen Filebrowser um eine Datei auszuwählen und lädt dise anschließend.
+    public File chooseFile(String description, String extension){ //Die Funktion öffnet einen Filebrowser um eine Datei auszuwählen und lädt dise anschließend.
         FileChooser fc = new FileChooser();
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("DigitSimFiles (*.dgs)", "*.dgs");
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(description, extension);
         fc.getExtensionFilters().add(extFilter);
         File selectedFile = fc.showOpenDialog(null);  
         return selectedFile;
