@@ -165,20 +165,20 @@ class NodeGestures {
 class SceneGestures {
 
     private static final double MAX_SCALE = 2.0d;
-    private static final double MIN_SCALE = 0.4d;
+    private static final double MIN_SCALE = 0.5d;
 
     private DragContext sceneDragContext = new DragContext();
 
     DraggableCanvas simCanvas;
 
-    private void placeCanvasMiddle(){//Sichtbereich in die Mitte setzen
+    /*private void placeCanvasMiddle(){//Sichtbereich in die Mitte setzen
          simCanvas.setTranslateX(sceneDragContext.translateAnchorX - (simCanvas.getPrefWidth() / 2));
          simCanvas.setTranslateY(sceneDragContext.translateAnchorY - (simCanvas.getPrefHeight() / 2));
-    }
+    }*/
     
     public SceneGestures( DraggableCanvas simCanvas) {
         this.simCanvas = simCanvas;
-        placeCanvasMiddle(); //Sichtbereich in die Mitte setzen
+        //placeCanvasMiddle(); //Sichtbereich in die Mitte setzen
     }
 
     public EventHandler<MouseEvent> getOnMousePressedEventHandler() {
@@ -220,7 +220,12 @@ class SceneGestures {
 
             simCanvas.setTranslateX(sceneDragContext.translateAnchorX + event.getSceneX() - sceneDragContext.mouseAnchorX);
             simCanvas.setTranslateY(sceneDragContext.translateAnchorY + event.getSceneY() - sceneDragContext.mouseAnchorY);
-
+            
+            /*
+            if(simCanvas.getTranslateX()>simCanvas.getWidth()*(-simCanvas.getScale())+25) {simCanvas.setTranslateX(25);} //Canvas kann nicht komplett aus dem Bild geschoben werden
+            if(simCanvas.getTranslateY()>25) {simCanvas.setTranslateY(25);} //Canvas kann nicht komplett aus dem Bild geschoben werden
+            if(simCanvas.getTranslateX()>simCanvas.getWidth()) {simCanvas.setTranslateX(simCanvas.getWidth());}
+            */
             event.consume();
         }
     };

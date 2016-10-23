@@ -42,6 +42,8 @@ public class DigitSimController extends Pane{
     private ToggleButton btnNAND;
     @FXML
     private AnchorPane simPane;
+    @FXML
+    private Button btnStart;
     
     //Constructor
     public DigitSimController() {
@@ -58,22 +60,22 @@ public class DigitSimController extends Pane{
 
         //Zeichnen von Objekten
         Label label1 = new Label("Draggable node 1");
-        label1.setTranslateX(5010);
-        label1.setTranslateY(5010);
+        label1.setTranslateX(10);
+        label1.setTranslateY(10);
         label1.addEventFilter( MouseEvent.MOUSE_PRESSED, nodeGestures.getOnMousePressedEventHandler());
         label1.addEventFilter( MouseEvent.MOUSE_DRAGGED, nodeGestures.getOnMouseDraggedEventHandler());
 
         Circle circle1 = new Circle( 300, 300, 50);
-        circle1.setTranslateX(5150);
-        circle1.setTranslateY(5150);
+        circle1.setTranslateX(50);
+        circle1.setTranslateY(50);
         circle1.setStroke(Color.ORANGE);
         circle1.setFill(Color.ORANGE.deriveColor(1, 1, 1, 0.5));
         circle1.addEventFilter( MouseEvent.MOUSE_PRESSED, nodeGestures.getOnMousePressedEventHandler());
         circle1.addEventFilter( MouseEvent.MOUSE_DRAGGED, nodeGestures.getOnMouseDraggedEventHandler());
 
         Rectangle rect1 = new Rectangle(100,100);
-        rect1.setTranslateX(5450);
-        rect1.setTranslateY(5450);
+        rect1.setTranslateX(450);
+        rect1.setTranslateY(450);
         rect1.setStroke(Color.BLUE);
         rect1.setFill(Color.BLUE.deriveColor(1, 1, 1, 0.5));
         rect1.addEventFilter( MouseEvent.MOUSE_PRESSED, nodeGestures.getOnMousePressedEventHandler());
@@ -130,6 +132,12 @@ public class DigitSimController extends Pane{
         stage = GenFunctions.openFXML("Help.fxml", "Hilfe", "icon.png"); //Öffnen des "Hilfe"-Fensters
         stage.setWidth(600);
         stage.setResizable(false);
+    }
+    public void btnStartOnAction(ActionEvent event) {
+        System.out.println("simCanvas Weite: " +simCanvas.getWidth());
+        System.out.println("simCanvas Höhe: " +simCanvas.getHeight());
+        System.out.println("simCanvas TranslateX: " +simCanvas.getTranslateX());
+        System.out.println("simCanvas TranslateY: " +simCanvas.getTranslateY());
     }
     
     public File chooseFile(){ //Die Funktion öffnet einen Filebrowser um eine Datei auszuwählen und lädt dise anschließend.
