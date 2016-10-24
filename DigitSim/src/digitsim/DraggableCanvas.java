@@ -332,15 +332,6 @@ class SceneGestures {
         canvas.setTranslateY(falseTransY);
     }
     
-    public void setRealTranslateX2(DraggableCanvas canvas, double transX) {
-        double falseTransX = canvas.getTranslateX();
-        double scale = canvas.getScale();
-        double X = (canvas.getWidth()) * scale - (canvas.getWidth());
-        falseTransX = transX + X;
-        
-        canvas.setTranslateX(falseTransX);
-    }
-    
     public void holdCanvasInVisibleArea(AnchorPane simPane) {
         double realTransX = getRealTranslateX(simCanvas);
         double realTransY = getRealTranslateY(simCanvas);
@@ -356,12 +347,20 @@ class SceneGestures {
         if(realTransX>25){setRealTranslateX(simCanvas, 25);}
         if(realTransY>25){setRealTranslateY(simCanvas, 25);}
         
-        //Kein Check ob simCanvas zu weit nach oben oder links verschoben wurde, weil: wenn simCanvas komplett auf Bildschirm passt,
-        //dann Fehler
-        
+        //Checkt ob simCanvas zu weit nach oben oder links verschoben wurde
         if((-(realTransX+(simCanvasWidth*scale-simCanvasWidth)) > (simCanvasWidth-simPaneWidth+25))) {
             System.out.println("ZU WEIT");
+            simCanvas.setTranslateX(-(simCanvasWidth + ((simCanvasWidth*0.5) * scale - (simCanvasWidth*0.5)) - simPaneWidth+25));
+        }
+        if((-(realTransY+(simCanvasHeight*scale-simCanvasHeight)) > (simCanvasHeight-simPaneHeight+25))) {
+            System.out.println("ZU WEIT");
+            simCanvas.setTranslateY(-(simCanvasHeight + ((simCanvasHeight*0.5) * scale - (simCanvasHeight*0.5)) - simPaneHeight+25));
         }
         
+        System.out.println("falseTransX: " +falseTransX);
+        System.out.println("realTransX: " +realTransX);
+        System.out.println("scale: " +scale);
+        System.out.println("simPaneWidth: "+simPaneWidth);
+        System.out.println(simCanvasWidth);
     }
 }
