@@ -52,25 +52,31 @@ public class DigitSimController extends Pane{
     @FXML
     public void initialize() {//initialize Funktion: wird direkt beim Starten der FXML aufgerufen.
         addSimCanvas();
-        //AND and0 = new AND(gc);
+        
         simCanvas.addGrid(simCanvas.getPrefWidth(), simCanvas.getPrefHeight());
-        loadBtnGroup();     
+        
+        loadBtnGroup();  
+        
+        //Verschiebt simCanvas ein bisschen
+        simCanvas.translateXProperty().set(25);
+        simCanvas.translateYProperty().set(25);
                
         NodeGestures nodeGestures = new NodeGestures( simCanvas);
+        SceneGestures sceneGestures = new SceneGestures(simCanvas, simPane);
 
         //Zeichnen von Objekten
-        Label label1 = Draw.drawLabel(5010, 5010, "Draggable node 1", Color.BLACK, true, 30, nodeGestures);
+        Label label1 = Draw.drawLabel(010, 10, "Draggable node 1", Color.BLACK, true, 30, nodeGestures);
 
-        Circle circle1 = Draw.drawCircle(5300, 5300, 50, Color.CORAL, 0.5, nodeGestures);
+        Circle circle1 = Draw.drawCircle(300, 300, 50, Color.CORAL, 0.5, nodeGestures);
 
-        Rectangle rect1 = Draw.drawRectangle(5450, 5450, 100, 100, 25, 25, Color.BLUE, 0.5, nodeGestures);
+        Rectangle rect1 = Draw.drawRectangle(450, 450, 100, 100, 25, 25, Color.BLUE, 0.5, nodeGestures);
 
         simCanvas.getChildren().addAll(label1, circle1, rect1); //Gezeichnete Objekte hinzufügen
         
-        SceneGestures sceneGestures = new SceneGestures(simCanvas);
-        simCanvas.addEventFilter( MouseEvent.MOUSE_PRESSED, sceneGestures.getOnMousePressedEventHandler());
-        simCanvas.addEventFilter( MouseEvent.MOUSE_DRAGGED, sceneGestures.getOnMouseDraggedEventHandler());
-        simCanvas.addEventFilter( ScrollEvent.ANY, sceneGestures.getOnScrollEventHandler());
+        //EVENT FILTER
+        simPane.addEventFilter( MouseEvent.MOUSE_PRESSED, sceneGestures.getOnMousePressedEventHandler());
+        simPane.addEventFilter( MouseEvent.MOUSE_DRAGGED, sceneGestures.getOnMouseDraggedEventHandler());
+        simPane.addEventFilter( ScrollEvent.ANY, sceneGestures.getOnScrollEventHandler());
     }
     
     @FXML

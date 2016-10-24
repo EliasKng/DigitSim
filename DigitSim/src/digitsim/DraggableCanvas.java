@@ -13,6 +13,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
@@ -170,14 +171,16 @@ class SceneGestures {
     private DragContext sceneDragContext = new DragContext();
 
     DraggableCanvas simCanvas;
+    AnchorPane simPane;
 
     private void placeCanvasMiddle(){//Sichtbereich in die Mitte setzen
          simCanvas.setTranslateX(sceneDragContext.translateAnchorX - (simCanvas.getPrefWidth() / 2));
          simCanvas.setTranslateY(sceneDragContext.translateAnchorY - (simCanvas.getPrefHeight() / 2));
     }
     
-    public SceneGestures( DraggableCanvas simCanvas) {
-        this.simCanvas = simCanvas;
+    public SceneGestures( DraggableCanvas pSimCanvas, AnchorPane pSimPane) {
+        this.simCanvas = pSimCanvas;
+        this.simPane = pSimPane;
         //placeCanvasMiddle(); //Sichtbereich in die Mitte setzen
     }
 
@@ -221,7 +224,7 @@ class SceneGestures {
             simCanvas.setTranslateX(sceneDragContext.translateAnchorX + event.getSceneX() - sceneDragContext.mouseAnchorX);
             simCanvas.setTranslateY(sceneDragContext.translateAnchorY + event.getSceneY() - sceneDragContext.mouseAnchorY);
             
-            holdCanvasInVisibleArea(simCanvas);
+            holdCanvasInVisibleArea(simPane);
             event.consume();
         }
     };
@@ -257,7 +260,7 @@ class SceneGestures {
             // note: pivot value must be untransformed, i. e. without scaling
             simCanvas.setPivot(f*dx, f*dy);
             
-            holdCanvasInVisibleArea(simCanvas);
+            holdCanvasInVisibleArea(simPane);
 
             event.consume();
 
@@ -329,12 +332,36 @@ class SceneGestures {
         canvas.setTranslateY(falseTransY);
     }
     
-    public void holdCanvasInVisibleArea(DraggableCanvas canvas) {
-        double transX = getRealTranslateX(canvas);
-        double transY = getRealTranslateY(canvas);
+    public void setRealTranslateX2(DraggableCanvas canvas, double transX) {
+        double falseTransX = canvas.getTranslateX();
+        double scale = canvas.getScale();
+        double X = (canvas.getWidth()) * scale - (canvas.getWidth());
+        falseTransX = transX + X;
+        
+        canvas.setTranslateX(falseTransX);
+    }
+    
+    public void holdCanvasInVisibleArea(AnchorPane simPane) {
+        double realTransX = getRealTranslateX(simCanvas);
+        double realTransY = getRealTranslateY(simCanvas);
+        double scale = simCanvas.getScale();
+        double falseTransX = simCanvas.getTranslateX();
+        double falseTransY = simCanvas.getTranslateY();
+        double simPaneWidth = simPane.getWidth();
+        double simPaneHeight = simPane.getHeight();
+        double simCanvasWidth = simCanvas.getWidth();
+        double simCanvasHeight = simCanvas.getHeight();
         
         //Checkt ob simCanvas zu weit nach unten oder rechts verschoben wurde
-        if(transX>25){setRealTranslateX(canvas, 25);}
-        if(transY>25){setRealTranslateY(canvas, 25);}
+        if(realTransX>25){setRealTranslateX(simCanvas, 25);}
+        if(realTransY>25){setRealTranslateY(simCanvas, 25);}
+        
+        //Kein Check ob simCanvas zu weit nach oben oder links verschoben wurde, weil: wenn simCanvas komplett auf Bildschirm passt,
+        //dann Fehler
+        
+        if((-(realTransX+(simCanvasWidth*scale-simCanvasWidth)) > (simCanvasWidth-simPaneWidth+25))) {
+            System.out.println("ZU WEIT");
+        }
+        
     }
 }
