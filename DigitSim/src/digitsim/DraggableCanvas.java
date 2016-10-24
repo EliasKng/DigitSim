@@ -50,7 +50,6 @@ public class DraggableCanvas extends Pane {
 
         simGrid.setMouseTransparent(true);
 
-        gc = simGrid.getGraphicsContext2D();
        
         // Karomuster malen
         // offset = linien abstand
@@ -349,18 +348,10 @@ class SceneGestures {
         
         //Checkt ob simCanvas zu weit nach oben oder links verschoben wurde
         if((-(realTransX+(simCanvasWidth*scale-simCanvasWidth)) > (simCanvasWidth-simPaneWidth+25))) {
-            System.out.println("ZU WEIT");
             simCanvas.setTranslateX(-(simCanvasWidth + ((simCanvasWidth*0.5) * scale - (simCanvasWidth*0.5)) - simPaneWidth+25));
         }
         if((-(realTransY+(simCanvasHeight*scale-simCanvasHeight)) > (simCanvasHeight-simPaneHeight+25))) {
-            System.out.println("ZU WEIT");
             simCanvas.setTranslateY(-(simCanvasHeight + ((simCanvasHeight*0.5) * scale - (simCanvasHeight*0.5)) - simPaneHeight+25));
         }
-        
-        System.out.println("falseTransX: " +falseTransX);
-        System.out.println("realTransX: " +realTransX);
-        System.out.println("scale: " +scale);
-        System.out.println("simPaneWidth: "+simPaneWidth);
-        System.out.println(simCanvasWidth);
     }
 }

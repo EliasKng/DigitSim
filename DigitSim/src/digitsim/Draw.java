@@ -33,8 +33,6 @@ public class Draw {
         gc.strokeLine( x1, y1, x2, y2);
     }
     
-    
-
     /**
     * Line zeichnen, die aus mehreren koordinaten als 2 besteht
     * 
@@ -49,10 +47,8 @@ public class Draw {
     public static void gcLineFromArray(GraphicsContext gc, double dx[], double dy[], double lineWidth, Color color)
     { 
        int points = 0;
-       if(dx.length != dy.length) {
-           ErrorHandler.printError(Draw.class, "Linie Wurde nicht gezeichnet weil: array Länge stimmt nicht");
-       }
-       else{
+       
+       if(checkArraySameLength(dx, dy) == true) {
            points = dx.length;
        }
        
@@ -104,12 +100,25 @@ public class Draw {
        gcLineFromArray(gc,dx,dy,lineWidth,color);
     }
     
-      /**
+    /**
+     * Vergleicht die Länge zweier Arrays
+     * @param a1 array nr 1
+     * @param a2 array nr 2
+     * @return wenn arrays gleichlang: return true      sonst return false
+     */
+    public static boolean checkArraySameLength(double a1[],double a2[]){
+        if(a1.length != a2.length) {
+           ErrorHandler.printError(Draw.class, "Arrays haben nicht die gleiche Länge");
+           return false;
+        }      
+        return true;
+    }
+    
+    /**
     * Funktionen zum erstellen von Zeichnungen mit den Listener(n)
     *
     * @author Dominik
     */
-    
     public static Circle drawCircle(double dX, double dY, double dRadius, Color dColor, double alpha, NodeGestures dNodeGestures){ //Kreis zeichen
         Circle circle = new Circle( dX, dY, dRadius);
         circle.setStroke(Color.ORANGE);

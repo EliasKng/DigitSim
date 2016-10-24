@@ -77,6 +77,9 @@ public class DigitSimController extends Pane{
         simPane.addEventFilter( MouseEvent.MOUSE_PRESSED, sceneGestures.getOnMousePressedEventHandler());
         simPane.addEventFilter( MouseEvent.MOUSE_DRAGGED, sceneGestures.getOnMouseDraggedEventHandler());
         simPane.addEventFilter( ScrollEvent.ANY, sceneGestures.getOnScrollEventHandler());
+        
+        
+        AND and0 = new AND(simCanvas);
     }
     
     @FXML

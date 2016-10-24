@@ -6,11 +6,9 @@
 package digitsim;
 
 
+import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.layout.Pane;
 
 
 /**
@@ -18,7 +16,13 @@ import javafx.scene.layout.Pane;
  * @author Elias
  */
 public class AND {
-    public AND(GraphicsContext gc) {
+    public AND(DraggableCanvas simCanvas) {
+        double w =simCanvas.getWidth();
+        double h =simCanvas.getHeight();
+        Canvas canvas = new Canvas();
+        canvas.setWidth(w);
+        canvas.setHeight(h);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
 
         Draw.gcDrawCircle(gc, 50, 50, 20, Color.RED);
         Draw.gcDrawLine(gc, 0, 0 ,50, 200, 1d, Color.YELLOW);
@@ -31,9 +35,6 @@ public class AND {
         System.out.printf("*ADDED VEC2*\n%.1f\n%.1f\n", v.x, v.y);
         v.sub(25, 15);
         System.out.printf("*SUBTRACTED VEC2*\n%.1f\n%.1f\n", v.x, v.y);
-       // Draw.gcLineFromArray(gc, allX, allY, 10, Color.BLACK);
-       
-       
        
        
         double bX = 350;
