@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author Johanna
+ * @author Elias
  */
 public class GenFunctions { //Laden der GUI
     /**

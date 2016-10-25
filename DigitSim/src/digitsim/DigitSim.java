@@ -7,8 +7,11 @@ package digitsim;
 
 import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 
 /**
@@ -17,13 +20,13 @@ import javafx.stage.Stage;
  */
 public class DigitSim extends Application {
     private static Stage stage;
+    private static Stage loadingStage;
     @Override
-  
     public void start(Stage primaryStage) {
+        
         stage = primaryStage;
-        stage = GenFunctions.openFXML("DigitSim.fxml", "Seminator", "icon.png");
-        stage.setMinWidth(800);
-        stage.setMinHeight(600);  
+        openMainWindow();
+          
     }
     
     public static double[] getWindowsSize()
@@ -33,6 +36,28 @@ public class DigitSim extends Application {
         d[1] = stage.getHeight();
         
         return d;
+    }
+    
+    /**
+     * Öffnet das Hauptfenster (den Seminator)
+     */
+    public static void openMainWindow() {
+        stage = GenFunctions.openFXML("DigitSim.fxml", "Seminator", "icon.png");
+        stage.setMinWidth(800);
+        stage.setMinHeight(600);
+    }
+    
+    /**
+     * GEHT NOCH NICHT!
+     * @author Elias
+     */
+    public static void openLoadingWindow() {
+        loadingStage.initStyle(StageStyle.UNDECORATED);
+        Group root = new Group();
+        Scene scene = new Scene(root, 100, 100);
+
+        loadingStage.setScene(scene);
+        loadingStage.show();
     }
     
     /**
