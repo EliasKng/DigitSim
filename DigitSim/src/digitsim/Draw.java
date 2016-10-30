@@ -4,11 +4,13 @@
  * and open the template in the editor.
  */
 package digitsim;
+import java.awt.Point;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 
@@ -119,36 +121,37 @@ public class Draw {
     *
     * @author Dominik
     */
-    public static Circle drawCircle(double dX, double dY, double dRadius, Color dColor, double alpha, NodeGestures dNodeGestures){ //Kreis zeichen
+    public static Circle drawCircle(double dX, double dY, double dRadius, Color dColor, double alpha){ //Kreis zeichen
         Circle circle = new Circle( dX, dY, dRadius);
         circle.setStroke(Color.ORANGE);
         circle.setFill(Color.ORANGE.deriveColor(1, 1, 1, alpha));
-        circle.addEventFilter( MouseEvent.MOUSE_PRESSED, dNodeGestures.getOnMousePressedEventHandler());
-        circle.addEventFilter( MouseEvent.MOUSE_DRAGGED, dNodeGestures.getOnMouseDraggedEventHandler());
         return circle;
     }
     
-    public static Rectangle drawRectangle(double dX, double dY, double dWidth, double dHeight, double dArcHeight, double dArcWidth, Color dColor, double alpha, NodeGestures dNodeGestures){//Rechteck zeichen
+    public static Rectangle drawRectangle(double dX, double dY, double dWidth, double dHeight, double dArcHeight, double dArcWidth, Color dColor, double alpha, double strokeWidth){//Rechteck zeichen
         Rectangle rec = new Rectangle(dX, dY, dWidth, dHeight);
-        rec.setStroke(Color.BLUE);
-        rec.setFill(Color.BLUE.deriveColor(1, 1, 1, alpha));
+        rec.setStroke(dColor);
+        rec.setStrokeWidth(strokeWidth);
+        rec.setFill(Color.BLACK.deriveColor(1, 1, 1, alpha));
         rec.setArcHeight(dArcHeight);
         rec.setArcWidth(dArcWidth);
-        rec.addEventFilter( MouseEvent.MOUSE_PRESSED, dNodeGestures.getOnMousePressedEventHandler());
-        rec.addEventFilter( MouseEvent.MOUSE_DRAGGED, dNodeGestures.getOnMouseDraggedEventHandler());
         return rec;
     }
     
-    public static Label drawLabel(double dX, double dY, String dText, Color dColor, boolean dUnderline, int dFontSize, NodeGestures dNodeGestures){//Label zeichen
+    public static Label drawLabel(double dX, double dY, String dText, Color dColor, boolean dUnderline, int dFontSize){//Label zeichen
         Label label = new Label(dText);
         label.setTranslateX(dX);
         label.setTranslateY(dY);
         label.setFont(new Font(dFontSize));
         label.setTextFill(dColor);
         label.setUnderline(dUnderline);
-        label.addEventFilter( MouseEvent.MOUSE_PRESSED, dNodeGestures.getOnMousePressedEventHandler());
-        label.addEventFilter( MouseEvent.MOUSE_DRAGGED, dNodeGestures.getOnMouseDraggedEventHandler());
         return label;
     }
     
+    public static Line drawLine(double p1X, double p1Y, double p2X, double p2Y, Color dColor,double dWidth){
+        Line l = new Line(p1X, p1Y, p2X, p2Y);
+        l.setStrokeWidth(dWidth);
+        l.setStroke(dColor);
+        return l;
+    } 
 }

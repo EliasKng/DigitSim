@@ -122,7 +122,7 @@ class NodeGestures {
 
         public void handle(MouseEvent event) {
 
-            // linker Mausknopf -> Verschieben
+            // Linker Mausknopf -> Verschieben
             if( !event.isPrimaryButtonDown())
                 return;
 
@@ -353,5 +353,5 @@ class SceneGestures {
         if((-(realTransY+(simCanvasHeight*scale-simCanvasHeight)) > (simCanvasHeight-simPaneHeight+25))) {
             simCanvas.setTranslateY(-(simCanvasHeight + ((simCanvasHeight*0.5) * scale - (simCanvasHeight*0.5)) - simPaneHeight+25));
         }
-    }
+    }   
 }

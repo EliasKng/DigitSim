@@ -1,7 +1,9 @@
 package digitsim;
 
 import java.io.File;
+import java.util.ArrayList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
@@ -9,9 +11,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 /**
  * Digitsim.fxml Controller class
@@ -22,6 +21,10 @@ import javafx.stage.Stage;
 public class DigitSimController extends Pane{
     //************************ Globals ********************************
     DraggableCanvas simCanvas = new DraggableCanvas();
+    ArrayList<Element> elements = new ArrayList<>();
+    NodeGestures nodeGestures;
+    SceneGestures sceneGestures;
+    String selectedElement = "NONE";
      /**
      * FXML OBJEKT-Erstellungs-Bereich:
      * Jedes Element, welches in der DigitSim.FXML verwendet wird, muss in folgendem wege im Code noch erstellt werden.
@@ -61,17 +64,8 @@ public class DigitSimController extends Pane{
         simCanvas.translateXProperty().set(25);
         simCanvas.translateYProperty().set(25);
                
-        NodeGestures nodeGestures = new NodeGestures( simCanvas);
-        SceneGestures sceneGestures = new SceneGestures(simCanvas, simPane);
-
-        //Zeichnen von Objekten
-        Label label1 = Draw.drawLabel(010, 10, "Draggable node 1", Color.BLACK, true, 30, nodeGestures);
-
-        Circle circle1 = Draw.drawCircle(300, 300, 50, Color.CORAL, 0.5, nodeGestures);
-
-        Rectangle rect1 = Draw.drawRectangle(450, 450, 100, 100, 25, 25, Color.BLUE, 0.5, nodeGestures);
-
-        simCanvas.getChildren().addAll(label1, circle1, rect1); //Gezeichnete Objekte hinzufügen
+        nodeGestures = new NodeGestures( simCanvas);
+        sceneGestures = new SceneGestures(simCanvas, simPane);            
         
         //EVENT FILTER
         simPane.addEventFilter( MouseEvent.MOUSE_PRESSED, sceneGestures.getOnMousePressedEventHandler());
@@ -84,6 +78,19 @@ public class DigitSimController extends Pane{
     
     @FXML
     private void addSimCanvas() {
+        /**
+         * Author: Dominik
+         * 
+         * Sobalt man klickt wird ein neuer Baustein hinzugefügt
+         */
+        simCanvas.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>(){
+            @Override
+            public void handle(MouseEvent event){
+                if(event.isPrimaryButtonDown()){
+                    addElement(event);
+                }
+            }
+        });
         simPane.getChildren().addAll(simCanvas);
     }
       
@@ -111,7 +118,12 @@ public class DigitSimController extends Pane{
     * @author Elias
     * -Bearbeitet von Dominik 22.10.16
     * -Bearbeitet von Tim 23.10.16
+    * -Bearbeitet von Dominik 31.10.16
     */
+    public void mItemCloseAction(ActionEvent event){
+        System.exit(0);
+    }
+    
     public void mItemOpenFileAction(ActionEvent event) {        
         File selectedFile = chooseFile("DigitSimFiles (*.dgs)", "*.dgs");  //Datei Auswählen
         //Öffnen der Datei (comming)
@@ -141,6 +153,27 @@ public class DigitSimController extends Pane{
         fc.getExtensionFilters().add(extFilter);
         File selectedFile = fc.showOpenDialog(null);  
         return selectedFile;
+    }
+    
+    public void element_selection_AND(ActionEvent event){
+            if(selectedElement != Element_AND.TYPE){
+                selectedElement = Element_AND.TYPE;
+            }else{
+                selectedElement = "NONE";
+            }
+    }
+    
+    /**
+     * 
+     * Author: Dominik
+     * 
+     * Fügt einen neuen Baustein hinzu
+     */
+    public void addElement(MouseEvent event){
+      if(selectedElement == Element_AND.TYPE){
+        elements.add(new Element_AND(event.getX() - 35, event.getY() - 35, 2, nodeGestures));
+        simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());  
+      } 
     }
     
     /**
