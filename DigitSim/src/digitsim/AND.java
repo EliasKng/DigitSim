@@ -27,15 +27,6 @@ public class AND {
         Draw.gcDrawCircle(gc, 50, 50, 20, Color.RED);
         Draw.gcDrawLine(gc, 0, 0 ,50, 200, 1d, Color.YELLOW);
 
-
-        vec2 v = new vec2();
-        v.set(10, 20);   
-        System.out.printf("*DEFAULT VEC2*\n%.1f\n%.1f\n", v.x, v.y);
-        v.add(new vec2(15, 5));     
-        System.out.printf("*ADDED VEC2*\n%.1f\n%.1f\n", v.x, v.y);
-        v.sub(25, 15);
-        System.out.printf("*SUBTRACTED VEC2*\n%.1f\n%.1f\n", v.x, v.y);
-       
        
         double bX = 350;
         double bY = 350;

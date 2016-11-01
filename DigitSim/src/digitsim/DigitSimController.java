@@ -175,16 +175,6 @@ public class DigitSimController extends Pane{
         simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());  
       } 
     }
-    
-    /**
-     * 
-     * @param event 
-     * @return Returnd die Koordinaten der Maus
-     * 
-     */
-    public vec2 getMouseCoordinates(MouseEvent event) {
-        // erstelle neuen vektor mit maus koordinaten und gebe ihn zurück
-        return new vec2(event.getX(), event.getY());
-    }
+
 }
       
