@@ -180,7 +180,8 @@ class SceneGestures {
     public SceneGestures( DraggableCanvas pSimCanvas, AnchorPane pSimPane) {
         this.simCanvas = pSimCanvas;
         this.simPane = pSimPane;
-        //placeCanvasMiddle(); //Sichtbereich in die Mitte setzen
+        placeCanvasMiddle(); //Sichtbereich in die Mitte setzen
+                             //Tim sagt diese funktion ist wichtig also lass es gut sein elias
     }
 
     public EventHandler<MouseEvent> getOnMousePressedEventHandler() {
