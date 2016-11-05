@@ -32,21 +32,22 @@ public class Element_AND extends Element{
         rec = Draw.drawRectangle(pX, pY, 75, 75, 25, 25, Color.BLACK, 0.0, 5);           //das AND zeichnen
         lbl = Draw.drawLabel((pX + 12), (pY - 15), "&", Color.BLACK, false, 70);
         l0 = Draw.drawLine((pX + 80), (pY + 37), (pX + 100), (pY + 37), Color.BLACK, 5);
-        if(pInputs == 4){ //And mit 4 Ausgängen
-            numInputs = 4;
+
+        
+            numInputs = pInputs;
             inputs = new int[]{0, 0, 0, 0};
-            lines.add(Draw.drawLine((pX - 5), (pY + 15), (pX - 15), (pY + 15), Color.BLACK, 5));
-            lines.add(Draw.drawLine((pX - 5), (pY + 30), (pX - 15), (pY + 30), Color.BLACK, 5));
-            lines.add(Draw.drawLine((pX - 5), (pY + 45), (pX - 15), (pY + 45), Color.BLACK, 5));
-            lines.add(Draw.drawLine((pX - 5), (pY + 60), (pX - 15), (pY + 60), Color.BLACK, 5));
-            grp = new Group(rec, lbl, l0, lines.get(0), lines.get(1), lines.get(2), lines.get(3));
-        }else{ //Standart mit 2
-            numInputs = 2;
-            inputs = new int[]{0, 0};
-            lines.add(Draw.drawLine((pX - 5), (pY + 25), (pX - 15), (pY + 25), Color.BLACK, 5));
-            lines.add(Draw.drawLine((pX - 5), (pY + 50), (pX - 15), (pY + 50), Color.BLACK, 5));
-            grp = new Group(rec, lbl, l0, lines.get(0), lines.get(1));   
-        }
+            grp = new Group(rec, lbl, l0);
+            for(int i = 0; i < numInputs; i++)
+            {
+                //  * Überarbeitet von Tim 05.11.16
+                // korrekte stelle für jeden eingang berechnen, egal wie viele eingänge
+                double offsetY = rec.getHeight() / (numInputs + 1) + (rec.getHeight() / (numInputs + 1)) * i;
+                
+                lines.add(Draw.drawLine((pX - 5), pY + offsetY, (pX - 15), pY + offsetY, Color.BLACK, 5));
+                grp.getChildren().add(lines.get(i));
+            }
+            
+          
         grp.addEventFilter( MouseEvent.MOUSE_PRESSED, dNodeGestures.getOnMousePressedEventHandler());
         grp.addEventFilter( MouseEvent.MOUSE_DRAGGED, dNodeGestures.getOnMouseDraggedEventHandler());
     }
