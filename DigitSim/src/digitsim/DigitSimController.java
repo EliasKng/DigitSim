@@ -171,7 +171,7 @@ public class DigitSimController extends Pane{
      */
     public void addElement(MouseEvent event){
       if(selectedElement == Element_AND.TYPE){
-        elements.add(new Element_AND(event.getX() - 35, event.getY() - 35, 2, nodeGestures));
+        elements.add(new Element_AND(event.getX(), event.getY(), 2, nodeGestures));
         simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());  
       } 
     }

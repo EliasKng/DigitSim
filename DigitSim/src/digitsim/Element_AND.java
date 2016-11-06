@@ -28,8 +28,15 @@ public class Element_AND extends Element{
     //Constructor
     public Element_AND(double pX, double pY, int pInputs, NodeGestures dNodeGestures){
         outputs = new int[]{0}; //Outputs
+        double elementWidth = 75;
+        double elementHeight = 75;
+        
+        //Überarbeitet von Elias
+        //Der Baustein wird nun (egal bei welcher BausteinWeite/Höhe) plaziert mit der Maus als Mittelpunkt
+        pX = pX-elementWidth/2;
+        pY = pY-elementHeight/2;
         numOutputs = 1;
-        rec = Draw.drawRectangle(pX, pY, 75, 75, 25, 25, Color.BLACK, 0.0, 5);           //das AND zeichnen
+        rec = Draw.drawRectangle(pX, pY, elementWidth, elementHeight, 10, 10, Color.BLACK, 0.0, 5);           //das AND zeichnen
         lbl = Draw.drawLabel((pX + 12), (pY - 15), "&", Color.BLACK, false, 70);
         l0 = Draw.drawLine((pX + 80), (pY + 37), (pX + 100), (pY + 37), Color.BLACK, 5);
 
