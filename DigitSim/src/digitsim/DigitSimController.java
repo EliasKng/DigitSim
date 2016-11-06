@@ -86,7 +86,7 @@ public class DigitSimController extends Pane{
         simCanvas.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>(){
             @Override
             public void handle(MouseEvent event){
-                if(event.isPrimaryButtonDown()){
+                if(event.isPrimaryButtonDown() && !isMouseOverNode()){
                     addElement(event);
                 }
             }
@@ -174,6 +174,14 @@ public class DigitSimController extends Pane{
         elements.add(new Element_AND(event.getX(), event.getY(), 2, nodeGestures));
         simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());  
       } 
+    }
+    
+    /**
+     * Gibt zurück ob sich die Maus über einer Node (Element) befindet
+     * !!!Hat noch keine Funktuion!!! (Muss noch gefüllt werden)
+     */
+    public boolean isMouseOverNode() {
+        return false;
     }
 
 }
