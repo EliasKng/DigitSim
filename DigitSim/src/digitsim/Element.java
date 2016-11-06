@@ -29,6 +29,8 @@ abstract class Element {
     
     abstract public double getX(); //Abstrakte Methoden die überschrieben werden müssen.
     abstract public double getY();
+    abstract public double getWidth();
+    abstract public double getHeight();
     abstract public void setInput(int pInput, int pValue); //Einen Input auswählen und auf 0 o. 1 setzen
     abstract public int getOutput(int pOut);           //Den output bekommen (0 o. 1)
     abstract public int getInputCount();       //Anzahl der Inputs bekommen (z.b 2 bei nem normalen AND)

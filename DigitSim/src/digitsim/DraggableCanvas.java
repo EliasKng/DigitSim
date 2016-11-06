@@ -139,7 +139,7 @@ class NodeGestures {
     };
 
     private EventHandler<MouseEvent> onMouseDraggedEventHandler = new EventHandler<MouseEvent>() {
-        public void handle(MouseEvent event) {
+        public void handle(MouseEvent event ) {
 
             // left mouse button => dragging
             if( !event.isPrimaryButtonDown())

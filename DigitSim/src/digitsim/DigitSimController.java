@@ -21,7 +21,7 @@ import javafx.stage.Stage;
 public class DigitSimController extends Pane{
     //************************ Globals ********************************
     DraggableCanvas simCanvas = new DraggableCanvas();
-    ArrayList<Element> elements = new ArrayList<>();
+    private static ArrayList<Element> elements = new ArrayList<>();
     NodeGestures nodeGestures;
     SceneGestures sceneGestures;
     String selectedElement = "NONE";
@@ -86,7 +86,7 @@ public class DigitSimController extends Pane{
         simCanvas.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>(){
             @Override
             public void handle(MouseEvent event){
-                if(event.isPrimaryButtonDown() && !isMouseOverNode()){
+                if(event.isPrimaryButtonDown() && !isMouseOverNode(event)){
                     addElement(event);
                 }
             }
@@ -171,18 +171,30 @@ public class DigitSimController extends Pane{
      */
     public void addElement(MouseEvent event){
       if(selectedElement == Element_AND.TYPE){
-        elements.add(new Element_AND(event.getX(), event.getY(), 2, nodeGestures));
-        simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());  
+            elements.add(new Element_AND(event.getX(), event.getY(), 2, nodeGestures));
+            simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());        
       } 
     }
     
     /**
      * Gibt zurück ob sich die Maus über einer Node (Element) befindet
-     * !!!Hat noch keine Funktuion!!! (Muss noch gefüllt werden)
+     * Author: Dominik (06.11.2016)
      */
-    public boolean isMouseOverNode() {
-        return false;
-    }
+    public static boolean isMouseOverNode(MouseEvent event) {
+        boolean result = false;
+        
+        for(Element i : elements){ //elemente durchgehen...
+            double element_x = i.getX() - (i.getWidth() / 1.5);         //X,Width,Height werden an das Element angepasst, da das Element in der mitte der Maus plaziert wird! 
+            double element_y = i.getY() - (i.getHeight() / 1.5);
+            double element_w = i.getWidth() + (i.getWidth() / 1.5);     //Es mag etwas viel vorkommen (besonderst bei den Y Coords, ist allerdings notwendig
+            double element_h = i.getHeight() + (i.getHeight() / 1.5);   //wegen den out & inputs!!
+            //Abfrage ob sich der Mauszeiger im Block eines Elements befindet.
+            if(event.getX() >= element_x && event.getX() <= (i.getX() + element_w) && event.getY() >= element_y && event.getY() <= (i.getY() + element_h)){
+                result = true;
+            }
+        }
+        return result;
+    }   
 
 }
       

@@ -16,20 +16,22 @@ import javafx.scene.shape.Rectangle;
 /**
  *
  * @author Dominik
+ * -Überarbeitet von Dome 06.11.2016
  */
 public class Element_AND extends Element{
 
+    //Globals
     public static final String TYPE = "AND"; //Der Typ des Bausteines
     private Rectangle rec;  //Die Elemente aus denen der Baustein zusammengestezt ist
     private Label lbl;
     private ArrayList<Line> lines = new ArrayList<>();
     private Line l0;
+    public static final double elementWidth = 80;
+    public static final double elementHeight = 80;
     
     //Constructor
     public Element_AND(double pX, double pY, int pInputs, NodeGestures dNodeGestures){
         outputs = new int[]{0}; //Outputs
-        double elementWidth = 75;
-        double elementHeight = 75;
         
         //Überarbeitet von Elias
         //Der Baustein wird nun (egal bei welcher BausteinWeite/Höhe) plaziert mit der Maus als Mittelpunkt
@@ -37,7 +39,7 @@ public class Element_AND extends Element{
         pY = pY-elementHeight/2;
         numOutputs = 1;
         rec = Draw.drawRectangle(pX, pY, elementWidth, elementHeight, 10, 10, Color.BLACK, 0.0, 5);           //das AND zeichnen
-        lbl = Draw.drawLabel((pX + 12), (pY - 15), "&", Color.BLACK, false, 70);
+        lbl = Draw.drawLabel((pX + 10), (pY - 15), "&", Color.BLACK, false, 75);
         l0 = Draw.drawLine((pX + 80), (pY + 37), (pX + 100), (pY + 37), Color.BLACK, 5);
 
         
@@ -68,6 +70,16 @@ public class Element_AND extends Element{
     @Override
     public double getY() {
         return rec.getY();
+    }
+    
+    @Override
+    public double getWidth(){
+        return elementWidth;
+    }
+    
+    @Override
+    public double getHeight(){
+        return elementWidth;
     }
     
     @Override
