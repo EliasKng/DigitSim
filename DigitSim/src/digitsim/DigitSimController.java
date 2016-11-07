@@ -139,7 +139,7 @@ public class DigitSimController extends Pane{
         stage.setWidth(600);
         stage.setResizable(false);
     }
-    public void btnStartOnAction(ActionEvent event) {
+    public void btnStartOnAction(ActionEvent event) {   //Der Startknopf dient bisher nur zur Ausgabe von Testwerten in der Konsole
         System.out.printf("simCanvas Weite: %.1f\n", simCanvas.getWidth());
         System.out.printf("simCanvas Höhe: %.1f\n", simCanvas.getHeight());
         System.out.printf("simCanvas TranslateX: %.1f\n", simCanvas.getTranslateX());
@@ -161,6 +161,16 @@ public class DigitSimController extends Pane{
             }else{
                 selectedElement = "NONE";
             }
+            System.out.println(selectedElement);
+    }
+    
+    public void element_selection_OR(ActionEvent event){
+            if(selectedElement != Element_OR.TYPE){
+                selectedElement = Element_OR.TYPE;
+            }else{
+                selectedElement = "NONE";
+            }
+            System.out.println(selectedElement);
     }
     
     /**
@@ -172,6 +182,10 @@ public class DigitSimController extends Pane{
     public void addElement(MouseEvent event){
       if(selectedElement == Element_AND.TYPE){
             elements.add(new Element_AND(getXAdaptGrid(event), getYAdaptGrid(event), 2, nodeGestures));
+            simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());        
+      } 
+      if(selectedElement == Element_OR.TYPE){
+            elements.add(new Element_OR(getXAdaptGrid(event), getYAdaptGrid(event), 2, nodeGestures));
             simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());        
       } 
     }
