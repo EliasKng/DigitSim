@@ -171,7 +171,7 @@ public class DigitSimController extends Pane{
      */
     public void addElement(MouseEvent event){
       if(selectedElement == Element_AND.TYPE){
-            elements.add(new Element_AND(event.getX(), event.getY(), 2, nodeGestures));
+            elements.add(new Element_AND(getXAdaptGrid(event), getYAdaptGrid(event), 2, nodeGestures));
             simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());        
       } 
     }
@@ -180,7 +180,7 @@ public class DigitSimController extends Pane{
      * Gibt zurück ob sich die Maus über einer Node (Element) befindet
      * Author: Dominik (06.11.2016)
      */
-    public static boolean isMouseOverNode(MouseEvent event) {
+    public boolean isMouseOverNode(MouseEvent event) {
         boolean result = false;
         
         for(Element i : elements){ //elemente durchgehen...
@@ -195,6 +195,31 @@ public class DigitSimController extends Pane{
         }
         return result;
     }   
+    
+    /**
+     * Nimmt die X-Mauskoordinate und passt sie an das Grid an
+     * @Author Elias
+     */
+    public double getXAdaptGrid(MouseEvent event) {
+        double mouseX = event.getX();
+        mouseX = mouseX / 21;
+        mouseX = Math.round(mouseX);
+        mouseX = mouseX * 21;
+        return mouseX;
+    }
+    
+    /**
+     * Nimmt die Y-Mauskoordinate und passt sie an das Grid an
+     * @Author Elias
+     */
+    public double getYAdaptGrid(MouseEvent event) {
+        double mouseY = event.getY();
+        mouseY = mouseY / 21;
+        mouseY = Math.round(mouseY);
+        mouseY = mouseY * 21;
+        return mouseY;
+    }
+
 
 }
       
