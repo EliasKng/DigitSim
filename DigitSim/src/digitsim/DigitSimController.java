@@ -180,7 +180,7 @@ public class DigitSimController extends Pane{
      * Gibt zurück ob sich die Maus über einer Node (Element) befindet
      * Author: Dominik (06.11.2016)
      */
-    public boolean isMouseOverNode(MouseEvent event) {
+    public static boolean isMouseOverNode(MouseEvent event) { //LASST ES STATIC! Damit man es in DraggableCanvas.java benutzen kann
         boolean result = false;
         
         for(Element i : elements){ //elemente durchgehen...
@@ -194,32 +194,23 @@ public class DigitSimController extends Pane{
             }
         }
         return result;
-    }   
+    }  
     
     /**
      * Nimmt die X-Mauskoordinate und passt sie an das Grid an
      * @Author Elias
      */
-    public double getXAdaptGrid(MouseEvent event) {
-        double mouseX = event.getX();
-        mouseX = mouseX / 21;
-        mouseX = Math.round(mouseX);
-        mouseX = mouseX * 21;
-        return mouseX;
+    public double getXAdaptGrid(MouseEvent event) { 
+        return Math.round(event.getX() / 21) * 21;
     }
     
     /**
      * Nimmt die Y-Mauskoordinate und passt sie an das Grid an
      * @Author Elias
      */
-    public double getYAdaptGrid(MouseEvent event) {
-        double mouseY = event.getY();
-        mouseY = mouseY / 21;
-        mouseY = Math.round(mouseY);
-        mouseY = mouseY * 21;
-        return mouseY;
+    public double getYAdaptGrid(MouseEvent event) { 
+        return Math.round(event.getY() / 21) * 21;
     }
-
 
 }
       

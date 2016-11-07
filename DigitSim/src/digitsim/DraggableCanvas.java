@@ -146,16 +146,21 @@ class NodeGestures {
                 return;
 
             double scale = canvas.getScale();
-
+            
             Node node = (Node) event.getSource();
-
-            node.setTranslateX(nodeDragContext.translateAnchorX + (( event.getSceneX() - nodeDragContext.mouseAnchorX) / scale));
-            node.setTranslateY(nodeDragContext.translateAnchorY + (( event.getSceneY() - nodeDragContext.mouseAnchorY) / scale));
+            
+            //Node passt sich jetzt ans Gitter an (Author: Dominik)
+            node.setTranslateX(getValueAdaptGrid(nodeDragContext.translateAnchorX + (( event.getSceneX() - nodeDragContext.mouseAnchorX) / scale)));
+            node.setTranslateY(getValueAdaptGrid(nodeDragContext.translateAnchorY + (( event.getSceneY() - nodeDragContext.mouseAnchorY) / scale)));
 
             event.consume();
 
         }
     };
+    //Anpassung eines beliebigen Volumen ans Gitter (Author: Dominik)
+    private double getValueAdaptGrid(double pV){
+        return Math.round(pV / 21) * 21;
+    }
 }
 
 /**
