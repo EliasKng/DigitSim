@@ -5,6 +5,7 @@
  */
 package digitsim;
 
+import java.util.ArrayList;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.EventHandler;
@@ -101,7 +102,9 @@ class DragContext {
  * Listener die eine Drag & Drop - Funktin mit der linken Maustaste ermöglichen. Bedenkt auch den Zoom.
  */
 class NodeGestures {
-
+    private static ArrayList<Element> elements = new ArrayList<>();
+    
+    
     private DragContext nodeDragContext = new DragContext();
 
     DraggableCanvas canvas;
@@ -139,7 +142,9 @@ class NodeGestures {
     };
 
     private EventHandler<MouseEvent> onMouseDraggedEventHandler = new EventHandler<MouseEvent>() {
+        
         public void handle(MouseEvent event ) {
+            elements = DigitSimController.elements;
 
             // left mouse button => dragging
             if( !event.isPrimaryButtonDown())

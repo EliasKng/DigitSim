@@ -21,7 +21,7 @@ import javafx.stage.Stage;
 public class DigitSimController extends Pane{
     //************************ Globals ********************************
     DraggableCanvas simCanvas = new DraggableCanvas();
-    private static ArrayList<Element> elements = new ArrayList<>();
+    public static ArrayList<Element> elements = new ArrayList<>();
     NodeGestures nodeGestures;
     SceneGestures sceneGestures;
     String selectedElement = "NONE";
