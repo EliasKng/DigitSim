@@ -58,7 +58,7 @@ public class Element_NOT extends Element{
                 if(rec.getHeight() <= (numInputs+1)*21) {
                     rec.setHeight((numInputs+1)*21);
                 }
-                double offsetY = i*21 + 21 -2.5;
+                double offsetY = i*21 + 21 - 1;
                 
                 lines.add(Draw.drawLine((pX - 5), pY + offsetY, (pX - 15), pY + offsetY, Color.BLACK, 5));
                 grp.getChildren().add(lines.get(i));

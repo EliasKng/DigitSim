@@ -164,27 +164,27 @@ public class DigitSimController extends Pane{
      */
     public void addElement(MouseEvent event){
       if(btnAND.isSelected()){
-            elements.add(new Element_AND(getXAdaptGrid(event), getYAdaptGrid(event), 80, nodeGestures));
+            elements.add(new Element_AND(getXAdaptGrid(event), getYAdaptGrid(event), 4, nodeGestures));
             simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());        
       } 
-      if(btnOR.isSelected()){
-            elements.add(new Element_OR(getXAdaptGrid(event), getYAdaptGrid(event), 80, nodeGestures));
+      else if(btnOR.isSelected()){
+            elements.add(new Element_OR(getXAdaptGrid(event), getYAdaptGrid(event), 4, nodeGestures));
             simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());        
       } 
-      if(btnNOT.isSelected()){
-            elements.add(new Element_NOT(getXAdaptGrid(event), getYAdaptGrid(event), 80, nodeGestures));
+      else if(btnNOT.isSelected()){
+            elements.add(new Element_NOT(getXAdaptGrid(event), getYAdaptGrid(event), 4, nodeGestures));
             simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());        
       } 
-      if(btnNOR.isSelected()){
-            elements.add(new Element_NOR(getXAdaptGrid(event), getYAdaptGrid(event), 80, nodeGestures));
+      else if(btnNOR.isSelected()){
+            elements.add(new Element_NOR(getXAdaptGrid(event), getYAdaptGrid(event), 4, nodeGestures));
             simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());        
       }
-      if(btnXOR.isSelected()){
-            elements.add(new Element_XOR(getXAdaptGrid(event), getYAdaptGrid(event), 80, nodeGestures));
+      else if(btnXOR.isSelected()){
+            elements.add(new Element_XOR(getXAdaptGrid(event), getYAdaptGrid(event), 4, nodeGestures));
             simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());        
       }
       if(btnNAND.isSelected()){
-            elements.add(new Element_NAND(getXAdaptGrid(event), getYAdaptGrid(event), 80, nodeGestures));
+            elements.add(new Element_NAND(getXAdaptGrid(event), getYAdaptGrid(event), 4, nodeGestures));
             simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());        
       }
     }
@@ -202,6 +202,9 @@ public class DigitSimController extends Pane{
             double element_w = i.getWidth() + (i.getWidth() / 1.5);     //Es mag etwas viel vorkommen (besonderst bei den Y Coords, ist allerdings notwendig
             double element_h = i.getHeight() + (i.getHeight() / 1.5);   //wegen den out & inputs!!
             //Abfrage ob sich der Mauszeiger im Block eines Elements befindet.
+            
+            System.out.printf("%.0f, [%.0f, %.0f] - %.0f, [%.0f, %.0f]\n", event.getX(), element_x, element_x+element_w, event.getY(), element_y, element_y + element_h);
+            
             if(event.getX() >= element_x && event.getX() <= (i.getX() + element_w) && event.getY() >= element_y && event.getY() <= (i.getY() + element_h)){
                 result = true;
             }
