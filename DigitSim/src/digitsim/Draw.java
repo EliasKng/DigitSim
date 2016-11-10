@@ -121,10 +121,17 @@ public class Draw {
     *
     * @author Dominik
     */
-    public static Circle drawCircle(double dX, double dY, double dRadius, Color dColor, double alpha){ //Kreis zeichen
+    public static Circle drawCircle(double dX, double dY, double dRadius, Color dColor, double alpha, boolean fill, double lineWidth){ //Kreis zeichen
         Circle circle = new Circle( dX, dY, dRadius);
-        circle.setStroke(Color.ORANGE);
-        circle.setFill(Color.ORANGE.deriveColor(1, 1, 1, alpha));
+        circle.setStroke(dColor);
+        circle.setStrokeWidth(lineWidth);
+        if(fill) {
+            circle.setFill(dColor.deriveColor(1, 1, 1, alpha));            
+        }
+        else {
+            circle.setFill(Color.TRANSPARENT);
+        }
+
         return circle;
     }
     

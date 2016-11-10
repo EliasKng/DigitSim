@@ -171,6 +171,10 @@ public class DigitSimController extends Pane{
             elements.add(new Element_OR(getXAdaptGrid(event), getYAdaptGrid(event), 2, nodeGestures));
             simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());        
       } 
+      if(btnNOT.isSelected()){
+            elements.add(new Element_NOT(getXAdaptGrid(event), getYAdaptGrid(event), 2, nodeGestures));
+            simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());        
+      } 
     }
     
     /**
