@@ -56,6 +56,7 @@ public class DigitSimController extends Pane{
     public void initialize() {//initialize Funktion: wird direkt beim Starten der FXML aufgerufen.
         addSimCanvas();
         
+        
         simCanvas.addGrid(simCanvas.getPrefWidth(), simCanvas.getPrefHeight());
         
         loadBtnGroup();  
@@ -155,23 +156,6 @@ public class DigitSimController extends Pane{
         return selectedFile;
     }
     
-    public void element_selection_AND(ActionEvent event){
-            if(selectedElement != Element_AND.TYPE){
-                selectedElement = Element_AND.TYPE;
-            }else{
-                selectedElement = "NONE";
-            }
-    }
-    
-    public void element_selection_OR(ActionEvent event){
-            if(selectedElement != Element_OR.TYPE){
-                selectedElement = Element_OR.TYPE;
-            }else{
-                selectedElement = "NONE";
-            }
-            System.out.println(selectedElement);
-    }
-    
     /**
      * 
      * Author: Dominik
@@ -179,11 +163,11 @@ public class DigitSimController extends Pane{
      * Fügt einen neuen Baustein hinzu
      */
     public void addElement(MouseEvent event){
-      if(selectedElement == Element_AND.TYPE){
+      if(btnAND.isSelected()){
             elements.add(new Element_AND(getXAdaptGrid(event), getYAdaptGrid(event), 2, nodeGestures));
             simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());        
       } 
-      if(selectedElement == Element_OR.TYPE){
+      if(btnOR.isSelected()){
             elements.add(new Element_OR(getXAdaptGrid(event), getYAdaptGrid(event), 2, nodeGestures));
             simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());        
       } 

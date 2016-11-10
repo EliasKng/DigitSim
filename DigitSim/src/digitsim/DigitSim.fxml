@@ -101,8 +101,8 @@
                   <children>
                     <Group id="Group" layoutX="14.0" layoutY="14.0">
                       <children>
-                        <ToggleButton fx:id="btnAND" layoutX="0.0" layoutY="0.0" mnemonicParsing="false" onAction="#element_selection_AND" prefHeight="50.0" prefWidth="50.0" style="-fx-background-image: url('/digitsim/data/UND.png')" />
-                        <ToggleButton fx:id="btnOR" layoutX="69.0" layoutY="0.0" mnemonicParsing="false" onAction="#element_selection_OR" prefHeight="50.0" prefWidth="50.0" style="-fx-background-image: url('/digitsim/data/OR.png')" />
+                        <ToggleButton fx:id="btnAND" layoutX="0.0" layoutY="0.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-image: url('/digitsim/data/UND.png')" />
+                        <ToggleButton fx:id="btnOR" layoutX="69.0" layoutY="0.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-image: url('/digitsim/data/OR.png')" />
                         <ToggleButton fx:id="btnNOT" layoutX="0.0" layoutY="89.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/NOT_3.png')" />
                         <ToggleButton fx:id="btnXOR" layoutX="70.0" layoutY="176.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-image: url('/digitsim/data/XOR.png')" />
                         <ToggleButton fx:id="btnNOR" layoutX="0.0" layoutY="176.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/NOR_3.png')" />

@@ -1,1 +1,1 @@
-(Sun Oct 23 10:25:42 CEST 2016)[ERROR IN <class java.lang.Class>] Fehler beim laden von DigitSim.fxml & Seminator & icon.png
+(Sun Oct 23 10:25:42 CEST 2016)[ERROR IN <class java.lang.Class>] Fehler beim laden von DigitSim.fxml & Seminator & icon.png(Thu Nov 10 20:49:35 CET 2016)[ERROR IN <class java.lang.Class>] Fehler beim laden von DigitSim.fxml & Seminator & icon.png(Thu Nov 10 20:50:15 CET 2016)[ERROR IN <class java.lang.Class>] Fehler beim laden von DigitSim.fxml & Seminator & icon.png
