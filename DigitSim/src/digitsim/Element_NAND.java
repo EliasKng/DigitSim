@@ -10,6 +10,7 @@ import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 
@@ -18,19 +19,21 @@ import javafx.scene.shape.Rectangle;
  * @author Dominik
  * -Überarbeitet von Dome 06.11.2016
  */
-public class Element_AND extends Element{
+public class Element_NAND extends Element{
 
     //Globals
     public static final String TYPE = "AND"; //Der Typ des Bausteines
     private Rectangle rec;  //Die Elemente aus denen der Baustein zusammengestezt ist
-    private Label lbl;
+    //private Label lbl;
     private ArrayList<Line> lines = new ArrayList<>();
     private Line l0;
+    private Circle cOutput;
+    private Label lbl;
     public static final double elementWidth = 80;
     public static final double elementHeight = 80;
     
     //Constructor
-    public Element_AND(double pX, double pY, int pInputs, NodeGestures dNodeGestures){
+    public Element_NAND(double pX, double pY, int pInputs, NodeGestures dNodeGestures){
         outputs = new int[]{0}; //Outputs
         
         //Überarbeitet von Elias
@@ -38,14 +41,15 @@ public class Element_AND extends Element{
         pX = pX-elementWidth/2;
         pY = pY-elementHeight/2;
         numOutputs = 1;
-        rec = Draw.drawRectangle(pX, pY, elementWidth, elementHeight, 10, 10, Color.BLACK, 0.5, 5);           //das AND zeichnen
-        lbl = Draw.drawLabel((pX + 10), (pY - 15), "&", Color.BLACK, false, 75);
-        l0 = Draw.drawLine((pX + 80), (pY + 40), (pX + 100), (pY + 40), Color.BLACK, 5);
+        rec = Draw.drawRectangle(pX, pY, elementWidth, elementHeight, 10, 10, Color.BLACK, 0.4, 5);           //das AND zeichnen
+        lbl = Draw.drawLabel((pX + 10), (pY - 15), "&", Color.BLACK, false, 75);                         //Das Ausrufezeichen Brauchwn wir nicht, da wir ja einen Kreis hinter das Bauteil setzten (damit es wie ein NOT aussieht)
+        l0 = Draw.drawLine((pX + 95), (pY + 37), (pX + 100), (pY + 37), Color.BLACK, 5);
+        cOutput = Draw.drawCircle(pX+88, pY+37, 5, Color.BLACK, 5, false, 5);
 
         
             numInputs = pInputs;
             inputs = new int[]{0, 0, 0, 0};
-            grp = new Group(rec, lbl, l0);
+            grp = new Group(rec, l0, cOutput, lbl);
             for(int i = 0; i < numInputs; i++)
             {
                 //  * Überarbeitet von Tim 05.11.16

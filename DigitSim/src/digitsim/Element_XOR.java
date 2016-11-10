@@ -5,6 +5,7 @@
  */
 package digitsim;
 
+import java.awt.Font;
 import java.util.ArrayList;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
@@ -15,40 +16,38 @@ import javafx.scene.shape.Rectangle;
 
 /**
  *
- * @author Dominik
- * -Überarbeitet von Dome 06.11.2016
+ * @author Elias (Nach Dominiks AND - Vorlage)
  */
-public class Element_AND extends Element{
+public class Element_XOR extends Element{
 
     //Globals
-    public static final String TYPE = "AND"; //Der Typ des Bausteines
+    public static final String TYPE = "OR"; //Der Typ des Bausteines
     private Rectangle rec;  //Die Elemente aus denen der Baustein zusammengestezt ist
     private Label lbl;
+    private Label lbl2;
     private ArrayList<Line> lines = new ArrayList<>();
     private Line l0;
     public static final double elementWidth = 80;
     public static final double elementHeight = 80;
     
     //Constructor
-    public Element_AND(double pX, double pY, int pInputs, NodeGestures dNodeGestures){
+    public Element_XOR(double pX, double pY, int pInputs, NodeGestures dNodeGestures){
         outputs = new int[]{0}; //Outputs
         
-        //Überarbeitet von Elias
-        //Der Baustein wird nun (egal bei welcher BausteinWeite/Höhe) plaziert mit der Maus als Mittelpunkt
+        //Der Baustein wird (egal bei welcher BausteinWeite/Höhe) plaziert mit der Maus als Mittelpunkt
         pX = pX-elementWidth/2;
         pY = pY-elementHeight/2;
         numOutputs = 1;
-        rec = Draw.drawRectangle(pX, pY, elementWidth, elementHeight, 10, 10, Color.BLACK, 0.5, 5);           //das AND zeichnen
-        lbl = Draw.drawLabel((pX + 10), (pY - 15), "&", Color.BLACK, false, 75);
-        l0 = Draw.drawLine((pX + 80), (pY + 40), (pX + 100), (pY + 40), Color.BLACK, 5);
-
+        rec = Draw.drawRectangle(pX, pY, elementWidth, elementHeight, 10, 10, Color.BLACK, 0.4, 5);           //das OR zeichnen
+        lbl = Draw.drawLabel((pX+2), (pY - 17), "=" , Color.BLACK, false, 75);
+        lbl2 = Draw.drawLabel((pX+40), (pY - 15), "1" , Color.BLACK, false, 75);
+        l0 = Draw.drawLine((pX + 80), (pY + 37), (pX + 100), (pY + 37), Color.BLACK, 5); 
         
             numInputs = pInputs;
             inputs = new int[]{0, 0, 0, 0};
-            grp = new Group(rec, lbl, l0);
+            grp = new Group(rec, lbl, l0, lbl2);
             for(int i = 0; i < numInputs; i++)
             {
-                //  * Überarbeitet von Tim 05.11.16
                 // korrekte stelle für jeden eingang berechnen, egal wie viele eingänge
                 double offsetY = rec.getHeight() / (numInputs + 1) + (rec.getHeight() / (numInputs + 1)) * i;
                 
@@ -64,12 +63,12 @@ public class Element_AND extends Element{
     //Diese Methoden müssen überschrieben werden (Beshcreibung in der Mutterklasse)
     @Override
     public double getX() {
-       return rec.getX() + grp.getTranslateX();
+       return rec.getX();
     }
 
     @Override
     public double getY() {
-        return rec.getY() + grp.getTranslateY();
+        return rec.getY();
     }
     
     @Override
@@ -166,3 +165,4 @@ public class Element_AND extends Element{
         }
     }
 }
+
