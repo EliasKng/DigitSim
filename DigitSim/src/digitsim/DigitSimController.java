@@ -161,7 +161,6 @@ public class DigitSimController extends Pane{
             }else{
                 selectedElement = "NONE";
             }
-            System.out.println(selectedElement);
     }
     
     public void element_selection_OR(ActionEvent event){

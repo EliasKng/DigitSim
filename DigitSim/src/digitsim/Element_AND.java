@@ -64,12 +64,12 @@ public class Element_AND extends Element{
     //Diese Methoden müssen überschrieben werden (Beshcreibung in der Mutterklasse)
     @Override
     public double getX() {
-       return rec.getX();
+       return rec.getX() + grp.getTranslateX();
     }
 
     @Override
     public double getY() {
-        return rec.getY();
+        return rec.getY() + grp.getTranslateY();
     }
     
     @Override
