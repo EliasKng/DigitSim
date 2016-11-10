@@ -144,7 +144,7 @@ class NodeGestures {
     private EventHandler<MouseEvent> onMouseDraggedEventHandler = new EventHandler<MouseEvent>() {
         
         public void handle(MouseEvent event ) {
-            elements = DigitSimController.elements;
+            elements = DigitSimController.getElements();
 
             // left mouse button => dragging
             if( !event.isPrimaryButtonDown())

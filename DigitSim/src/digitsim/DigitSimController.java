@@ -21,7 +21,7 @@ import javafx.stage.Stage;
 public class DigitSimController extends Pane{
     //************************ Globals ********************************
     DraggableCanvas simCanvas = new DraggableCanvas();
-    public static ArrayList<Element> elements = new ArrayList<>();
+    private static ArrayList<Element> elements = new ArrayList<>();
     NodeGestures nodeGestures;
     SceneGestures sceneGestures;
     String selectedElement = "NONE";
@@ -225,6 +225,9 @@ public class DigitSimController extends Pane{
     public double getYAdaptGrid(MouseEvent event) { 
         return Math.round(event.getY() / 21) * 21;
     }
+    
+    public static ArrayList<Element> getElements(){
+        return elements;
+    }
 
 }
-      
