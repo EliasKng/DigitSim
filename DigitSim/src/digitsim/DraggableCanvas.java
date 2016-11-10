@@ -303,7 +303,6 @@ class SceneGestures {
         double scale = canvas.getScale();
         transX = (canvas.getWidth()*0.5) * scale - (canvas.getWidth()*0.5);
         transX = falseTransX - transX;
-        
         return transX;
     }
     
