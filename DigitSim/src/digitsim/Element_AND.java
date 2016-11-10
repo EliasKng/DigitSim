@@ -50,7 +50,12 @@ public class Element_AND extends Element{
             {
                 //  * Überarbeitet von Tim 05.11.16
                 // korrekte stelle für jeden eingang berechnen, egal wie viele eingänge
-                double offsetY = rec.getHeight() / (numInputs + 1) + (rec.getHeight() / (numInputs + 1)) * i;
+                // *Überarbeitet von Elias 11.11.16
+                // Bausteine passen sich nun automatisch mit ihrer Höhe an die anzahl der Eingänge an
+                if(rec.getHeight() <= (numInputs+1)*21) {
+                    rec.setHeight((numInputs+1)*21);
+                }
+                double offsetY = i*21 + 21 -2.5;
                 
                 lines.add(Draw.drawLine((pX - 5), pY + offsetY, (pX - 15), pY + offsetY, Color.BLACK, 5));
                 grp.getChildren().add(lines.get(i));
