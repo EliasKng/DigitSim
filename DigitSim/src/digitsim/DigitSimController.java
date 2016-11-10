@@ -164,27 +164,27 @@ public class DigitSimController extends Pane{
      */
     public void addElement(MouseEvent event){
       if(btnAND.isSelected()){
-            elements.add(new Element_AND(getXAdaptGrid(event), getYAdaptGrid(event), 2, nodeGestures));
+            elements.add(new Element_AND(getXAdaptGrid(event), getYAdaptGrid(event), 80, nodeGestures));
             simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());        
       } 
       if(btnOR.isSelected()){
-            elements.add(new Element_OR(getXAdaptGrid(event), getYAdaptGrid(event), 2, nodeGestures));
+            elements.add(new Element_OR(getXAdaptGrid(event), getYAdaptGrid(event), 80, nodeGestures));
             simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());        
       } 
       if(btnNOT.isSelected()){
-            elements.add(new Element_NOT(getXAdaptGrid(event), getYAdaptGrid(event), 2, nodeGestures));
+            elements.add(new Element_NOT(getXAdaptGrid(event), getYAdaptGrid(event), 80, nodeGestures));
             simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());        
       } 
       if(btnNOR.isSelected()){
-            elements.add(new Element_NOR(getXAdaptGrid(event), getYAdaptGrid(event), 2, nodeGestures));
+            elements.add(new Element_NOR(getXAdaptGrid(event), getYAdaptGrid(event), 80, nodeGestures));
             simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());        
       }
       if(btnXOR.isSelected()){
-            elements.add(new Element_XOR(getXAdaptGrid(event), getYAdaptGrid(event), 2, nodeGestures));
+            elements.add(new Element_XOR(getXAdaptGrid(event), getYAdaptGrid(event), 80, nodeGestures));
             simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());        
       }
       if(btnNAND.isSelected()){
-            elements.add(new Element_NAND(getXAdaptGrid(event), getYAdaptGrid(event), 2, nodeGestures));
+            elements.add(new Element_NAND(getXAdaptGrid(event), getYAdaptGrid(event), 80, nodeGestures));
             simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());        
       }
     }

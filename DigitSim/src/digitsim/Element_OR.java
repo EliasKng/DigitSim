@@ -43,7 +43,7 @@ public class Element_OR extends Element{
         lbl = Draw.drawLabel((pX+2), (pY - 17), ">" , Color.BLACK, false, 75);
         lbl2 = Draw.drawLabel((pX+40), (pY - 15), "1" , Color.BLACK, false, 75);
         lUnderL = Draw.drawLine(pX+14.5, pY+63, pX+42, pY+63, Color.BLACK, 5);
-        l0 = Draw.drawLine((pX + 80), (pY + 37), (pX + 100), (pY + 37), Color.BLACK, 5); 
+        l0 = Draw.drawLine((pX + 80), (pY + 40), (pX + 100), (pY + 40), Color.BLACK, 5); 
         
             numInputs = pInputs;
             inputs = new int[]{0, 0, 0, 0};
