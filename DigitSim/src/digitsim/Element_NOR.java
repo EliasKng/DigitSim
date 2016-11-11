@@ -31,8 +31,8 @@ public class Element_NOR extends Element{
     private Line l0;
     private Line lUnderL;
     private Circle cOutput;
-    public static final double elementWidth = 80;
-    public static final double elementHeight = 80;
+    private static final double elementWidth = 80;
+    private static final double elementHeight = 80;
     
     //Constructor
     public Element_NOR(double pX, double pY, int pInputs, NodeGestures dNodeGestures){

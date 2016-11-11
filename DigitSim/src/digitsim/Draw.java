@@ -4,10 +4,8 @@
  * and open the template in the editor.
  */
 package digitsim;
-import java.awt.Point;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;

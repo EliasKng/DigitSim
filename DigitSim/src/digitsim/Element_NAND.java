@@ -31,8 +31,8 @@ public class Element_NAND extends Element{
     private Line l0;
     private Circle cOutput;
     private Label lbl;
-    public static final double elementWidth = 80;
-    public static final double elementHeight = 80;
+    private static final double elementWidth = 80;
+    private static final double elementHeight = 80;
     
     //Constructor
     public Element_NAND(double pX, double pY, int pInputs, NodeGestures dNodeGestures){

@@ -29,8 +29,8 @@ public class Element_XOR extends Element{
     private Label lbl2;
     private ArrayList<Line> lines = new ArrayList<>();
     private Line l0;
-    public static final double elementWidth = 80;
-    public static final double elementHeight = 80;
+    private static final double elementWidth = 80;
+    private static final double elementHeight = 80;
     
     //Constructor
     public Element_XOR(double pX, double pY, int pInputs, NodeGestures dNodeGestures){

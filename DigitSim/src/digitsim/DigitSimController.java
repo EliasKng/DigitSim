@@ -1,5 +1,4 @@
 package digitsim;
-
 import java.io.File;
 import java.util.ArrayList;
 import javafx.event.ActionEvent;
@@ -26,7 +25,6 @@ public class DigitSimController extends Pane{
     public static ArrayList<Element> elements = new ArrayList<>();
     NodeGestures nodeGestures;
     SceneGestures sceneGestures;
-    String selectedElement = "NONE";
     
     Connection allConnections;
     

@@ -159,7 +159,6 @@ class NodeGestures {
             node.setTranslateY(getValueAdaptGrid(nodeDragContext.translateAnchorY + (( event.getSceneY() - nodeDragContext.mouseAnchorY) / scale)));
 
             event.consume();
-
         }
     };
     //Anpassung eines beliebigen Volumen ans Gitter (Author: Dominik)
@@ -345,8 +344,6 @@ class SceneGestures {
         double realTransX = getRealTranslateX(simCanvas);
         double realTransY = getRealTranslateY(simCanvas);
         double scale = simCanvas.getScale();
-        double falseTransX = simCanvas.getTranslateX();
-        double falseTransY = simCanvas.getTranslateY();
         double simPaneWidth = simPane.getWidth();
         double simPaneHeight = simPane.getHeight();
         double simCanvasWidth = simCanvas.getWidth();

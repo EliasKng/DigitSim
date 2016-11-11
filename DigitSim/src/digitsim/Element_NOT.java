@@ -29,8 +29,8 @@ public class Element_NOT extends Element{
     private ArrayList<Line> lines = new ArrayList<>();
     private Line l0;
     private Circle cOutput;
-    public static final double elementWidth = 80;
-    public static final double elementHeight = 80;
+    private static final double elementWidth = 80;
+    private static final double elementHeight = 80;
     
     //Constructor
     public Element_NOT(double pX, double pY, int pInputs, NodeGestures dNodeGestures){

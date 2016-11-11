@@ -5,7 +5,6 @@
  */
 package digitsim;
 
-import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Arrays;
 import javafx.scene.Group;
@@ -30,8 +29,8 @@ public class Element_OR extends Element{
     private ArrayList<Line> lines = new ArrayList<>();
     private Line l0;
     private Line lUnderL;
-    public static final double elementWidth = 80;
-    public static final double elementHeight = 80;
+    private static final double elementWidth = 80;
+    private static final double elementHeight = 80;
     
     //Constructor
     public Element_OR(double pX, double pY, int pInputs, NodeGestures dNodeGestures){
