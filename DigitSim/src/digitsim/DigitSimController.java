@@ -11,6 +11,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 /**
  * Digitsim.fxml Controller class
@@ -153,6 +155,7 @@ public class DigitSimController extends Pane{
         System.out.printf("simCanvas TranslateX: %.1f\n", simCanvas.getTranslateX());
         System.out.printf("simCanvas TranslateY: %.1f\n", simCanvas.getTranslateY());
         System.out.printf("simCanvas Scale: %.1f\n", simCanvas.getScale());
+        drawNodeCheckAreas();
     }
     
     public File chooseFile(String description, String extension){ //Die Funktion öffnet einen Filebrowser um eine Datei auszuwählen und lädt dise anschließend.
@@ -171,7 +174,7 @@ public class DigitSimController extends Pane{
      */
     public void addElement(MouseEvent event){
       if(btnAND.isSelected()){
-            elements.add(new Element_AND(getXAdaptGrid(event), getYAdaptGrid(event), 4, nodeGestures));
+            elements.add(new Element_AND(getXAdaptGrid(event), getYAdaptGrid(event), 20, nodeGestures));
             simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());        
       } 
       else if(btnOR.isSelected()){
@@ -179,19 +182,19 @@ public class DigitSimController extends Pane{
             simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());        
       } 
       else if(btnNOT.isSelected()){
-            elements.add(new Element_NOT(getXAdaptGrid(event), getYAdaptGrid(event), 4, nodeGestures));
+            elements.add(new Element_NOT(getXAdaptGrid(event), getYAdaptGrid(event), 1, nodeGestures));
             simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());        
       } 
       else if(btnNOR.isSelected()){
-            elements.add(new Element_NOR(getXAdaptGrid(event), getYAdaptGrid(event), 4, nodeGestures));
+            elements.add(new Element_NOR(getXAdaptGrid(event), getYAdaptGrid(event), 3, nodeGestures));
             simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());        
       }
       else if(btnXOR.isSelected()){
-            elements.add(new Element_XOR(getXAdaptGrid(event), getYAdaptGrid(event), 4, nodeGestures));
+            elements.add(new Element_XOR(getXAdaptGrid(event), getYAdaptGrid(event), 8, nodeGestures));
             simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());        
       }
       if(btnNAND.isSelected()){
-            elements.add(new Element_NAND(getXAdaptGrid(event), getYAdaptGrid(event), 4, nodeGestures));
+            elements.add(new Element_NAND(getXAdaptGrid(event), getYAdaptGrid(event), 2, nodeGestures));
             simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());        
       }
       
@@ -210,25 +213,50 @@ public class DigitSimController extends Pane{
     /**
      * Gibt zurück ob sich die Maus über einer Node (Element) befindet
      * Author: Dominik (06.11.2016)
+     * --Editiert von Elias 11.11.2016
      */
     public static boolean isMouseOverNode(MouseEvent event) { //LASST ES STATIC! Damit man es in DraggableCanvas.java benutzen kann
         boolean result = false;
         
         for(Element i : elements){ //elemente durchgehen...
-            double element_x = i.getX() - (i.getWidth() / 1.5);         //X,Width,Height werden an das Element angepasst, da das Element in der mitte der Maus plaziert wird! 
-            double element_y = i.getY() - (i.getHeight() / 1.5);
-            double element_w = i.getWidth() + (i.getWidth() / 1.5);     //Es mag etwas viel vorkommen (besonderst bei den Y Coords, ist allerdings notwendig
-            double element_h = i.getHeight() + (i.getHeight() / 1.5);   //wegen den out & inputs!!
+            double addition = 0;
+            if(i.getInputCount()>3) {
+                addition = (i.getInputCount()-3)*21;
+            }
+            double element_x = i.getX() - (i.getWidth() / 2.4);         //X,Width,Height werden an das Element angepasst, da das Element in der mitte der Maus plaziert wird! 
+            double element_y = i.getY() - (i.getWidth() / 2.4);
+            double element_w = i.getWidth() + (i.getWidth() / 1.2);     //Es mag etwas viel vorkommen (besonderst bei den Y Coords, ist allerdings notwendig
+            double element_h = i.getHeight() +addition + (i.getHeight() / 1.2);   //wegen den out & inputs!!
+            
             //Abfrage ob sich der Mauszeiger im Block eines Elements befindet.
-            
-            System.out.printf("%.0f, [%.0f, %.0f] - %.0f, [%.0f, %.0f]\n", event.getX(), element_x, element_x+element_w, event.getY(), element_y, element_y + element_h);
-            
-            if(event.getX() >= element_x && event.getX() <= (i.getX() + element_w) && event.getY() >= element_y && event.getY() <= (i.getY() + element_h)){
+            if(event.getX() > element_x && event.getX() < element_x + element_w && event.getY() > element_y && event.getY() < element_y + element_h) {
                 result = true;
             }
+            
+
         }
         return result;
     }  
+    
+    public void drawNodeCheckAreas() {
+        boolean result = false;
+        
+        for(Element i : elements){ //elemente durchgehen...
+            double addition = 0;
+            if(i.getInputCount()>3) {
+                addition = (i.getInputCount()-3)*21;
+            }
+            double element_x = i.getX() - (i.getWidth() / 2.4);         //X,Width,Height werden an das Element angepasst, da das Element in der mitte der Maus plaziert wird! 
+            double element_y = i.getY() - (i.getWidth() / 2.4);
+            double element_w = i.getWidth() + (i.getWidth() / 1.2);     //Es mag etwas viel vorkommen (besonderst bei den Y Coords, ist allerdings notwendig
+            double element_h = i.getHeight() +addition + (i.getHeight() / 1.2);   //wegen den out & inputs!!
+            
+            
+            //Abfrage ob sich der Mauszeiger im Block eines Elements befindet.
+            Rectangle rec = Draw.drawRectangle(element_x, element_y, element_w, element_h, 0, 0, Color.RED, 0.0, 2);
+            simCanvas.getChildren().add(rec);
+        }
+    }
     
     /**
      * Nimmt die X-Mauskoordinate und passt sie an das Grid an
