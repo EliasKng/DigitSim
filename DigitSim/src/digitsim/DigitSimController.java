@@ -167,11 +167,11 @@ public class DigitSimController extends Pane{
      */
     public void addElement(MouseEvent event){
       if(btnAND.isSelected()){
-            elements.add(new Element_AND(getXAdaptGrid(event), getYAdaptGrid(event), 2, nodeGestures));
+            elements.add(new Element_AND(getXAdaptGrid(event), getYAdaptGrid(event), 20, nodeGestures));
             simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());        
       } 
       else if(btnOR.isSelected()){
-            elements.add(new Element_OR(getXAdaptGrid(event), getYAdaptGrid(event), 2, nodeGestures));
+            elements.add(new Element_OR(getXAdaptGrid(event), getYAdaptGrid(event), 4, nodeGestures));
             simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());        
       } 
       else if(btnNOT.isSelected()){
@@ -179,11 +179,11 @@ public class DigitSimController extends Pane{
             simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());        
       } 
       else if(btnNOR.isSelected()){
-            elements.add(new Element_NOR(getXAdaptGrid(event), getYAdaptGrid(event), 2, nodeGestures));
+            elements.add(new Element_NOR(getXAdaptGrid(event), getYAdaptGrid(event), 3, nodeGestures));
             simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());        
       }
       else if(btnXOR.isSelected()){
-            elements.add(new Element_XOR(getXAdaptGrid(event), getYAdaptGrid(event), 2, nodeGestures));
+            elements.add(new Element_XOR(getXAdaptGrid(event), getYAdaptGrid(event), 8, nodeGestures));
             simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());        
       }
       if(btnNAND.isSelected()){
@@ -201,10 +201,14 @@ public class DigitSimController extends Pane{
         boolean result = false;
         
         for(Element i : elements){ //elemente durchgehen...
+            double addition = 0;
+            if(i.getInputCount()>3) {
+                addition = (i.getInputCount()-3)*21;
+            }
             double element_x = i.getX() - (i.getWidth() / 2.4);         //X,Width,Height werden an das Element angepasst, da das Element in der mitte der Maus plaziert wird! 
             double element_y = i.getY() - (i.getWidth() / 2.4);
             double element_w = i.getWidth() + (i.getWidth() / 1.2);     //Es mag etwas viel vorkommen (besonderst bei den Y Coords, ist allerdings notwendig
-            double element_h = i.getHeight() + (i.getHeight() / 1.2);   //wegen den out & inputs!!
+            double element_h = i.getHeight() +addition + (i.getHeight() / 1.2);   //wegen den out & inputs!!
             
             //Abfrage ob sich der Mauszeiger im Block eines Elements befindet.
             if(event.getX() > element_x && event.getX() < element_x + element_w && event.getY() > element_y && event.getY() < element_y + element_h) {
@@ -220,11 +224,14 @@ public class DigitSimController extends Pane{
         boolean result = false;
         
         for(Element i : elements){ //elemente durchgehen...
-            
+            double addition = 0;
+            if(i.getInputCount()>3) {
+                addition = (i.getInputCount()-3)*21;
+            }
             double element_x = i.getX() - (i.getWidth() / 2.4);         //X,Width,Height werden an das Element angepasst, da das Element in der mitte der Maus plaziert wird! 
             double element_y = i.getY() - (i.getWidth() / 2.4);
             double element_w = i.getWidth() + (i.getWidth() / 1.2);     //Es mag etwas viel vorkommen (besonderst bei den Y Coords, ist allerdings notwendig
-            double element_h = i.getHeight() + (i.getHeight() / 1.2);   //wegen den out & inputs!!
+            double element_h = i.getHeight() +addition + (i.getHeight() / 1.2);   //wegen den out & inputs!!
             
             
             //Abfrage ob sich der Mauszeiger im Block eines Elements befindet.
