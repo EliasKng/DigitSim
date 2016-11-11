@@ -1,8 +1,6 @@
 package digitsim;
 import java.io.File;
 import java.util.ArrayList;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -23,12 +21,12 @@ import javafx.stage.Stage;
  */
 public class DigitSimController extends Pane{
     //************************ Globals ********************************
-    DraggableCanvas simCanvas = new DraggableCanvas();
-    public static ArrayList<Element> elements = new ArrayList<>();
-    NodeGestures nodeGestures;
-    SceneGestures sceneGestures;
+    DraggableCanvas simCanvas = new DraggableCanvas(); //Arbeitsfläche / Fläche zum zeichnen
+    private static ArrayList<Element> elements = new ArrayList<>(); //Alle Elemente kommen hier rein, static damit andere Klassen (einfach) darauf zugreifen können
+    NodeGestures nodeGestures;  //Die handler für die Nodes (z.B Elemente) beziehen
+    SceneGestures sceneGestures; //Die handler für die Arbeitsfläche beziehen
     
-    Connection allConnections;
+    Connection allConnections; //Verbindungen zwischen Elementen werden hier gespeichert
     
      /**
      * FXML OBJEKT-Erstellungs-Bereich:
@@ -55,41 +53,35 @@ public class DigitSimController extends Pane{
     @FXML
     private Slider inputSlider;
     
-    //Constructor
+    //Constructor (leer)
     public DigitSimController() {
     }   
     
     @FXML
     public void initialize() {//initialize Funktion: wird direkt beim Starten der FXML aufgerufen.
         
-        addSimCanvas();
-        setSliderProperties();
+        addSimCanvas(); //Handler zum erstellen neuer Elemente zur Arbeitsfläche hinzufügen & Die Arbeitsfläche reinladen
+        setSliderProperties(); //Einstellungen für den Silder zum einstellen der Eingange von Grundbausteinen
         
+        simCanvas.addGrid(simCanvas.getPrefWidth(), simCanvas.getPrefHeight()); //Gitter zeichnen
         
-        simCanvas.addGrid(simCanvas.getPrefWidth(), simCanvas.getPrefHeight());
-        
-        loadBtnGroup();  
+        loadBtnGroup(); //Alle Buttons die ein Element auswählen in eine Gruppe packen, damit immer nur einer ausgewählt ist
 
         //Verschiebt simCanvas ein bisschen
         simCanvas.translateXProperty().set(25);
         simCanvas.translateYProperty().set(25);
                
+        //Handler für funktionen wie Drag, Zoom etc.
         nodeGestures = new NodeGestures( simCanvas);
         sceneGestures = new SceneGestures(simCanvas, simPane);            
         
-        //EVENT FILTER
-        simPane.addEventFilter( MouseEvent.MOUSE_PRESSED, sceneGestures.getOnMousePressedEventHandler());
+        //EVENT FILTER (Diese werden ausgelöst sobald ein gewisses Ereignis eintritt)
+        simPane.addEventFilter( MouseEvent.MOUSE_PRESSED, sceneGestures.getOnMousePressedEventHandler()); //Wenn z.b die Maus gedrückt wird, wird der getOnMousePressedEventHanlder ausgeführt
         simPane.addEventFilter( MouseEvent.MOUSE_DRAGGED, sceneGestures.getOnMouseDraggedEventHandler());
         simPane.addEventFilter( ScrollEvent.ANY, sceneGestures.getOnScrollEventHandler());
         
 
-         allConnections = new Connection();
-         
-         // beide ersten eingtänge sollten nun 1 sein
-         
-         
-         
-         
+         allConnections = new Connection(); //Klasse für die Verbindungen                     
     }
     
     @FXML
@@ -103,11 +95,11 @@ public class DigitSimController extends Pane{
             @Override
             public void handle(MouseEvent event){          
                 if(event.isPrimaryButtonDown() && !isMouseOverNode(event)){
-                    addElement(event);
+                    addElement(event); //Neuen Baustein einfügen
                 }
             }
         });
-        simPane.getChildren().addAll(simCanvas);
+        simPane.getChildren().addAll(simCanvas); //die Arbeitsfläche auf das Panel setzen
     }
       
 
@@ -128,8 +120,7 @@ public class DigitSimController extends Pane{
     }
     
     /**
-    * Bildet nötige Gruppen für Togglebuttons (damit immer nur einer Selected sein kann)
-    * 
+    * Einstellungen für den Slider, mit dem man die Anzahl von Inputs bestimmt
     * @author Elias
     * 
     */
@@ -151,20 +142,19 @@ public class DigitSimController extends Pane{
     * -Bearbeitet von Tim 23.10.16
     * -Bearbeitet von Dominik 31.10.16
     */
-    public void mItemCloseAction(ActionEvent event){
+    public void mItemCloseAction(ActionEvent event){ //Programm schließen
         System.exit(0);
     }
     
-    public void mItemOpenFileAction(ActionEvent event) {        
+    public void mItemOpenFileAction(ActionEvent event) { //Datei öffnen      
         File selectedFile = chooseFile("DigitSimFiles (*.dgs)", "*.dgs");  //Datei Auswählen
-        //Öffnen der Datei (comming)
     }
-    public void mItemPropertiesOnAction(ActionEvent event) {
+    public void mItemPropertiesOnAction(ActionEvent event) { //Einstellungs-Fenster öffnen
         Stage stage;
         stage = GenFunctions.openFXML("Properties.fxml", "Einstellungen", "icon.png"); //Öffnen des "Einstellungen"-Fensters
         stage.setResizable(false);
     }
-    public void mItemHelpOnAction(ActionEvent event) {
+    public void mItemHelpOnAction(ActionEvent event) { //Hilfe öffnen
         Stage stage;
         stage = GenFunctions.openFXML("Help.fxml", "Hilfe", "icon.png"); //Öffnen des "Hilfe"-Fensters
         stage.setWidth(600);
@@ -176,10 +166,9 @@ public class DigitSimController extends Pane{
         System.out.printf("simCanvas TranslateX: %.1f\n", simCanvas.getTranslateX());
         System.out.printf("simCanvas TranslateY: %.1f\n", simCanvas.getTranslateY());
         System.out.printf("simCanvas Scale: %.1f\n", simCanvas.getScale());
-        //drawNodeCheckAreas();
         System.out.println(inputSlider.getValue());
     }
-    public void inputSliderOnDragDone() {
+    public void inputSliderOnDragDone() { //Den Wert vom Slider runden
         double value = inputSlider.getValue();
         value = Math.round(value);
         inputSlider.setValue(value);
@@ -197,34 +186,35 @@ public class DigitSimController extends Pane{
      * 
      * Author: Dominik
      * 
-     * Fügt einen neuen Baustein hinzu
+     * Erstellt einen neuen Baustein & added diesen zu den Elementen sowie der Arbeitsfläche
      */
     public void addElement(MouseEvent event){
-      if(btnAND.isSelected()){
+      if(btnAND.isSelected()){ //And
             elements.add(new Element_AND(getXAdaptGrid(event), getYAdaptGrid(event), (int) inputSlider.getValue(), nodeGestures));
             simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
       } 
-      else if(btnOR.isSelected()){
+      else if(btnOR.isSelected()){ //Or
             elements.add(new Element_OR(getXAdaptGrid(event), getYAdaptGrid(event), (int) inputSlider.getValue(), nodeGestures));
             simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());        
       } 
-      else if(btnNOT.isSelected()){
+      else if(btnNOT.isSelected()){ //Not
             elements.add(new Element_NOT(getXAdaptGrid(event), getYAdaptGrid(event), 1, nodeGestures));
             simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());        
       } 
-      else if(btnNOR.isSelected()){
+      else if(btnNOR.isSelected()){ //NOR
             elements.add(new Element_NOR(getXAdaptGrid(event), getYAdaptGrid(event),(int) inputSlider.getValue(), nodeGestures));
             simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());        
       }
-      else if(btnXOR.isSelected()){
+      else if(btnXOR.isSelected()){ //Xor
             elements.add(new Element_XOR(getXAdaptGrid(event), getYAdaptGrid(event), (int) inputSlider.getValue(), nodeGestures));
             simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());        
       }
-      if(btnNAND.isSelected()){
+      if(btnNAND.isSelected()){ //Nand
             elements.add(new Element_NAND(getXAdaptGrid(event), getYAdaptGrid(event), (int) inputSlider.getValue(), nodeGestures));
             simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());        
       }
       
+      //NUR EINE TESTFUNKTION! NICHT WICHTIG!
       if(elements.size() > 1) // nachdem 2 element plaziert wurden, diese verbinden, jeweils die ersten in puts von beiden
       {
           // von beiden wird jeweils input[0] verbunden
@@ -243,7 +233,7 @@ public class DigitSimController extends Pane{
      * Author: Dominik (06.11.2016)
      * --Editiert von Elias 11.11.2016
      */
-    public static boolean isMouseOverNode(MouseEvent event) { //LASST ES STATIC! Damit man es in DraggableCanvas.java benutzen kann
+    private boolean isMouseOverNode(MouseEvent event) { //Tested ob die Maus über einem Element (Node) ist, static damit man es in DraggableCanvas.java benutzen kann
         boolean result = false;
         
         for(Element i : elements){ //elemente durchgehen...
@@ -259,32 +249,10 @@ public class DigitSimController extends Pane{
             //Abfrage ob sich der Mauszeiger im Block eines Elements befindet.
             if(event.getX() > element_x && event.getX() < element_x + element_w && event.getY() > element_y && event.getY() < element_y + element_h) {
                 result = true;
-            }
-            
-
+            }          
         }
         return result;
     }  
-    
-    public void drawNodeCheckAreas() {
-        boolean result = false;
-        
-        for(Element i : elements){ //elemente durchgehen...
-            double addition = 0;
-            if(i.getInputCount()>3) {
-                addition = (i.getInputCount()-3)*21;
-            }
-            double element_x = i.getX() - (i.getWidth() / 2.4);         //X,Width,Height werden an das Element angepasst, da das Element in der mitte der Maus plaziert wird! 
-            double element_y = i.getY() - (i.getWidth() / 2.4);
-            double element_w = i.getWidth() + (i.getWidth() / 1.2);     //Es mag etwas viel vorkommen (besonderst bei den Y Coords, ist allerdings notwendig
-            double element_h = i.getHeight() +addition + (i.getHeight() / 1.2);   //wegen den out & inputs!!
-            
-            
-            //Abfrage ob sich der Mauszeiger im Block eines Elements befindet.
-            Rectangle rec = Draw.drawRectangle(element_x, element_y, element_w, element_h, 0, 0, Color.RED, 0.0, 2);
-            simCanvas.getChildren().add(rec);
-        }
-    }
     
     /**
      * Nimmt die X-Mauskoordinate und passt sie an das Grid an
@@ -302,7 +270,7 @@ public class DigitSimController extends Pane{
         return Math.round(event.getY() / 21) * 21;
     }
     
-    public static ArrayList<Element> getElements(){
+    public static ArrayList<Element> getElements(){ //Über diese Methode können andere Klassen auf die Elemente zugreifen
         return elements;
     }
 

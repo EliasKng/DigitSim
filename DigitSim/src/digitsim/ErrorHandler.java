@@ -18,9 +18,9 @@ import javax.swing.JOptionPane;
 public class ErrorHandler {
     
    //Globals
-    private static final String dataName = "Error_Log.txt";
+    private static final String dataName = "Error_Log.txt"; //Name der Error-Datei
     
-   private ErrorHandler(){}
+   private ErrorHandler(){}//Es soll nicht möglich sein ein Objekt dieser Klasse anzulegen
     
    public static void printError(Object obj, String msg){ //einen Error in die Error_Log.txt Datei schreiben
 		try {
@@ -31,13 +31,14 @@ public class ErrorHandler {
 			bw.flush();
 			bw.close();
 			fw.close();
-		} catch (IOException e) {
+		} catch (IOException e) { //Fehler, tritt meistens auf wenn die Datei offen ist
 			JOptionPane.showMessageDialog(null,
 				    "Bitte die " + dataName + " Datei schließen!",
 				    "ERROR",
 				    JOptionPane.ERROR_MESSAGE);
 		}
 		
+                //Dem Benutzer über den Error informieren
 		JOptionPane.showMessageDialog(null,
 			    "Ein Fehler ist aufgetreten! Siehe " + dataName + "!",
 			    "ERROR",

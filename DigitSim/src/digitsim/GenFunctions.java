@@ -20,19 +20,19 @@ public class GenFunctions { //Laden der GUI
      * 
      */
     public static Stage openFXML(String fxmlName, String windowTitle, String iconFileName) {
-        try{ //Beschreibung des Designs per XML-Datei
-            FXMLLoader fxmlLoader = new FXMLLoader(DigitSim.class.getResource(fxmlName));
+        try{ //Beschreibung des Designs/Fensters per (F)XML-Datei
+            FXMLLoader fxmlLoader = new FXMLLoader(DigitSim.class.getResource(fxmlName)); //Lädt die FXML-Datei
             Parent root1 = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
             stage.setTitle(windowTitle);
             stage.setScene(new Scene(root1));  
             stage.getIcons().add(new Image(DigitSim.class.getResourceAsStream( iconFileName )));
             
-            stage.show();
+            stage.show(); //Das Fenster sichtbar machen
            
-            return stage;
+            return stage; 
             
-        } catch(Exception e) {
+        } catch(Exception e) { //Error
             ErrorHandler.printError(GenFunctions.class, "Fehler beim laden von " + fxmlName + " & " + windowTitle + " & " + iconFileName);
         }
         return null;

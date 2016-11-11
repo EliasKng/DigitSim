@@ -6,16 +6,15 @@
 package digitsim;
 
 import java.util.ArrayList;
-import java.util.List;
 import javafx.scene.shape.Line;
 
 /**
  *
  * @author Tim
  */
-public class Connection {
+public class Connection { //Speichert die Verbindungen
     
-    public class Data
+    public class Data //Daten einer Verbinden (Zwischen zwei In oder Outputs
     {
         public int indexFirstElement;
         public boolean typeFirst;
@@ -26,7 +25,7 @@ public class Connection {
         public Line connectionLine;
     }
     
-    public static List<Data> connections = new ArrayList<Data>();
+    public static ArrayList<Data> connections = new ArrayList<Data>(); //Speichert alle Verbindungne
 
 
     
@@ -50,10 +49,10 @@ public class Connection {
         data.typeFirst = typeFirst;
         data.typeSecond = typeSecond;
         
-        connections.add(data);       
+        connections.add(data);    
     }
     
-    void update()
+    void update() //Geht alle Verbindungen durch und schaltet sie durch
     {
         for(Data d : connections)
         {
@@ -79,7 +78,7 @@ public class Connection {
                 lineX2 = DigitSimController.elements.get(d.indexSecondElement).getInputX(d.indexFirst);
                 lineY2 = DigitSimController.elements.get(d.indexSecondElement).getInputY(d.indexFirst);
                 d.connectionLine = Draw.drawLine(lineX1, lineY1, lineX2, lineY2, Color.BLACK, 2);*/
-                DigitSimController.elements.get(d.indexSecondElement).setInput(d.indexSecond, DigitSimController.elements.get(d.indexFirstElement).getOutput(d.indexFirst));
+                DigitSimController.getElements().get(d.indexSecondElement).setInput(d.indexSecond, DigitSimController.getElements().get(d.indexFirstElement).getOutput(d.indexFirst));
             }
             if((d.typeFirst != d.typeSecond) && d.typeFirst) // eingang mit ausgang verbunden
             {
@@ -88,7 +87,7 @@ public class Connection {
                 lineX2 = DigitSimController.elements.get(d.indexSecondElement).getOutputX(d.indexFirst);
                 lineY2 = DigitSimController.elements.get(d.indexSecondElement).getOutputY(d.indexFirst);
                 d.connectionLine = Draw.drawLine(lineX1, lineY1, lineX2, lineY2, Color.BLACK, 2);*/
-                DigitSimController.elements.get(d.indexFirstElement).setInput(d.indexFirst, DigitSimController.elements.get(d.indexSecondElement).getOutput(d.indexSecond));
+                DigitSimController.getElements().get(d.indexFirstElement).setInput(d.indexFirst, DigitSimController.getElements().get(d.indexSecondElement).getOutput(d.indexSecond));
             }
             if((d.typeFirst == d.typeSecond) && d.typeFirst) // eingang mit eingang verbunden
             {
@@ -99,16 +98,17 @@ public class Connection {
                 d.connectionLine = Draw.drawLine(lineX1, lineY1, lineX2, lineY2, Color.BLACK, 2);*/
                 
                 int newVal = 0;
-                if(DigitSimController.elements.get(d.indexFirstElement).inputs[d.indexFirst] > 0 || DigitSimController.elements.get(d.indexSecondElement).inputs[d.indexSecond] > 0)
+                if(DigitSimController.getElements().get(d.indexFirstElement).inputs[d.indexFirst] > 0 || DigitSimController.getElements().get(d.indexSecondElement).inputs[d.indexSecond] > 0)
                 {
                     newVal = 1;
                 }
                 
-                DigitSimController.elements.get(d.indexFirstElement).setInput(d.indexFirst, newVal);
-                DigitSimController.elements.get(d.indexSecondElement).setInput(d.indexSecond, newVal);
+                DigitSimController.getElements().get(d.indexFirstElement).setInput(d.indexFirst, newVal);
+                DigitSimController.getElements().get(d.indexSecondElement).setInput(d.indexSecond, newVal);
             }
-            DigitSimController.elements.get(d.indexFirstElement).update();
-            DigitSimController.elements.get(d.indexSecondElement).update();
+            //Die Beusteine selbst (auf ihre Logik) updaten
+            DigitSimController.getElements().get(d.indexFirstElement).update();
+            DigitSimController.getElements().get(d.indexSecondElement).update();
         }
     }
 }

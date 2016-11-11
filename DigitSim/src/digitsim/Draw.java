@@ -115,7 +115,7 @@ public class Draw {
     }
     
     /**
-    * Funktionen zum erstellen von Zeichnungen mit den Listener(n)
+    * Funktionen zum erstellen von Zeichnungen (ziehmlich selbsterklärend daher auch nicht Auskommentiert)
     *
     * @author Dominik
     */

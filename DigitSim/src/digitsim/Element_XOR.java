@@ -33,7 +33,7 @@ public class Element_XOR extends Element{
     private static final double elementHeight = 80;
     
     //Constructor
-    public Element_XOR(double pX, double pY, int pInputs, NodeGestures dNodeGestures){
+    public Element_XOR(double pX, double pY, int pInputs, NodeGestures dNodeGestures){//Baustein zeichnen
         outputs = new int[]{0}; //Outputs
         
         //Der Baustein wird (egal bei welcher BausteinWeite/Höhe) plaziert mit der Maus als Mittelpunkt
@@ -64,12 +64,12 @@ public class Element_XOR extends Element{
                 grp.getChildren().add(lines.get(i));
             }
             
-          
+         //Die Hanlder hinzufügenn (Beschreibung der Hander in  DraggableCanvas.java)  
         grp.addEventFilter( MouseEvent.MOUSE_PRESSED, dNodeGestures.getOnMousePressedEventHandler());
         grp.addEventFilter( MouseEvent.MOUSE_DRAGGED, dNodeGestures.getOnMouseDraggedEventHandler());
     }
     
-    //Diese Methoden müssen überschrieben werden (Beshcreibung in der Mutterklasse)
+    //Diese Methoden müssen überschrieben werden (Beschreibung in der Mutterklasse)
     @Override
     public double getX() {
        return rec.getX();

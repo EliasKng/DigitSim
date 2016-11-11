@@ -33,7 +33,7 @@ public class Element_AND extends Element{
     private static final double elementHeight = 80;
     
     //Constructor
-    public Element_AND(double pX, double pY, int pInputs, NodeGestures dNodeGestures){
+    public Element_AND(double pX, double pY, int pInputs, NodeGestures dNodeGestures){ //Baustein zeichnen
         outputs = new int[]{0}; //Outputs
         
         //Überarbeitet von Elias
@@ -61,16 +61,16 @@ public class Element_AND extends Element{
                 }
                 double offsetY = i*21 + 21 - 1;
                 
-                lines.add(Draw.drawLine((pX - 5), pY + offsetY, (pX - 15), pY + offsetY, Color.BLACK, 5));
-                grp.getChildren().add(lines.get(i));
+                lines.add(Draw.drawLine((pX - 5), pY + offsetY, (pX - 15), pY + offsetY, Color.BLACK, 5)); //Linie zeichnen
+                grp.getChildren().add(lines.get(i)); //Linie hinzufügen
             }
             
-          
+          //Die Hanlder hinzufügenn (Beschreibung der Hander in  DraggableCanvas.java)
         grp.addEventFilter( MouseEvent.MOUSE_PRESSED, dNodeGestures.getOnMousePressedEventHandler());
         grp.addEventFilter( MouseEvent.MOUSE_DRAGGED, dNodeGestures.getOnMouseDraggedEventHandler());
     }
     
-    //Diese Methoden müssen überschrieben werden (Beshcreibung in der Mutterklasse)
+    //Diese Methoden müssen überschrieben werden (Beschreibung in der Mutterklasse)
     @Override
     public double getX() {
        return rec.getX() + grp.getTranslateX();
@@ -146,7 +146,7 @@ public class Element_AND extends Element{
     }  
     
     @Override
-    public void update(){
+    public void update(){ 
         boolean logic = true;
         for(int i = 0; i < numInputs; i++){ //Eingänge durchiterieren & Logik überprüfen
             if(inputs[i] == 0){

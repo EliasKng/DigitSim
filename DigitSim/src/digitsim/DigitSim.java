@@ -16,18 +16,18 @@ import javafx.stage.StageStyle;
  *
  * @author Elias
  */
-public class DigitSim extends Application {
-    private static Stage stage;
-    private static Stage loadingStage;
+public class DigitSim extends Application { //Hauptklasse
+    private static Stage stage; //Hauptfenster
+    private static Stage loadingStage; //Loading Screen
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) { //Wird nach dem launch ausgeführt
         
         stage = primaryStage;
         openMainWindow();
           
     }
     
-    public static double[] getWindowsSize()
+    public static double[] getWindowsSize() //Liefert die Fenstergröße in einem Array
     {      
         double d[] = new double[2];
         d[0] = stage.getWidth();
@@ -49,7 +49,7 @@ public class DigitSim extends Application {
      * GEHT NOCH NICHT!
      * @author Elias
      */
-    public static void openLoadingWindow() {
+    public static void openLoadingWindow() { 
         loadingStage.initStyle(StageStyle.UNDECORATED);
         Group root = new Group();
         Scene scene = new Scene(root, 100, 100);
@@ -61,7 +61,7 @@ public class DigitSim extends Application {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) { //Hier startet das Programm
         launch(args);
     }
     

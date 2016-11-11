@@ -23,14 +23,14 @@ import javafx.scene.paint.Color;
  * @author Elias
  * -Überarbeitet von Dominik 22.10.2016 (Zoom verbessert, Das Sichtfenster in die Mitte gesetzt, Größe der Fläche angepasst)
  */
-public class DraggableCanvas extends Pane {
-    DoubleProperty myScale = new SimpleDoubleProperty(1.0);
+public class DraggableCanvas extends Pane { //Arbeitsfläche
+    DoubleProperty myScale = new SimpleDoubleProperty(1.0); //Standartzoom auf 1
 
     public DraggableCanvas() {
-        setPrefSize(8000, 8000);
-        setStyle("-fx-background-color: white; -fx-border-color: grey;");
+        setPrefSize(8000, 8000); //Standartgröße
+        setStyle("-fx-background-color: white; -fx-border-color: grey;"); //Farben
 
-        // add scale transform
+        // Die Scalierung einbinden
         scaleXProperty().bind(myScale);
         scaleYProperty().bind(myScale);
     }
@@ -41,7 +41,7 @@ public class DraggableCanvas extends Pane {
     * @author Elias
     * Bearbeitet von Tim 16.10.16
     */
-    public void addGrid(double width, double heigth) {
+    public void addGrid(double width, double heigth) { //zeichnet Gitter
         Canvas simGrid = new Canvas();
         GraphicsContext gc = simGrid.getGraphicsContext2D();
         simGrid.setWidth(width);
@@ -65,35 +65,35 @@ public class DraggableCanvas extends Pane {
         }        
         
 
-        getChildren().add(simGrid);
+        getChildren().add(simGrid); //Die Zeichenfläche hinzufügen
 
-        //Verschiebt simGrid in den Hintergrund
+        //Verschiebt simGrid in den Hintergrund, damit die Elemente im Vordergrund sind
         simGrid.toBack();
     }
 
-    public double getScale() {
+    public double getScale() { //Liefert die Scalierung
         return myScale.get();
     }
 
-    public void setScale( double scale) {
+    public void setScale( double scale) { //Setzt die Scalierung
         myScale.set(scale);
     }
 
-    public void setPivot( double x, double y) {
+    public void setPivot( double x, double y) { //verschiebt das "Sichtfenster"
         setTranslateX(getTranslateX()-x);
         setTranslateY(getTranslateY()-y);
     }
 }
 
 /**
- * Maus drag context wird für nodes & scene gestures benötigt
+ * Maus drag context wird für nodes & scene gestures benötigt, um den Unterscied der Änderungsraten zu berechnen
  */
 class DragContext {
 
-    double mouseAnchorX;
+    double mouseAnchorX; 
     double mouseAnchorY;
 
-    double translateAnchorX;
+    double translateAnchorX; 
     double translateAnchorY;
 
 }
@@ -102,18 +102,17 @@ class DragContext {
  * Listener die eine Drag & Drop - Funktin mit der linken Maustaste ermöglichen. Bedenkt auch den Zoom.
  */
 class NodeGestures {
-    private static ArrayList<Element> elements = new ArrayList<>();
-    
-    
-    private DragContext nodeDragContext = new DragContext();
+    private static ArrayList<Element> elements = new ArrayList<>(); //Elemente
+   
+    private DragContext nodeDragContext = new DragContext(); //Nötige Daten für Berechnungen
 
-    DraggableCanvas canvas;
+    DraggableCanvas canvas; //Arbeitsfläche
 
-    public NodeGestures( DraggableCanvas canvas) {
+    public NodeGestures( DraggableCanvas canvas) { //Consturctor
         this.canvas = canvas;
     }
 
-    public EventHandler<MouseEvent> getOnMousePressedEventHandler() {
+    public EventHandler<MouseEvent> getOnMousePressedEventHandler() { //Liefert einen Handler
         return onMousePressedEventHandler;
     }
 
@@ -121,7 +120,7 @@ class NodeGestures {
         return onMouseDraggedEventHandler;
     }
 
-    private EventHandler<MouseEvent> onMousePressedEventHandler = new EventHandler<MouseEvent>() {
+    private EventHandler<MouseEvent> onMousePressedEventHandler = new EventHandler<MouseEvent>() { //Handler für "Maus klick"
 
         public void handle(MouseEvent event) {
 
@@ -129,19 +128,19 @@ class NodeGestures {
             if( !event.isPrimaryButtonDown())
                 return;
 
-            nodeDragContext.mouseAnchorX = event.getSceneX();
+            nodeDragContext.mouseAnchorX = event.getSceneX(); //X/Y Koordinaten der Maus speichern (später benötig)
             nodeDragContext.mouseAnchorY = event.getSceneY();
 
-            Node node = (Node) event.getSource();
+            Node node = (Node) event.getSource(); //Das betroffene Element bekommen
 
-            nodeDragContext.translateAnchorX = node.getTranslateX();
+            nodeDragContext.translateAnchorX = node.getTranslateX(); //Die akutelle Änderungsrate speichern (später nötig)
             nodeDragContext.translateAnchorY = node.getTranslateY();
 
         }
 
     };
 
-    private EventHandler<MouseEvent> onMouseDraggedEventHandler = new EventHandler<MouseEvent>() {
+    private EventHandler<MouseEvent> onMouseDraggedEventHandler = new EventHandler<MouseEvent>() { //Handler für "Drag"
         
         public void handle(MouseEvent event ) {
             elements = DigitSimController.getElements();
@@ -150,15 +149,16 @@ class NodeGestures {
             if( !event.isPrimaryButtonDown())
                 return;
 
-            double scale = canvas.getScale();
+            double scale = canvas.getScale(); //Scalierung
             
-            Node node = (Node) event.getSource();
+            Node node = (Node) event.getSource(); //Das betroffene Element bekommen
             
-            //Node passt sich jetzt ans Gitter an (Author: Dominik)
+            //-Node passt sich jetzt ans Gitter an (Author: Dominik)
+            //Den Abstand zwischen der alten und der neuen Mausposition berechnen und zur Änderungsrate hinzufügen
             node.setTranslateX(getValueAdaptGrid(nodeDragContext.translateAnchorX + (( event.getSceneX() - nodeDragContext.mouseAnchorX) / scale)));
             node.setTranslateY(getValueAdaptGrid(nodeDragContext.translateAnchorY + (( event.getSceneY() - nodeDragContext.mouseAnchorY) / scale)));
 
-            event.consume();
+            event.consume(); 
         }
     };
     //Anpassung eines beliebigen Volumen ans Gitter (Author: Dominik)
@@ -171,14 +171,14 @@ class NodeGestures {
  * Listeners for making the scene's canvas draggable and zoomable
  * -Überarbeitet von Dominik 22.10.2016 (Zoom verbessert, Das Sichtfenster in die Mitte gesetzt, Größe der Fläche angepasst)
  */
-class SceneGestures {
+class SceneGestures { //Klasse für Zoom und verschiebung der Arbeitsfläche
 
-    private static final double MAX_SCALE = 2.0d;
+    private static final double MAX_SCALE = 2.0d; //Min. & Max. scalierung
     private static final double MIN_SCALE = 0.5d;
 
     private DragContext sceneDragContext = new DragContext();
 
-    DraggableCanvas simCanvas;
+    DraggableCanvas simCanvas; //Arbeitsfläche
     AnchorPane simPane;
 
     private void placeCanvasMiddle(){//Sichtbereich in die Mitte setzen
@@ -186,14 +186,13 @@ class SceneGestures {
          simCanvas.setTranslateY(sceneDragContext.translateAnchorY - (simCanvas.getPrefHeight() / 2));
     }
     
-    public SceneGestures( DraggableCanvas pSimCanvas, AnchorPane pSimPane) {
+    public SceneGestures( DraggableCanvas pSimCanvas, AnchorPane pSimPane) { //Constructor
         this.simCanvas = pSimCanvas;
         this.simPane = pSimPane;
         placeCanvasMiddle(); //Sichtbereich in die Mitte setzen
-                             //Tim sagt diese funktion ist wichtig also lass es gut sein elias
     }
 
-    public EventHandler<MouseEvent> getOnMousePressedEventHandler() {
+    public EventHandler<MouseEvent> getOnMousePressedEventHandler() {//Liefert einen Handler
         return onMousePressedEventHandler;
     }
 
@@ -205,7 +204,7 @@ class SceneGestures {
         return onScrollEventHandler;
     }
 
-    private EventHandler<MouseEvent> onMousePressedEventHandler = new EventHandler<MouseEvent>() {
+    private EventHandler<MouseEvent> onMousePressedEventHandler = new EventHandler<MouseEvent>() { //Handler für "Maus klick"
 
         public void handle(MouseEvent event) {
 
@@ -213,27 +212,28 @@ class SceneGestures {
             if( !event.isSecondaryButtonDown())
                 return;
 
-            sceneDragContext.mouseAnchorX = event.getSceneX();
+            sceneDragContext.mouseAnchorX = event.getSceneX(); //X/Y Koordinaten der Maus speichern (später benötig)
             sceneDragContext.mouseAnchorY = event.getSceneY();
 
-            sceneDragContext.translateAnchorX = simCanvas.getTranslateX();
+            sceneDragContext.translateAnchorX = simCanvas.getTranslateX(); //Die akutelle Änderungsrate speichern (später nötig)
             sceneDragContext.translateAnchorY = simCanvas.getTranslateY();
 
         }
 
     };
 
-    private EventHandler<MouseEvent> onMouseDraggedEventHandler = new EventHandler<MouseEvent>() {
+    private EventHandler<MouseEvent> onMouseDraggedEventHandler = new EventHandler<MouseEvent>() {//Handler für "Drag"
         public void handle(MouseEvent event) {
 
             // right mouse button => panning
             if( !event.isSecondaryButtonDown())
                 return;
 
+            //Berechnet den Abstand zwischen der alten und der neuen Mausposition
             simCanvas.setTranslateX(sceneDragContext.translateAnchorX + event.getSceneX() - sceneDragContext.mouseAnchorX);
             simCanvas.setTranslateY(sceneDragContext.translateAnchorY + event.getSceneY() - sceneDragContext.mouseAnchorY);
             
-            holdCanvasInVisibleArea(simPane);
+            holdCanvasInVisibleArea(simPane); //Hält die Canvas im Sichtbaren bereich
             event.consume();
         }
     };
@@ -242,34 +242,36 @@ class SceneGestures {
      * Mouse wheel handler: zoom to pivot point
      * -Überarbeitet von Dominik 22.10.2016 (Zoom verbessert, Das Sichtfenster in die Mitte gesetzt, Größe der Fläche angepasst)
      */
-    private EventHandler<ScrollEvent> onScrollEventHandler = new EventHandler<ScrollEvent>() {
+    private EventHandler<ScrollEvent> onScrollEventHandler = new EventHandler<ScrollEvent>() { //Handler für "Zoom"
 
         @Override
         public void handle(ScrollEvent event) {
 
-            double delta = 1.15;
+            double delta = 1.15; //Zoomrate / Zoomgeschwindigkeit
 
-            double scale = simCanvas.getScale(); // currently we only use Y, same value is used for X
-            double oldScale = scale;
+            double scale = simCanvas.getScale(); //scalierung
+            double oldScale = scale; 
 
-            if (event.getDeltaY() < 0)
+            if (event.getDeltaY() < 0) //Überorüfen in welche richtung das Mausrad gedreht wird
                 scale /= delta;
             else
                 scale *= delta;
 
-            scale = clamp( scale, MIN_SCALE, MAX_SCALE);
+            scale = clamp( scale, MIN_SCALE, MAX_SCALE); //Gibt Scale zurück falls es zwischen Min und Max ist, ansonsten das jeweile min / max
 
             double f = (scale / oldScale)-1;
 
+            //Koordinaten für das Sichtfenster berechnen
             double dx = (event.getSceneX() - (simCanvas.getBoundsInParent().getWidth()/2 + simCanvas.getBoundsInParent().getMinX()));
             double dy = (event.getSceneY() - (simCanvas.getBoundsInParent().getHeight()/2 + simCanvas.getBoundsInParent().getMinY()));
 
+            //Setzt das "Sichtfenster" an eine angepasste Stelle 
             simCanvas.setScale( scale);
 
             // note: pivot value must be untransformed, i. e. without scaling
             simCanvas.setPivot(f*dx, f*dy);
             
-            holdCanvasInVisibleArea(simPane);
+            holdCanvasInVisibleArea(simPane); //Sorgt dafür das die Arbeitsfläche nicht aus dem Sichtbereich geschoben werden kann
 
             event.consume();
 
@@ -278,7 +280,7 @@ class SceneGestures {
     };
 
 
-    public static double clamp( double value, double min, double max) {
+    public static double clamp( double value, double min, double max) { //Gibt den Wert zurück der zwischen Min und Max liegt, ansonsten das jeweile min / max
 
         if( Double.compare(value, min) < 0)
             return min;
@@ -340,7 +342,7 @@ class SceneGestures {
         canvas.setTranslateY(falseTransY);
     }
     
-    public void holdCanvasInVisibleArea(AnchorPane simPane) {
+    public void holdCanvasInVisibleArea(AnchorPane simPane) { //Hält die Arbeitsfläche im Sichtbereich
         double realTransX = getRealTranslateX(simCanvas);
         double realTransY = getRealTranslateY(simCanvas);
         double scale = simCanvas.getScale();

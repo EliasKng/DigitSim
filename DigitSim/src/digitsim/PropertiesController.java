@@ -14,7 +14,7 @@ import javafx.fxml.Initializable;
  *
  * @author Elias
  */
-public class PropertiesController implements Initializable {
+public class PropertiesController implements Initializable { //Klasse für das Einstellungs-Fenster
 
     /**
      * Initializes the controller class.
