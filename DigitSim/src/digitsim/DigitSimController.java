@@ -201,13 +201,15 @@ public class DigitSimController extends Pane{
         boolean result = false;
         
         for(Element i : elements){ //elemente durchgehen...
-            double element_x = i.getX() - (i.getWidth() / 3);         //X,Width,Height werden an das Element angepasst, da das Element in der mitte der Maus plaziert wird! 
-            double element_y = i.getY() - (i.getWidth() / 3);
-            double element_w = i.getWidth() + (i.getWidth() / 1.5);     //Es mag etwas viel vorkommen (besonderst bei den Y Coords, ist allerdings notwendig
-            double element_h = i.getHeight() + (i.getHeight() / 1.5);   //wegen den out & inputs!!
-            //Abfrage ob sich der Mauszeiger im Block eines Elements befindet.
+            double element_x = i.getX() - (i.getWidth() / 2.4);         //X,Width,Height werden an das Element angepasst, da das Element in der mitte der Maus plaziert wird! 
+            double element_y = i.getY() - (i.getWidth() / 2.4);
+            double element_w = i.getWidth() + (i.getWidth() / 1.2);     //Es mag etwas viel vorkommen (besonderst bei den Y Coords, ist allerdings notwendig
+            double element_h = i.getHeight() + (i.getHeight() / 1.2);   //wegen den out & inputs!!
             
-            if(event.getX() > element_x && event.getX() < element_x + element_w && event.getY() > element_y && event.getY() < element_y + element_h) { result = true;}
+            //Abfrage ob sich der Mauszeiger im Block eines Elements befindet.
+            if(event.getX() > element_x && event.getX() < element_x + element_w && event.getY() > element_y && event.getY() < element_y + element_h) {
+                result = true;
+            }
             
 
         }
@@ -219,10 +221,10 @@ public class DigitSimController extends Pane{
         
         for(Element i : elements){ //elemente durchgehen...
             
-            double element_x = i.getX() - (i.getWidth() / 3);         //X,Width,Height werden an das Element angepasst, da das Element in der mitte der Maus plaziert wird! 
-            double element_y = i.getY() - (i.getWidth() / 3);
-            double element_w = i.getWidth() + (i.getWidth() / 1.5);     //Es mag etwas viel vorkommen (besonderst bei den Y Coords, ist allerdings notwendig
-            double element_h = i.getHeight() + (i.getHeight() / 1.5);   //wegen den out & inputs!!
+            double element_x = i.getX() - (i.getWidth() / 2.4);         //X,Width,Height werden an das Element angepasst, da das Element in der mitte der Maus plaziert wird! 
+            double element_y = i.getY() - (i.getWidth() / 2.4);
+            double element_w = i.getWidth() + (i.getWidth() / 1.2);     //Es mag etwas viel vorkommen (besonderst bei den Y Coords, ist allerdings notwendig
+            double element_h = i.getHeight() + (i.getHeight() / 1.2);   //wegen den out & inputs!!
             
             
             //Abfrage ob sich der Mauszeiger im Block eines Elements befindet.
