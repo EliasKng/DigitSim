@@ -205,7 +205,7 @@ public class DigitSimController extends Pane{
           // input(element1)[0] = input(element2)[0] 
           // siehe connection.java für parameter
         allConnections.addConnection(0/*element 0*/, true/*eingang */, 0/*index vom eingang 0*/, 1, true, 0);
-        elements.get(1).setInput(0, 1);
+        elements.get(0).setInput(0, 1);
         allConnections.update();
       }
     }
