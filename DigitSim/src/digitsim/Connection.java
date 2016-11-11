@@ -72,8 +72,7 @@ public class Connection {
                 if(DigitSimController.elements.get(d.indexFirstElement).inputs[d.indexFirst] > 0 || DigitSimController.elements.get(d.indexSecondElement).inputs[d.indexSecond] > 0)
                 {
                     newVal = 1;
-                }
-                
+                }        
                 DigitSimController.elements.get(d.indexFirstElement).setInput(d.indexFirst, newVal);
                 DigitSimController.elements.get(d.indexSecondElement).setInput(d.indexSecond, newVal);
             }

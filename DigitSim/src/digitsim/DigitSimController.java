@@ -209,6 +209,7 @@ public class DigitSimController extends Pane{
         allConnections.update();
       }
     }
+  
     
     /**
      * Gibt zurück ob sich die Maus über einer Node (Element) befindet
