@@ -21,10 +21,13 @@ import javafx.stage.Stage;
 public class DigitSimController extends Pane{
     //************************ Globals ********************************
     DraggableCanvas simCanvas = new DraggableCanvas();
-    private static ArrayList<Element> elements = new ArrayList<>();
+    public static ArrayList<Element> elements = new ArrayList<>();
     NodeGestures nodeGestures;
     SceneGestures sceneGestures;
     String selectedElement = "NONE";
+    
+    Connection allConnections;
+    
      /**
      * FXML OBJEKT-Erstellungs-Bereich:
      * Jedes Element, welches in der DigitSim.FXML verwendet wird, muss in folgendem wege im Code noch erstellt werden.
@@ -56,10 +59,10 @@ public class DigitSimController extends Pane{
     public void initialize() {//initialize Funktion: wird direkt beim Starten der FXML aufgerufen.
         addSimCanvas();
         
-        
         simCanvas.addGrid(simCanvas.getPrefWidth(), simCanvas.getPrefHeight());
         
         loadBtnGroup();  
+
         
         //Verschiebt simCanvas ein bisschen
         simCanvas.translateXProperty().set(25);
@@ -73,8 +76,12 @@ public class DigitSimController extends Pane{
         simPane.addEventFilter( MouseEvent.MOUSE_DRAGGED, sceneGestures.getOnMouseDraggedEventHandler());
         simPane.addEventFilter( ScrollEvent.ANY, sceneGestures.getOnScrollEventHandler());
         
-        
-        AND and0 = new AND(simCanvas);
+
+         allConnections = new Connection();
+         
+         // beide ersten eingtänge sollten nun 1 sein
+         
+         
     }
     
     @FXML
@@ -86,7 +93,7 @@ public class DigitSimController extends Pane{
          */
         simCanvas.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>(){
             @Override
-            public void handle(MouseEvent event){
+            public void handle(MouseEvent event){          
                 if(event.isPrimaryButtonDown() && !isMouseOverNode(event)){
                     addElement(event);
                 }
@@ -186,6 +193,17 @@ public class DigitSimController extends Pane{
       if(btnNAND.isSelected()){
             elements.add(new Element_NAND(getXAdaptGrid(event), getYAdaptGrid(event), 4, nodeGestures));
             simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());        
+      }
+      
+      if(elements.size() > 1) // nachdem 2 element plaziert wurden, diese verbinden, jeweils die ersten in puts von beiden
+      {
+          // von beiden wird jeweils input[0] verbunden
+          // wenn bei einem der input[0] geändert wird, also auch beim anderen element
+          // input(element1)[0] = input(element2)[0] 
+          // siehe connection.java für parameter
+        allConnections.addConnection(0/*element 0*/, true/*eingang */, 0/*index vom eingang 0*/, 1, true, 0);
+        elements.get(1).setInput(0, 1);
+        allConnections.update();
       }
     }
     
