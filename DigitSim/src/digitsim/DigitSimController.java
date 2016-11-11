@@ -11,6 +11,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 /**
  * Digitsim.fxml Controller class
@@ -146,6 +148,7 @@ public class DigitSimController extends Pane{
         System.out.printf("simCanvas TranslateX: %.1f\n", simCanvas.getTranslateX());
         System.out.printf("simCanvas TranslateY: %.1f\n", simCanvas.getTranslateY());
         System.out.printf("simCanvas Scale: %.1f\n", simCanvas.getScale());
+        drawNodeCheckAreas();
     }
     
     public File chooseFile(String description, String extension){ //Die Funktion öffnet einen Filebrowser um eine Datei auszuwählen und lädt dise anschließend.
@@ -211,6 +214,21 @@ public class DigitSimController extends Pane{
         }
         return result;
     }  
+    
+    public void drawNodeCheckAreas() {
+        boolean result = false;
+        
+        for(Element i : elements){ //elemente durchgehen...
+            
+            double element_x = i.getX() - (i.getWidth() / 1.5);         //X,Width,Height werden an das Element angepasst, da das Element in der mitte der Maus plaziert wird! 
+            double element_y = i.getY() - (i.getHeight() / 1.5);
+            double element_w = i.getWidth() + (i.getWidth() / 1.5);     //Es mag etwas viel vorkommen (besonderst bei den Y Coords, ist allerdings notwendig
+            double element_h = i.getHeight() + (i.getHeight() / 1.5);   //wegen den out & inputs!!
+            //Abfrage ob sich der Mauszeiger im Block eines Elements befindet.
+            Rectangle rec = Draw.drawRectangle(element_x, element_y, element_w, element_h, 0, 0, Color.RED, 0.0, 2);
+            simCanvas.getChildren().add(rec);
+        }
+    }
     
     /**
      * Nimmt die X-Mauskoordinate und passt sie an das Grid an
