@@ -6,6 +6,7 @@
 package digitsim;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -18,6 +19,7 @@ import javafx.scene.shape.Rectangle;
  *
  * @author Dominik
  * -Überarbeitet von Dome 06.11.2016
+ * -Überarbeitet von Dome 11.11.2016
  */
 public class Element_NAND extends Element{
 
@@ -48,7 +50,8 @@ public class Element_NAND extends Element{
 
         
             numInputs = pInputs;
-            inputs = new int[]{0, 0, 0, 0};
+            inputs = new int[numInputs];
+            Arrays.fill(inputs, 0); //Setzt alle Inputs auf '0
             grp = new Group(rec, l0, cOutput, lbl);
             for(int i = 0; i < numInputs; i++)
             {
@@ -104,19 +107,6 @@ public class Element_NAND extends Element{
     }
 
     @Override
-    public int getOutput(int pOut) {
-        update();
-        if(pOut == 1){
-            if(numOutputs == 4){
-                return (inputs[0] == 1 && inputs[1] == 1 && inputs[2] == 1 && inputs[3] == 1) ? 1 : 0;  
-            }else{
-                return (inputs[0] == 1 && inputs[1] == 1) ? 1 : 0; 
-            }
-        }
-        return 0;
-    }
-
-    @Override
     public int getInputCount() {
         return numInputs;
     }
@@ -160,18 +150,18 @@ public class Element_NAND extends Element{
     
     @Override
     public void update(){
-        if(numInputs == 4){
-            if(inputs[0] == 1 && inputs[1] == 1 && inputs[2] == 1 && inputs[3] == 1){
-                l0.setStroke(Color.RED);
-            }else{
-                l0.setStroke(Color.BLACK);
+        boolean logic = true;
+        for(int i = 0; i < numInputs; i++){ //Eingänge durchiterieren & Logik überprüfen
+            if(inputs[i] == 0){
+                logic = false;
             }
-        }else{
-            if(inputs[0] == 1 && inputs[1] == 1){
-                l0.setStroke(Color.RED);
-            }else{
+        }
+        if(logic){                             
+            outputs[0] = 0;
             l0.setStroke(Color.BLACK);
-        }
-        }
+        }else{
+            outputs[0] = 1;
+            l0.setStroke(Color.RED);
+        }      
     }
 }

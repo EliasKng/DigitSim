@@ -7,6 +7,7 @@ package digitsim;
 
 import java.awt.Font;
 import java.util.ArrayList;
+import java.util.Arrays;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -17,6 +18,7 @@ import javafx.scene.shape.Rectangle;
 /**
  *
  * @author Elias (Nach Dominiks AND - Vorlage)
+ * -Überarbeitet von Dome 11.11.2016
  */
 public class Element_OR extends Element{
 
@@ -46,7 +48,8 @@ public class Element_OR extends Element{
         l0 = Draw.drawLine((pX + 80), (pY + 40), (pX + 100), (pY + 40), Color.BLACK, 5); 
         
             numInputs = pInputs;
-            inputs = new int[]{0, 0, 0, 0};
+            inputs = new int[numInputs];
+            Arrays.fill(inputs, 0); //Setzt alle Inputs auf '0
             grp = new Group(rec, lbl, l0, lUnderL, lbl2);
             for(int i = 0; i < numInputs; i++)
             {
@@ -102,19 +105,6 @@ public class Element_OR extends Element{
     }
 
     @Override
-    public int getOutput(int pOut) {
-        update();
-        if(pOut == 1){
-            if(numOutputs == 4){
-                return (inputs[0] == 1 && inputs[1] == 1 && inputs[2] == 1 && inputs[3] == 1) ? 1 : 0;  
-            }else{
-                return (inputs[0] == 1 && inputs[1] == 1) ? 1 : 0; 
-            }
-        }
-        return 0;
-    }
-
-    @Override
     public int getInputCount() {
         return numInputs;
     }
@@ -158,18 +148,18 @@ public class Element_OR extends Element{
     
     @Override
     public void update(){
-        if(numInputs == 4){
-            if(inputs[0] == 1 && inputs[1] == 1 && inputs[2] == 1 && inputs[3] == 1){
-                l0.setStroke(Color.RED);
-            }else{
-                l0.setStroke(Color.BLACK);
+        boolean logic = false;
+        for(int i = 0; i < numInputs; i++){ //Eingänge durchiterieren & Logik überprüfen
+            if(inputs[i] == 1){
+                logic = true;
             }
+        }
+        if(logic){                             
+            outputs[0] = 1;
+            l0.setStroke(Color.RED);
         }else{
-            if(inputs[0] == 1 && inputs[1] == 1){
-                l0.setStroke(Color.RED);
-            }else{
+            outputs[0] = 0;
             l0.setStroke(Color.BLACK);
-        }
-        }
+        }  
     }
 }

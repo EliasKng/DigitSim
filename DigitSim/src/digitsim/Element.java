@@ -10,6 +10,7 @@ import javafx.scene.Group;
 /**
  *
  * @author Dominik
+ * -Überarbeitet von Dome 11.11.2016
  * 
  * Die Klasse ist die Mutterklasse/Mainclass für die Elemente
  */
@@ -32,7 +33,6 @@ abstract class Element {
     abstract public double getWidth();
     abstract public double getHeight();
     abstract public void setInput(int pInput, int pValue); //Einen Input auswählen und auf 0 o. 1 setzen
-    abstract public int getOutput(int pOut);           //Den output bekommen (0 o. 1)
     abstract public int getInputCount();       //Anzahl der Inputs bekommen (z.b 2 bei nem normalen AND)
     abstract public int getOutputCount();     //anzahl der Outputs (Z.b 1 bei AND)
     abstract public double getInputX(int pInput); //Koordinaten des jeweiligen Inputs bekommen
@@ -47,5 +47,10 @@ abstract class Element {
     
     public void setTranslateY(double pY){ //Bewegt das Element
         grp.setTranslateY(pY);
+    }
+    
+    public int getOutput(int pOut) {
+        update();
+        return outputs[pOut];
     }
 }

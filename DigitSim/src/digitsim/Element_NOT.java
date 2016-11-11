@@ -18,6 +18,7 @@ import javafx.scene.shape.Rectangle;
  *
  * @author Dominik
  * -Überarbeitet von Dome 06.11.2016
+ * -Überarbeitet von Dome 11.11.2016
  */
 public class Element_NOT extends Element{
 
@@ -46,8 +47,8 @@ public class Element_NOT extends Element{
         cOutput = Draw.drawCircle(pX+88, pY+40, 5, Color.BLACK, 5, false, 5);
 
         
-            numInputs = pInputs;
-            inputs = new int[]{0, 0, 0, 0};
+            numInputs = 1; //Input mit mehr als 1 Eingang ist sinnlos!
+            inputs = new int[]{0};
             grp = new Group(rec, l0, lbl, cOutput);
             for(int i = 0; i < numInputs; i++)
             {
@@ -103,19 +104,6 @@ public class Element_NOT extends Element{
     }
 
     @Override
-    public int getOutput(int pOut) {
-        update();
-        if(pOut == 1){
-            if(numOutputs == 4){
-                return (inputs[0] == 1 && inputs[1] == 1 && inputs[2] == 1 && inputs[3] == 1) ? 1 : 0;  
-            }else{
-                return (inputs[0] == 1 && inputs[1] == 1) ? 1 : 0; 
-            }
-        }
-        return 0;
-    }
-
-    @Override
     public int getInputCount() {
         return numInputs;
     }
@@ -159,18 +147,12 @@ public class Element_NOT extends Element{
     
     @Override
     public void update(){
-        if(numInputs == 4){
-            if(inputs[0] == 1 && inputs[1] == 1 && inputs[2] == 1 && inputs[3] == 1){
-                l0.setStroke(Color.RED);
-            }else{
-                l0.setStroke(Color.BLACK);
-            }
+        if(inputs[0] == 0){
+            outputs[0] = 1;
+            lines.get(0).setStroke(Color.RED);
         }else{
-            if(inputs[0] == 1 && inputs[1] == 1){
-                l0.setStroke(Color.RED);
-            }else{
-            l0.setStroke(Color.BLACK);
-        }
+            outputs[0] = 0;
+            lines.get(0).setStroke(Color.BLACK);
         }
     }
 }

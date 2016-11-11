@@ -84,6 +84,8 @@ public class DigitSimController extends Pane{
          // beide ersten eingtänge sollten nun 1 sein
          
          
+         
+         
     }
     
     @FXML
@@ -174,11 +176,14 @@ public class DigitSimController extends Pane{
      */
     public void addElement(MouseEvent event){
       if(btnAND.isSelected()){
-            elements.add(new Element_AND(getXAdaptGrid(event), getYAdaptGrid(event), 20, nodeGestures));
-            simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());        
+            elements.add(new Element_AND(getXAdaptGrid(event), getYAdaptGrid(event), 2, nodeGestures));
+            simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
+            elements.get(0).setInput(0, 1);
+            elements.get(0).setInput(1, 1);
+            elements.get(0).update();
       } 
       else if(btnOR.isSelected()){
-            elements.add(new Element_OR(getXAdaptGrid(event), getYAdaptGrid(event), 4, nodeGestures));
+            elements.add(new Element_OR(getXAdaptGrid(event), getYAdaptGrid(event), 2, nodeGestures));
             simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());        
       } 
       else if(btnNOT.isSelected()){
@@ -186,15 +191,15 @@ public class DigitSimController extends Pane{
             simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());        
       } 
       else if(btnNOR.isSelected()){
-            elements.add(new Element_NOR(getXAdaptGrid(event), getYAdaptGrid(event), 3, nodeGestures));
+            elements.add(new Element_NOR(getXAdaptGrid(event), getYAdaptGrid(event), 4, nodeGestures));
             simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());        
       }
       else if(btnXOR.isSelected()){
-            elements.add(new Element_XOR(getXAdaptGrid(event), getYAdaptGrid(event), 8, nodeGestures));
+            elements.add(new Element_XOR(getXAdaptGrid(event), getYAdaptGrid(event), 2, nodeGestures));
             simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());        
       }
       if(btnNAND.isSelected()){
-            elements.add(new Element_NAND(getXAdaptGrid(event), getYAdaptGrid(event), 2, nodeGestures));
+            elements.add(new Element_NAND(getXAdaptGrid(event), getYAdaptGrid(event), 4, nodeGestures));
             simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());        
       }
       
@@ -204,9 +209,9 @@ public class DigitSimController extends Pane{
           // wenn bei einem der input[0] geändert wird, also auch beim anderen element
           // input(element1)[0] = input(element2)[0] 
           // siehe connection.java für parameter
-        allConnections.addConnection(0/*element 0*/, true/*eingang */, 0/*index vom eingang 0*/, 1, true, 0);
-        elements.get(0).setInput(0, 1);
-        allConnections.update();
+        //allConnections.addConnection(0/*element 0*/, true/*eingang */, 0/*index vom eingang 0*/, 1, true, 0);
+       // elements.get(0).setInput(0, 1);
+        //allConnections.update();   
       }
     }
   
