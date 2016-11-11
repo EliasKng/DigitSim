@@ -26,3 +26,8 @@
 .menuItem:focused {
     -fx-background-color: #4295d5;
 }
+
+/*---Slider---*/
+.slider:focused {
+    /*-fx-shadow-highlight-color: transparent;*/
+}

@@ -95,7 +95,7 @@
       <children>
         <Accordion layoutX="5.0" layoutY="14.0">
           <panes>
-            <TitledPane animated="false" text="Elementare Grundbausteine">
+            <TitledPane animated="false" prefHeight="426.0" text="Elementare Grundbausteine">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="378.0" prefWidth="206.0">
                   <children>
@@ -119,6 +119,7 @@
                         <Label alignment="CENTER" layoutX="0.0" layoutY="266.0" prefHeight="27.0" prefWidth="60.0" text="NAND" />
                       </children>
                     </Group>
+                    <Slider fx:id="inputSlider" layoutX="12.0" layoutY="355.0" onMouseReleased="#inputSliderOnDragDone" prefWidth="182.0" />
                   </children>
                 </AnchorPane>
               </content>

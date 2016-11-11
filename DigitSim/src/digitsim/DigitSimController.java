@@ -1,6 +1,8 @@
 package digitsim;
 import java.io.File;
 import java.util.ArrayList;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -50,6 +52,8 @@ public class DigitSimController extends Pane{
     private AnchorPane simPane;
     @FXML
     private Button btnStart;
+    @FXML
+    private Slider inputSlider;
     
     //Constructor
     public DigitSimController() {
@@ -57,13 +61,15 @@ public class DigitSimController extends Pane{
     
     @FXML
     public void initialize() {//initialize Funktion: wird direkt beim Starten der FXML aufgerufen.
+        
         addSimCanvas();
+        setSliderProperties();
+        
         
         simCanvas.addGrid(simCanvas.getPrefWidth(), simCanvas.getPrefHeight());
         
         loadBtnGroup();  
 
-        
         //Verschiebt simCanvas ein bisschen
         simCanvas.translateXProperty().set(25);
         simCanvas.translateYProperty().set(25);
@@ -91,7 +97,7 @@ public class DigitSimController extends Pane{
         /**
          * Author: Dominik
          * 
-         * Sobalt man klickt wird ein neuer Baustein hinzugefügt
+         * Sobald man klickt wird ein neuer Baustein hinzugefügt
          */
         simCanvas.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>(){
             @Override
@@ -119,7 +125,22 @@ public class DigitSimController extends Pane{
         btnNAND.setToggleGroup(group);
         btnNOR.setToggleGroup(group);
         btnXOR.setToggleGroup(group);
-        
+    }
+    
+    /**
+    * Bildet nötige Gruppen für Togglebuttons (damit immer nur einer Selected sein kann)
+    * 
+    * @author Elias
+    * 
+    */
+    public void setSliderProperties() {
+        inputSlider.setMax(8);
+        inputSlider.setMin(2);
+        inputSlider.setShowTickLabels(true);
+        inputSlider.setShowTickMarks(true);
+        inputSlider.setMajorTickUnit(2);
+        inputSlider.setMinorTickCount(1);
+        inputSlider.setBlockIncrement(2);
     }
     //*********ON ACTION bereich: wird verwendet um z.B. Buttonclicks auszuwerten**********
     /**
@@ -155,9 +176,14 @@ public class DigitSimController extends Pane{
         System.out.printf("simCanvas TranslateX: %.1f\n", simCanvas.getTranslateX());
         System.out.printf("simCanvas TranslateY: %.1f\n", simCanvas.getTranslateY());
         System.out.printf("simCanvas Scale: %.1f\n", simCanvas.getScale());
-        drawNodeCheckAreas();
+        //drawNodeCheckAreas();
+        System.out.println(inputSlider.getValue());
     }
-    
+    public void inputSliderOnDragDone() {
+        double value = inputSlider.getValue();
+        value = Math.round(value);
+        inputSlider.setValue(value);
+    }
     public File chooseFile(String description, String extension){ //Die Funktion öffnet einen Filebrowser um eine Datei auszuwählen und lädt dise anschließend.
         FileChooser fc = new FileChooser();
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(description, extension);
@@ -165,6 +191,7 @@ public class DigitSimController extends Pane{
         File selectedFile = fc.showOpenDialog(null);  
         return selectedFile;
     }
+    
     
     /**
      * 
@@ -174,11 +201,11 @@ public class DigitSimController extends Pane{
      */
     public void addElement(MouseEvent event){
       if(btnAND.isSelected()){
-            elements.add(new Element_AND(getXAdaptGrid(event), getYAdaptGrid(event), 2, nodeGestures));
+            elements.add(new Element_AND(getXAdaptGrid(event), getYAdaptGrid(event), (int) inputSlider.getValue(), nodeGestures));
             simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
       } 
       else if(btnOR.isSelected()){
-            elements.add(new Element_OR(getXAdaptGrid(event), getYAdaptGrid(event), 2, nodeGestures));
+            elements.add(new Element_OR(getXAdaptGrid(event), getYAdaptGrid(event), (int) inputSlider.getValue(), nodeGestures));
             simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());        
       } 
       else if(btnNOT.isSelected()){
@@ -186,15 +213,15 @@ public class DigitSimController extends Pane{
             simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());        
       } 
       else if(btnNOR.isSelected()){
-            elements.add(new Element_NOR(getXAdaptGrid(event), getYAdaptGrid(event), 4, nodeGestures));
+            elements.add(new Element_NOR(getXAdaptGrid(event), getYAdaptGrid(event),(int) inputSlider.getValue(), nodeGestures));
             simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());        
       }
       else if(btnXOR.isSelected()){
-            elements.add(new Element_XOR(getXAdaptGrid(event), getYAdaptGrid(event), 2, nodeGestures));
+            elements.add(new Element_XOR(getXAdaptGrid(event), getYAdaptGrid(event), (int) inputSlider.getValue(), nodeGestures));
             simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());        
       }
       if(btnNAND.isSelected()){
-            elements.add(new Element_NAND(getXAdaptGrid(event), getYAdaptGrid(event), 4, nodeGestures));
+            elements.add(new Element_NAND(getXAdaptGrid(event), getYAdaptGrid(event), (int) inputSlider.getValue(), nodeGestures));
             simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());        
       }
       
