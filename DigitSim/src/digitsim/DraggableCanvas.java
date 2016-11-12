@@ -8,10 +8,15 @@ package digitsim;
 import java.util.ArrayList;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Side;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
@@ -103,6 +108,8 @@ class DragContext {
  */
 class NodeGestures {
     private static ArrayList<Element> elements = new ArrayList<>(); //Elemente
+    private ContextMenu contextMenu;
+    private Group temporaryGroup;
    
     private DragContext nodeDragContext = new DragContext(); //Nötige Daten für Berechnungen
 
@@ -110,6 +117,33 @@ class NodeGestures {
 
     public NodeGestures( DraggableCanvas canvas) { //Consturctor
         this.canvas = canvas;
+        this.contextMenu = new ContextMenu(); //Menü das bei einem Rechtsklick auf ein Element angezeigt wird
+        addContext();
+    }
+    
+    //Rechtsklick Menü-Items hinzufügen
+    private void addContext(){
+        MenuItem deleteItem = new MenuItem("Entfernen");
+        MenuItem propertiesItem = new MenuItem("Eigenschaften");
+        
+        deleteItem.setOnAction(new EventHandler<ActionEvent>() { //Wird ausgelößt wenn man bei einem Element "Entfernen" auswählt
+            public void handle(ActionEvent e) {
+               elements = DigitSimController.getElements();
+               for(Element i : elements){ //Alle Elemente durchgehen, um das zu finden das Ausgewählt ist
+                   if(i.getGroup().hashCode() == temporaryGroup.hashCode()){ //Der HashCode eines Objektes ist immer EINMALIG, sozusagen eine "Personalnummer", eignet sich daher gut für den "Gleichheitstest"
+                       canvas.getChildren().remove(temporaryGroup); //Die "Zeichnung" entfernen, da diese bestehen bleibt wenn das Element gelöscht wird
+                       elements.remove(i); //Das Element entfernen
+                       break; //Schleife abbrechen, da gefunden
+                   }
+               }
+            }});      
+        
+        propertiesItem.setOnAction(new EventHandler<ActionEvent>() { //Wird ausgelößt wenn man bei einem Element "Eigenschaften" auswählt
+            public void handle(ActionEvent e) {
+               
+            }});
+        
+        contextMenu.getItems().addAll(deleteItem, propertiesItem);
     }
 
     public EventHandler<MouseEvent> getOnMousePressedEventHandler() { //Liefert einen Handler
@@ -124,18 +158,20 @@ class NodeGestures {
 
         public void handle(MouseEvent event) {
 
-            // Linker Mausknopf -> Verschieben
-            if( !event.isPrimaryButtonDown())
-                return;
-
+            // Rechtsklick
+            if( !event.isPrimaryButtonDown()){
+                temporaryGroup = (Group) event.getSource();
+                contextMenu.show((Node)event.getSource(), Side.RIGHT, 0, 0); //Rechtsklick-Menü anzeigen
+                event.consume(); 
+            }else{//Linksklick -> Verschieben
             nodeDragContext.mouseAnchorX = event.getSceneX(); //X/Y Koordinaten der Maus speichern (später benötig)
             nodeDragContext.mouseAnchorY = event.getSceneY();
 
             Node node = (Node) event.getSource(); //Das betroffene Element bekommen
 
             nodeDragContext.translateAnchorX = node.getTranslateX(); //Die akutelle Änderungsrate speichern (später nötig)
-            nodeDragContext.translateAnchorY = node.getTranslateY();
-
+            nodeDragContext.translateAnchorY = node.getTranslateY(); 
+            }
         }
 
     };
@@ -181,7 +217,7 @@ class SceneGestures { //Klasse für Zoom und verschiebung der Arbeitsfläche
     DraggableCanvas simCanvas; //Arbeitsfläche
     AnchorPane simPane;
 
-    public void placeCanvasMiddle(){//Sichtbereich in die Mitte setzen
+    private void placeCanvasMiddle(){//Sichtbereich in die Mitte setzen
          simCanvas.setTranslateX(sceneDragContext.translateAnchorX - (simCanvas.getPrefWidth() / 2));
          simCanvas.setTranslateY(sceneDragContext.translateAnchorY - (simCanvas.getPrefHeight() / 2));
     }

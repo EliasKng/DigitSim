@@ -23,7 +23,6 @@ public class DigitSimController extends Pane{
     private static ArrayList<Element> elements; //Alle Elemente kommen hier rein, static damit andere Klassen (einfach) darauf zugreifen können
     NodeGestures nodeGestures;  //Die handler für die Nodes (z.B Elemente) beziehen
     SceneGestures sceneGestures; //Die handler für die Arbeitsfläche beziehen
-    DigitSim digitSim;
     Connection allConnections; //Verbindungen zwischen Elementen werden hier gespeichert
     
      /**
@@ -138,6 +137,7 @@ public class DigitSimController extends Pane{
     * -Bearbeitet von Dominik 22.10.16
     * -Bearbeitet von Tim 23.10.16
     * -Bearbeitet von Dominik 31.10.16
+    * -Bearbeitet von Dominik 12.11.16
     */
     public void mItemCloseAction(ActionEvent event){ //Programm schließen
         System.exit(0);

@@ -39,7 +39,7 @@ public class DigitSim extends Application { //Hauptklasse
     /**
      * Öffnet das Hauptfenster (den Seminator)
      */
-    public static void openMainWindow() {
+    private static void openMainWindow() {
         stage = GenFunctions.openFXML("DigitSim.fxml", "Seminator", "icon.png");
         stage.setMinWidth(800);
         stage.setMinHeight(600);
