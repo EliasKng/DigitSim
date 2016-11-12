@@ -111,4 +111,9 @@ public class Connection { //Speichert die Verbindungen
             DigitSimController.getElements().get(d.indexSecondElement).update();
         }
     }
+    //Author: Dominik
+    //Löscht alle Verbindungen
+    public void clear(){
+        connections.clear();
+    }
 }

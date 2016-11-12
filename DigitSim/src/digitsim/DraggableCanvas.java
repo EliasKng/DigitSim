@@ -181,7 +181,7 @@ class SceneGestures { //Klasse für Zoom und verschiebung der Arbeitsfläche
     DraggableCanvas simCanvas; //Arbeitsfläche
     AnchorPane simPane;
 
-    private void placeCanvasMiddle(){//Sichtbereich in die Mitte setzen
+    public void placeCanvasMiddle(){//Sichtbereich in die Mitte setzen
          simCanvas.setTranslateX(sceneDragContext.translateAnchorX - (simCanvas.getPrefWidth() / 2));
          simCanvas.setTranslateY(sceneDragContext.translateAnchorY - (simCanvas.getPrefHeight() / 2));
     }

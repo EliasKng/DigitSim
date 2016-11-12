@@ -10,8 +10,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 /**
  * Digitsim.fxml Controller class
@@ -22,10 +20,10 @@ import javafx.stage.Stage;
 public class DigitSimController extends Pane{
     //************************ Globals ********************************
     DraggableCanvas simCanvas = new DraggableCanvas(); //Arbeitsfläche / Fläche zum zeichnen
-    private static ArrayList<Element> elements = new ArrayList<>(); //Alle Elemente kommen hier rein, static damit andere Klassen (einfach) darauf zugreifen können
+    private static ArrayList<Element> elements; //Alle Elemente kommen hier rein, static damit andere Klassen (einfach) darauf zugreifen können
     NodeGestures nodeGestures;  //Die handler für die Nodes (z.B Elemente) beziehen
     SceneGestures sceneGestures; //Die handler für die Arbeitsfläche beziehen
-    
+    DigitSim digitSim;
     Connection allConnections; //Verbindungen zwischen Elementen werden hier gespeichert
     
      /**
@@ -59,7 +57,6 @@ public class DigitSimController extends Pane{
     
     @FXML
     public void initialize() {//initialize Funktion: wird direkt beim Starten der FXML aufgerufen.
-        
         addSimCanvas(); //Handler zum erstellen neuer Elemente zur Arbeitsfläche hinzufügen & Die Arbeitsfläche reinladen
         setSliderProperties(); //Einstellungen für den Silder zum einstellen der Eingange von Grundbausteinen
         
@@ -78,10 +75,10 @@ public class DigitSimController extends Pane{
         //EVENT FILTER (Diese werden ausgelöst sobald ein gewisses Ereignis eintritt)
         simPane.addEventFilter( MouseEvent.MOUSE_PRESSED, sceneGestures.getOnMousePressedEventHandler()); //Wenn z.b die Maus gedrückt wird, wird der getOnMousePressedEventHanlder ausgeführt
         simPane.addEventFilter( MouseEvent.MOUSE_DRAGGED, sceneGestures.getOnMouseDraggedEventHandler());
-        simPane.addEventFilter( ScrollEvent.ANY, sceneGestures.getOnScrollEventHandler());
-        
-
-         allConnections = new Connection(); //Klasse für die Verbindungen                     
+        simPane.addEventFilter( ScrollEvent.ANY, sceneGestures.getOnScrollEventHandler());  
+        elements = new ArrayList<Element>(); //Beschreibung oben
+        //Klasse für die Verbindungen    
+        allConnections = new Connection();
     }
     
     @FXML
@@ -159,6 +156,13 @@ public class DigitSimController extends Pane{
         stage = GenFunctions.openFXML("Help.fxml", "Hilfe", "icon.png"); //Öffnen des "Hilfe"-Fensters
         stage.setWidth(600);
         stage.setResizable(false);
+    }
+    
+    public void mItemNewOnAction(ActionEvent event) { //Hilfe öffnen
+        elements.clear();
+        simCanvas.getChildren().clear();
+        simCanvas.addGrid(simCanvas.getPrefWidth(), simCanvas.getPrefHeight());
+        allConnections.clear();
     }
     public void btnStartOnAction(ActionEvent event) {   //Der Startknopf dient bisher nur zur Ausgabe von Testwerten in der Konsole
         System.out.printf("simCanvas Weite: %.1f\n", simCanvas.getWidth());
