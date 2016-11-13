@@ -159,4 +159,17 @@ public class Draw {
         l.setStroke(dColor);
         return l;
     } 
+    
+    // @author tim (box check)
+    private static double abs(double d)
+    {
+        if(d < 0) return -d;
+        else return d;
+    }
+    public static boolean isInArea(double sourceX, double sourceY, double otherX, double otherY, double radius)
+    {
+        System.out.printf("Dif: %.1f, %.1f\n", (abs(sourceX - otherX)), (abs(sourceY - otherY)));
+        boolean result = (abs(sourceX - otherX) < radius) && (abs(sourceY - otherY) < radius);
+        return result;
+    }
 }

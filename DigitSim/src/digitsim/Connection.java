@@ -5,7 +5,9 @@
  */
 package digitsim;
 
+import static digitsim.DigitSimController.getElements;
 import java.util.ArrayList;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Line;
 
 /**
@@ -14,15 +16,15 @@ import javafx.scene.shape.Line;
  */
 public class Connection { //Speichert die Verbindungen
     
-    public class Data //Daten einer Verbinden (Zwischen zwei In oder Outputs
+    public class Data                       // Daten einer Verbindung
     {
-        public int indexFirstElement;
-        public boolean typeFirst;
-        public int indexFirst;
-        public int indexSecondElement;
-        public boolean typeSecond;
-        public int indexSecond;      
-        public Line connectionLine;
+        public int indexFirstElement;       // index des ersten elements im array
+        public boolean typeFirst;           // ein oder ausgang
+        public int indexFirst;              // index des jeweiligen ein oder ausgangs am ersten element
+        public int indexSecondElement;      // index des zweiten elements im array
+        public boolean typeSecond;          // ein oder ausgang
+        public int indexSecond;             // index des jeweiligen ein oder ausgangs am zweiten element
+        public Line connectionLine;         // line, die beide elemente verbindet
     }
     
     public static ArrayList<Data> connections = new ArrayList<Data>(); //Speichert alle Verbindungne
@@ -56,8 +58,6 @@ public class Connection { //Speichert die Verbindungen
     {
         for(Data d : connections)
         {
-
-           // public static Line drawLine(double p1X, double p1Y, double p2X, double p2Y, Color dColor,double dWidth){
             double lineX1;
             double lineY1;
             double lineX2;
@@ -91,10 +91,10 @@ public class Connection { //Speichert die Verbindungen
             }
             if((d.typeFirst == d.typeSecond) && d.typeFirst) // eingang mit eingang verbunden
             {
-              /*  lineX1 = DigitSimController.elements.get(d.indexFirstElement).getInputX(d.indexFirst);
-                lineY1 = DigitSimController.elements.get(d.indexFirstElement).getInputY(d.indexFirst);
-                lineX2 = DigitSimController.elements.get(d.indexSecondElement).getInputX(d.indexFirst);
-                lineY2 = DigitSimController.elements.get(d.indexSecondElement).getInputY(d.indexFirst);
+               /* lineX1 = DigitSimController.getElements().get(d.indexFirstElement).getInputX(d.indexFirst);
+                lineY1 = DigitSimController.getElements().get(d.indexFirstElement).getInputY(d.indexFirst);
+                lineX2 = DigitSimController.getElements().get(d.indexSecondElement).getInputX(d.indexFirst);
+                lineY2 = DigitSimController.getElements().get(d.indexSecondElement).getInputY(d.indexFirst);
                 d.connectionLine = Draw.drawLine(lineX1, lineY1, lineX2, lineY2, Color.BLACK, 2);*/
                 
                 int newVal = 0;
@@ -111,9 +111,42 @@ public class Connection { //Speichert die Verbindungen
             DigitSimController.getElements().get(d.indexSecondElement).update();
         }
     }
+    
+    /**
+     * @author tim
+     *  checkt, ob die maus über einem input ist und switcht diesen
+    * */
+    public void checkInputChange(MouseEvent event)
+    {
+        for(Element e : getElements())
+        {
+        // schauen ob in der nähe eines inputs geklickt wurde
+            for(int i = 0; i < e.numInputs; i++) {
+            double dInX = e.getInputX(i);
+            double dInY = e.getInputY(i);
+                  
+            if(Draw.isInArea(event.getX(), event.getY(), dInX, dInY, 10))
+            {
+                if(e.inputs[i] == 1)
+                    e.setInput(i, 0);
+                else 
+                    e.setInput(i, 1);
+                e.update();
+            }               
+            }
+        }       
+    }
+    
     //Author: Dominik
     //Löscht alle Verbindungen
     public void clear(){
         connections.clear();
+    }
+    
+    // Author Tim
+    // bestimmte verbindung entfernen
+    public void removeConnection(Connection c)
+    {
+        c.clear();
     }
 }

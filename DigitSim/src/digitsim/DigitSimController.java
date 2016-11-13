@@ -93,6 +93,7 @@ public class DigitSimController extends Pane{
                 if(event.isPrimaryButtonDown() && !isMouseOverNode(event)){
                     addElement(event); //Neuen Baustein einfügen
                 }
+                allConnections.checkInputChange(event);
             }
         });
         simPane.getChildren().addAll(simCanvas); //die Arbeitsfläche auf das Panel setzen
@@ -193,9 +194,10 @@ public class DigitSimController extends Pane{
      * Erstellt einen neuen Baustein & added diesen zu den Elementen sowie der Arbeitsfläche
      */
     public void addElement(MouseEvent event){
-      if(btnAND.isSelected()){ //And
+      if(btnAND.isSelected()){ //And  
             elements.add(new Element_AND(getXAdaptGrid(event), getYAdaptGrid(event), (int) inputSlider.getValue(), nodeGestures));
             simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
+            
       } 
       else if(btnOR.isSelected()){ //Or
             elements.add(new Element_OR(getXAdaptGrid(event), getYAdaptGrid(event), (int) inputSlider.getValue(), nodeGestures));
@@ -213,7 +215,7 @@ public class DigitSimController extends Pane{
             elements.add(new Element_XOR(getXAdaptGrid(event), getYAdaptGrid(event), (int) inputSlider.getValue(), nodeGestures));
             simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());        
       }
-      if(btnNAND.isSelected()){ //Nand
+      else if(btnNAND.isSelected()){ //Nand
             elements.add(new Element_NAND(getXAdaptGrid(event), getYAdaptGrid(event), (int) inputSlider.getValue(), nodeGestures));
             simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());        
       }
@@ -226,7 +228,7 @@ public class DigitSimController extends Pane{
           // input(element1)[0] = input(element2)[0] 
           // siehe connection.java für parameter
         //allConnections.addConnection(0/*element 0*/, true/*eingang */, 0/*index vom eingang 0*/, 1, true, 0);
-       // elements.get(0).setInput(0, 1);
+        //elements.get(0).setInput(0, 1);
         //allConnections.update();   
       }
     }
