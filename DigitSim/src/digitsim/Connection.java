@@ -8,6 +8,7 @@ package digitsim;
 import static digitsim.DigitSimController.getElements;
 import java.util.ArrayList;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 
 /**
@@ -65,43 +66,45 @@ public class Connection { //Speichert die Verbindungen
          
            if((d.typeFirst == d.typeSecond) && !d.typeFirst) // ausgang mit ausgang verbunden
            {
-           /* lineX1 = DigitSimController.elements.get(d.indexFirstElement).getOutputX(d.indexFirst);
-            lineY1 = DigitSimController.elements.get(d.indexFirstElement).getOutputY(d.indexFirst);
-            lineX2 = DigitSimController.elements.get(d.indexSecondElement).getOutputX(d.indexFirst);
-            lineY2 = DigitSimController.elements.get(d.indexSecondElement).getOutputX(d.indexFirst);
-             d.connectionLine = Draw.drawLine(lineX1, lineY1, lineX2, lineY2, Color.BLACK, 2);*/
+            lineX1 = DigitSimController.getElements().get(d.indexFirstElement).getOutputX(d.indexFirst);
+            lineY1 = DigitSimController.getElements().get(d.indexFirstElement).getOutputY(d.indexFirst);
+            lineX2 = DigitSimController.getElements().get(d.indexSecondElement).getOutputX(d.indexFirst);
+            lineY2 = DigitSimController.getElements().get(d.indexSecondElement).getOutputX(d.indexFirst);
+             DigitSimController.getSimCanvas().getChildren().add(d.connectionLine);
+             d.connectionLine = Draw.drawLine(lineX1, lineY1, lineX2, lineY2, Color.BLACK, 4);
            }
             if((d.typeFirst != d.typeSecond) && !d.typeFirst) // ausgang mit eingang verbunden
             {
-               /* lineX1 = DigitSimController.elements.get(d.indexFirstElement).getOutputX(d.indexFirst);
-                lineY1 = DigitSimController.elements.get(d.indexFirstElement).getOutputY(d.indexFirst);
-                lineX2 = DigitSimController.elements.get(d.indexSecondElement).getInputX(d.indexFirst);
-                lineY2 = DigitSimController.elements.get(d.indexSecondElement).getInputY(d.indexFirst);
-                d.connectionLine = Draw.drawLine(lineX1, lineY1, lineX2, lineY2, Color.BLACK, 2);*/
+                lineX1 = DigitSimController.getElements().get(d.indexFirstElement).getOutputX(d.indexFirst);
+                lineY1 = DigitSimController.getElements().get(d.indexFirstElement).getOutputY(d.indexFirst);
+                lineX2 = DigitSimController.getElements().get(d.indexSecondElement).getInputX(d.indexFirst);
+                lineY2 = DigitSimController.getElements().get(d.indexSecondElement).getInputY(d.indexFirst);
+                d.connectionLine = Draw.drawLine(lineX1, lineY1, lineX2, lineY2, Color.BLACK, 4);
+                DigitSimController.getSimCanvas().getChildren().add(d.connectionLine);
                 DigitSimController.getElements().get(d.indexSecondElement).setInput(d.indexSecond, DigitSimController.getElements().get(d.indexFirstElement).getOutput(d.indexFirst));
             }
             if((d.typeFirst != d.typeSecond) && d.typeFirst) // eingang mit ausgang verbunden
             {
-             /*   lineX1 = DigitSimController.elements.get(d.indexFirstElement).getInputX(d.indexFirst);
-                lineY1 = DigitSimController.elements.get(d.indexFirstElement).getInputY(d.indexFirst);
-                lineX2 = DigitSimController.elements.get(d.indexSecondElement).getOutputX(d.indexFirst);
-                lineY2 = DigitSimController.elements.get(d.indexSecondElement).getOutputY(d.indexFirst);
-                d.connectionLine = Draw.drawLine(lineX1, lineY1, lineX2, lineY2, Color.BLACK, 2);*/
+                lineX1 = DigitSimController.getElements().get(d.indexFirstElement).getInputX(d.indexFirst);
+                lineY1 = DigitSimController.getElements().get(d.indexFirstElement).getInputY(d.indexFirst);
+                lineX2 = DigitSimController.getElements().get(d.indexSecondElement).getOutputX(d.indexFirst);
+                lineY2 = DigitSimController.getElements().get(d.indexSecondElement).getOutputY(d.indexFirst);
+                d.connectionLine = Draw.drawLine(lineX1, lineY1, lineX2, lineY2, Color.BLACK, 4);
+                DigitSimController.getSimCanvas().getChildren().add(d.connectionLine);
+                
                 DigitSimController.getElements().get(d.indexFirstElement).setInput(d.indexFirst, DigitSimController.getElements().get(d.indexSecondElement).getOutput(d.indexSecond));
             }
             if((d.typeFirst == d.typeSecond) && d.typeFirst) // eingang mit eingang verbunden
             {
-               /* lineX1 = DigitSimController.getElements().get(d.indexFirstElement).getInputX(d.indexFirst);
+                lineX1 = DigitSimController.getElements().get(d.indexFirstElement).getInputX(d.indexFirst);
                 lineY1 = DigitSimController.getElements().get(d.indexFirstElement).getInputY(d.indexFirst);
                 lineX2 = DigitSimController.getElements().get(d.indexSecondElement).getInputX(d.indexFirst);
                 lineY2 = DigitSimController.getElements().get(d.indexSecondElement).getInputY(d.indexFirst);
-                d.connectionLine = Draw.drawLine(lineX1, lineY1, lineX2, lineY2, Color.BLACK, 2);*/
+                d.connectionLine = Draw.drawLine(lineX1, lineY1, lineX2, lineY2, Color.BLACK, 4);
+                DigitSimController.getSimCanvas().getChildren().add(d.connectionLine);
                 
-                int newVal = 0;
-                if(DigitSimController.getElements().get(d.indexFirstElement).inputs[d.indexFirst] > 0 || DigitSimController.getElements().get(d.indexSecondElement).inputs[d.indexSecond] > 0)
-                {
-                    newVal = 1;
-                }
+                int newVal = DigitSimController.getElements().get(d.indexFirstElement).inputs[d.indexFirst];
+                
                 
                 DigitSimController.getElements().get(d.indexFirstElement).setInput(d.indexFirst, newVal);
                 DigitSimController.getElements().get(d.indexSecondElement).setInput(d.indexSecond, newVal);
@@ -131,11 +134,12 @@ public class Connection { //Speichert die Verbindungen
                     e.setInput(i, 0);
                 else 
                     e.setInput(i, 1);
-                e.update();
+                update();
             }               
             }
-        }       
+        }   
     }
+    
     
     //Author: Dominik
     //Löscht alle Verbindungen
