@@ -140,7 +140,13 @@ class NodeGestures {
         
         propertiesItem.setOnAction(new EventHandler<ActionEvent>() { //Wird ausgelößt wenn man bei einem Element "Eigenschaften" auswählt
             public void handle(ActionEvent e) {
-               
+               elements = DigitSimController.getElements();
+               for(Element i : elements){ //Alle Elemente durchgehen, um das zu finden das Ausgewählt ist
+                   if(i.getGroup().hashCode() == temporaryGroup.hashCode()){ //Der HashCode eines Objektes ist immer EINMALIG, sozusagen eine "Personalnummer", eignet sich daher gut für den "Gleichheitstest"
+                       i.showProperties(); //Zeigt das "Eigenschaften"-Fenster
+                       break; //Schleife abbrechen, da gefunden
+                   }
+               }
             }});
         
         contextMenu.getItems().addAll(deleteItem, propertiesItem);

@@ -7,23 +7,32 @@ package digitsim;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  *
  * @author Elias (Nach Dominiks AND - Vorlage)
  * -Überarbeitet von Dome 11.11.2016
+ * -Überarbeitet von Dome 13.11.2016
  */
 public class Element_NOR extends Element{
 
     //Globals
-    public static final String TYPE = "OR"; //Der Typ des Bausteines
+    public static final String TYPE = "NOR"; //Der Typ des Bausteines
     private Rectangle rec;  //Die Elemente aus denen der Baustein zusammengestezt ist
     private Label lbl;
     private Label lbl2;
@@ -31,8 +40,7 @@ public class Element_NOR extends Element{
     private Line l0;
     private Line lUnderL;
     private Circle cOutput;
-    private static final double elementWidth = 80;
-    private static final double elementHeight = 80;
+    private Element thisElement = this; //Referenz auf sich selbst
     
     //Constructor
     public Element_NOR(double pX, double pY, int pInputs, NodeGestures dNodeGestures){//Baustein zeichnen
@@ -83,17 +91,7 @@ public class Element_NOR extends Element{
     public double getY() {
         return rec.getY();
     }
-    
-    @Override
-    public double getWidth(){
-        return elementWidth;
-    }
-    
-    @Override
-    public double getHeight(){
-        return elementWidth;
-    }
-    
+  
     @Override
     public void setInput(int pInput, int pValue) {
         if(pInput >= 0 && pInput < numInputs){
@@ -163,5 +161,59 @@ public class Element_NOR extends Element{
             outputs[0] = 1;
             l0.setStroke(Color.RED);
         }  
+    }
+    
+    @Override
+    public void showProperties(){ //Zeigt das "Eigenschaften"-Fenster für dieses Element
+        Stage stage = new Stage(StageStyle.DECORATED); //Ein Fenster für die Eigenschaften erstellen und Anzeigen
+        stage.setTitle("Eigenschaften"); //titel
+        Label lbl = new Label("Inputs:");
+        lbl.setTranslateX(5); //X/Y Koords
+        lbl.setTranslateY(5);
+        lbl.setFont(new Font(14)); //Schriftgröße
+        lbl.setPrefHeight(20); //Größe
+        lbl.setPrefWidth(50);
+        TextField tf = new TextField(){ //textfeld um die inputs einzugeben
+            @Override public void replaceText(int start, int end, String text) {//Diese funktionen werden ausgeführt wenn man den text ändert
+                if (text.matches("[0-9]") || text == "") {//Überorüfen ob nur zahlen eingegeben wurden
+                   super.replaceText(start, end, text);//Ja
+                }else{
+                    this.setText("");//nein, also textfeld leeren
+                }
+            }
+     
+           @Override public void replaceSelection(String text) {//Selbe
+               if (text.matches("[0-9]") || text == "") {
+               super.replaceSelection(text);
+               }else{
+                    this.setText("");
+                }
+           }
+        };
+        tf.setText(String.valueOf(numInputs));
+        tf.setTranslateX(50);
+        tf.setTranslateY(5);
+        tf.setPrefHeight(20);
+        tf.setPrefWidth(50);
+        Button btn = new Button("Übernehmen");
+        btn.setTranslateX(5);
+        btn.setTranslateY(40);
+        btn.setPrefHeight(20);
+        btn.setPrefWidth(100);
+        btn.setOnAction(new EventHandler<ActionEvent>(){//Wird bei "Übernehmen" ausgeführt
+            @Override
+            public void handle(ActionEvent e){
+                int pInputs = Integer.parseInt(tf.getText().trim());//String zu Integer
+                if(pInputs < 9 && pInputs > 1 && pInputs != numInputs){//Testen ob die inputs sinn machen und sich geändert haben
+                    DigitSimController.rebuildElement(thisElement, pInputs);//Element ändern
+                }else{
+                    tf.setText(String.valueOf(numInputs));//zurücksetzen
+                } 
+                stage.close();
+            }         
+        });
+       Scene scene = new Scene(new Group(lbl, tf, btn));
+       stage.setScene(scene);
+       stage.show();//Fenster zeigen
     }
 }

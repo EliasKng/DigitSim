@@ -19,11 +19,11 @@ import javafx.stage.Stage;
  */
 public class DigitSimController extends Pane{
     //************************ Globals ********************************
-    DraggableCanvas simCanvas = new DraggableCanvas(); //Arbeitsfläche / Fläche zum zeichnen
+    private static DraggableCanvas simCanvas = new DraggableCanvas(); //Arbeitsfläche / Fläche zum zeichnen
     private static ArrayList<Element> elements; //Alle Elemente kommen hier rein, static damit andere Klassen (einfach) darauf zugreifen können
-    NodeGestures nodeGestures;  //Die handler für die Nodes (z.B Elemente) beziehen
-    SceneGestures sceneGestures; //Die handler für die Arbeitsfläche beziehen
-    Connection allConnections; //Verbindungen zwischen Elementen werden hier gespeichert
+    private static NodeGestures nodeGestures;  //Die handler für die Nodes (z.B Elemente) beziehen
+    private SceneGestures sceneGestures; //Die handler für die Arbeitsfläche beziehen
+    private Connection allConnections; //Verbindungen zwischen Elementen werden hier gespeichert
     
      /**
      * FXML OBJEKT-Erstellungs-Bereich:
@@ -276,6 +276,33 @@ public class DigitSimController extends Pane{
     
     public static ArrayList<Element> getElements(){ //Über diese Methode können andere Klassen auf die Elemente zugreifen
         return elements;
+    }
+    
+    public static void rebuildElement(Element e, int inputs){ //Löscht ein Element und baut es neu auf mit den gegebenen Inputs
+          if(e.getClass().equals(Element_AND.class)){
+              elements.add(new Element_AND(e.getX() + (e.getWidth() / 2), e.getY() + (e.getHeight() / 2), inputs, nodeGestures)); //Element aufbau wie oben bei addElement() [Bei X/Y die hälfte der Höhe und Weite abziehen um die richtige Position zu bekommen]
+              simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
+              simCanvas.getChildren().remove(e.getGroup()); //Element von der Arbeitsfläche und aus den elements löschen
+              elements.remove(e);
+          }else if(e.getClass().equals(Element_NAND.class)){
+              System.out.print("LOL");
+              elements.add(new Element_NAND(e.getX() + (e.getWidth() / 2), e.getY() + (e.getHeight() / 2), inputs, nodeGestures));
+              simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
+              simCanvas.getChildren().remove(e.getGroup());
+              elements.remove(e);
+          }else if(e.getClass().equals(Element_OR.class)){
+              System.out.print("LOL");
+              elements.add(new Element_OR(e.getX() + (e.getWidth() / 2), e.getY() + (e.getHeight() / 2), inputs, nodeGestures));
+              simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
+              simCanvas.getChildren().remove(e.getGroup());
+              elements.remove(e);
+          }else if(e.getClass().equals(Element_NOR.class)){
+              System.out.print("LOL");
+              elements.add(new Element_NOR(e.getX() + (e.getWidth() / 2), e.getY() + (e.getHeight() / 2), inputs, nodeGestures));
+              simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
+              simCanvas.getChildren().remove(e.getGroup());
+              elements.remove(e);
+          }
     }
 
 }

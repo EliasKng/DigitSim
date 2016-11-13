@@ -14,6 +14,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -23,14 +24,12 @@ import javafx.scene.shape.Rectangle;
 public class Element_XOR extends Element{
 
     //Globals
-    public static final String TYPE = "OR"; //Der Typ des Bausteines
+    public static final String TYPE = "XOR"; //Der Typ des Bausteines
     private Rectangle rec;  //Die Elemente aus denen der Baustein zusammengestezt ist
     private Label lbl;
     private Label lbl2;
     private ArrayList<Line> lines = new ArrayList<>();
     private Line l0;
-    private static final double elementWidth = 80;
-    private static final double elementHeight = 80;
     
     //Constructor
     public Element_XOR(double pX, double pY, int pInputs, NodeGestures dNodeGestures){//Baustein zeichnen
@@ -45,7 +44,7 @@ public class Element_XOR extends Element{
         lbl2 = Draw.drawLabel((pX+40), (pY - 15), "1" , Color.BLACK, false, 75);
         l0 = Draw.drawLine((pX + 80), (pY + 40), (pX + 100), (pY + 40), Color.BLACK, 5); 
         
-            numInputs = pInputs;
+            numInputs = 2; // 2 Da mehr keinen Sinn machen
             inputs = new int[numInputs];
             Arrays.fill(inputs, 0); //Setzt alle Inputs auf '0
             grp = new Group(rec, lbl, l0, lbl2);
@@ -79,17 +78,7 @@ public class Element_XOR extends Element{
     public double getY() {
         return rec.getY();
     }
-    
-    @Override
-    public double getWidth(){
-        return elementWidth;
-    }
-    
-    @Override
-    public double getHeight(){
-        return elementWidth;
-    }
-    
+   
     @Override
     public void setInput(int pInput, int pValue) {
         if(pInput >= 0 && pInput < numInputs){
@@ -162,6 +151,14 @@ public class Element_XOR extends Element{
             outputs[0] = 1;
             l0.setStroke(Color.RED);
         }  
+    }
+    
+     @Override
+    public void showProperties(){ //Zeigt das "Eigenschaften"-Fenster für dieses Element
+        JOptionPane.showMessageDialog(null,
+			    "'XOR' besitzt keine Eigenschaften",
+			    "Info",
+			    JOptionPane.INFORMATION_MESSAGE);
     }
 }
 

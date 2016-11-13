@@ -13,6 +13,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -23,14 +24,12 @@ import javafx.scene.shape.Rectangle;
 public class Element_NOT extends Element{
 
     //Globals
-    public static final String TYPE = "AND"; //Der Typ des Bausteines
+    public static final String TYPE = "NOT"; //Der Typ des Bausteines
     private Rectangle rec;  //Die Elemente aus denen der Baustein zusammengestezt ist
     private Label lbl;
     private ArrayList<Line> lines = new ArrayList<>();
     private Line l0;
     private Circle cOutput;
-    private static final double elementWidth = 80;
-    private static final double elementHeight = 80;
     
     //Constructor
     public Element_NOT(double pX, double pY, int pInputs, NodeGestures dNodeGestures){//Baustein zeichnen
@@ -80,17 +79,7 @@ public class Element_NOT extends Element{
     public double getY() {
         return rec.getY() + grp.getTranslateY();
     }
-    
-    @Override
-    public double getWidth(){
-        return elementWidth;
-    }
-    
-    @Override
-    public double getHeight(){
-        return elementWidth;
-    }
-    
+  
     @Override
     public void setInput(int pInput, int pValue) {
         if(pInput >= 0 && pInput < numInputs){
@@ -154,5 +143,13 @@ public class Element_NOT extends Element{
             outputs[0] = 0;
             lines.get(0).setStroke(Color.BLACK);
         }
+    }
+    
+     @Override
+    public void showProperties(){ //Zeigt das "Eigenschaften"-Fenster für dieses Element
+        JOptionPane.showMessageDialog(null,
+			    "'NOT' besitzt keine Eigenschaften",
+			    "Info",
+			    JOptionPane.INFORMATION_MESSAGE);
     }
 }
