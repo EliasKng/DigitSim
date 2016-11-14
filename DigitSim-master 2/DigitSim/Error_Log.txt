@@ -1,1 +1,0 @@
-(Sun Oct 23 10:25:42 CEST 2016)[ERROR IN <class java.lang.Class>] Fehler beim laden von DigitSim.fxml & Seminator & icon.png
