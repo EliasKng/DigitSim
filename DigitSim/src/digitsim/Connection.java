@@ -55,14 +55,15 @@ public class Connection { //Speichert die Verbindungen
         connections.add(data);    
     }
     
+    /* -Bearbeitet von Tim 14.11.16 */
     void update() //Geht alle Verbindungen durch und schaltet sie durch
     {
         for(ConData d : connections)
         {
-            double lineX1;
-            double lineY1;
-            double lineX2;
-            double lineY2;
+            double lineX1 = 0;
+            double lineY1 = 0;
+            double lineX2 = 0;
+            double lineY2 = 0;
          
            if((d.typeFirst == d.typeSecond) && !d.typeFirst) // ausgang mit ausgang verbunden
            {
@@ -70,8 +71,6 @@ public class Connection { //Speichert die Verbindungen
             lineY1 = DigitSimController.getElements().get(d.indexFirstElement).getOutputY(d.indexFirst);
             lineX2 = DigitSimController.getElements().get(d.indexSecondElement).getOutputX(d.indexFirst);
             lineY2 = DigitSimController.getElements().get(d.indexSecondElement).getOutputX(d.indexFirst);
-             DigitSimController.getSimCanvas().getChildren().add(d.connectionLine);
-             d.connectionLine = Draw.drawLine(lineX1, lineY1, lineX2, lineY2, Color.BLACK, 4);
            }
             if((d.typeFirst != d.typeSecond) && !d.typeFirst) // ausgang mit eingang verbunden
             {
@@ -79,8 +78,6 @@ public class Connection { //Speichert die Verbindungen
                 lineY1 = DigitSimController.getElements().get(d.indexFirstElement).getOutputY(d.indexFirst);
                 lineX2 = DigitSimController.getElements().get(d.indexSecondElement).getInputX(d.indexFirst);
                 lineY2 = DigitSimController.getElements().get(d.indexSecondElement).getInputY(d.indexFirst);
-                d.connectionLine = Draw.drawLine(lineX1, lineY1, lineX2, lineY2, Color.BLACK, 4);
-                DigitSimController.getSimCanvas().getChildren().add(d.connectionLine);
                 DigitSimController.getElements().get(d.indexSecondElement).setInput(d.indexSecond, DigitSimController.getElements().get(d.indexFirstElement).getOutput(d.indexFirst));
             }
             if((d.typeFirst != d.typeSecond) && d.typeFirst) // eingang mit ausgang verbunden
@@ -89,9 +86,6 @@ public class Connection { //Speichert die Verbindungen
                 lineY1 = DigitSimController.getElements().get(d.indexFirstElement).getInputY(d.indexFirst);
                 lineX2 = DigitSimController.getElements().get(d.indexSecondElement).getOutputX(d.indexFirst);
                 lineY2 = DigitSimController.getElements().get(d.indexSecondElement).getOutputY(d.indexFirst);
-                d.connectionLine = Draw.drawLine(lineX1, lineY1, lineX2, lineY2, Color.BLACK, 4);
-                DigitSimController.getSimCanvas().getChildren().add(d.connectionLine);
-                
                 DigitSimController.getElements().get(d.indexFirstElement).setInput(d.indexFirst, DigitSimController.getElements().get(d.indexSecondElement).getOutput(d.indexSecond));
             }
             if((d.typeFirst == d.typeSecond) && d.typeFirst) // eingang mit eingang verbunden
@@ -100,15 +94,17 @@ public class Connection { //Speichert die Verbindungen
                 lineY1 = DigitSimController.getElements().get(d.indexFirstElement).getInputY(d.indexFirst);
                 lineX2 = DigitSimController.getElements().get(d.indexSecondElement).getInputX(d.indexFirst);
                 lineY2 = DigitSimController.getElements().get(d.indexSecondElement).getInputY(d.indexFirst);
-                d.connectionLine = Draw.drawLine(lineX1, lineY1, lineX2, lineY2, Color.BLACK, 4);
-                DigitSimController.getSimCanvas().getChildren().add(d.connectionLine);
-                
                 int newVal = DigitSimController.getElements().get(d.indexFirstElement).inputs[d.indexFirst];
                 
                 
                 DigitSimController.getElements().get(d.indexFirstElement).setInput(d.indexFirst, newVal);
                 DigitSimController.getElements().get(d.indexSecondElement).setInput(d.indexSecond, newVal);
             }
+            
+            // linien zeichenen
+            DigitSimController.getSimCanvas().getChildren().add(d.connectionLine);
+            d.connectionLine = Draw.drawLine(lineX1, lineY1, lineX2, lineY2, Color.BLACK, 4);
+             
             //Die Beusteine selbst (auf ihre Logik) updaten
             DigitSimController.getElements().get(d.indexFirstElement).update();
             DigitSimController.getElements().get(d.indexSecondElement).update();
@@ -135,7 +131,7 @@ public class Connection { //Speichert die Verbindungen
                     e.setInput(i, 0);
                 else 
                     e.setInput(i, 1);
-                update();
+                update(); // only element with an actual connection
             }               
             }
         }   
