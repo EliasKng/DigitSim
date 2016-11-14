@@ -17,7 +17,7 @@ import javafx.scene.shape.Line;
  */
 public class Connection { //Speichert die Verbindungen
     
-    public class Data                       // Daten einer Verbindung
+    public class ConData                       // Daten einer Verbindung
     {
         public int indexFirstElement;       // index des ersten elements im array
         public boolean typeFirst;           // ein oder ausgang
@@ -28,7 +28,7 @@ public class Connection { //Speichert die Verbindungen
         public Line connectionLine;         // line, die beide elemente verbindet
     }
     
-    public static ArrayList<Data> connections = new ArrayList<Data>(); //Speichert alle Verbindungne
+    public static ArrayList<ConData> connections = new ArrayList<ConData>(); //Speichert alle Verbindungne
 
 
     
@@ -44,7 +44,7 @@ public class Connection { //Speichert die Verbindungen
  */
     public void addConnection(int indexFirstElement, boolean typeFirst, int indexFirst, int indexSecondElement, boolean typeSecond, int indexSecond)
     {
-        Data data = new Data();
+        ConData data = new ConData();
         data.indexFirstElement = indexFirstElement;
         data.indexSecondElement = indexSecondElement;
         data.indexFirst = indexFirst;
@@ -57,7 +57,7 @@ public class Connection { //Speichert die Verbindungen
     
     void update() //Geht alle Verbindungen durch und schaltet sie durch
     {
-        for(Data d : connections)
+        for(ConData d : connections)
         {
             double lineX1;
             double lineY1;
@@ -119,6 +119,7 @@ public class Connection { //Speichert die Verbindungen
      * @author tim
      *  checkt, ob die maus über einem input ist und switcht diesen
     * */
+    //Inputs auf Klicks überprüfen (TESTFUNKTION!)
     public void checkInputChange(MouseEvent event)
     {
         for(Element e : getElements())
@@ -149,8 +150,16 @@ public class Connection { //Speichert die Verbindungen
     
     // Author Tim
     // bestimmte verbindung entfernen
-    public void removeConnection(Connection c)
+    public void removeConnection(ConData data)
     {
-        c.clear();
+        connections.remove(data);
+    }
+    
+    public ArrayList<ConData> getConnectionData(){ //Verbindungen zurückgeben
+        return connections;
+    }
+    
+    public ConData getSpecificConnectionData(int choice){ //Einzelne Verbindungen zurückgeben
+        return connections.get(choice);
     }
 }

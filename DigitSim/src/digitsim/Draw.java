@@ -161,15 +161,11 @@ public class Draw {
     } 
     
     // @author tim (box check)
-    private static double abs(double d)
-    {
-        if(d < 0) return -d;
-        else return d;
-    }
+    //Schaut ob man auf den Input eines Elements geklickt hat (Testfunktion!)
     public static boolean isInArea(double sourceX, double sourceY, double otherX, double otherY, double radius)
     {
-        System.out.printf("Dif: %.1f, %.1f\n", (abs(sourceX - otherX)), (abs(sourceY - otherY)));
-        boolean result = (abs(sourceX - otherX) < radius) && (abs(sourceY - otherY) < radius);
+        System.out.printf("Dif: %.1f, %.1f\n", (Math.abs(sourceX - otherX)), (Math.abs(sourceY - otherY)));
+        boolean result = (Math.abs(sourceX - otherX) < radius) && (Math.abs(sourceY - otherY) < radius); //Math.abs gibt immer den Absoluten wert zurück
         return result;
     }
 }

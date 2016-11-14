@@ -5,15 +5,11 @@
  */
 package digitsim;
 
-import java.awt.Font;
-import java.util.ArrayList;
 import java.util.Arrays;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
-import javafx.scene.shape.Rectangle;
 import javax.swing.JOptionPane;
 
 /**
@@ -25,11 +21,9 @@ public class Element_XOR extends Element{
 
     //Globals
     public static final String TYPE = "XOR"; //Der Typ des Bausteines
-    private Rectangle rec;  //Die Elemente aus denen der Baustein zusammengestezt ist
+    //Die Elemente aus denen der Baustein zusammengestezt ist
     private Label lbl;
     private Label lbl2;
-    private ArrayList<Line> lines = new ArrayList<>();
-    private Line l0;
     
     //Constructor
     public Element_XOR(double pX, double pY, int pInputs, NodeGestures dNodeGestures){//Baustein zeichnen
@@ -42,12 +36,12 @@ public class Element_XOR extends Element{
         rec = Draw.drawRectangle(pX, pY, elementWidth, elementHeight, 10, 10, Color.BLACK, 0.4, 5);           //das OR zeichnen
         lbl = Draw.drawLabel((pX+2), (pY - 17), "=" , Color.BLACK, false, 75);
         lbl2 = Draw.drawLabel((pX+40), (pY - 15), "1" , Color.BLACK, false, 75);
-        l0 = Draw.drawLine((pX + 80), (pY + 40), (pX + 100), (pY + 40), Color.BLACK, 5); 
+        outputLines.add(Draw.drawLine((pX + 80), (pY + 40), (pX + 100), (pY + 40), Color.BLACK, 5)); 
         
             numInputs = 2; // 2 Da mehr keinen Sinn machen
             inputs = new int[numInputs];
             Arrays.fill(inputs, 0); //Setzt alle Inputs auf '0
-            grp = new Group(rec, lbl, l0, lbl2);
+            grp = new Group(rec, lbl, outputLines.get(0), lbl2);
             for(int i = 0; i < numInputs; i++)
             {
                 //  * Überarbeitet von Tim 05.11.16
@@ -59,8 +53,8 @@ public class Element_XOR extends Element{
                 }
                 double offsetY = i*21 + 21 - 1;
                 
-                lines.add(Draw.drawLine((pX - 5), pY + offsetY, (pX - 15), pY + offsetY, Color.BLACK, 5));
-                grp.getChildren().add(lines.get(i));
+                inputLines.add(Draw.drawLine((pX - 5), pY + offsetY, (pX - 15), pY + offsetY, Color.BLACK, 5));
+                grp.getChildren().add(inputLines.get(i));
             }
             
          //Die Hanlder hinzufügenn (Beschreibung der Hander in  DraggableCanvas.java)  
@@ -69,70 +63,6 @@ public class Element_XOR extends Element{
     }
     
     //Diese Methoden müssen überschrieben werden (Beschreibung in der Mutterklasse)
-    @Override
-    public double getX() {
-       return rec.getX();
-    }
-
-    @Override
-    public double getY() {
-        return rec.getY();
-    }
-   
-    @Override
-    public void setInput(int pInput, int pValue) {
-        if(pInput >= 0 && pInput < numInputs){
-            inputs[pInput] = pValue;
-            if(pValue == 1){
-                lines.get(pInput).setStroke(Color.RED);
-            }else{
-                lines.get(pInput).setStroke(Color.BLACK);
-            }
-        }
-    }
-
-    @Override
-    public int getInputCount() {
-        return numInputs;
-    }
-    
-    @Override
-    public int getOutputCount() {
-        return numOutputs;
-    }
-
-    @Override
-    public double getInputX(int pInput) {
-        if(pInput < numInputs && pInput >= 0){
-            return lines.get(pInput).getEndX();
-        }
-        return 0;
-    }
-
-    @Override
-    public double getInputY(int pInput) {
-        if(pInput < numInputs && pInput >= 0){
-            return lines.get(pInput).getEndY();
-        }
-        return 0;
-    }
-
-    @Override
-    public double getOutputX(int pOutput) {
-         if(pOutput < numOutputs && pOutput >= 0){
-            return l0.getEndX();
-        }
-        return 0;
-    }
-
-    @Override
-    public double getOutputY(int pOutput) {
-           if(pOutput < numOutputs && pOutput >= 0){
-            return l0.getEndY();
-        }
-        return 0;
-    }  
-    
     @Override
     public void update(){
         boolean allON = true;
@@ -146,10 +76,10 @@ public class Element_XOR extends Element{
         }
         if(allON || allOFF){
             outputs[0] = 0;
-            l0.setStroke(Color.BLACK);
+            outputLines.get(0).setStroke(Color.BLACK);
         }else{
             outputs[0] = 1;
-            l0.setStroke(Color.RED);
+            outputLines.get(0).setStroke(Color.RED);
         }  
     }
     
