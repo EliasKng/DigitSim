@@ -201,6 +201,7 @@ public class DigitSimController extends Pane{
     public void btnStartOnAction(ActionEvent event) {   //Der Startknopf dient bisher nur zur Ausgabe von Testwerten in der Konsole
         //btnStart.setDisable(true);
         btnPause.setDisable(false);
+        btnStart.setDisable(true);
         
         elements.forEach(e -> e.update()); //Geht alle Elemente durch und Updaten sie. ACHTUNG: Lambda schreibweise! Infos -> https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html
         allConnections.update();                         
