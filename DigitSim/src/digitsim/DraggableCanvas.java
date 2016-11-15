@@ -6,6 +6,7 @@
 package digitsim;
 
 import java.util.ArrayList;
+import javafx.animation.FadeTransition;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.ActionEvent;
@@ -22,6 +23,7 @@ import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
 
 /**
  *
@@ -131,8 +133,15 @@ class NodeGestures {
                elements = DigitSimController.getElements();
                for(Element i : elements){ //Alle Elemente durchgehen, um das zu finden das Ausgewählt ist
                    if(i.getGroup().hashCode() == temporaryGroup.hashCode()){ //Der HashCode eines Objektes ist immer EINMALIG, sozusagen eine "Personalnummer", eignet sich daher gut für den "Gleichheitstest"
-                       canvas.getChildren().remove(temporaryGroup); //Die "Zeichnung" entfernen, da diese bestehen bleibt wenn das Element gelöscht wird
-                       elements.remove(i); //Das Element entfernen
+                       //canvas.getChildren().remove(temporaryGroup); //Die "Zeichnung" entfernen, da diese bestehen bleibt wenn das Element gelöscht wird
+                       //elements.remove(i); //Das Element entfernen
+                       
+                       FadeTransition ft = new FadeTransition(Duration.millis(300), i.getGroup());
+                        ft.setFromValue(1.0);
+                        ft.setToValue(0);
+                        ft.setAutoReverse(false);
+                        ft.play();
+                       
                        break; //Schleife abbrechen, da gefunden
                    }
                }
@@ -145,6 +154,7 @@ class NodeGestures {
                    if(i.getGroup().hashCode() == temporaryGroup.hashCode()){ //Der HashCode eines Objektes ist immer EINMALIG, sozusagen eine "Personalnummer", eignet sich daher gut für den "Gleichheitstest"
                        i.showProperties(); //Zeigt das "Eigenschaften"-Fenster
                        break; //Schleife abbrechen, da gefunden
+                       
                    }
                }
             }});
