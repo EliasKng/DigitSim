@@ -103,10 +103,10 @@ public class DigitSimController extends Pane{
                 
                 int result[] = null;
                 // INPUTS DURCH KLICKEN UMSCHALTEN (TESTFUNKTION)
-               /* if((result = allConnections.closeToInOrOut(event)) != null && result[Connection.CETYPE] == 1)
+               if((result = allConnections.closeToInOrOut(event)) != null && result[Connection.CETYPE] == 1)
                 {
                     getElements().get(result[Connection.EINDEX]).setInput(  result[Connection.CINDEX], (-getElements().get(result[Connection.EINDEX]).inputs[result[Connection.CINDEX]]) + 1);
-                }*/
+                }
                
                // anschlüsse durch klicken verbinden TEST! GEHT NOCH NICHT         
                /*if(result1 != null)
