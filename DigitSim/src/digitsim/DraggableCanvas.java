@@ -133,15 +133,8 @@ class NodeGestures {
                elements = DigitSimController.getElements();
                for(Element i : elements){ //Alle Elemente durchgehen, um das zu finden das Ausgewählt ist
                    if(i.getGroup().hashCode() == temporaryGroup.hashCode()){ //Der HashCode eines Objektes ist immer EINMALIG, sozusagen eine "Personalnummer", eignet sich daher gut für den "Gleichheitstest"
-                       //canvas.getChildren().remove(temporaryGroup); //Die "Zeichnung" entfernen, da diese bestehen bleibt wenn das Element gelöscht wird
-                       //elements.remove(i); //Das Element entfernen
-                       
-                       FadeTransition ft = new FadeTransition(Duration.millis(300), i.getGroup());
-                        ft.setFromValue(1.0);
-                        ft.setToValue(0);
-                        ft.setAutoReverse(false);
-                        ft.play();
-                       
+                       canvas.getChildren().remove(temporaryGroup); //Die "Zeichnung" entfernen, da diese bestehen bleibt wenn das Element gelöscht wird
+                       elements.remove(i); //Das Element entfernen
                        break; //Schleife abbrechen, da gefunden
                    }
                }
