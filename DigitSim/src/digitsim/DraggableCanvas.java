@@ -141,7 +141,7 @@ class NodeGestures {
                         ft.setToValue(0);
                         ft.setAutoReverse(false);
                         ft.play();
-                       elements.remove(i); //Das Element entfernen
+                       
                        break; //Schleife abbrechen, da gefunden
                    }
                }
