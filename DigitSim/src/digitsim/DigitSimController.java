@@ -103,24 +103,22 @@ public class DigitSimController extends Pane{
                 
                 int result[] = null;
                 // INPUTS DURCH KLICKEN UMSCHALTEN (TESTFUNKTION)
-                if((result = allConnections.closeToInput(event)) != null)
+               /* if((result = allConnections.closeToInOrOut(event)) != null && result[Connection.CETYPE] == 1)
                 {
-                    getElements().get(result[Connection.EINDEX]).setInput(  result[Connection.CINDEX], 
-                                                                            (-getElements().get(result[Connection.EINDEX]).inputs[result[Connection.CINDEX]]) + 1);
-                }
-                
+                    getElements().get(result[Connection.EINDEX]).setInput(  result[Connection.CINDEX], (-getElements().get(result[Connection.EINDEX]).inputs[result[Connection.CINDEX]]) + 1);
+                }*/
                
                // anschlüsse durch klicken verbinden TEST! GEHT NOCH NICHT         
                /*if(result1 != null)
                {
-                    if(((result2 = allConnections.closeToInput(event)) != null) || ((result2 = allConnections.closeToOutput(event)) != null))
+                    if(((result2 = allConnections.closeToInOrOut(event)) != null))
                     {
                         allConnections.addConnection(   result1[Connection.EINDEX], result1[Connection.CETYPE] == 1, result1[Connection.CINDEX],
                                                         result2[Connection.EINDEX], result2[Connection.CETYPE] == 1, result2[Connection.CINDEX]);
                     }
                     return;
                }
-               if(((result1 = allConnections.closeToInput(event)) != null) || ((result1 = allConnections.closeToOutput(event)) != null))
+               if((result1 = allConnections.closeToInOrOut(event)) != null)
                    return;*/
             }
         });

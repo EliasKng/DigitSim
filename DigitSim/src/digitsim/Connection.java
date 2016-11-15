@@ -120,8 +120,9 @@ public class Connection { //Speichert die Verbindungen
     public static final int CINDEX = 1; // connection index
     public static final int CETYPE = 2; // input(1) oder output(0)
     
-    public int[] closeToInput(MouseEvent event)
+    public int[] closeToInOrOut(MouseEvent event)
     {
+        int result[] = new int[3];
         for(int n = 0; n <  DigitSimController.getElements().size(); n++)
         {
             // schauen ob in der nähe eines inputs geklickt wurde
@@ -130,27 +131,19 @@ public class Connection { //Speichert die Verbindungen
                 double dInY = getElements().get(n).getInputY(i);
                 if(Draw.isInArea(event.getX(), event.getY(), dInX, dInY, 10))
                 {
-                   int result[] = new int[3];
                    result[EINDEX] = n; // element index
                    result[CINDEX] = i; // input index
                    result[CETYPE] = 1; // es ist ein input
                    return result;
                 }
             } 
-        }
-        return null;
-    }
-     public int[] closeToOutput(MouseEvent event)
-    {
-       for(int n = 0; n <  DigitSimController.getElements().size(); n++)
-        {
+            
             // schauen ob in der nähe eines outputs geklickt wurde
             for(int i = 0; i < getElements().get(n).numOutputs; i++) {
                 double dInX = getElements().get(n).getOutputX(i);
                 double dInY = getElements().get(n).getOutputY(i);
                 if(Draw.isInArea(event.getX(), event.getY(), dInX, dInY, 10))
                 {
-                   int result[] = new int[3];
                    result[EINDEX] = n; // element index
                    result[CINDEX] = i; // output index
                    result[CETYPE] = 0; // es ist ein output
