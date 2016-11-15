@@ -29,8 +29,6 @@ public class Connection { //Speichert die Verbindungen
     }
     
     public static ArrayList<ConData> connections = new ArrayList<ConData>(); //Speichert alle Verbindungne
-
-
     
 /**
  * addConnection(..)
@@ -52,7 +50,7 @@ public class Connection { //Speichert die Verbindungen
         data.typeFirst = typeFirst;
         data.typeSecond = typeSecond;
         
-        connections.add(data);    
+        connections.add(data);   
     }
     
     /* -Bearbeitet von Tim 14.11.16 */
@@ -111,32 +109,57 @@ public class Connection { //Speichert die Verbindungen
         }
     }
     
-    /**
+
+     /**
      * @author tim
-     *  checkt, ob die maus über einem input ist und switcht diesen
-    * */
-    //Inputs auf Klicks überprüfen (TESTFUNKTION!)
-    public void checkInputChange(MouseEvent event)
-    {
-        for(Element e : getElements())
-        {
-        // schauen ob in der nähe eines inputs geklickt wurde
-            for(int i = 0; i < e.numInputs; i++) {
-            double dInX = e.getInputX(i);
-            double dInY = e.getInputY(i);
-                  
-            if(Draw.isInArea(event.getX(), event.getY(), dInX, dInY, 10))
-            {
-                if(e.inputs[i] == 1)
-                    e.setInput(i, 0);
-                else 
-                    e.setInput(i, 1);
-                update(); // only element with an actual connection
-            }               
-            }
-        }   
-    }
+     * sehen ob nah an einem input geklickt wurde
+     * (erstes von 2)
+     */  
     
+    public static final int EINDEX = 0; // element index
+    public static final int CINDEX = 1; // connection index
+    public static final int CETYPE = 2; // input(1) oder output(0)
+    
+    public int[] closeToInput(MouseEvent event)
+    {
+        for(int n = 0; n <  DigitSimController.getElements().size(); n++)
+        {
+            // schauen ob in der nähe eines inputs geklickt wurde
+            for(int i = 0; i < getElements().get(n).numInputs; i++) {
+                double dInX = getElements().get(n).getInputX(i);
+                double dInY = getElements().get(n).getInputY(i);
+                if(Draw.isInArea(event.getX(), event.getY(), dInX, dInY, 10))
+                {
+                   int result[] = new int[3];
+                   result[EINDEX] = n; // element index
+                   result[CINDEX] = i; // input index
+                   result[CETYPE] = 1; // es ist ein input
+                   return result;
+                }
+            } 
+        }
+        return null;
+    }
+     public int[] closeToOutput(MouseEvent event)
+    {
+       for(int n = 0; n <  DigitSimController.getElements().size(); n++)
+        {
+            // schauen ob in der nähe eines outputs geklickt wurde
+            for(int i = 0; i < getElements().get(n).numOutputs; i++) {
+                double dInX = getElements().get(n).getOutputX(i);
+                double dInY = getElements().get(n).getOutputY(i);
+                if(Draw.isInArea(event.getX(), event.getY(), dInX, dInY, 10))
+                {
+                   int result[] = new int[3];
+                   result[EINDEX] = n; // element index
+                   result[CINDEX] = i; // output index
+                   result[CETYPE] = 0; // es ist ein output
+                   return result;
+                }
+            } 
+        }
+        return null;
+    }
     
     //Author: Dominik
     //Löscht alle Verbindungen
