@@ -160,12 +160,12 @@
     </AnchorPane>
     <AnchorPane prefHeight="156.0" prefWidth="212.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="612.0">
       <children>
-        <Button fx:id="btnStart" mnemonicParsing="false" onAction="#btnStartOnAction" prefHeight="84.0" prefWidth="84.0" style="-fx-background-image: url('/digitsim/data/START.png')" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0">
+        <ToggleButton fx:id="btnStart" mnemonicParsing="false" onAction="#btnStartOnAction" prefHeight="84.0" prefWidth="84.0" style="-fx-background-image: url('/digitsim/data/START.png')" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0">
           <font>
             <Font name="System Bold" size="22.0" fx:id="x1" />
           </font>
-        </Button>
-        <Button fx:id="btnPause" disable="true" font="$x1" mnemonicParsing="false" onAction="#btnPauseOnAction" prefHeight="84.0" prefWidth="84.0" style="-fx-background-image: url('/digitsim/data/STOP.png')" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="114.0" />
+        </ToggleButton>
+        <ToggleButton fx:id="btnPause" disable="true" font="$x1" mnemonicParsing="false" onAction="#btnPauseOnAction" prefHeight="84.0" prefWidth="84.0" style="-fx-background-image: url('/digitsim/data/STOP.png')" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="114.0" />
       </children>
     </AnchorPane>
   </children>

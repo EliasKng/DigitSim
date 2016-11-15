@@ -46,9 +46,9 @@ public class DigitSimController extends Pane{
     @FXML
     private AnchorPane simPane;
     @FXML
-    private Button btnStart;
+    private ToggleButton btnStart;
     @FXML
-    private Button btnPause;
+    private ToggleButton btnPause;
     @FXML
     private Slider inputSlider;
     
@@ -147,6 +147,10 @@ public class DigitSimController extends Pane{
         btnNAND.setToggleGroup(group);
         btnNOR.setToggleGroup(group);
         btnXOR.setToggleGroup(group);
+        ToggleGroup startstopgrp = new ToggleGroup();
+        btnStart.setToggleGroup(startstopgrp);
+        btnPause.setToggleGroup(startstopgrp);
+
     }
     
     /**
@@ -199,16 +203,13 @@ public class DigitSimController extends Pane{
         allConnections.clear();
     }
     public void btnStartOnAction(ActionEvent event) {   //Der Startknopf dient bisher nur zur Ausgabe von Testwerten in der Konsole
-        //btnStart.setDisable(true);
-        btnPause.setDisable(false);
-        btnStart.setDisable(true);
         
         elements.forEach(e -> e.update()); //Geht alle Elemente durch und Updaten sie. ACHTUNG: Lambda schreibweise! Infos -> https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html
-        allConnections.update();                         
+        allConnections.update(); 
+        
     }
     public void btnPauseOnAction(ActionEvent event) {   //Der Startknopf dient bisher nur zur Ausgabe von Testwerten in der Konsole
-        btnStart.setDisable(false);
-        btnPause.setDisable(true);
+        
     }
     public void inputSliderOnDragDone() { //Den Wert vom Slider runden
         double value = inputSlider.getValue();
