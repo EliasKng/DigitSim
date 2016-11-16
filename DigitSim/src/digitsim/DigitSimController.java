@@ -23,9 +23,7 @@ public class DigitSimController extends Pane{
     private static ArrayList<Element> elements; //Alle Elemente kommen hier rein, static damit andere Klassen (einfach) darauf zugreifen können
     private static NodeGestures nodeGestures;  //Die handler für die Nodes (z.B Elemente) beziehen
     private SceneGestures sceneGestures; //Die handler für die Arbeitsfläche beziehen
-    private static Connection allConnections; //Verbindungen zwischen Elementen werden hier gespeichert
-    private boolean simulationIsRunning; //ist true wenn die Simulation läuft
-    private Simulation simulation = new Simulation(); //Obejkt von der Simulationsklasse
+    private Connection allConnections; //Verbindungen zwischen Elementen werden hier gespeichert
     
      /**
      * FXML OBJEKT-Erstellungs-Bereich:
@@ -62,7 +60,6 @@ public class DigitSimController extends Pane{
     public void initialize() {//initialize Funktion: wird direkt beim Starten der FXML aufgerufen.
         addSimCanvas(); //Handler zum erstellen neuer Elemente zur Arbeitsfläche hinzufügen & Die Arbeitsfläche reinladen
         setSliderProperties(); //Einstellungen für den Silder zum einstellen der Eingange von Grundbausteinen
-        
         
         simCanvas.addGrid(simCanvas.getPrefWidth(), simCanvas.getPrefHeight()); //Gitter zeichnen
         
@@ -203,22 +200,15 @@ public class DigitSimController extends Pane{
         allConnections.clear();
     }
     public void btnStartOnAction(ActionEvent event) {   //Der Startknopf dient bisher nur zur Ausgabe von Testwerten in der Konsole
-        btnStart.setDisable(true);
+        //btnStart.setDisable(true);
         btnPause.setDisable(false);
-        simulation.setStop(false);
-        
-        //simulation.setAllConnections(allConnections);
-        simulation.run();
-        
-//        elements.forEach(e -> e.update()); //Geht alle Elemente durch und Updaten sie. ACHTUNG: Lambda schreibweise! Infos -> https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html
-//        allConnections.update(); 
+        elements.forEach(e -> e.update()); //Geht alle Elemente durch und Updaten sie. ACHTUNG: Lambda schreibweise! Infos -> https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html
+        allConnections.update(); 
         
     }
     public void btnPauseOnAction(ActionEvent event) {   //Der Startknopf dient bisher nur zur Ausgabe von Testwerten in der Konsole
         btnPause.setDisable(true);
         btnStart.setDisable(false);
-        
-        simulation.setStop(true);
     }
     public void inputSliderOnDragDone() { //Den Wert vom Slider runden
         double value = inputSlider.getValue();
@@ -313,10 +303,6 @@ public class DigitSimController extends Pane{
     
     public static ArrayList<Element> getElements(){ //Über diese Methode können andere Klassen auf die Elemente zugreifen
         return elements;
-    }
-    
-    public static Connection getAllConnections() {
-        return allConnections;
     }
     
     public static void rebuildElement(Element e, int inputs){ //Löscht ein Element und baut es neu auf mit den gegebenen Inputs
