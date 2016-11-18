@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 /**
  * Digitsim.fxml Controller class
  *
- * @author Elias
+ * @author El_ias
  * -Überarbeitet von Dominik 22.10.2016
  */
 public class DigitSimController extends Pane{
