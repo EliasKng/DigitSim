@@ -44,6 +44,8 @@ public class DigitSimController extends Pane{
     @FXML
     private ToggleButton btnNAND;
     @FXML
+    private ToggleButton btnXNOR;
+    @FXML
     private AnchorPane simPane;
     @FXML
     private Button btnStart;
@@ -145,6 +147,7 @@ public class DigitSimController extends Pane{
         btnNAND.setToggleGroup(group);
         btnNOR.setToggleGroup(group);
         btnXOR.setToggleGroup(group);
+        btnXNOR.setToggleGroup(group);
 
     }
     
@@ -257,6 +260,10 @@ public class DigitSimController extends Pane{
             elements.add(new Element_NAND(getXAdaptGrid(event), getYAdaptGrid(event), (int) inputSlider.getValue(), nodeGestures));
             simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());        
       }
+      else if(btnXNOR.isSelected()){ //Nand
+            elements.add(new Element_XNOR(getXAdaptGrid(event), getYAdaptGrid(event), (int) inputSlider.getValue(), nodeGestures));
+            simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());        
+      }
     }
    
     /**
@@ -312,23 +319,29 @@ public class DigitSimController extends Pane{
               simCanvas.getChildren().remove(e.getGroup()); //Element von der Arbeitsfläche und aus den elements löschen
               elements.remove(e);
           }else if(e.getClass().equals(Element_NAND.class)){
-              System.out.print("LOL");
+              System.out.print("NAND");
               elements.add(new Element_NAND(e.getX() + (e.getWidth() / 2), e.getY() + (e.getHeight() / 2), inputs, nodeGestures));
               simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
               simCanvas.getChildren().remove(e.getGroup());
               elements.remove(e);
           }else if(e.getClass().equals(Element_OR.class)){
-              System.out.print("LOL");
+              System.out.print("OR");
               elements.add(new Element_OR(e.getX() + (e.getWidth() / 2), e.getY() + (e.getHeight() / 2), inputs, nodeGestures));
               simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
               simCanvas.getChildren().remove(e.getGroup());
               elements.remove(e);
           }else if(e.getClass().equals(Element_NOR.class)){
-              System.out.print("LOL");
+              System.out.print("NOR");
               elements.add(new Element_NOR(e.getX() + (e.getWidth() / 2), e.getY() + (e.getHeight() / 2), inputs, nodeGestures));
               simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
               simCanvas.getChildren().remove(e.getGroup());
               elements.remove(e);
+          }else if(e.getClass().equals(Element_XNOR.class)){
+              System.out.print("XNOR");
+              elements.add(new Element_XNOR(e.getX() + (e.getWidth() / 2), e.getY() + (e.getHeight() / 2), inputs, nodeGestures));
+              simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
+              simCanvas.getChildren().remove(e.getGroup());
+              elements.remove(e);    
           }
     }
 

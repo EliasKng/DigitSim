@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.input.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import java.net.URL?>
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Accordion?>
@@ -19,7 +26,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="digitsim.DigitSimController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="digitsim.DigitSimController">
   <children>
     <Separator layoutX="216.0" layoutY="14.0" orientation="VERTICAL" prefHeight="754.0" prefWidth="6.0" />
     <MenuBar layoutY="-1.0" prefHeight="24.0" prefWidth="1024.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
@@ -111,6 +118,8 @@
                         <Label alignment="CENTER" layoutX="0.0" layoutY="179.0" prefHeight="27.0" prefWidth="60.0" text="NOR" />
                         <Label alignment="CENTER" layoutX="69.0" layoutY="179.0" prefHeight="27.0" prefWidth="60.0" text="XOR" />
                         <Label alignment="CENTER" layoutX="0.0" layoutY="266.0" prefHeight="27.0" prefWidth="60.0" text="NAND" />
+                                    <Label alignment="CENTER" layoutX="69.0" layoutY="266.0" prefHeight="27.0" prefWidth="60.0" text="XNOR" />
+                                    <ToggleButton fx:id="btnXNOR" layoutX="74.0" layoutY="216.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-image: url('/digitsim/data/XNOR.png');" />
                       </children>
                     </Group>
                     <Slider fx:id="inputSlider" layoutX="12.0" layoutY="355.0" onMouseReleased="#inputSliderOnDragDone" prefWidth="182.0" />
@@ -118,14 +127,18 @@
                 </AnchorPane>
               </content>
             </TitledPane>
-            <TitledPane animated="false" text="Elemente">
+            <TitledPane animated="false" prefHeight="523.0" prefWidth="208.0" text="Elemente">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="336.0" prefWidth="206.0">
                   <children>
-                    <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="75.0" style="-fx-background-image: url('/digitsim/data/SUBCIRCUIT.png')" />
-                    <Label alignment="CENTER" layoutX="9.0" layoutY="88.0" prefHeight="27.0" prefWidth="85.0" text="SUBCIRCUIT" />
-                    <Button layoutX="122.0" layoutY="63.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="50.0" style="-fx-background-image: url('/digitsim/data/Textfeld.png')" />
-                    <Label alignment="CENTER" layoutX="105.0" layoutY="87.0" prefHeight="27.0" prefWidth="85.0" text="TEXTFELD" />
+                    <Label alignment="CENTER" layoutX="14.0" layoutY="74.0" prefHeight="27.0" prefWidth="85.0" text="SUBCIRCUIT" />
+                    <Label alignment="CENTER" layoutX="106.0" layoutY="74.0" prefHeight="27.0" prefWidth="85.0" text="TEXTFELD" />
+                              <Label alignment="CENTER" layoutX="14.0" layoutY="159.0" prefHeight="27.0" prefWidth="85.0" text="LED" />
+                              <Label alignment="CENTER" layoutX="106.0" layoutY="159.0" prefHeight="27.0" prefWidth="85.0" text="SIGNAL" />
+                              <ToggleButton fx:id="btnAND1" layoutX="32.0" layoutY="101.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-image: url('/digitsim/data/LED.png');" />
+                              <ToggleButton fx:id="btnAND2" layoutX="118.0" layoutY="101.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/signal.png');" />
+                              <ToggleButton fx:id="btnAND21" layoutX="27.0" layoutY="14.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/SUBCIRCUIT.png');" />
+                              <ToggleButton fx:id="btnAND22" layoutX="119.0" layoutY="14.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/Textfeld.png');" />
                   </children>
                 </AnchorPane>
               </content>
