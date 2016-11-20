@@ -6,18 +6,10 @@
 package digitsim;
 
 import java.util.Arrays;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 /**
  *  ----> ACHTUNG: Um dieses Element zu verstehen sollte zuerst "Element.java" (Die Mutterklasse) studiert werden!
@@ -94,6 +86,6 @@ public class Element_AND extends Element{
     
     @Override
     public void showProperties(){ //Zeigt das "Eigenschaften"-Fenster für dieses Element
-        GenFunctions.showProperties(numInputs, thisElement);
+        GenFunctions.showBasicElementProperties(numInputs, thisElement);
     }
 }

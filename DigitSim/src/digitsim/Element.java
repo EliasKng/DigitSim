@@ -82,14 +82,14 @@ abstract class Element { //Abstakte Klasse, nur zur Vererbung, es kann kein dire
     
     public double getOutputX(int pOutput) { //Gibt die X-Koordinate eines Outputs zurück (also von der Linie)
          if(pOutput < numOutputs && pOutput >= 0){
-            return outputLines.get(pOutput).getEndX();
+            return outputLines.get(pOutput).getEndX() + grp.getTranslateX();
         }
         return 0;
     }
 
     public double getOutputY(int pOutput) { //Gibt die Y-Koordinate eines Outputs zurück (also von der Linie)
            if(pOutput < numOutputs && pOutput >= 0){
-            return outputLines.get(pOutput).getEndY();
+            return outputLines.get(pOutput).getEndY() + grp.getTranslateY();
         }
         return 0;
     }  

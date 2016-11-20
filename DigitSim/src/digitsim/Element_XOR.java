@@ -10,7 +10,6 @@ import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -24,6 +23,7 @@ public class Element_XOR extends Element{
     //Die Elemente aus denen der Baustein zusammengestezt ist
     private Label lbl;
     private Label lbl2;
+    private Element thisElement = this; //Referenz auf sich selbst
     
     //Constructor
     public Element_XOR(double pX, double pY, int pInputs, NodeGestures dNodeGestures){//Baustein zeichnen
@@ -36,9 +36,9 @@ public class Element_XOR extends Element{
         rec = Draw.drawRectangle(pX, pY, elementWidth, elementHeight, 10, 10, Color.BLACK, 0.4, 5);           //das OR zeichnen
         lbl = Draw.drawLabel((pX+2), (pY - 17), "=" , Color.BLACK, false, 75);
         lbl2 = Draw.drawLabel((pX+40), (pY - 15), "1" , Color.BLACK, false, 75);
-        outputLines.add(Draw.drawLine((pX + 80), (pY + 40), (pX + 100), (pY + 40), Color.BLACK, 5)); 
+        outputLines.add(Draw.drawLine((pX + 85), (pY + 40), (pX + 100), (pY + 40), Color.BLACK, 5)); 
         
-            numInputs = 2; // 2 Da mehr keinen Sinn machen
+            numInputs = pInputs; // 2 Da mehr keinen Sinn machen
             inputs = new int[numInputs];
             Arrays.fill(inputs, 0); //Setzt alle Inputs auf '0
             grp = new Group(rec, lbl, outputLines.get(0), lbl2);
@@ -85,10 +85,7 @@ public class Element_XOR extends Element{
     
      @Override
     public void showProperties(){ //Zeigt das "Eigenschaften"-Fenster für dieses Element
-        JOptionPane.showMessageDialog(null,
-			    "'XOR' besitzt keine Eigenschaften",
-			    "Info",
-			    JOptionPane.INFORMATION_MESSAGE);
+        GenFunctions.showBasicElementProperties(numInputs, thisElement);
     }
 }
 

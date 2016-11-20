@@ -23,7 +23,10 @@ public class DigitSimController extends Pane{
     private static ArrayList<Element> elements; //Alle Elemente kommen hier rein, static damit andere Klassen (einfach) darauf zugreifen können
     private static NodeGestures nodeGestures;  //Die handler für die Nodes (z.B Elemente) beziehen
     private SceneGestures sceneGestures; //Die handler für die Arbeitsfläche beziehen
-    public static Connection allConnections; //Verbindungen zwischen Elementen werden hier gespeichert
+    private Connection allConnections; //Verbindungen zwischen Elementen werden hier gespeichert
+    private SimThread runningThread = new SimThread(this); //Thread der, falls gestartet, immer die Elemente & Verbindungen updatet
+    private boolean locked = false; //Wenn wir das Programm starten setzen wir locked auf True, damit das Programm blokiert wird und man während der Simulation nichts ändern kann!
+    private static DigitSimController refThis;
     
      /**
      * FXML OBJEKT-Erstellungs-Bereich:
@@ -56,6 +59,7 @@ public class DigitSimController extends Pane{
     
     //Constructor (leer)
     public DigitSimController() {
+        refThis = this;
     }   
     
     @FXML
@@ -81,7 +85,7 @@ public class DigitSimController extends Pane{
         simPane.addEventFilter( ScrollEvent.ANY, sceneGestures.getOnScrollEventHandler());  
         elements = new ArrayList<Element>(); //Beschreibung oben
         //Klasse für die Verbindungen    
-        allConnections = new Connection();
+        allConnections = new Connection(this);
     }
     
     //TEST
@@ -98,41 +102,41 @@ public class DigitSimController extends Pane{
          */
         simCanvas.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>(){
             @Override
-            public void handle(MouseEvent event){          
+            public void handle(MouseEvent event){     
+                if(isLocked()){ //Schauen ob das Programm blokiert ist (erklärung: siehe DigitSimController oben)
+                    return;
+                }
                 if(event.isPrimaryButtonDown() && !isMouseOverNode(event)){
                     addElement(event); //Neuen Baustein einfügen
                 }
                 
-                if(event.isSecondaryButtonDown())
-                        {
-               int result[] = null;
-                // INPUTS DURCH KLICKEN UMSCHALTEN (TESTFUNKTION)
-               if((result = allConnections.closeToInOrOut(event)) != null && result[Connection.CETYPE] == 1)
-                {
-                    getElements().get(result[Connection.EINDEX]).setInput(  result[Connection.CINDEX], (-getElements().get(result[Connection.EINDEX]).inputs[result[Connection.CINDEX]]) + 1);
+               if(event.isSecondaryButtonDown()){
+                   int result[] = null;
+                   // INPUTS DURCH KLICKEN UMSCHALTEN (TESTFUNKTION)
+                   if((result = allConnections.closeToInOrOut(event)) != null && result[Connection.CETYPE] == 1){
+                       getElements().get(result[Connection.EINDEX]).setInput( result[Connection.CINDEX], (-getElements().get(result[Connection.EINDEX]).inputs[result[Connection.CINDEX]]) + 1);
+                    }
                 }
-                        }
+               
                // anschlüsse durch klicken verbinden TEST! GEHT NOCH NICHT         
-               if(result1 != null)
+              if(result1 != null)
                {
                     if(((result2 = allConnections.closeToInOrOut(event)) != null))
                     {
-                        allConnections.addConnection(   result1[Connection.EINDEX], result1[Connection.CETYPE] == 1, result1[Connection.CINDEX],
-                                                        result2[Connection.EINDEX], result2[Connection.CETYPE] == 1, result2[Connection.CINDEX]);
-                        
+                        allConnections.addConnection(result1[Connection.EINDEX], result1[Connection.CETYPE] == 1, result1[Connection.CINDEX], result2[Connection.EINDEX], result2[Connection.CETYPE] == 1, result2[Connection.CINDEX]);   
+                        allConnections.drawUpdate();
                         result1 = null;
                         result2 = null;
                     }
                     return;
                }
-               if((result1 = allConnections.closeToInOrOut(event)) != null)
-                   return;
+               result1 = allConnections.closeToInOrOut(event);             
             }
         });
         simPane.getChildren().addAll(simCanvas); //die Arbeitsfläche auf das Panel setzen
     }
     
-    public static DraggableCanvas getSimCanvas()
+    public DraggableCanvas getSimCanvas()
     {
         return simCanvas;
     }
@@ -181,6 +185,9 @@ public class DigitSimController extends Pane{
     * -Bearbeitet von Dominik 12.11.16
     */  
     public void mItemCloseAction(ActionEvent event){ //Programm schließen
+        if(runningThread.isAlive()){
+            runningThread.interrupt(); //Wenn der Thread beim schließen läuft muss dieser geschlossen werden, sonst läuft er weiter
+        }
         System.exit(0);
     }
     
@@ -199,25 +206,25 @@ public class DigitSimController extends Pane{
         stage.setResizable(false);
     }
     
-    public void mItemNewOnAction(ActionEvent event) { //Hilfe öffnen
-        
-        
+    public void mItemNewOnAction(ActionEvent event) { //Hilfe öffnen  
         elements.clear();
         simCanvas.getChildren().clear();
         simCanvas.addGrid(simCanvas.getPrefWidth(), simCanvas.getPrefHeight());
         allConnections.clear();
     }
-    public void btnStartOnAction(ActionEvent event) {   //Der Startknopf dient bisher nur zur Ausgabe von Testwerten in der Konsole
-        //btnStart.setDisable(true);
+    public void btnStartOnAction(ActionEvent event) {   
+        btnStart.setDisable(true);
         btnPause.setDisable(false);
-        allConnections.update(); 
-        elements.forEach(e -> e.update()); //Geht alle Elemente durch und Updaten sie. ACHTUNG: Lambda schreibweise! Infos -> https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html
-        
-        
-    }
-    public void btnPauseOnAction(ActionEvent event) {   //Der Startknopf dient bisher nur zur Ausgabe von Testwerten in der Konsole
+        runningThread = new SimThread(this);
+        runningThread.start(); //Den Thread starten, d.h alle Elemente & Connections werden regelmäßig geupdated
+        locked = true; //Programm blockieren (siehe erklärung oben)
+  }
+    public void btnPauseOnAction(ActionEvent event) {   
+        runningThread.interrupt(); //Den Thread anhalten
+        resetElements(); //Alles resetzen
         btnPause.setDisable(true);
         btnStart.setDisable(false);
+        locked = false;
     }
     public void inputSliderOnDragDone() { //Den Wert vom Slider runden
         double value = inputSlider.getValue();
@@ -232,7 +239,6 @@ public class DigitSimController extends Pane{
         return selectedFile;
     }
     
-    
     /**
      * 
      * Author: Dominik
@@ -242,8 +248,7 @@ public class DigitSimController extends Pane{
     public void addElement(MouseEvent event){
       if(btnAND.isSelected()){ //And  
             elements.add(new Element_AND(getXAdaptGrid(event), getYAdaptGrid(event), (int) inputSlider.getValue(), nodeGestures));
-            simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
-            
+            simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());        
       } 
       else if(btnOR.isSelected()){ //Or
             elements.add(new Element_OR(getXAdaptGrid(event), getYAdaptGrid(event), (int) inputSlider.getValue(), nodeGestures));
@@ -314,41 +319,68 @@ public class DigitSimController extends Pane{
         return Math.round(event.getY() / 21) * 21;
     }
     
-    public static ArrayList<Element> getElements(){ //Über diese Methode können andere Klassen auf die Elemente zugreifen
+    public ArrayList<Element> getElements(){ //Über diese Methode können andere Klassen auf die Elemente zugreifen
         return elements;
     }
     
-    public static void rebuildElement(Element e, int inputs){ //Löscht ein Element und baut es neu auf mit den gegebenen Inputs
-          if(e.getClass().equals(Element_AND.class)){
+    public void rebuildElement(Element e, int inputs){ //Löscht ein Element und baut es neu auf mit den gegebenen Inputs
+          allConnections.removeAllConncectionsRelatedTo(e);
+          if(e.getClass().equals(Element_AND.class)){ //Rausfinden um welches Element es sich handelt
               elements.add(new Element_AND(e.getX() + (e.getWidth() / 2), e.getY() + (e.getHeight() / 2), inputs, nodeGestures)); //Element aufbau wie oben bei addElement() [Bei X/Y die hälfte der Höhe und Weite abziehen um die richtige Position zu bekommen]
               simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
               simCanvas.getChildren().remove(e.getGroup()); //Element von der Arbeitsfläche und aus den elements löschen
               elements.remove(e);
           }else if(e.getClass().equals(Element_NAND.class)){
-              System.out.print("NAND");
               elements.add(new Element_NAND(e.getX() + (e.getWidth() / 2), e.getY() + (e.getHeight() / 2), inputs, nodeGestures));
               simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
               simCanvas.getChildren().remove(e.getGroup());
               elements.remove(e);
           }else if(e.getClass().equals(Element_OR.class)){
-              System.out.print("OR");
               elements.add(new Element_OR(e.getX() + (e.getWidth() / 2), e.getY() + (e.getHeight() / 2), inputs, nodeGestures));
               simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
               simCanvas.getChildren().remove(e.getGroup());
               elements.remove(e);
           }else if(e.getClass().equals(Element_NOR.class)){
-              System.out.print("NOR");
               elements.add(new Element_NOR(e.getX() + (e.getWidth() / 2), e.getY() + (e.getHeight() / 2), inputs, nodeGestures));
               simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
               simCanvas.getChildren().remove(e.getGroup());
               elements.remove(e);
           }else if(e.getClass().equals(Element_XNOR.class)){
-              System.out.print("XNOR");
               elements.add(new Element_XNOR(e.getX() + (e.getWidth() / 2), e.getY() + (e.getHeight() / 2), inputs, nodeGestures));
+              simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
+              simCanvas.getChildren().remove(e.getGroup());
+              elements.remove(e);    
+          }else if(e.getClass().equals(Element_XOR.class)){
+              elements.add(new Element_XOR(e.getX() + (e.getWidth() / 2), e.getY() + (e.getHeight() / 2), inputs, nodeGestures));
               simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
               simCanvas.getChildren().remove(e.getGroup());
               elements.remove(e);    
           }
     }
-
+    
+    public void run(){
+        elements.forEach(e -> e.update()); //Geht alle Elemente durch und Updaten sie. ACHTUNG: Lambda schreibweise! Infos -> https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html   
+        allConnections.update(); //Alle Verbindungen updaten
+    }
+    
+    public boolean isLocked(){ //Schauen ob das Programm blokiert ist (erklärung: siehe DigitSimController oben)
+        return locked;
+    }
+    
+    public Connection getConnections(){ //Rückgabe der Verbindungen
+        return allConnections;
+    }
+    
+    public static DigitSimController getReference(){ //Rückgabe einer Referenz (für Klassen die sonst keine besitzen)
+        return refThis;
+    }
+    
+    private void resetElements(){
+        for(Element e: elements){ //Alles reseten
+            for(int i = 0; i < e.getInputCount(); i++){
+                e.setInput(i, 0);
+            }
+        }
+        elements.forEach(e -> e.update()); //Updates sichtbar machen
+    }
 }

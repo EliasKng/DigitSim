@@ -6,10 +6,12 @@
 package digitsim;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.stage.WindowEvent;
 
 
 /**
@@ -43,6 +45,12 @@ public class DigitSim extends Application { //Hauptklasse
         stage = GenFunctions.openFXML("DigitSim.fxml", "Seminator", "icon.png");
         stage.setMinWidth(800);
         stage.setMinHeight(600);
+        stage.setOnCloseRequest(
+            new EventHandler<WindowEvent>() {         
+                @Override
+                public void handle(WindowEvent event) {
+                    DigitSimController.getReference().mItemCloseAction(null);
+                }});
     }
     
     /**

@@ -6,19 +6,11 @@
 package digitsim;
 
 import java.util.Arrays;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
-import javafx.scene.text.Font;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 /**
  *
@@ -48,7 +40,7 @@ public class Element_OR extends Element{
         lbl = Draw.drawLabel((pX+2), (pY - 17), ">" , Color.BLACK, false, 75);
         lbl2 = Draw.drawLabel((pX+40), (pY - 15), "1" , Color.BLACK, false, 75);
         lUnderL = Draw.drawLine(pX+14.5, pY+63, pX+42, pY+63, Color.BLACK, 5);
-        outputLines.add(Draw.drawLine((pX + 80), (pY + 40), (pX + 100), (pY + 40), Color.BLACK, 5)); 
+        outputLines.add(Draw.drawLine((pX + 85), (pY + 40), (pX + 100), (pY + 40), Color.BLACK, 5)); 
         
             numInputs = pInputs;
             inputs = new int[numInputs];
@@ -94,6 +86,6 @@ public class Element_OR extends Element{
     
     @Override
     public void showProperties(){ //Zeigt das "Eigenschaften"-Fenster für dieses Element
-        GenFunctions.showProperties(numInputs, thisElement);
+        GenFunctions.showBasicElementProperties(numInputs, thisElement);
     }
 }

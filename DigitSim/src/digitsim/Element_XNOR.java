@@ -7,18 +7,10 @@ package digitsim;
 
 import static digitsim.Element.elementWidth;
 import java.util.Arrays;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 /**
  *  ----> ACHTUNG: Um dieses Element zu verstehen sollte zuerst "Element.java" (Die Mutterklasse) studiert werden!
@@ -45,7 +37,7 @@ public class Element_XNOR extends Element{
         pY = pY-elementHeight/2;
         numOutputs = 1;
         rec = Draw.drawRectangle(pX, pY, elementWidth, elementHeight, 10, 10, Color.BLACK, 0.5, 5);           //das XNOR zeichnen
-        lbl = Draw.drawLabel((pX + 20), (pY - 15), "=", Color.BLACK, false, 75);
+        lbl = Draw.drawLabel((pX + 15), (pY - 20), "=", Color.BLACK, false, 75);
         outputLines.add(Draw.drawLine((pX + 85), (pY + 40), (pX + 100), (pY + 40), Color.BLACK, 5));
 
         
@@ -96,6 +88,6 @@ public class Element_XNOR extends Element{
     
     @Override
     public void showProperties(){ //Zeigt das "Eigenschaften"-Fenster für dieses Element
-        GenFunctions.showProperties(numInputs, thisElement);
+        GenFunctions.showBasicElementProperties(numInputs, thisElement);
     }
 }

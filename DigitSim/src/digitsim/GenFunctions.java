@@ -50,7 +50,7 @@ public class GenFunctions { //Laden der GUI
     /**
      * Zeigt das Eigenschaftenfenster von Elementen
      */
-    public static void showProperties(int numInputs, Element thisElement){ //Zeigt das "Eigenschaften"-Fenster für dieses Element
+    public static void showBasicElementProperties(int numInputs, Element thisElement){ //Zeigt das "Eigenschaften"-Fenster für dieses Element
         Stage stage = new Stage(StageStyle.DECORATED); //Ein Fenster für die Eigenschaften erstellen und Anzeigen
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.alwaysOnTopProperty();
@@ -97,7 +97,7 @@ public class GenFunctions { //Laden der GUI
             public void handle(ActionEvent e){
                 int pInputs = Integer.parseInt(tf.getText().trim());//String zu Integer
                 if(pInputs < 9 && pInputs > 1 && pInputs != numInputs){//Testen ob die inputs sinn machen und sich geändert haben
-                    DigitSimController.rebuildElement(thisElement, pInputs);//Element ändern
+                    DigitSimController.getReference().rebuildElement(thisElement, pInputs);//Element ändern
                 }else{
                     tf.setText(String.valueOf(numInputs));//zurücksetzen
                 } 

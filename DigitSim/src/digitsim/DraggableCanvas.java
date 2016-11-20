@@ -6,7 +6,6 @@
 package digitsim;
 
 import java.util.ArrayList;
-import javafx.animation.FadeTransition;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.ActionEvent;
@@ -23,7 +22,6 @@ import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.util.Duration;
 
 /**
  *
@@ -130,10 +128,11 @@ class NodeGestures {
         
         deleteItem.setOnAction(new EventHandler<ActionEvent>() { //Wird ausgelößt wenn man bei einem Element "Entfernen" auswählt
             public void handle(ActionEvent e) {
-               elements = DigitSimController.getElements();
+               elements = DigitSimController.getReference().getElements();
                for(Element i : elements){ //Alle Elemente durchgehen, um das zu finden das Ausgewählt ist
                    if(i.getGroup().hashCode() == temporaryGroup.hashCode()){ //Der HashCode eines Objektes ist immer EINMALIG, sozusagen eine "Personalnummer", eignet sich daher gut für den "Gleichheitstest"
                        canvas.getChildren().remove(temporaryGroup); //Die "Zeichnung" entfernen, da diese bestehen bleibt wenn das Element gelöscht wird
+                       DigitSimController.getReference().getConnections().removeAllConncectionsRelatedTo(i);
                        elements.remove(i); //Das Element entfernen
                        break; //Schleife abbrechen, da gefunden
                    }
@@ -142,7 +141,7 @@ class NodeGestures {
         
         propertiesItem.setOnAction(new EventHandler<ActionEvent>() { //Wird ausgelößt wenn man bei einem Element "Eigenschaften" auswählt
             public void handle(ActionEvent e) {
-               elements = DigitSimController.getElements();
+               elements = DigitSimController.getReference().getElements();
                for(Element i : elements){ //Alle Elemente durchgehen, um das zu finden das Ausgewählt ist
                    if(i.getGroup().hashCode() == temporaryGroup.hashCode()){ //Der HashCode eines Objektes ist immer EINMALIG, sozusagen eine "Personalnummer", eignet sich daher gut für den "Gleichheitstest"
                        i.showProperties(); //Zeigt das "Eigenschaften"-Fenster
@@ -166,7 +165,8 @@ class NodeGestures {
     private EventHandler<MouseEvent> onMousePressedEventHandler = new EventHandler<MouseEvent>() { //Handler für "Maus klick"
 
         public void handle(MouseEvent event) {
-
+            if(DigitSimController.getReference().isLocked()) //Schauen ob das Programm blokiert ist (erklärung: siehe DigitSimController oben)
+                return;
             // Rechtsklick
             if( !event.isPrimaryButtonDown()){
                 temporaryGroup = (Group) event.getSource();
@@ -188,7 +188,9 @@ class NodeGestures {
     private EventHandler<MouseEvent> onMouseDraggedEventHandler = new EventHandler<MouseEvent>() { //Handler für "Drag"
         
         public void handle(MouseEvent event ) {
-            elements = DigitSimController.getElements();
+            if(DigitSimController.getReference().isLocked()) //Schauen ob das Programm blokiert ist (erklärung: siehe DigitSimController oben)
+               return;
+            elements = DigitSimController.getReference().getElements();
 
             // left mouse button => dragging
             if( !event.isPrimaryButtonDown())
@@ -203,7 +205,7 @@ class NodeGestures {
             node.setTranslateX(getValueAdaptGrid(nodeDragContext.translateAnchorX + (( event.getSceneX() - nodeDragContext.mouseAnchorX) / scale)));
             node.setTranslateY(getValueAdaptGrid(nodeDragContext.translateAnchorY + (( event.getSceneY() - nodeDragContext.mouseAnchorY) / scale)));
             
-            DigitSimController.allConnections.update();
+            DigitSimController.getReference().getConnections().drawUpdate();
             
             event.consume(); 
         }

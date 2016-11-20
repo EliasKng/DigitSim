@@ -164,7 +164,6 @@ public class Draw {
     //Schaut ob man auf den Input eines Elements geklickt hat (Testfunktion!)
     public static boolean isInArea(double sourceX, double sourceY, double otherX, double otherY, double radius)
     {
-        System.out.printf("Dif: %.1f, %.1f\n", (Math.abs(sourceX - otherX)), (Math.abs(sourceY - otherY)));
         boolean result = (Math.abs(sourceX - otherX) < radius) && (Math.abs(sourceY - otherY) < radius); //Math.abs gibt immer den Absoluten wert zurück
         return result;
     }
