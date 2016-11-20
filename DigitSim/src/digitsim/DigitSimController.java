@@ -56,6 +56,8 @@ public class DigitSimController extends Pane{
     private Button btnPause;
     @FXML
     private Slider inputSlider;
+    @FXML
+    private ToggleButton btnLogicToggle;
     
     //Constructor (leer)
     public DigitSimController() {
@@ -184,6 +186,10 @@ public class DigitSimController extends Pane{
     * -Bearbeitet von Dominik 31.10.16
     * -Bearbeitet von Dominik 12.11.16
     */  
+    
+    public void btnLogicToggleOnAction(ActionEvent event) {
+        System.out.println("LOGICTOGGLE");
+    }
     public void mItemCloseAction(ActionEvent event){ //Programm schließen
         if(runningThread.isAlive()){
             runningThread.interrupt(); //Wenn der Thread beim schließen läuft muss dieser geschlossen werden, sonst läuft er weiter
