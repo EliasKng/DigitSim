@@ -70,7 +70,7 @@ public class Connection { //Speichert die Verbindungen
             lineX2 = DigitSimController.getElements().get(d.indexSecondElement).getOutputX(d.indexFirst);
             lineY2 = DigitSimController.getElements().get(d.indexSecondElement).getOutputX(d.indexFirst);
            }
-            if((d.typeFirst != d.typeSecond) && !d.typeFirst) // ausgang mit eingang verbunden
+           else if((d.typeFirst != d.typeSecond) && !d.typeFirst) // ausgang mit eingang verbunden
             {
                 lineX1 = DigitSimController.getElements().get(d.indexFirstElement).getOutputX(d.indexFirst);
                 lineY1 = DigitSimController.getElements().get(d.indexFirstElement).getOutputY(d.indexFirst);
@@ -78,7 +78,7 @@ public class Connection { //Speichert die Verbindungen
                 lineY2 = DigitSimController.getElements().get(d.indexSecondElement).getInputY(d.indexFirst);
                 DigitSimController.getElements().get(d.indexSecondElement).setInput(d.indexSecond, DigitSimController.getElements().get(d.indexFirstElement).getOutput(d.indexFirst));
             }
-            if((d.typeFirst != d.typeSecond) && d.typeFirst) // eingang mit ausgang verbunden
+            else if((d.typeFirst != d.typeSecond) && d.typeFirst) // eingang mit ausgang verbunden
             {
                 lineX1 = DigitSimController.getElements().get(d.indexFirstElement).getInputX(d.indexFirst);
                 lineY1 = DigitSimController.getElements().get(d.indexFirstElement).getInputY(d.indexFirst);
@@ -86,7 +86,7 @@ public class Connection { //Speichert die Verbindungen
                 lineY2 = DigitSimController.getElements().get(d.indexSecondElement).getOutputY(d.indexFirst);
                 DigitSimController.getElements().get(d.indexFirstElement).setInput(d.indexFirst, DigitSimController.getElements().get(d.indexSecondElement).getOutput(d.indexSecond));
             }
-            if((d.typeFirst == d.typeSecond) && d.typeFirst) // eingang mit eingang verbunden
+            else if((d.typeFirst == d.typeSecond) && d.typeFirst) // eingang mit eingang verbunden
             {
                 lineX1 = DigitSimController.getElements().get(d.indexFirstElement).getInputX(d.indexFirst);
                 lineY1 = DigitSimController.getElements().get(d.indexFirstElement).getInputY(d.indexFirst);
@@ -100,8 +100,10 @@ public class Connection { //Speichert die Verbindungen
             }
             
             // linien zeichenen
-            DigitSimController.getSimCanvas().getChildren().add(d.connectionLine);
+            if(d != null)
+            DigitSimController.getSimCanvas().getChildren().remove(d.connectionLine);
             d.connectionLine = Draw.drawLine(lineX1, lineY1, lineX2, lineY2, Color.BLACK, 4);
+            DigitSimController.getSimCanvas().getChildren().add(d.connectionLine);
              
             //Die Beusteine selbst (auf ihre Logik) updaten
             DigitSimController.getElements().get(d.indexFirstElement).update();

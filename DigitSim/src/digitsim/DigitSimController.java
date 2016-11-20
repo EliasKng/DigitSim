@@ -23,7 +23,7 @@ public class DigitSimController extends Pane{
     private static ArrayList<Element> elements; //Alle Elemente kommen hier rein, static damit andere Klassen (einfach) darauf zugreifen können
     private static NodeGestures nodeGestures;  //Die handler für die Nodes (z.B Elemente) beziehen
     private SceneGestures sceneGestures; //Die handler für die Arbeitsfläche beziehen
-    private Connection allConnections; //Verbindungen zwischen Elementen werden hier gespeichert
+    public static Connection allConnections; //Verbindungen zwischen Elementen werden hier gespeichert
     
      /**
      * FXML OBJEKT-Erstellungs-Bereich:
@@ -103,25 +103,30 @@ public class DigitSimController extends Pane{
                     addElement(event); //Neuen Baustein einfügen
                 }
                 
-                int result[] = null;
+                if(event.isSecondaryButtonDown())
+                        {
+               int result[] = null;
                 // INPUTS DURCH KLICKEN UMSCHALTEN (TESTFUNKTION)
                if((result = allConnections.closeToInOrOut(event)) != null && result[Connection.CETYPE] == 1)
                 {
                     getElements().get(result[Connection.EINDEX]).setInput(  result[Connection.CINDEX], (-getElements().get(result[Connection.EINDEX]).inputs[result[Connection.CINDEX]]) + 1);
                 }
-               
+                        }
                // anschlüsse durch klicken verbinden TEST! GEHT NOCH NICHT         
-               /*if(result1 != null)
+               if(result1 != null)
                {
                     if(((result2 = allConnections.closeToInOrOut(event)) != null))
                     {
                         allConnections.addConnection(   result1[Connection.EINDEX], result1[Connection.CETYPE] == 1, result1[Connection.CINDEX],
                                                         result2[Connection.EINDEX], result2[Connection.CETYPE] == 1, result2[Connection.CINDEX]);
+                        
+                        result1 = null;
+                        result2 = null;
                     }
                     return;
                }
                if((result1 = allConnections.closeToInOrOut(event)) != null)
-                   return;*/
+                   return;
             }
         });
         simPane.getChildren().addAll(simCanvas); //die Arbeitsfläche auf das Panel setzen
@@ -205,8 +210,9 @@ public class DigitSimController extends Pane{
     public void btnStartOnAction(ActionEvent event) {   //Der Startknopf dient bisher nur zur Ausgabe von Testwerten in der Konsole
         //btnStart.setDisable(true);
         btnPause.setDisable(false);
-        elements.forEach(e -> e.update()); //Geht alle Elemente durch und Updaten sie. ACHTUNG: Lambda schreibweise! Infos -> https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html
         allConnections.update(); 
+        elements.forEach(e -> e.update()); //Geht alle Elemente durch und Updaten sie. ACHTUNG: Lambda schreibweise! Infos -> https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html
+        
         
     }
     public void btnPauseOnAction(ActionEvent event) {   //Der Startknopf dient bisher nur zur Ausgabe von Testwerten in der Konsole

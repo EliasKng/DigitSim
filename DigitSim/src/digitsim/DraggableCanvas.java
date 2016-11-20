@@ -202,7 +202,9 @@ class NodeGestures {
             //Den Abstand zwischen der alten und der neuen Mausposition berechnen und zur Änderungsrate hinzufügen
             node.setTranslateX(getValueAdaptGrid(nodeDragContext.translateAnchorX + (( event.getSceneX() - nodeDragContext.mouseAnchorX) / scale)));
             node.setTranslateY(getValueAdaptGrid(nodeDragContext.translateAnchorY + (( event.getSceneY() - nodeDragContext.mouseAnchorY) / scale)));
-
+            
+            DigitSimController.allConnections.update();
+            
             event.consume(); 
         }
     };
