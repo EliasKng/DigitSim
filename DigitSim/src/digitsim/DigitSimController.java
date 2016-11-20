@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Group;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 /**
  * Digitsim.fxml Controller class
@@ -188,7 +190,23 @@ public class DigitSimController extends Pane{
     */  
     
     public void btnLogicToggleOnAction(ActionEvent event) {
-        System.out.println("LOGICTOGGLE");
+        //Steht hier nur zum testen für die Draw.lineArrayXYToGroup(...).
+        double[] dx = new double[5];
+        double[] dy = new double[5];
+        dx[0] = 10;
+        dx[1] = 60;
+        dx[2] = 60;
+        dx[3] = 130;
+        dx[4] = 150;
+        dy[0] = 10;
+        dy[1] = 10;
+        dy[2] = 75;
+        dy[3] = 75;
+        dy[4] = 75;
+        Group g = new Group();
+        g = Draw.lineArrayXYToGroup(dx, dy, Color.RED, 3);
+        simCanvas.getChildren().add(g);
+        
     }
     public void mItemCloseAction(ActionEvent event){ //Programm schließen
         if(runningThread.isAlive()){

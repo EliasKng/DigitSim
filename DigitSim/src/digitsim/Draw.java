@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package digitsim;
+import javafx.scene.Group;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
@@ -160,6 +161,22 @@ public class Draw {
         return l;
     } 
     
+    /**
+     * Baut eine Gruppe bestehend aus Linien. Die X und Y Koordinaten der Linien stecken in den beiden Arrays. Die Linien werden außerdem an das Karomuster angepasst.
+     * @author Elias
+     * @return 
+     */
+    public static Group lineArrayXYToGroup(double dx[], double dy[], Color lineColor, double lineWidth) {
+        if(Draw.checkArraySameLength(dx, dy)) {
+            Group g = new Group();
+            for (int i =0; i < (dx.length-1); i ++) {
+                g.getChildren().add(Draw.drawLine(getXYAdaptGrid(dx[i]), getXYAdaptGrid(dy[i]),getXYAdaptGrid(dx[i+1]) , getXYAdaptGrid(dy[i+1]), lineColor, lineWidth));
+            }
+            return g;
+        }
+        return null;
+    }
+    
     // @author tim (box check)
     //Schaut ob man auf den Input eines Elements geklickt hat (Testfunktion!)
     public static boolean isInArea(double sourceX, double sourceY, double otherX, double otherY, double radius)
@@ -167,4 +184,15 @@ public class Draw {
         boolean result = (Math.abs(sourceX - otherX) < radius) && (Math.abs(sourceY - otherY) < radius); //Math.abs gibt immer den Absoluten wert zurück
         return result;
     }
+    
+    
+    /**
+     * Nimmt eine Koordinate und passt diese an das Grid an
+     * @Author Elias
+     */
+    public static double getXYAdaptGrid(double d) { 
+        return Math.round(d / 21) * 21;
+    }
+    
+
 }

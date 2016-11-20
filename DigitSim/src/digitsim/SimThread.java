@@ -34,7 +34,7 @@ public class SimThread extends Thread { //Ein Thread kann nebenbei laufen (auf e
     
     public long clampDiff(long diff) {
         if(diff > 50){
-            diff = 0;
+            diff = 50;
         }
         return diff;
     }
