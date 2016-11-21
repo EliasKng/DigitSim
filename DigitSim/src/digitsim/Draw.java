@@ -191,7 +191,7 @@ public class Draw {
      * @Author Elias
      */
     public static double getXYAdaptGrid(double d) { 
-        return Math.round(d / 21) * 21;
+        return Math.round(d / Properties.GridOffset) * Properties.GridOffset;
     }
     
 

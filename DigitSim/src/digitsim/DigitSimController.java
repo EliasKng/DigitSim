@@ -75,9 +75,6 @@ public class DigitSimController extends Pane{
         
         loadBtnGroup(); //Alle Buttons die ein Element auswählen in eine Gruppe packen, damit immer nur einer ausgewählt ist
 
-        //Verschiebt simCanvas ein bisschen
-        simCanvas.translateXProperty().set(25);
-        simCanvas.translateYProperty().set(25);
                
         //Handler für funktionen wie Drag, Zoom etc.
         nodeGestures = new NodeGestures( simCanvas);
@@ -312,7 +309,7 @@ public class DigitSimController extends Pane{
         for(Element i : elements){ //elemente durchgehen...
             double addition = 0;
             if(i.getInputCount()>3) {
-                addition = (i.getInputCount()-3)*21;
+                addition = (i.getInputCount()-3)*Properties.GridOffset;
             }
             double element_x = i.getX() - (i.getWidth() / 2.4);         //X,Width,Height werden an das Element angepasst, da das Element in der mitte der Maus plaziert wird! 
             double element_y = i.getY() - (i.getWidth() / 2.4);
@@ -332,7 +329,7 @@ public class DigitSimController extends Pane{
      * @Author Elias
      */
     public double getXAdaptGrid(MouseEvent event) { 
-        return Math.round(event.getX() / 21) * 21;
+        return Math.round(event.getX() / Properties.GridOffset) * Properties.GridOffset;
     }
     
     /**
@@ -340,7 +337,7 @@ public class DigitSimController extends Pane{
      * @Author Elias
      */
     public double getYAdaptGrid(MouseEvent event) { 
-        return Math.round(event.getY() / 21) * 21;
+        return Math.round(event.getY() / Properties.GridOffset) * Properties.GridOffset;
     }
     
     public ArrayList<Element> getElements(){ //Über diese Methode können andere Klassen auf die Elemente zugreifen
