@@ -43,8 +43,8 @@ public class DigitSim extends Application { //Hauptklasse
      */
     private static void openMainWindow() {
         stage = GenFunctions.openFXML("DigitSim.fxml", "Seminator", "icon.png");
-        stage.setMinWidth(800);
-        stage.setMinHeight(600);
+        stage.setMinWidth(Properties.windowMinX);
+        stage.setMinHeight(Properties.windowMinY);
         stage.setOnCloseRequest(
             new EventHandler<WindowEvent>() {         
                 @Override

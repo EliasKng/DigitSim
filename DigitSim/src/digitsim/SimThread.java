@@ -25,7 +25,7 @@ public class SimThread extends Thread { //Ein Thread kann nebenbei laufen (auf e
             dsController.run(); //Alle Elemente updaten etc.
             Math.abs(diff -= System.currentTimeMillis()); //Rausfinden wieviel Zeit vergangen ist (Differenz)
             try{
-            this.wait(50 - clampDiff(diff)); //50ms Warten, Wir ziehen die Differenz ab, damit wir IMMER 50ms haben SPRICH: Unser Simulator läuft im Normalfall mit einer Frequenz von 20Hz
+            this.wait(Properties.threadDurationMS - clampDiff(diff)); //50ms Warten, Wir ziehen die Differenz ab, damit wir IMMER 50ms haben SPRICH: Unser Simulator läuft im Normalfall mit einer Frequenz von 20Hz
             }catch(Exception e){
                 //Nichts tun! Es wird abgebrochen sobald die 50s vorbei sind.
             }
@@ -33,8 +33,8 @@ public class SimThread extends Thread { //Ein Thread kann nebenbei laufen (auf e
     }
     
     public long clampDiff(long diff) {
-        if(diff > 50){
-            diff = 50;
+        if(diff > Properties.threadDurationMS){
+            diff = Properties.threadDurationMS;
         }
         return diff;
     }

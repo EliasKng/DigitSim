@@ -45,13 +45,17 @@ public class Element_XOR extends Element{
             for(int i = 0; i < numInputs; i++)
             {
                 //  * Überarbeitet von Tim 05.11.16
+                //  * Überarbeitet von Tim 21.11.16
                 // korrekte stelle für jeden eingang berechnen, egal wie viele eingänge
                 // *Überarbeitet von Elias 11.11.16
                 // Bausteine passen sich nun automatisch mit ihrer Höhe an die anzahl der Eingänge an
-                if(rec.getHeight() <= (numInputs+1)*21) {
-                    rec.setHeight((numInputs+1)*21);
+                
+                double gridOffset = (double) Properties.GridOffset;
+                
+                if(rec.getHeight() <= (numInputs + 1) * gridOffset) {
+                    rec.setHeight((numInputs + 1) * gridOffset);
                 }
-                double offsetY = i*21 + 21 - 1;
+                double offsetY = i * gridOffset + gridOffset - 1;
                 
                 inputLines.add(Draw.drawLine((pX - 5), pY + offsetY, (pX - 15), pY + offsetY, Color.BLACK, 5));
                 grp.getChildren().add(inputLines.get(i));
