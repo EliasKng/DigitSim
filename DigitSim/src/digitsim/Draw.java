@@ -170,7 +170,7 @@ public class Draw {
         if(Draw.checkArraySameLength(dx, dy)) {
             Group g = new Group();
             for (int i =0; i < (dx.length-1); i ++) {
-                g.getChildren().add(Draw.drawLine(getXYAdaptGrid(dx[i]), getXYAdaptGrid(dy[i]),getXYAdaptGrid(dx[i+1]) , getXYAdaptGrid(dy[i+1]), lineColor, lineWidth));
+                g.getChildren().add(Draw.drawLine(GenFunctions.getXYAdaptGrid(dx[i]), GenFunctions.getXYAdaptGrid(dy[i]),GenFunctions.getXYAdaptGrid(dx[i+1]) , GenFunctions.getXYAdaptGrid(dy[i+1]), lineColor, lineWidth));
             }
             return g;
         }
@@ -186,13 +186,7 @@ public class Draw {
     }
     
     
-    /**
-     * Nimmt eine Koordinate und passt diese an das Grid an
-     * @Author Elias
-     */
-    public static double getXYAdaptGrid(double d) { 
-        return Math.round(d / Properties.GridOffset) * Properties.GridOffset;
-    }
+    
     
 
 }

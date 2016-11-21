@@ -200,10 +200,10 @@ public class DigitSimController extends Pane{
         dy[2] = 75;
         dy[3] = 75;
         dy[4] = 75;
-        Group g = new Group();
-        g = Draw.lineArrayXYToGroup(dx, dy, Color.RED, 3);
+        Group g;
+        ConnectionLine l0 = new ConnectionLine(dx,dy,5);
+        g = l0.getGroup();
         simCanvas.getChildren().add(g);
-        
     }
     public void mItemCloseAction(ActionEvent event){ //Programm schließen
         if(runningThread.isAlive()){

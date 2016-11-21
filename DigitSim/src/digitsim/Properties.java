@@ -27,4 +27,5 @@ public class Properties {
     // Window Stuff
     public static final int windowMinX = 800;
     public static final int windowMinY = 600;
+    
 }

@@ -48,6 +48,14 @@ public class GenFunctions { //Laden der GUI
     }
     
     /**
+     * Nimmt eine Koordinate und passt diese an das Grid an
+     * @Author Elias
+     */
+    public static double getXYAdaptGrid(double d) { 
+        return Math.round(d / Properties.GridOffset) * Properties.GridOffset;
+    }
+    
+    /**
      * Zeigt das Eigenschaftenfenster von Elementen
      */
     public static void showBasicElementProperties(int numInputs, Element thisElement){ //Zeigt das "Eigenschaften"-Fenster für dieses Element
