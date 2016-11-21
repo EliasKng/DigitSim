@@ -137,7 +137,7 @@ public class DigitSimController extends Pane{
         simPane.getChildren().addAll(simCanvas); //die Arbeitsfläche auf das Panel setzen
     }
     
-    public DraggableCanvas getSimCanvas()
+    public static DraggableCanvas getSimCanvas()
     {
         return simCanvas;
     }
@@ -202,8 +202,8 @@ public class DigitSimController extends Pane{
         dy[4] = 75;
         Group g;
         ConnectionLine l0 = new ConnectionLine(dx,dy,5);
-        g = l0.getGroup();
-        simCanvas.getChildren().add(g);
+        //g = l0.getGroup();
+        //simCanvas.getChildren().add(g);
     }
     public void mItemCloseAction(ActionEvent event){ //Programm schließen
         if(runningThread.isAlive()){

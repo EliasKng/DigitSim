@@ -22,6 +22,7 @@ public class Connection { //Speichert die Verbindungen
         dsController = pDSController;
     }
 
+    // -Bearbeitet von Tim 21.11.16
     public class ConData // Daten einer Verbindung
     {
         public int indexFirstElement;       // index des ersten elements im array
@@ -30,7 +31,7 @@ public class Connection { //Speichert die Verbindungen
         public int indexSecondElement;      // index des zweiten elements im array
         public boolean typeSecond;          // ein oder ausgang
         public int indexSecond;             // index des jeweiligen ein oder ausgangs am zweiten element
-        public Line connectionLine;         // line, die beide elemente verbindet
+        public ConnectionLine connectionLine; // Elias KLasse zum Zeichnen von conenctions
     }
 
     public static ArrayList<ConData> connections = new ArrayList<ConData>(); //Speichert alle Verbindungne
@@ -66,6 +67,7 @@ public class Connection { //Speichert die Verbindungen
         data.indexSecond = indexSecond;
         data.typeFirst = typeFirst;
         data.typeSecond = typeSecond;
+        data.connectionLine = new ConnectionLine(2, 5);
         connections.add(data);
     }
 
@@ -104,11 +106,13 @@ public class Connection { //Speichert die Verbindungen
                 lineY2 = dsController.getElements().get(d.indexSecondElement).getOutputY(d.indexSecond);
             }
             // Linien zeichenen
-            if (d.connectionLine != null) {
-                dsController.getSimCanvas().getChildren().remove(d.connectionLine);
+            if (d.connectionLine.getGroup() != null) {
+                d.connectionLine.clearGroup();
             }
-            d.connectionLine = Draw.drawLine(lineX1, lineY1, lineX2, lineY2, Color.BLACK, 4);
-            dsController.getSimCanvas().getChildren().add(d.connectionLine);
+            d.connectionLine.setlX(new double[]{lineX1, lineX2});
+            d.connectionLine.setlY(new double[]{lineY1, lineY2});
+            d.connectionLine.update();
+
         }
     }
 

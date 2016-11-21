@@ -34,6 +34,19 @@ public class ConnectionLine {
         createGroup();
     }
     
+     /**
+     * Erstellt ein Objekt von dieser Klasse mit standard Attributen
+     * @param reserved größe des arrays wenn man ohne koordinaten erstellen will
+     * @param lWidth gitb die Dicke der Linie an
+     */
+    public ConnectionLine(int reserved, double lWidth) {
+        this.lX = new double[reserved];
+        this.lY = new double[reserved];
+
+        this.lWidth = lWidth;
+        createGroup();
+    }
+    
     /**
      * Erstellt ein Objekt von dieser Klasse mit standard Attributen
      * @param lX In diesem Array stecken alle X Koordinaten der Linie
@@ -102,6 +115,7 @@ public class ConnectionLine {
         if(Draw.checkArraySameLength(lX, lY)) {
             for (int i =0; i < (lX.length-1); i ++) {
                 this.group.getChildren().add(Draw.drawLine(GenFunctions.getXYAdaptGrid(lX[i]), GenFunctions.getXYAdaptGrid(lY[i]),GenFunctions.getXYAdaptGrid(lX[i+1]) , GenFunctions.getXYAdaptGrid(lY[i+1]), lColor, lWidth));
+                DigitSimController.getSimCanvas().getChildren().add(group);
             }
         }
     }
@@ -110,8 +124,13 @@ public class ConnectionLine {
      * löscht die vorhandene Gruppe und erstellt diese neu (wenn z.B. die Farbe geändert wurde ec.)
      * @author Elias
      */
-    public void update() {
+    public void clearGroup()
+    {
         group.getChildren().clear();
+        DigitSimController.getSimCanvas().getChildren().remove(group);
+    }
+    public void update() {
+        
         createGroup();
     }
     
