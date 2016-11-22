@@ -42,8 +42,8 @@ public class Element_NOR extends Element{
         lbl = Draw.drawLabel((pX+2), (pY - 17), ">" , Color.BLACK, false, 75);
         lbl2 = Draw.drawLabel((pX+40), (pY - 15), "1" , Color.BLACK, false, 75);
         lUnderL = Draw.drawLine(pX+14.5, pY+63, pX+42, pY+63, Color.BLACK, 5);
-        outputLines.add(Draw.drawLine((pX + 95), (pY + 40), (pX + 100), (pY + 40), Color.BLACK, 5)); 
-        cOutput = Draw.drawCircle(pX+88, pY+40, 5, Color.BLACK, 5, false, 5);
+        outputLines.add(Draw.drawLine((pX + 95), (pY + 29.5), (pX + 100), (pY + 29.5), Color.BLACK, 5)); 
+        cOutput = Draw.drawCircle(pX+88, pY+29.5, 5, Color.BLACK, 5, false, 5);
         
             numInputs = pInputs;
             inputs = new int[numInputs];
@@ -59,10 +59,10 @@ public class Element_NOR extends Element{
                 
                 double gridOffset = (double) Properties.GridOffset;
                 
-                if(rec.getHeight() <= (numInputs + 1) * gridOffset) {
-                    rec.setHeight((numInputs + 1) * gridOffset);
+                if(rec.getHeight() <= (numInputs) * gridOffset) {
+                    rec.setHeight((numInputs) * gridOffset);
                 }
-                double offsetY = i * gridOffset + gridOffset - 1;
+                double offsetY = i * gridOffset + gridOffset - 11.5;
                 
                 inputLines.add(Draw.drawLine((pX - 5), pY + offsetY, (pX - 15), pY + offsetY, Color.BLACK, 5));
                 grp.getChildren().add(inputLines.get(i));

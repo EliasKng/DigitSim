@@ -36,7 +36,7 @@ public class Element_XOR extends Element{
         rec = Draw.drawRectangle(pX, pY, elementWidth, elementHeight, 10, 10, Color.BLACK, 0.4, 5);           //das OR zeichnen
         lbl = Draw.drawLabel((pX+2), (pY - 17), "=" , Color.BLACK, false, 75);
         lbl2 = Draw.drawLabel((pX+40), (pY - 15), "1" , Color.BLACK, false, 75);
-        outputLines.add(Draw.drawLine((pX + 85), (pY + 40), (pX + 100), (pY + 40), Color.BLACK, 5)); 
+        outputLines.add(Draw.drawLine((pX + 85), (pY + 29.5), (pX + 100), (pY + 29.5), Color.BLACK, 5)); 
         
             numInputs = pInputs; // 2 Da mehr keinen Sinn machen
             inputs = new int[numInputs];
@@ -52,10 +52,10 @@ public class Element_XOR extends Element{
                 
                 double gridOffset = (double) Properties.GridOffset;
                 
-                if(rec.getHeight() <= (numInputs + 1) * gridOffset) {
-                    rec.setHeight((numInputs + 1) * gridOffset);
+                if(rec.getHeight() <= (numInputs) * gridOffset) {
+                    rec.setHeight((numInputs) * gridOffset);
                 }
-                double offsetY = i * gridOffset + gridOffset - 1;
+                double offsetY = i * gridOffset + gridOffset - 11.5;
                 
                 inputLines.add(Draw.drawLine((pX - 5), pY + offsetY, (pX - 15), pY + offsetY, Color.BLACK, 5));
                 grp.getChildren().add(inputLines.get(i));
