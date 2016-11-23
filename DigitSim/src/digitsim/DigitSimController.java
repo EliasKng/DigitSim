@@ -29,6 +29,7 @@ public class DigitSimController extends Pane{
     private SimThread runningThread = new SimThread(this); //Thread der, falls gestartet, immer die Elemente & Verbindungen updatet
     private boolean locked = false; //Wenn wir das Programm starten setzen wir locked auf True, damit das Programm blokiert wird und man während der Simulation nichts ändern kann!
     private static DigitSimController refThis;
+    private Pathfinder pathFinder = new Pathfinder();
     
      /**
      * FXML OBJEKT-Erstellungs-Bereich:
@@ -87,6 +88,11 @@ public class DigitSimController extends Pane{
         elements = new ArrayList<Element>(); //Beschreibung oben
         //Klasse für die Verbindungen    
         allConnections = new Connection(this);
+        
+        
+        
+        
+        
     }
     
     //TEST
@@ -187,23 +193,7 @@ public class DigitSimController extends Pane{
     */  
     
     public void btnLogicToggleOnAction(ActionEvent event) {
-        //Steht hier nur zum testen für die Draw.lineArrayXYToGroup(...).
-        double[] dx = new double[5];
-        double[] dy = new double[5];
-        dx[0] = 10;
-        dx[1] = 60;
-        dx[2] = 60;
-        dx[3] = 130;
-        dx[4] = 150;
-        dy[0] = 10;
-        dy[1] = 10;
-        dy[2] = 75;
-        dy[3] = 75;
-        dy[4] = 75;
-        Group g;
-        ConnectionLine l0 = new ConnectionLine(dx,dy,5);
-        //g = l0.getGroup();
-        //simCanvas.getChildren().add(g);
+        pathFinder.createArray(elements, Properties.simSizeX, Properties.simSizeY, simCanvas);
     }
     public void mItemCloseAction(ActionEvent event){ //Programm schließen
         if(runningThread.isAlive()){
