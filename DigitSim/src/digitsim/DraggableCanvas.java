@@ -32,7 +32,7 @@ public class DraggableCanvas extends Pane { //Arbeitsfläche
     DoubleProperty myScale = new SimpleDoubleProperty(1.0); //Standartzoom auf 1
 
     public DraggableCanvas() {
-        setPrefSize(Properties.simSizeX, Properties.simSizeY); //Standartgröße
+        setPrefSize(Properties.GetSimSizeX(), Properties.GetSimSizeY()); //Standartgröße
         setStyle("-fx-background-color: white; -fx-border-color: grey;"); //Farben
 
         // Die Scalierung einbinden
@@ -60,12 +60,12 @@ public class DraggableCanvas extends Pane { //Arbeitsfläche
         // Karomuster malen
         // offset = linien abstand
         double d;
-        for( double i = Properties.GridOffset; i < w; i += Properties.GridOffset) {
+        for( double i = Properties.GetGridOffset(); i < w; i += Properties.GetGridOffset()) {
                 if(i % 4 == 0) d = 2; //Jede 5. Linie mit doppelter Dicke zeichnen
                 else d = 1;
                                 
-                Draw.gcDrawLine(gc, i, 0, i, h, d, Properties.gridColor);
-                Draw.gcDrawLine(gc, 0, i, w, i, d, Properties.gridColor);
+                Draw.gcDrawLine(gc, i, 0, i, h, d, Properties.GetGridColor());
+                Draw.gcDrawLine(gc, 0, i, w, i, d, Properties.GetGridColor());
         }        
         
 
@@ -211,7 +211,7 @@ class NodeGestures {
     };
     //Anpassung eines beliebigen Volumen ans Gitter (Author: Dominik)
     private double getValueAdaptGrid(double pV){
-        double offset = Properties.GridOffset;
+        double offset = Properties.GetGridOffset();
         return Math.round(pV / offset) * offset;
     }
 }

@@ -54,7 +54,7 @@ public class Element_XNOR extends Element{
                 // *Überarbeitet von Elias 11.11.16
                 // Bausteine passen sich nun automatisch mit ihrer Höhe an die anzahl der Eingänge an
                 
-                double gridOffset = (double) Properties.GridOffset;
+                double gridOffset = (double) Properties.GetGridOffset();
                 
                 if(rec.getHeight() <= (numInputs) * gridOffset) {
                     rec.setHeight((numInputs) * gridOffset);

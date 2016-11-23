@@ -52,7 +52,7 @@ public class GenFunctions { //Laden der GUI
      * @Author Elias
      */
     public static double getXYAdaptGrid(double d) { 
-        return Math.round(d / Properties.GridOffset) * Properties.GridOffset;
+        return Math.round(d / Properties.GetGridOffset()) * Properties.GetGridOffset();
     }
     
     /**

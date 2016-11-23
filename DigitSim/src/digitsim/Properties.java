@@ -16,16 +16,51 @@ public class Properties {
     // Damit änderungen sichtbar werden muss man unter Run auf "Clean and Build Project" klicken!
     
     // Simgrid Stuff
-    public static final int simSizeX = 4000;
-    public static final int simSizeY = 4000;    
-    public static final int GridOffset = 21;
-    public static Color gridColor = Color.LIGHTGREY;
+    private static final int simSizeX = 4000;
+    private static final int simSizeY = 4000;    
+    private static final int gridOffset = 21;
+    private static Color gridColor = Color.LIGHTGREY;
     
     // Thread Stuff
-    public static final int threadDurationMS = 50;
+    private static final int threadDurationMS = 50;
     
     // Window Stuff
-    public static final int windowMinX = 800;
-    public static final int windowMinY = 600;
+    private static final int windowMinX = 800;
+    private static final int windowMinY = 600;
     
+    
+    // Getters
+    public static int GetSimSizeX()
+    {
+        return simSizeX;
+    }
+    
+    public static int GetSimSizeY()
+    {
+        return simSizeY;
+    }
+    
+    public static int GetGridOffset()
+    {
+        return gridOffset;
+    }
+    
+    public static Color GetGridColor()
+    {
+        return gridColor;
+    }
+    
+    public static int GetThreadDurationMS()
+    {
+        return threadDurationMS;
+    }
+    public static int GetWindowMinX()
+    {
+        return windowMinX;
+    }
+    
+    public static int GetWindowMinY()
+    {
+        return windowMinY;
+    }
 }

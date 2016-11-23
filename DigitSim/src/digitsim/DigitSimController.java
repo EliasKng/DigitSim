@@ -193,7 +193,7 @@ public class DigitSimController extends Pane{
     */  
     
     public void btnLogicToggleOnAction(ActionEvent event) {
-        pathFinder.createArray(elements, Properties.simSizeX, Properties.simSizeY, simCanvas);
+        pathFinder.createArray(elements, Properties.GetSimSizeX(), Properties.GetSimSizeY(), simCanvas);
     }
     public void mItemCloseAction(ActionEvent event){ //Programm schließen
         if(runningThread.isAlive()){
@@ -299,7 +299,7 @@ public class DigitSimController extends Pane{
         for(Element i : elements){ //elemente durchgehen...
             double addition = 0;
             if(i.getInputCount()>3) {
-                addition = (i.getInputCount()-3)*Properties.GridOffset;
+                addition = (i.getInputCount()-3)*Properties.GetGridOffset();
             }
             double element_x = i.getX() - (i.getWidth() / 2.4);         //X,Width,Height werden an das Element angepasst, da das Element in der mitte der Maus plaziert wird! 
             double element_y = i.getY() - (i.getWidth() / 2.4);
@@ -319,7 +319,7 @@ public class DigitSimController extends Pane{
      * @Author Elias
      */
     public double getXAdaptGrid(MouseEvent event) { 
-        return Math.round(event.getX() / Properties.GridOffset) * Properties.GridOffset;
+        return Math.round(event.getX() / Properties.GetGridOffset()) * Properties.GetGridOffset();
     }
     
     /**
@@ -327,7 +327,7 @@ public class DigitSimController extends Pane{
      * @Author Elias
      */
     public double getYAdaptGrid(MouseEvent event) { 
-        return Math.round(event.getY() / Properties.GridOffset) * Properties.GridOffset;
+        return Math.round(event.getY() / Properties.GetGridOffset()) * Properties.GetGridOffset();
     }
     
     public ArrayList<Element> getElements(){ //Über diese Methode können andere Klassen auf die Elemente zugreifen
