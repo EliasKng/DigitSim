@@ -26,7 +26,7 @@
 <?import javafx.scene.text.*?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="digitsim.DigitSimController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="digitsim.DigitSimController">
   <children>
     <Separator layoutX="216.0" layoutY="14.0" orientation="VERTICAL" prefHeight="754.0" prefWidth="6.0" />
     <MenuBar layoutY="-1.0" prefHeight="24.0" prefWidth="1024.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
@@ -38,7 +38,7 @@
                 <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
               </accelerator>
             </MenuItem>
-            <MenuItem id="mItemOpenFile" mnemonicParsing="false" onAction="#mItemOpenFileAction" text="Öffnen" fx:id="mItemOpenFile">
+            <MenuItem id="mItemOpenFile" fx:id="mItemOpenFile" mnemonicParsing="false" onAction="#mItemOpenFileAction" text="Öffnen">
               <accelerator>
                 <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
               </accelerator>
@@ -49,7 +49,7 @@
               </accelerator>
             </MenuItem>
             <MenuItem mnemonicParsing="false" text="Speichern als..." />
-            <MenuItem mnemonicParsing="false" onAction="#mItemCloseAction" text="Schließen" fx:id="mItemClose">
+            <MenuItem fx:id="mItemClose" mnemonicParsing="false" onAction="#mItemCloseAction" text="Schließen">
               <accelerator>
                 <KeyCodeCombination alt="UP" code="C" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
               </accelerator>
@@ -63,7 +63,7 @@
                 <KeyCodeCombination alt="UP" code="DELETE" control="UP" meta="UP" shift="UP" shortcut="ANY" />
               </accelerator>
             </MenuItem>
-            <MenuItem mnemonicParsing="false" onAction="#mItemPropertiesOnAction" text="Einstellungen" fx:id="mItemProperties">
+            <MenuItem fx:id="mItemProperties" mnemonicParsing="false" onAction="#mItemPropertiesOnAction" text="Einstellungen">
               <accelerator>
                 <KeyCodeCombination alt="UP" code="P" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
               </accelerator>
@@ -87,7 +87,7 @@
         <Menu mnemonicParsing="false" text="Hilfe">
           <items>
             <MenuItem mnemonicParsing="false" text="Über den Seminator" />
-            <MenuItem mnemonicParsing="false" onAction="#mItemHelpOnAction" text="Hilfe" fx:id="mItemHelp" />
+            <MenuItem fx:id="mItemHelp" mnemonicParsing="false" onAction="#mItemHelpOnAction" text="Hilfe" />
           </items>
         </Menu>
       </menus>
@@ -135,7 +135,7 @@
                     <Label alignment="CENTER" layoutX="106.0" layoutY="74.0" prefHeight="27.0" prefWidth="85.0" text="TEXTFELD" />
                     <Label alignment="CENTER" layoutX="14.0" layoutY="159.0" prefHeight="27.0" prefWidth="85.0" text="LED" />
                     <Label alignment="CENTER" layoutX="106.0" layoutY="159.0" prefHeight="27.0" prefWidth="85.0" text="SIGNAL" />
-                    <ToggleButton fx:id="btnAND1" layoutX="32.0" layoutY="101.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-image: url('/digitsim/data/LED.png');" />
+                    <ToggleButton fx:id="btnLED" layoutX="32.0" layoutY="101.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-image: url('/digitsim/data/LED.png');" />
                     <ToggleButton fx:id="btnAND2" layoutX="118.0" layoutY="101.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/signal.png');" />
                     <ToggleButton fx:id="btnAND21" layoutX="27.0" layoutY="14.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/SUBCIRCUIT.png');" />
                     <ToggleButton fx:id="btnAND22" layoutX="119.0" layoutY="14.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/Textfeld.png');" />
