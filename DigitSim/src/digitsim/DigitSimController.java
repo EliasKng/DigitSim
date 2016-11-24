@@ -4,15 +4,15 @@ import java.util.ArrayList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Group;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import pathFinder.PathFinder;
+import pathFinder.Vector2i;
 /**
  * Digitsim.fxml Controller class
  *
@@ -196,6 +196,10 @@ public class DigitSimController extends Pane{
     
     public void btnLogicToggleOnAction(ActionEvent event) {
         pathFinder.createArray(elements, Properties.GetSimSizeX(), Properties.GetSimSizeY(), simCanvas);
+        PathFinder pf = new PathFinder();
+        Vector2i start = new Vector2i(0,0);
+        Vector2i goal = new Vector2i(100,100);
+        pf.findPath(start, goal);
     }
     
     public void mItemCloseAction(ActionEvent event){ //Programm schließen

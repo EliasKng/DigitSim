@@ -21,7 +21,7 @@ import javafx.scene.shape.Rectangle;
  * Die Klasse ist die Mutterklasse/Mainclass für die Elemente
  * Alle zukünftigen Elemente müssen von dieser Klasse erben und die vorgeschriebenen Methoden implementieren. ALs Beispiel kann z.b das Element_AND genutzt werden!
  */
-abstract class Element { //Abstakte Klasse, nur zur Vererbung, es kann kein direktes Object dieser Klasse erstellt werden
+public abstract class Element { //Abstakte Klasse, nur zur Vererbung, es kann kein direktes Object dieser Klasse erstellt werden
     //Globals für ALLE Elemente
     public static final String TYPE = "ELEMENT"; //Benutzen wir als eine Art "ENUM"
     protected Group grp; //Protected da die Erbenden Klassen auch auf diese zugreifen können (geht bei private nicht!)
