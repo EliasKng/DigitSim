@@ -27,7 +27,7 @@ public class DigitSimController extends Pane{
     private SceneGestures sceneGestures; //Die handler für die Arbeitsfläche beziehen
     private Connection allConnections; //Verbindungen zwischen Elementen werden hier gespeichert
     private SimThread runningThread = new SimThread(this); //Thread der, falls gestartet, immer die Elemente & Verbindungen updatet
-    private boolean locked = false; //Wenn wir das Programm starten setzen wir locked auf True, damit das Programm blokiert wird und man während der Simulation nichts ändern kann!
+    private static boolean locked = false; //Wenn wir das Programm starten setzen wir locked auf True, damit das Programm blokiert wird und man während der Simulation nichts ändern kann!
     private static DigitSimController refThis;
     private Pathfinder pathFinder = new Pathfinder();
     
@@ -61,6 +61,8 @@ public class DigitSimController extends Pane{
     private Slider inputSlider;
     @FXML
     private ToggleButton btnLogicToggle;
+    @FXML
+    private ToggleButton btnLED;
     
     //Constructor (leer)
     public DigitSimController() {
@@ -164,7 +166,7 @@ public class DigitSimController extends Pane{
         btnNOR.setToggleGroup(group);
         btnXOR.setToggleGroup(group);
         btnXNOR.setToggleGroup(group);
-
+        btnLED.setToggleGroup(group);
     }
     
     /**
@@ -230,7 +232,7 @@ public class DigitSimController extends Pane{
         runningThread = new SimThread(this);
         runningThread.start(); //Den Thread starten, d.h alle Elemente & Connections werden regelmäßig geupdated
         locked = true; //Programm blockieren (siehe erklärung oben)
-  }
+  }     
     public void btnPauseOnAction(ActionEvent event) {   
         runningThread.interrupt(); //Den Thread anhalten
         resetElements(); //Alles resetzen
@@ -286,6 +288,10 @@ public class DigitSimController extends Pane{
       else if(btnXNOR.isSelected()){ //Nand
             elements.add(new Element_XNOR(getXAdaptGrid(event), getYAdaptGrid(event), (int) inputSlider.getValue(), nodeGestures));
             simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());        
+      }
+      else if (btnLED.isSelected()) { //LED
+            elements.add(new Element_LED(getXAdaptGrid(event), getYAdaptGrid(event), 1, nodeGestures));
+            simCanvas.getChildren().add(elements.get(elements.size() -1).getGroup());
       }
     }
    
@@ -375,7 +381,8 @@ public class DigitSimController extends Pane{
         allConnections.update(); //Alle Verbindungen updaten
     }
     
-    public boolean isLocked(){ //Schauen ob das Programm blokiert ist (erklärung: siehe DigitSimController oben)
+    //Methode und Boolean sind jetzt static für LED (und signal vlcht?) *Lukas*
+    public static boolean isLocked(){ //Schauen ob das Programm blokiert ist (erklärung: siehe DigitSimController oben)
         return locked;
     }
     
