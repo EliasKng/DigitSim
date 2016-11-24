@@ -195,6 +195,7 @@ public class DigitSimController extends Pane{
     public void btnLogicToggleOnAction(ActionEvent event) {
         pathFinder.createArray(elements, Properties.GetSimSizeX(), Properties.GetSimSizeY(), simCanvas);
     }
+    
     public void mItemCloseAction(ActionEvent event){ //Programm schließen
         if(runningThread.isAlive()){
             runningThread.interrupt(); //Wenn der Thread beim schließen läuft muss dieser geschlossen werden, sonst läuft er weiter
