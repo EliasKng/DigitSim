@@ -26,7 +26,7 @@ public abstract class Element { //Abstakte Klasse, nur zur Vererbung, es kann ke
     public static final String TYPE = "ELEMENT"; //Benutzen wir als eine Art "ENUM"
     protected Group grp; //Protected da die Erbenden Klassen auch auf diese zugreifen können (geht bei private nicht!)
     protected int numOutputs; //Anzahl In und Outputs
-    protected int numInputs;
+    public int numInputs;
     protected static double elementWidth = 80; //Standartbreite (Kann geändert werden!)
     protected static double elementHeight = 80; //selbe mit höhe
     protected int[] inputs; //Werte der In und Outputs (0 o. 1)

@@ -195,10 +195,10 @@ public class DigitSimController extends Pane{
     */  
     
     public void btnLogicToggleOnAction(ActionEvent event) {
-        pathFinder.createArray(elements, Properties.GetSimSizeX(), Properties.GetSimSizeY(), simCanvas);
-        PathFinder pf = new PathFinder();
+        //pathFinder.createArray(elements, Properties.GetSimSizeX(), Properties.GetSimSizeY(), simCanvas);
+        PathFinder pf = new PathFinder(elements);
         Vector2i start = new Vector2i(0,0);
-        Vector2i goal = new Vector2i(100,100);
+        Vector2i goal = new Vector2i(100,0);
         pf.findPath(start, goal);
     }
     
