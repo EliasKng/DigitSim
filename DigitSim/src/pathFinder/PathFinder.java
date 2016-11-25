@@ -32,15 +32,6 @@ public class PathFinder {
         
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
     private Comparator<Node> nodeSorter = new Comparator<Node>() {
         @Override
         public int compare(Node n0, Node n1) {

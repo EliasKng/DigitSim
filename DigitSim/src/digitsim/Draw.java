@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package digitsim;
+import java.util.List;
 import javafx.scene.Group;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
@@ -12,6 +13,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import pathFinder.Node;
 
 /**
  * Alle Funktionen die zeichnen / animieren gehören in diese Klasse
@@ -185,6 +187,19 @@ public class Draw {
         return result;
     }
     
+    public static Group drawPath(List<Node> path) {
+        Group g = new Group();
+        for(Node i : path) {
+            int x = i.tile.getX()*21;
+            int y = i.tile.getY()*21;
+            Circle circle = new Circle( x+10.5, y+10.5, 3);
+            circle.setStroke(Color.RED);
+            circle.setStrokeWidth(2);
+            circle.setFill(Color.TRANSPARENT);
+            g.getChildren().add(circle);
+        }
+        return g;
+    }
     
     
     

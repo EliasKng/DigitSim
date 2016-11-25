@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Group;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.scene.input.MouseEvent;
@@ -198,8 +199,10 @@ public class DigitSimController extends Pane{
         //pathFinder.createArray(elements, Properties.GetSimSizeX(), Properties.GetSimSizeY(), simCanvas);
         PathFinder pf = new PathFinder(elements);
         Vector2i start = new Vector2i(0,0);
-        Vector2i goal = new Vector2i(100,0);
-        pf.findPath(start, goal);
+        Vector2i goal = new Vector2i(0,5);
+        
+        Group g = new Group(Draw.drawPath(pf.findPath(start, goal)));
+        simCanvas.getChildren().add(g);
     }
     
     public void mItemCloseAction(ActionEvent event){ //Programm schließen
