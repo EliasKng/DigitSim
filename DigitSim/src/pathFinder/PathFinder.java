@@ -56,7 +56,7 @@ public class PathFinder {
         
         createTileCode();
         //Startnode
-        Node current = new Node(start, null, 0, getDistance(start, goal));
+        Node current = new Node(start, null, 0, getManhattanDistance(start, goal));
         openList.add(current);
         
         while(openList.size() > 0) {
@@ -87,8 +87,8 @@ public class PathFinder {
                 if(isTileSolid(x, xi, y, yi)) continue;
                 
                 Vector2i a = new Vector2i(x+xi,y+yi);
-                double gCost = current.gCost + getDistance(current.tile, a);
-                double hCost = getDistance(a, goal);
+                double gCost = current.gCost + getManhattanDistance(current.tile, a);
+                double hCost = getManhattanDistance(a, goal);
                 Node node = new Node(a,current, gCost, hCost);
                 if(vecInList(closedList, a) && gCost >= node.gCost) continue;
                 if(!vecInList(openList, a) || gCost < node.gCost) {
@@ -108,7 +108,11 @@ public class PathFinder {
         return false;
     }
     
-    private double getDistance(Vector2i tile, Vector2i goal) {
+    private double getManhattanDistance(Vector2i tile, Vector2i goal) {
+        return Math.abs(tile.getX()-goal.getX())+Math.abs(tile.getY()-goal.getY());
+    }
+    
+    private double getEuclideanDistance(Vector2i tile, Vector2i goal) {
         double dx = tile.getX() - goal.getX();
         double dy = tile.getY() - goal.getY();
         return Math.sqrt(dx * dx + dy * dy);
