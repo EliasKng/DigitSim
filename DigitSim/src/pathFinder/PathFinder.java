@@ -32,6 +32,15 @@ public class PathFinder {
         
     }
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
     private Comparator<Node> nodeSorter = new Comparator<Node>() {
         @Override
         public int compare(Node n0, Node n1) {
@@ -67,23 +76,19 @@ public class PathFinder {
             }
             openList.remove(current);
             closedList.add(current);
-            for (int i = 1; i < 9; i = i + 2) { //i kann folgende Werte annehmen: 1,3,5,7
-                //if(i == 4 || i == 0) continue;
-                int addCost = 0;
+            for (int i = 0; i < 9; i++) {
+                if(i == 4) continue;
                 int x = current.tile.getX();
                 int y = current.tile.getY();
                 int xi = (i % 3) -1;
                 int yi = (i / 3) -1;
                 
-                if(!isTileAvailible(x, xi, y , yi)) continue;   
+                if(!isTileAvailible(x, xi, y , yi)) continue;
                 if(isTileSolid(x, xi, y, yi)) continue;
-                if(isTileInElementArea(x, xi, y, yi)) {
-                    addCost = 15;
-                }
                 
                 Vector2i a = new Vector2i(x+xi,y+yi);
                 double gCost = current.gCost + getDistance(current.tile, a);
-                double hCost = getDistance(a, goal) + addCost;
+                double hCost = getDistance(a, goal);
                 Node node = new Node(a,current, gCost, hCost);
                 if(vecInList(closedList, a) && gCost >= node.gCost) continue;
                 if(!vecInList(openList, a) || gCost < node.gCost) {
@@ -104,12 +109,9 @@ public class PathFinder {
     }
     
     private double getDistance(Vector2i tile, Vector2i goal) {
-        /*double dx = tile.getX() - goal.getX();
+        double dx = tile.getX() - goal.getX();
         double dy = tile.getY() - goal.getY();
-        return Math.sqrt(dx * dx + dy * dy);*/
-        
-        int hCost = (Math.abs(tile.getX() - goal.getX())) + (Math.abs(tile.getY() - goal.getY()));
-        return hCost;
+        return Math.sqrt(dx * dx + dy * dy);
     }
     
     
@@ -130,21 +132,12 @@ public class PathFinder {
      * @return 
      */
     public boolean isTileSolid(int x, int xi, int y, int yi) {
-        if(tileCode[x+xi][y+yi] == 1) {
-            return true;
+        boolean result = false;
+        int status = tileCode[x+xi][y+yi];
+        if(status == 1) {
+            result = true;
         }
-        return false;
-    }
-    
-    /**
-     * Wenn sich dieses Tile im Umfeld eines Bausteines befindet (Umfeld eines Elementes entspricht auf allen Seiten eine Tile mehr) wird true zurück gegeben
-     * @return 
-     */
-    public boolean isTileInElementArea(int x, int xi, int y, int yi) {
-        if(tileCode[x+xi][y+yi] == 2) {
-            return true;
-        }
-        return false;
+        return result;
     }
     
     /**
@@ -171,14 +164,9 @@ public class PathFinder {
             eX = (int) i.getX() / gridOffset - 1;
             eY = (int) i.getY() / gridOffset;
             
-            for(int k = eX-1; k < (eX + eWidth+1); k++) {
-                for(int o = eY-1; o < (eY + eHeight+1); o++) {
-                    if((k >= eX && k < (eX+eWidth)) && (o >= eY && o < (eY + eHeight))) {
-                        tileCode[k][o] = 1;// = 1 bedeuted, dass da ein Element ist, sprich das Feld is geblockt
-                    } else {
-                        tileCode[k][o] = 2;// = 2 bedeuted, dass da das Umfeld eines Elements ist, sprich das Feld ist nicht geblockt, es fällt dem pathfinder jedoch schwer, diesen Weg zu nehmen, weil die fCost erhöht wird
-                    }
-                    
+            for(int k = eX; k < (eX + eWidth); k++) {
+                for(int o = eY; o < (eY + eHeight); o++) {
+                    tileCode[k][o] = 1;
                 }
             }
         }
