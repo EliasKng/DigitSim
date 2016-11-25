@@ -133,7 +133,7 @@ public class DigitSimController extends Pane{
                {
                     if(((result2 = allConnections.closeToInOrOut(event)) != null))
                     {
-                        allConnections.addConnection(result1[Connection.EINDEX], result1[Connection.CETYPE] == 1, result1[Connection.CINDEX], result2[Connection.EINDEX], result2[Connection.CETYPE] == 1, result2[Connection.CINDEX]);   
+                        allConnections.addConnection(elements,result1[Connection.EINDEX], result1[Connection.CETYPE] == 1, result1[Connection.CINDEX], result2[Connection.EINDEX], result2[Connection.CETYPE] == 1, result2[Connection.CINDEX]);   
                         allConnections.drawUpdate();
                         result1 = null;
                         result2 = null;
@@ -197,11 +197,11 @@ public class DigitSimController extends Pane{
     
     public void btnLogicToggleOnAction(ActionEvent event) {
         //pathFinder.createArray(elements, Properties.GetSimSizeX(), Properties.GetSimSizeY(), simCanvas);
-        PathFinder pf = new PathFinder(elements);
+        PathFinder pf = new PathFinder();
         Vector2i start = new Vector2i(5,5);
         Vector2i goal = new Vector2i(50,5);
         
-        Group g = new Group(Draw.drawPath(pf.findPath(start, goal)));
+        Group g = new Group(Draw.drawPath(pf.findPath(elements,start, goal)));
         simCanvas.getChildren().add(g);
     }
     

@@ -190,13 +190,12 @@ public class Draw {
     public static Group drawPath(List<Node> path) {
         Group g = new Group();
         for(Node i : path) {
-            int x = i.tile.getX()*21;
-            int y = i.tile.getY()*21;
-            Circle circle = new Circle( x+10.5, y+10.5, 3);
-            circle.setStroke(Color.RED);
-            circle.setStrokeWidth(2);
-            circle.setFill(Color.TRANSPARENT);
-            g.getChildren().add(circle);
+            double x = i.tile.getX()*21+10.5;
+            double y = i.parent.tile.getY()*21+10.5;
+            double xParent = i.parent.tile.getX()*21+10.5;
+            double yParent = i.tile.getY()*21+10.5;
+            Line line = Draw.drawLine(xParent, yParent, x, y, Color.CORAL, 3);
+            g.getChildren().add(line);
         }
         return g;
     }
