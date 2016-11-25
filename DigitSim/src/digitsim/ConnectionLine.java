@@ -121,7 +121,7 @@ public class ConnectionLine {
     }
     
     private Vector2i convertToVec21(int a, int b) {
-        Vector2i vec = new Vector2i(a/21,b/21);
+        Vector2i vec = new Vector2i(a,b);
         return vec;
     }
     
