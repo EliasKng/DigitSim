@@ -57,11 +57,13 @@ public class PathFinder {
         createTileCode();
         //Startnode
         Node current = new Node(start, null, 0, getManhattanDistance(start, goal));
+        Node before = new Node(null,null,0,0);
         openList.add(current);
         
         while(openList.size() > 0) {
             //sortiert die nodeliste nach der fCost der einzelnen Nodes (siehe NodeComparator)
             Collections.sort(openList, nodeSorter);
+            before = current;
             current = openList.get(0);
             if(current.tile.equals(goal)) {
                 List<Node> path = new ArrayList<Node>();
@@ -77,7 +79,8 @@ public class PathFinder {
             openList.remove(current);
             closedList.add(current);
             for (int i = 0; i < 9; i++) {
-                if(i == 4) continue;
+                int addCost = 0;
+                if(i == 4 || i == 0 || i == 2 || i == 6 || i == 8) continue;
                 int x = current.tile.getX();
                 int y = current.tile.getY();
                 int xi = (i % 3) -1;
@@ -85,6 +88,9 @@ public class PathFinder {
                 
                 if(!isTileAvailible(x, xi, y , yi)) continue;
                 if(isTileSolid(x, xi, y, yi)) continue;
+//                if(isDirectionChanged(current, before)) {
+//                    addCost+=1;
+//                }
                 
                 Vector2i a = new Vector2i(x+xi,y+yi);
                 double gCost = current.gCost + getManhattanDistance(current.tile, a);
@@ -101,6 +107,19 @@ public class PathFinder {
         return null;
     }
     
+    private boolean isDirectionChanged(Node current, Node before) {
+        boolean result = true;
+        if(before.tile != null) {
+            if((current.parent.tile.getX() == current.tile.getX()) || current.parent.tile.getY() == current.tile.getY()) {
+                if((before.parent.tile.getX() == before.tile.getX()) || before.parent.tile.getY() == before.tile.getY()) {
+                    result = false;
+                }
+            }
+        }
+        
+        return result;
+    }
+    
     private boolean vecInList(List<Node> list, Vector2i vector) {
         for (Node n : list) {
             if(n.tile.equals(vector)) return true;
@@ -109,6 +128,12 @@ public class PathFinder {
     }
     
     private double getManhattanDistance(Vector2i tile, Vector2i goal) {
+        if(tile.getX() != goal.getX() && tile.getY() != goal.getY()) {
+            if((Math.abs(tile.getX()+goal.getX()) <= 1) &&(Math.abs(tile.getY()+goal.getY()) <= 1)) {
+                return Math.abs(tile.getX()-goal.getX())+Math.abs(tile.getY()-goal.getY())+100;
+            }
+            
+        }
         return Math.abs(tile.getX()-goal.getX())+Math.abs(tile.getY()-goal.getY());
     }
     

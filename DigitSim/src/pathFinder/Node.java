@@ -11,7 +11,7 @@ package pathFinder;
 public class Node {
     public Vector2i tile;
     public Node parent;
-    public double fCost, gCost, hCost;
+    public double fCost, gCost, hCost, addCost;
     
     public Node(Vector2i tile, Node parent, double gCost, double hCost) {
         this.tile = tile;
@@ -19,5 +19,14 @@ public class Node {
         this.gCost = gCost;
         this.hCost = hCost;
         this.fCost = this.gCost + this.hCost;
+    }
+    
+    public Node(Vector2i tile, Node parent, double gCost, double hCost, double addCost) {
+        this.tile = tile;
+        this.parent = parent;
+        this.gCost = gCost;
+        this.hCost = hCost;
+        this.addCost = addCost;
+        this.fCost = this.gCost + this.hCost + this.addCost;
     }
 }
