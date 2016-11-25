@@ -193,9 +193,14 @@ public class PathFinder {
             eX = (int) i.getX() / gridOffset - 1;
             eY = (int) i.getY() / gridOffset;
             
-            for(int k = eX; k < (eX + eWidth); k++) {
-                for(int o = eY; o < (eY + eHeight); o++) {
-                    tileCode[k][o] = 1;
+            for(int k = eX-1; k < (eX + eWidth+1); k++) {
+                for(int o = eY-1; o < (eY + eHeight+1); o++) {
+                    try {   //Hier muss ein try catch hin, weil es sein kann, dass Bausteine in Bereichen liegen, die das Array nicht hat (keine Beeinflussung auf den Pathfinder)
+                        tileCode[k][o] = 1;
+                    } catch(Exception e) {
+                        System.out.println("Array konnte nicht vollständig gebildet werden!!!(PATHFINDER)");
+                    }
+                    
                 }
             }
         }
