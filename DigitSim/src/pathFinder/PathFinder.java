@@ -67,8 +67,8 @@ public class PathFinder {
             }
             openList.remove(current);
             closedList.add(current);
-            for (int i = 0; i < 9; i++) {
-                if(i == 4) continue;
+            for (int i = 1; i < 9; i = i + 2) { //i kann folgende Werte annehmen: 1,3,5,7
+                //if(i == 4 || i == 0) continue;
                 int x = current.tile.getX();
                 int y = current.tile.getY();
                 int xi = (i % 3) -1;
@@ -100,9 +100,12 @@ public class PathFinder {
     }
     
     private double getDistance(Vector2i tile, Vector2i goal) {
-        double dx = tile.getX() - goal.getX();
+        /*double dx = tile.getX() - goal.getX();
         double dy = tile.getY() - goal.getY();
-        return Math.sqrt(dx * dx + dy * dy);
+        return Math.sqrt(dx * dx + dy * dy);*/
+        
+        int hCost = (Math.abs(tile.getX() - goal.getX())) + (Math.abs(tile.getY() - goal.getY()));
+        return hCost;
     }
     
     

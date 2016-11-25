@@ -198,8 +198,8 @@ public class DigitSimController extends Pane{
     public void btnLogicToggleOnAction(ActionEvent event) {
         //pathFinder.createArray(elements, Properties.GetSimSizeX(), Properties.GetSimSizeY(), simCanvas);
         PathFinder pf = new PathFinder(elements);
-        Vector2i start = new Vector2i(0,0);
-        Vector2i goal = new Vector2i(0,5);
+        Vector2i start = new Vector2i(5,5);
+        Vector2i goal = new Vector2i(50,5);
         
         Group g = new Group(Draw.drawPath(pf.findPath(start, goal)));
         simCanvas.getChildren().add(g);

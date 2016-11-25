@@ -114,7 +114,7 @@ public class ConnectionLine {
     private void createGroup() {
         if(Draw.checkArraySameLength(lX, lY)) {
             for (int i =0; i < (lX.length-1); i ++) {
-                this.group.getChildren().add(Draw.drawLine(GenFunctions.getXYAdaptGrid(lX[i]), GenFunctions.getXYAdaptGrid(lY[i]),GenFunctions.getXYAdaptGrid(lX[i+1]) , GenFunctions.getXYAdaptGrid(lY[i+1]), lColor, lWidth));
+                this.group.getChildren().add(Draw.drawLine(lX[i], lY[i],lX[i+1] , lY[i+1], lColor, lWidth));
                 DigitSimController.getSimCanvas().getChildren().add(group);
             }
         }
