@@ -75,7 +75,7 @@ public class PathFinder {
                 int xi = (i % 3) -1;
                 int yi = (i / 3) -1;
                 
-                if(!isTileAvailible(x, xi, y , yi)) continue;
+                if(!isTileAvailible(x, xi, y , yi)) continue;   
                 if(isTileSolid(x, xi, y, yi)) continue;
                 if(isTileInElementArea(x, xi, y, yi)) {
                     addCost = 15;
@@ -130,25 +130,21 @@ public class PathFinder {
      * @return 
      */
     public boolean isTileSolid(int x, int xi, int y, int yi) {
-        boolean result = false;
-        int status = tileCode[x+xi][y+yi];
-        if(status == 1) {
-            result = true;
+        if(tileCode[x+xi][y+yi] == 1) {
+            return true;
         }
-        return result;
+        return false;
     }
     
     /**
-     * Wenn sich über diesem Tile ein Baustein befindet wird true zurück gegeben
+     * Wenn sich dieses Tile im Umfeld eines Bausteines befindet (Umfeld eines Elementes entspricht auf allen Seiten eine Tile mehr) wird true zurück gegeben
      * @return 
      */
     public boolean isTileInElementArea(int x, int xi, int y, int yi) {
-        boolean result = false;
-        int status = tileCode[x+xi][y+yi];
-        if(status == 2) {
-            result = true;
+        if(tileCode[x+xi][y+yi] == 2) {
+            return true;
         }
-        return result;
+        return false;
     }
     
     /**
