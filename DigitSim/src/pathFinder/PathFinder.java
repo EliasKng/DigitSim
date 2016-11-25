@@ -27,7 +27,9 @@ public class PathFinder {
     private int[][] tileCode;
     
     
-    public PathFinder() { 
+    public PathFinder(ArrayList<Element> elements) {
+        this.elements = elements;
+        
     }
     
     private Comparator<Node> nodeSorter = new Comparator<Node>() {
@@ -39,8 +41,7 @@ public class PathFinder {
         }
     };
 
-    public List<Node> findPath(ArrayList<Element> elements, Vector2i start, Vector2i goal) {
-        this.elements = elements;
+    public List<Node> findPath(Vector2i start, Vector2i goal) {
         List<Node> openList = new ArrayList<Node>();
         List<Node> closedList = new ArrayList<Node>();
         

@@ -7,14 +7,15 @@ package digitsim;
 
 import java.util.ArrayList;
 import javafx.scene.input.MouseEvent;
-import pathFinder.Vector2i;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 
 /**
  *
  * @author Tim
  */
 public class Connection { //Speichert die Verbindungen
-    private ArrayList<Element> elements;
+
     private DigitSimController dsController;
 
     public Connection(DigitSimController pDSController) {
@@ -47,7 +48,7 @@ public class Connection { //Speichert die Verbindungen
      * Controlelr klasse elements) param type: 0 für ausgang, 1 für eingang
      * param index: index des ein oder ausgangs am element
      */
-    public void addConnection(ArrayList<Element> elements, int indexFirstElement, boolean typeFirst, int indexFirst, int indexSecondElement, boolean typeSecond, int indexSecond) {
+    public void addConnection(int indexFirstElement, boolean typeFirst, int indexFirst, int indexSecondElement, boolean typeSecond, int indexSecond) {
         ConData data = new ConData();
         if(indexFirstElement == indexSecondElement){ //Überorüfen ob es sich um die gleichen Elemente handelt
             return;
@@ -66,8 +67,7 @@ public class Connection { //Speichert die Verbindungen
         data.indexSecond = indexSecond;
         data.typeFirst = typeFirst;
         data.typeSecond = typeSecond;
-        
-        data.connectionLine = new ConnectionLine();
+        data.connectionLine = new ConnectionLine(2, 5);
         connections.add(data);
     }
 
@@ -94,28 +94,24 @@ public class Connection { //Speichert die Verbindungen
 
             if ((d.typeFirst != d.typeSecond) && !d.typeFirst) // ausgang mit eingang verbunden
             {
-                lineX1 = dsController.getElements().get(d.indexFirstElement).getOutputX(d.indexFirst)+21;
+                lineX1 = dsController.getElements().get(d.indexFirstElement).getOutputX(d.indexFirst);
                 lineY1 = dsController.getElements().get(d.indexFirstElement).getOutputY(d.indexFirst);
-                lineX2 = dsController.getElements().get(d.indexSecondElement).getInputX(d.indexSecond)-21;
+                lineX2 = dsController.getElements().get(d.indexSecondElement).getInputX(d.indexSecond);
                 lineY2 = dsController.getElements().get(d.indexSecondElement).getInputY(d.indexSecond);
             } else if ((d.typeFirst != d.typeSecond) && d.typeFirst) // eingang mit ausgang verbunden
             {
-                lineX1 = dsController.getElements().get(d.indexFirstElement).getInputX(d.indexFirst)-21;
+                lineX1 = dsController.getElements().get(d.indexFirstElement).getInputX(d.indexFirst);
                 lineY1 = dsController.getElements().get(d.indexFirstElement).getInputY(d.indexFirst);
-                lineX2 = dsController.getElements().get(d.indexSecondElement).getOutputX(d.indexSecond)+21;
+                lineX2 = dsController.getElements().get(d.indexSecondElement).getOutputX(d.indexSecond);
                 lineY2 = dsController.getElements().get(d.indexSecondElement).getOutputY(d.indexSecond);
             }
             // Linien zeichenen
             if (d.connectionLine.getGroup() != null) {
                 d.connectionLine.clearGroup();
             }
-            d.connectionLine.createLine(elements,(int) lineX1,(int) lineY1,(int) lineX2,(int) lineY1);
-            /**
             d.connectionLine.setlX(new double[]{lineX1, lineX2});
             d.connectionLine.setlY(new double[]{lineY1, lineY2});
-            * */
             d.connectionLine.update();
-
 
         }
     }

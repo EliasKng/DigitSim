@@ -6,42 +6,70 @@
 package digitsim;
 
 
-import java.util.ArrayList;
-import java.util.List;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
-import pathFinder.Node;
-import pathFinder.PathFinder;
-import pathFinder.Vector2i;
 
 /**
  *Diese Klasse (wird) dazu dienen Verbindungslinien zwischen Bausteinen zu erstellen und zu optimieren
  * @author Elias
  */
 public class ConnectionLine {
-    private final double lWidth = 2;  //Liniendicke
+    private double lWidth = 2;  //Liniendicke
     private Color lColor = Color.BLACK;   //Linienfarbe
     private double[] lX;    //In diesem Array stecken alle X Koordinaten der Linie
     private double[] lY;    //In diesem Array stecken alle Y Koordinaten der Linie
     private Group group = new Group();  //Stelld die Gruppe dar, in welcher die einzelnen Linien sind
-    private List<Node> path;
-    private PathFinder pathFinder = new PathFinder();
-    private Vector2i start;
-    private Vector2i end;
-    
     
     /**
-     * Konstruktor zum späteren Zeichnen der Linie
-     * @param path NodeList, welche den Pfad enthält (wird mit Pathfinder erstellt)
+     * Erstellt ein Objekt von dieser Klasse mit standard Attributen
+     * @param lX In diesem Array stecken alle X Koordinaten der Linie
+     * @param lY In diesem Array stecken alle Y Koordinaten der Linie
      */
-    public ConnectionLine() {
+    public ConnectionLine(double lX[], double lY[]) {
+        this.lX = new double[lX.length];
+        this.lY = new double[lY.length];
+        this.lX = lX;
+        this.lY = lY;
+        this.lWidth = 2;
+        createGroup();
+    }
+    
+     /**
+     * Erstellt ein Objekt von dieser Klasse mit standard Attributen
+     * @param reserved größe des arrays wenn man ohne koordinaten erstellen will
+     * @param lWidth gitb die Dicke der Linie an
+     */
+    public ConnectionLine(int reserved, double lWidth) {
+        this.lX = new double[reserved];
+        this.lY = new double[reserved];
+
+        this.lWidth = lWidth;
+        createGroup();
+    }
+    
+    /**
+     * Erstellt ein Objekt von dieser Klasse mit standard Attributen
+     * @param lX In diesem Array stecken alle X Koordinaten der Linie
+     * @param lY In diesem Array stecken alle Y Koordinaten der Linie
+     * @param lWidth gitb die Dicke der Linie an
+     */
+    public ConnectionLine(double lX[], double lY[], double lWidth) {
+        this.lX = new double[lX.length];
+        this.lY = new double[lY.length];
+        this.lX = lX;
+        this.lY = lY;
+        this.lWidth = lWidth;
+        createGroup();
     }
     
     
     //*************SET/GET*********************
-
     public double getlWidth() {
         return lWidth;
+    }
+
+    public void setlWidth(double lWidth) {
+        this.lWidth = lWidth;
     }
 
     public Color getlColor() {
@@ -67,7 +95,7 @@ public class ConnectionLine {
     public void setlY(double[] lY) {
         this.lY = lY;
     }
-
+    
     public Group getGroup() {
         return group;
     }
@@ -75,89 +103,12 @@ public class ConnectionLine {
     public void setGroup(Group group) {
         this.group = group;
     }
-
-    public List<Node> getPath() {
-        return path;
-    }
-
-    public void setPath(List<Node> path) {
-        this.path = path;
-    }
-
-    public Vector2i getStart() {
-        return start;
-    }
-
-    public void setStart(Vector2i start) {
-        this.start = start;
-    }
-
-    public Vector2i getEnd() {
-        return end;
-    }
-
-    public void setEnd(Vector2i end) {
-        this.end = end;
-    }
-    
     //*******************************************
 
     
     
     /**
-     * Diese Funktion wird benötigt um eine Linie zu erstellen
-     * @param elements
-     * @param start
-     * @param goal 
-     */
-    public void createLine(ArrayList<Element> elements, int lineX1, int lineY1,int lineX2, int lineY2) {
-        this.start = convertToVec21(lineX1,lineY1);
-        this.end = convertToVec21(lineX2,lineY2);
-        System.out.println("VecStart:" +start.getX() +" , " +start.getY());
-        System.out.println("VecEnd:" +end.getX() +" , " +end.getY());
-        findPath(elements, start, end);
-        createArray();
-        createGroup();
-    }
-    
-    private Vector2i convertToVec21(int a, int b) {
-        Vector2i vec = new Vector2i(a,b);
-        return vec;
-    }
-    
-    /**
-     * Benutzt den PathFinder um den Weg zum Ziel zu finden
-     * @param elements
-     * @param start
-     * @param goal 
-     */
-    private void findPath(ArrayList<Element> elements, Vector2i start, Vector2i goal) {
-        this.path = pathFinder.findPath(elements, start, goal);
-    }
-    
-    /**
-     * Erstellt ein Array aus der vom PathFinder generierten Nodeliste
-     */
-    private void createArray() {
-        lX = new double[path.size()];
-        lY = new double[path.size()];
-        int k = 0;
-        for(Node i : path) {
-            double x = i.tile.getX()*21+10.5;
-            double y = i.parent.tile.getY()*21+10.5;
-            double xParent = i.parent.tile.getX()*21+10.5;
-            double yParent = i.tile.getY()*21+10.5;
-            lX[k] = xParent;
-            lX[k+1] = x;
-                    
-                    
-            k++;
-        }
-    }
-    
-    
-    /**
-     * Erstellt eine Gruppe bestehend aus Linien. Die Koordinaten der Linien werden aus lX[] und lY[] genommen
+     * Erstellt eine Gruppe bestehend aus Linien. DIe Koordinaten der Linien werden aus lX[] und lY[] genommen
      * @author Elias
      */
     private void createGroup() {
@@ -179,6 +130,12 @@ public class ConnectionLine {
         DigitSimController.getSimCanvas().getChildren().remove(group);
     }
     public void update() {
+        
         createGroup();
     }
+    
+    
+    /// PATHFINDING
+    
+    
 }
