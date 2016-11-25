@@ -39,8 +39,7 @@ public class Element_LED extends Element{
        outputLines.add(Draw.drawLine((pX + 95), (pY + 29.5), (pX + 100), (pY + 29.5), Color.BLACK, 5));
        outputLines.get(0).setVisible(false);  //Outputline ist unsichtbaar, muss wegen vererbung aber vorhanden sein!
         indicator = Draw.drawCircle(pX + 40, pY  + 40, 5, Color.BLUE, 5, true, 65);     //TODO: wenn zustandlos hier annfangsfarbe ändern
-        indicator.setVisible(false);
-         numInputs = 1; //Input mit mehr als 1 Eingang ist sinnlos!
+        numInputs = 1; //Input mit mehr als 1 Eingang ist sinnlos!
             inputs = new int[]{0};
             grp =  new Group(rec, outputLines.get(0), indicator);
             for(int i = 0; i < numInputs; i++)
