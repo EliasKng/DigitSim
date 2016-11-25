@@ -36,11 +36,19 @@ public class Pathfinder {
             eX = (int) i.getX() / gridOffset - 1;
             eY = (int) i.getY() / gridOffset;
             
-            for(int k = eX; k < (eX + eWidth); k++) {
-                for(int o = eY; o < (eY + eHeight); o++) {
-                    fieldCode[k][o] = 1;
-                    Rectangle r = Draw.drawRectangle((k) * gridOffset, (o) * gridOffset, gridOffset, gridOffset, 0, 0, Color.BLACK, 0.7, 1);
-                    canvas.getChildren().add(r);
+            
+            for(int k = eX-1; k < (eX + eWidth+1); k++) {
+                for(int o = eY-1; o < (eY + eHeight+1); o++) {
+                    if((k >= eX && k < (eX+eWidth)) && (o >= eY && o < (eY + eHeight))) {
+                        fieldCode[k][o] = 1;
+                        Rectangle r = Draw.drawRectangle((k) * gridOffset, (o) * gridOffset, gridOffset, gridOffset, 0, 0, Color.BLACK, 0.7, 1);
+                        canvas.getChildren().add(r);
+                    } else {
+                        fieldCode[k][o] = 2;
+                        Rectangle r = Draw.drawRectangle((k) * gridOffset, (o) * gridOffset, gridOffset, gridOffset, 0, 0, Color.RED, 0.7, 1);
+                        canvas.getChildren().add(r);
+                    }
+                    
                 }
             }
         }
