@@ -57,7 +57,7 @@ public class PathFinder {
         createTileCode();
         //Startnode
         Node current = new Node(start, null, 0, getManhattanDistance(start, goal));
-        Node before = new Node(null,null,0,0);
+        Node before;
         openList.add(current);
         
         while(openList.size() > 0) {
@@ -88,14 +88,17 @@ public class PathFinder {
                 
                 if(!isTileAvailible(x, xi, y , yi)) continue;
                 if(isTileSolid(x, xi, y, yi)) continue;
-//                if(isDirectionChanged(current, before)) {
-//                    addCost+=1;
-//                }
+                
                 
                 Vector2i a = new Vector2i(x+xi,y+yi);
                 double gCost = current.gCost + getManhattanDistance(current.tile, a);
                 double hCost = getManhattanDistance(a, goal);
                 Node node = new Node(a,current, gCost, hCost);
+                
+                if(isDirectionChanged(current, node, start)) {
+                    node.fCost++;
+                }
+                
                 if(vecInList(closedList, a) && gCost >= node.gCost) continue;
                 if(!vecInList(openList, a) || gCost < node.gCost) {
                     openList.add(node);
@@ -107,17 +110,32 @@ public class PathFinder {
         return null;
     }
     
-    private boolean isDirectionChanged(Node current, Node before) {
-        boolean result = true;
-        if(before.tile != null) {
-            if((current.parent.tile.getX() == current.tile.getX()) || current.parent.tile.getY() == current.tile.getY()) {
-                if((before.parent.tile.getX() == before.tile.getX()) || before.parent.tile.getY() == before.tile.getY()) {
-                    result = false;
-                }
+    private boolean isDirectionChanged(Node current, Node node, Vector2i start) {
+        if(current.parent != null) {
+            int parentX = current.parent.tile.getX();
+            int parentY = current.parent.tile.getY();
+            int currentX = current.tile.getX();
+            int currentY = current.tile.getY();
+            int nodeX = node.tile.getX();
+            int nodeY = node.tile.getY(); 
+            
+//            System.out.println("parentX: \t" +parentX);
+//            System.out.println("parentY: \t" +parentY);
+//            System.out.println("currentX: \t" +currentX);
+//            System.out.println("currentY: \t" +currentY);
+//            System.out.println("nodeX: \t\t" +nodeX);
+//            System.out.println("nodeY: \t\t" +nodeY);
+            
+            if(((parentX == currentX) && (parentX == nodeX))    ||    ((parentY == currentY) && (parentY == nodeY))) {
+                System.out.println("Direction Stayed");
+                return false;
+            } else {
+                System.out.println("Direction CHanged");
+                return true;
             }
         }
-        
-        return result;
+        System.out.println("No Parent");
+        return false;
     }
     
     private boolean vecInList(List<Node> list, Vector2i vector) {

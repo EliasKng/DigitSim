@@ -21,12 +21,4 @@ public class Node {
         this.fCost = this.gCost + this.hCost;
     }
     
-    public Node(Vector2i tile, Node parent, double gCost, double hCost, double addCost) {
-        this.tile = tile;
-        this.parent = parent;
-        this.gCost = gCost;
-        this.hCost = hCost;
-        this.addCost = addCost;
-        this.fCost = this.gCost + this.hCost + this.addCost;
-    }
 }
