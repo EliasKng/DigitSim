@@ -3,35 +3,35 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package digitsim;
+package element;
 
+import digitsim.Draw;
+import digitsim.GenFunctions;
+import Gestures.NodeGestures;
+import digitsim.Properties;
+import element.Element;
 import java.util.Arrays;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
 
 /**
  *
  * @author Elias (Nach Dominiks AND - Vorlage)
  * -Überarbeitet von Dome 11.11.2016
- * -Überarbeitet von Dome 13.11.2016
  */
-public class Element_NOR extends Element{
+public class Element_XOR extends Element{
 
     //Globals
-    public static final String TYPE = "NOR"; //Der Typ des Bausteines
+    public static final String TYPE = "XOR"; //Der Typ des Bausteines
     //Die Elemente aus denen der Baustein zusammengestezt ist
     private Label lbl;
     private Label lbl2;
-    private Line lUnderL;
-    private Circle cOutput;
     private Element thisElement = this; //Referenz auf sich selbst
     
     //Constructor
-    public Element_NOR(double pX, double pY, int pInputs, NodeGestures dNodeGestures){//Baustein zeichnen
+    public Element_XOR(double pX, double pY, int pInputs, NodeGestures dNodeGestures){//Baustein zeichnen
         outputs = new int[]{0}; //Outputs
         
         //Der Baustein wird (egal bei welcher BausteinWeite/Höhe) plaziert mit der Maus als Mittelpunkt
@@ -39,16 +39,14 @@ public class Element_NOR extends Element{
         pY = pY-elementHeight/2;
         numOutputs = 1;
         rec = Draw.drawRectangle(pX, pY, elementWidth, elementHeight, 10, 10, Color.BLACK, 0.4, 5);           //das OR zeichnen
-        lbl = Draw.drawLabel((pX+2), (pY - 17), ">" , Color.BLACK, false, 75);
+        lbl = Draw.drawLabel((pX+2), (pY - 17), "=" , Color.BLACK, false, 75);
         lbl2 = Draw.drawLabel((pX+40), (pY - 15), "1" , Color.BLACK, false, 75);
-        lUnderL = Draw.drawLine(pX+14.5, pY+63, pX+42, pY+63, Color.BLACK, 5);
-        outputLines.add(Draw.drawLine((pX + 95), (pY + 29.5), (pX + 100), (pY + 29.5), Color.BLACK, 5)); 
-        cOutput = Draw.drawCircle(pX+88, pY+29.5, 5, Color.BLACK, 5, false, 5);
+        outputLines.add(Draw.drawLine((pX + 85), (pY + 29.5), (pX + 100), (pY + 29.5), Color.BLACK, 5)); 
         
-            numInputs = pInputs;
+            numInputs = pInputs; // 2 Da mehr keinen Sinn machen
             inputs = new int[numInputs];
-            Arrays.fill(inputs, 0); //Setzt alle Inputs auf '0;
-            grp = new Group(rec, lbl, outputLines.get(0), lUnderL, lbl2, cOutput);
+            Arrays.fill(inputs, 0); //Setzt alle Inputs auf '0
+            grp = new Group(rec, lbl, outputLines.get(0), lbl2);
             for(int i = 0; i < numInputs; i++)
             {
                 //  * Überarbeitet von Tim 05.11.16
@@ -76,13 +74,16 @@ public class Element_NOR extends Element{
     //Diese Methoden müssen überschrieben werden (Beschreibung in der Mutterklasse)
     @Override
     public void update(){
-        boolean logic = false;
+        boolean allON = true;
+        boolean allOFF = true;
         for(int i = 0; i < numInputs; i++){ //Eingänge durchiterieren & Logik überprüfen
-            if(inputs[i] == 1){
-                logic = true;
+            if(inputs[i] == 0){
+                allON = false;
+            }else{
+                allOFF = false;
             }
         }
-        if(logic){                             
+        if(allON || allOFF){
             outputs[0] = 0;
             outputLines.get(0).setStroke(Color.BLACK);
         }else{
@@ -91,8 +92,9 @@ public class Element_NOR extends Element{
         }  
     }
     
-    @Override
+     @Override
     public void showProperties(){ //Zeigt das "Eigenschaften"-Fenster für dieses Element
         GenFunctions.showBasicElementProperties(numInputs, thisElement);
     }
 }
+

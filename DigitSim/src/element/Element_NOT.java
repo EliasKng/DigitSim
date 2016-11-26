@@ -3,49 +3,51 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package digitsim;
+package element;
 
-import java.util.Arrays;
+import digitsim.Draw;
+import Gestures.NodeGestures;
+import digitsim.Properties;
+import element.Element;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
+import javafx.scene.shape.Circle;
+import javax.swing.JOptionPane;
 
 /**
  *
- * @author Elias (Nach Dominiks AND - Vorlage)
+ * @author Dominik
+ * -Überarbeitet von Dome 06.11.2016
  * -Überarbeitet von Dome 11.11.2016
- * -Überarbeitet von Dome 13.11.2016
  */
-public class Element_OR extends Element{
+public class Element_NOT extends Element{
 
     //Globals
-    public static final String TYPE = "OR"; //Der Typ des Bausteines
+    public static final String TYPE = "NOT"; //Der Typ des Bausteines
     //Die Elemente aus denen der Baustein zusammengestezt ist
     private Label lbl;
-    private Label lbl2;
-    private Line lUnderL;
-    private Element thisElement = this; //Referenz auf sich selbst
+    private Circle cOutput;
     
     //Constructor
-    public Element_OR(double pX, double pY, int pInputs, NodeGestures dNodeGestures){//Baustein zeichnen
+    public Element_NOT(double pX, double pY, int pInputs, NodeGestures dNodeGestures){//Baustein zeichnen
         outputs = new int[]{0}; //Outputs
         
-        //Der Baustein wird (egal bei welcher BausteinWeite/Höhe) plaziert mit der Maus als Mittelpunkt
+        //Überarbeitet von Elias
+        //Der Baustein wird nun (egal bei welcher BausteinWeite/Höhe) plaziert mit der Maus als Mittelpunkt
         pX = pX-elementWidth/2;
         pY = pY-elementHeight/2;
         numOutputs = 1;
-        rec = Draw.drawRectangle(pX, pY, elementWidth, elementHeight, 10, 10, Color.BLACK, 0.4, 5);           //das OR zeichnen
-        lbl = Draw.drawLabel((pX+2), (pY - 17), ">" , Color.BLACK, false, 75);
-        lbl2 = Draw.drawLabel((pX+40), (pY - 15), "1" , Color.BLACK, false, 75);
-        lUnderL = Draw.drawLine(pX+14.5, pY+63, pX+42, pY+63, Color.BLACK, 5);
-        outputLines.add(Draw.drawLine((pX + 85), (pY + 29.5), (pX + 100), (pY + 29.5), Color.BLACK, 5)); 
+        rec = Draw.drawRectangle(pX, pY, elementWidth, elementHeight, 10, 10, Color.BLACK, 0.4, 5);           //das AND zeichnen
+        lbl = Draw.drawLabel((pX + 20), (pY - 15), "1", Color.BLACK, false, 75);                            //Das Ausrufezeichen Brauchwn wir nicht, da wir ja einen Kreis hinter das Bauteil setzten (damit es wie ein NOT aussieht)
+        outputLines.add(Draw.drawLine((pX + 95), (pY + 29.5), (pX + 100), (pY + 29.5), Color.BLACK, 5));
+        cOutput = Draw.drawCircle(pX+88, pY+29.5, 5, Color.BLACK, 5, false, 5);
+
         
-            numInputs = pInputs;
-            inputs = new int[numInputs];
-            Arrays.fill(inputs, 0); //Setzt alle Inputs auf '0
-            grp = new Group(rec, lbl, outputLines.get(0), lUnderL, lbl2);
+            numInputs = 1; //Input mit mehr als 1 Eingang ist sinnlos!
+            inputs = new int[]{0};
+            grp = new Group(rec, outputLines.get(0), lbl, cOutput);
             for(int i = 0; i < numInputs; i++)
             {
                 //  * Überarbeitet von Tim 05.11.16
@@ -70,26 +72,23 @@ public class Element_OR extends Element{
         grp.addEventFilter( MouseEvent.MOUSE_DRAGGED, dNodeGestures.getOnMouseDraggedEventHandler());
     }
     
-    //Diese Methoden müssen überschrieben werden (Beschreibung in der Mutterklasse)
+    //Diese Methoden müssen überschrieben werden (Beschreibung in der Mutterklasse) 
     @Override
     public void update(){
-        boolean logic = false;
-        for(int i = 0; i < numInputs; i++){ //Eingänge durchiterieren & Logik überprüfen
-            if(inputs[i] == 1){
-                logic = true;
-            }
-        }
-        if(logic){                             
+        if(inputs[0] == 0){
             outputs[0] = 1;
             outputLines.get(0).setStroke(Color.RED);
         }else{
             outputs[0] = 0;
             outputLines.get(0).setStroke(Color.BLACK);
-        }  
+        }
     }
     
-    @Override
+     @Override
     public void showProperties(){ //Zeigt das "Eigenschaften"-Fenster für dieses Element
-        GenFunctions.showBasicElementProperties(numInputs, thisElement);
+        JOptionPane.showMessageDialog(null,
+			    "'NOT' besitzt keine Eigenschaften",
+			    "Info",
+			    JOptionPane.INFORMATION_MESSAGE);
     }
 }

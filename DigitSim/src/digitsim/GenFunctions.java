@@ -5,6 +5,7 @@
  */
 package digitsim;
 
+import element.Element;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;

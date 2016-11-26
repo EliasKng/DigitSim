@@ -5,6 +5,7 @@
  */
 package digitsim;
 
+import element.Element;
 import java.util.ArrayList;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -85,7 +86,7 @@ public class Connection { //Speichert die Verbindungen
         }
     }
 
-    void drawUpdate() {
+    public void drawUpdate() {
         for (ConData d : connections) {
             double lineX1 = 0;
             double lineY1 = 0;
@@ -139,7 +140,7 @@ public class Connection { //Speichert die Verbindungen
             }
 
             // schauen ob in der nähe eines outputs geklickt wurde
-            for (int i = 0; i < dsController.getElements().get(n).numOutputs; i++) {
+            for (int i = 0; i < dsController.getElements().get(n).getNumOutputs(); i++) {
                 double dInX = dsController.getElements().get(n).getOutputX(i);
                 double dInY = dsController.getElements().get(n).getOutputY(i);
                 if (Draw.isInArea(event.getX(), event.getY(), dInX, dInY, 5)) {

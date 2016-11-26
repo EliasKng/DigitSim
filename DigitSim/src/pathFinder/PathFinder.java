@@ -6,7 +6,7 @@
 package pathFinder;
 
 import digitsim.Draw;
-import digitsim.Element;
+import element.Element;
 import digitsim.Properties;
 import java.util.ArrayList;
 import java.util.Arrays;

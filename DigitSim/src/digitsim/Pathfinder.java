@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 package digitsim;
+import Gestures.DraggableCanvas;
+import element.Element;
 import java.util.ArrayList;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;

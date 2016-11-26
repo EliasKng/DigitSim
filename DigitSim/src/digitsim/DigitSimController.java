@@ -1,4 +1,16 @@
 package digitsim;
+import Gestures.DraggableCanvas;
+import Gestures.NodeGestures;
+import Gestures.SceneGestures;
+import element.Element_XOR;
+import element.Element_XNOR;
+import element.Element_OR;
+import element.Element_NOT;
+import element.Element_NOR;
+import element.Element_NAND;
+import element.Element_LED;
+import element.Element_AND;
+import element.Element;
 import java.io.File;
 import java.util.ArrayList;
 import javafx.event.ActionEvent;
@@ -124,7 +136,7 @@ public class DigitSimController extends Pane{
                    int result[] = null;
                    // INPUTS DURCH KLICKEN UMSCHALTEN (TESTFUNKTION)
                    if((result = allConnections.closeToInOrOut(event)) != null && result[Connection.CETYPE] == 1){
-                       getElements().get(result[Connection.EINDEX]).setInput( result[Connection.CINDEX], (-getElements().get(result[Connection.EINDEX]).inputs[result[Connection.CINDEX]]) + 1);
+                       getElements().get(result[Connection.EINDEX]).setInput( result[Connection.CINDEX], (-getElements().get(result[Connection.EINDEX]).getInputs()[result[Connection.CINDEX]]) + 1);
                     }
                 }
                

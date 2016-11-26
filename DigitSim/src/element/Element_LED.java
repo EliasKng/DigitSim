@@ -3,7 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package digitsim;
+package element;
+import digitsim.Draw;
+import Gestures.NodeGestures;
+import digitsim.Properties;
+import element.Element;
 import javafx.scene.Group;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;

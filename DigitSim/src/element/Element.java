@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package digitsim;
+package element;
 
 import java.util.ArrayList;
 import javafx.scene.Group;
@@ -39,6 +39,18 @@ public abstract class Element { //Abstakte Klasse, nur zur Vererbung, es kann ke
     public Group getGroup(){
         return grp;
     }
+
+    public int[] getInputs() {
+        return inputs;
+    }
+
+    public int getNumOutputs() {
+        return numOutputs;
+    }
+    
+    
+    
+    
    
     //Abstrakte methoden MÜSSEN überschrieben werden
     abstract public void update(); //Updatet den Block (überorüft alle Inputs, durchläuft die Logik und setzt die Outputs dementsprechend (Ändert auch die Farben))

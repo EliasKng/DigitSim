@@ -3,9 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package digitsim;
+package element;
 
-import static digitsim.Element.elementWidth;
+import digitsim.Draw;
+import digitsim.GenFunctions;
+import Gestures.NodeGestures;
+import digitsim.Properties;
+import element.Element;
+import static element.Element.elementWidth;
 import java.util.Arrays;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
