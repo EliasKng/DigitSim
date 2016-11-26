@@ -23,12 +23,10 @@ import javafx.scene.shape.Rectangle;
 public class PathFinder {
     private int simSizeX = Properties.GetSimSizeX();
     private int simSizeY = Properties.GetSimSizeY();
-    private ArrayList<Element> elements;
     private int[][] tileCode;
     
     
-    public PathFinder(ArrayList<Element> elements) {
-        this.elements = elements;
+    public PathFinder() {
         
     }
     
@@ -50,11 +48,11 @@ public class PathFinder {
         }
     };
 
-    public List<Node> findPath(Vector2i start, Vector2i goal) {
+    public List<Node> findPath(Vector2i start, Vector2i goal, ArrayList<Element> elements) {
         List<Node> openList = new ArrayList<Node>();
         List<Node> closedList = new ArrayList<Node>();
         
-        createTileCode();
+        createTileCode(elements);
         //Startnode
         Node current = new Node(start, null, 0, getManhattanDistance(start, goal));
         openList.add(current);
@@ -224,7 +222,7 @@ public class PathFinder {
      * @param height
      * @author Elias
      */
-    public void createTileCode() {
+    public void createTileCode(ArrayList<Element> elements) {
         int gridOffset = Properties.GetGridOffset();
         
         int arrayWidth = (int) Math.ceil(simSizeX / gridOffset); //Berechnet den Wert für die Weite den Arrays (jedes Kästchen soll 1 arrayplatz belegen), desshalb wird die gesamthöhe genommen, durch 21 geteilt und dann aufgerundet
@@ -265,7 +263,6 @@ public class PathFinder {
                 }
             }
         }
-        this.tileCode = tileCode;
     }
     
     /**
