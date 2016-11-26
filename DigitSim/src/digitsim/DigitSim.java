@@ -71,7 +71,6 @@ public class DigitSim extends Application { //Hauptklasse
      */
     public static void main(String[] args) { //Hier startet das Programm
         Properties.load(); //Einstellungen laden
-        Properties.save();
         launch(args);
     }
     
