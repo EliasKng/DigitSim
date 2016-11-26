@@ -57,13 +57,11 @@ public class PathFinder {
         createTileCode();
         //Startnode
         Node current = new Node(start, null, 0, getManhattanDistance(start, goal));
-        Node before;
         openList.add(current);
         
         while(openList.size() > 0) {
             //sortiert die nodeliste nach der fCost der einzelnen Nodes (siehe NodeComparator)
             Collections.sort(openList, nodeSorter);
-            before = current;
             current = openList.get(0);
             if(current.tile.equals(goal)) {
                 List<Node> path = new ArrayList<Node>();
@@ -98,6 +96,12 @@ public class PathFinder {
                 if(isDirectionChanged(current, node, start)) {
                     node.fCost++;
                 }
+                if(isTileInIOArea(x,xi,y,yi)) {
+                    node.fCost +=50;
+                }
+                if(isTileInElementArea(x,xi,y,yi)) {
+                    node.fCost += 5;
+                }
                 
                 if(vecInList(closedList, a) && gCost >= node.gCost) continue;
                 if(!vecInList(openList, a) || gCost < node.gCost) {
@@ -127,14 +131,14 @@ public class PathFinder {
 //            System.out.println("nodeY: \t\t" +nodeY);
             
             if(((parentX == currentX) && (parentX == nodeX))    ||    ((parentY == currentY) && (parentY == nodeY))) {
-                System.out.println("Direction Stayed");
+//                System.out.println("Direction Stayed");
                 return false;
             } else {
-                System.out.println("Direction CHanged");
+//                System.out.println("Direction CHanged");
                 return true;
             }
         }
-        System.out.println("No Parent");
+//        System.out.println("No Parent");
         return false;
     }
     
@@ -188,6 +192,32 @@ public class PathFinder {
     }
     
     /**
+     * Wenn sich über diesem Tile ein oder Ausgänge eines Elements befinden, wird true zurückgegeben
+     * @return 
+     */
+    public boolean isTileInIOArea(int x, int xi, int y, int yi) {
+        boolean result = false;
+        int status = tileCode[x+xi][y+yi];
+        if(status == 2) {
+            result = true;
+        }
+        return result;
+    }
+    
+    /**
+     * Wenn sich über diesem Tile das Umfeld einess Elements befindet (Umfeld entspricht ein Block größer als das Element), wird true returnt
+     * @return 
+     */
+    public boolean isTileInElementArea(int x, int xi, int y, int yi) {
+        boolean result = false;
+        int status = tileCode[x+xi][y+yi];
+        if(status == 3) {
+            result = true;
+        }
+        return result;
+    }
+    
+    /**
      * Beschreibt das tileCodeArray mit Daten (wenn sich auf diesem Tile ein Block befindet, wird es auf 1 gesetzt
      * @param elements
      * @param width
@@ -213,11 +243,24 @@ public class PathFinder {
             
             for(int k = eX-1; k < (eX + eWidth+1); k++) {
                 for(int o = eY-1; o < (eY + eHeight+1); o++) {
-                    try {   //Hier muss ein try catch hin, weil es sein kann, dass Bausteine in Bereichen liegen, die das Array nicht hat (keine Beeinflussung auf den Pathfinder)
-                        tileCode[k][o] = 1;
-                    } catch(Exception e) {
-                        System.out.println("Array konnte nicht vollständig gebildet werden!!!(PATHFINDER)");
+                    int value;
+                    if((k >= eX && k < (eX+eWidth)) && (o >= eY && o < (eY + eHeight))) {
+                        if(k == eX || k == (eX + eWidth -1)) {
+                            value = 2;
+                        } else {
+                            value = 1;
+                        }
+                    } else {
+                        value = 3;
                     }
+                    try {
+                        if((tileCode[k][o] == 0) || value < tileCode[k][o]) {
+                            tileCode[k][o] = value;
+                        }
+                    }catch(Exception e) {
+                        System.out.println("Unstimmigkeit beim Erstellen des Arrays (PATHFINDER)");
+                    }
+                    
                     
                 }
             }
