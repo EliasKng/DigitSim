@@ -12,6 +12,7 @@ import element.Element_LED;
 import element.Element_AND;
 import element.Element;
 import element.Element_SIGNAL;
+import element.Element_TEXT;
 import java.io.File;
 import java.util.ArrayList;
 import javafx.event.ActionEvent;
@@ -79,7 +80,8 @@ public class DigitSimController extends Pane{
     private ToggleButton btnLED;
     @FXML
     private ToggleButton btnSIGNAL;
-    
+     @FXML
+    private ToggleButton btnTEXT;
     //Constructor (leer)
     public DigitSimController() {
         refThis = this;
@@ -318,6 +320,10 @@ public class DigitSimController extends Pane{
       }
       else if(btnSIGNAL.isSelected()){ //Signal
           elements.add(new Element_SIGNAL(getXAdaptGrid(event), getYAdaptGrid(event), nodeGestures));
+          simCanvas.getChildren().add(elements.get(elements.size() -1).getGroup());
+      }
+      else if(btnTEXT.isSelected()){ //Text
+          elements.add(new Element_TEXT(getXAdaptGrid(event), getYAdaptGrid(event), nodeGestures));
           simCanvas.getChildren().add(elements.get(elements.size() -1).getGroup());
       }
     }
