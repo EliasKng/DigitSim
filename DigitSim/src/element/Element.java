@@ -66,7 +66,6 @@ public abstract class Element { //Abstakte Klasse, nur zur Vererbung, es kann ke
     }
     
     public int getOutput(int pOut) { //Liefert den Wert des Outputs an der Stelle pOut
-        update();
         return outputs[pOut];
     }
     
@@ -131,5 +130,12 @@ public abstract class Element { //Abstakte Klasse, nur zur Vererbung, es kann ke
                 inputLines.get(pInput).setStroke(Color.BLACK);
             }
         }
+    }
+    
+    public void reset(){ //Simple reset methode (kann natürlich überschireben werden, für spezielle Bausteine)
+        for(int i = 0; i < getInputCount(); i++){
+                setInput(i, 0);
+            }
+        update();
     }
 }

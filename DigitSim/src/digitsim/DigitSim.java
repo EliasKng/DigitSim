@@ -70,6 +70,8 @@ public class DigitSim extends Application { //Hauptklasse
      * @param args the command line arguments
      */
     public static void main(String[] args) { //Hier startet das Programm
+        Properties.load(); //Einstellungen laden
+        Properties.save();
         launch(args);
     }
     

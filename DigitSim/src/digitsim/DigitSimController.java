@@ -11,6 +11,7 @@ import element.Element_NAND;
 import element.Element_LED;
 import element.Element_AND;
 import element.Element;
+import element.Element_SIGNAL;
 import java.io.File;
 import java.util.ArrayList;
 import javafx.event.ActionEvent;
@@ -76,6 +77,8 @@ public class DigitSimController extends Pane{
     private ToggleButton btnLogicToggle;
     @FXML
     private ToggleButton btnLED;
+    @FXML
+    private ToggleButton btnSIGNAL;
     
     //Constructor (leer)
     public DigitSimController() {
@@ -180,6 +183,7 @@ public class DigitSimController extends Pane{
         btnXOR.setToggleGroup(group);
         btnXNOR.setToggleGroup(group);
         btnLED.setToggleGroup(group);
+        btnSIGNAL.setToggleGroup(group);
     }
     
     /**
@@ -312,6 +316,10 @@ public class DigitSimController extends Pane{
             elements.add(new Element_LED(getXAdaptGrid(event), getYAdaptGrid(event), 1, nodeGestures));
             simCanvas.getChildren().add(elements.get(elements.size() -1).getGroup());
       }
+      else if(btnSIGNAL.isSelected()){ //Signal
+          elements.add(new Element_SIGNAL(getXAdaptGrid(event), getYAdaptGrid(event), nodeGestures));
+          simCanvas.getChildren().add(elements.get(elements.size() -1).getGroup());
+      }
     }
    
     /**
@@ -414,11 +422,6 @@ public class DigitSimController extends Pane{
     }
     
     private void resetElements(){
-        for(Element e: elements){ //Alles reseten
-            for(int i = 0; i < e.getInputCount(); i++){
-                e.setInput(i, 0);
-            }
-        }
-        elements.forEach(e -> e.update()); //Updates sichtbar machen
+        elements.forEach(e -> e.reset()); //Alle Elemente reseten
     }
 }

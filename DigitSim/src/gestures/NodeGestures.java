@@ -8,6 +8,7 @@ package Gestures;
 import digitsim.DigitSimController;
 import digitsim.Properties;
 import element.Element;
+import element.Element_SIGNAL;
 import java.util.ArrayList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -84,11 +85,21 @@ public class NodeGestures {
     private EventHandler<MouseEvent> onMousePressedEventHandler = new EventHandler<MouseEvent>() { //Handler für "Maus klick"
 
         public void handle(MouseEvent event) {
-            if(DigitSimController.getReference().isLocked()) //Schauen ob das Programm blokiert ist (erklärung: siehe DigitSimController oben)
+            if(DigitSimController.getReference().isLocked()){ //Schauen ob das Programm blokiert ist (erklärung: siehe DigitSimController oben)
+                temporaryGroup = (Group) event.getSource();
+                Element temp = findElement();
+                if(temp instanceof  Element_SIGNAL){ //Dass Signal and und aus schalten, per rechtsklick (geht nur wenn die Simulation läuft)
+                    int i = temp.getOutput(0);
+                    if(i == 1){
+                        temp.setInput(0, 0);
+                    }else{
+                        temp.setInput(0, 1);
+                    }
+                }
                 return;
+            }
             // Rechtsklick
             if( !event.isPrimaryButtonDown()){
-                temporaryGroup = (Group) event.getSource();
                 contextMenu.show((Node)event.getSource(), Side.RIGHT, 0, 0); //Rechtsklick-Menü anzeigen
                 event.consume(); 
             }else{//Linksklick -> Verschieben
@@ -133,5 +144,15 @@ public class NodeGestures {
     private double getValueAdaptGrid(double pV){
         double offset = Properties.GetGridOffset();
         return Math.round(pV / offset) * offset;
+    }
+    
+    private Element findElement(){ //Ein Element finden (über die akutelle gruppe)
+         elements = DigitSimController.getReference().getElements();
+         for(Element i : elements){ //Alle Elemente durchgehen, um das zu finden das Ausgewählt ist
+                   if(i.getGroup().hashCode() == temporaryGroup.hashCode()){ //Der HashCode eines Objektes ist immer EINMALIG, sozusagen eine "Personalnummer", eignet sich daher gut für den "Gleichheitstest"
+                       return i;
+                 } 
+          }
+         return null;
     }
 }

@@ -14,51 +14,106 @@ import javafx.scene.paint.Color;
 public class Properties {
     
     // Damit änderungen sichtbar werden muss man unter Run auf "Clean and Build Project" klicken!
-    
+    //DIES HIER SIND DIE DEFAULT WERTE! falls es noch keine propetie datei gibt. (Wenn man das Programm zum ersten mal benutzt)
+    //Wer hier neue Einszellungen einfügt muss diese auch bei save, load und in PropertiesXmlFormat.java einfügen!
     // Simgrid Stuff
-    private static final int simSizeX = 4000;
-    private static final int simSizeY = 4000;    
-    private static final int gridOffset = 21;
+    private static int simSizeX = 4000;
+    private static int simSizeY = 4000;    
+    private static int gridOffset = 21;
     private static Color gridColor = Color.LIGHTGREY;
     
     // Thread Stuff
-    private static final int threadDurationMS = 50;
+    private static int threadDurationMS = 50;
     
     // Window Stuff
-    private static final int windowMinX = 800;
-    private static final int windowMinY = 600;
+    private static int windowMinX = 800;
+    private static int windowMinY = 600;
     
+        
+    public static void save(){ //Einstellungen speichern
+        PropertiesXmlFormat saveFile = new PropertiesXmlFormat(simSizeX, simSizeY, gridOffset, gridColor, threadDurationMS, windowMinX, windowMinY);
+        XmlLoader.saveObject("Properties.semiProp", saveFile);
+    }
+    
+    public static void load(){ //Einstellungen laden
+        if(!XmlLoader.fileExist("Properties.semiProp"))
+            return;
+        PropertiesXmlFormat saveFile = (PropertiesXmlFormat) XmlLoader.loadObject("Properties.semiProp", PropertiesXmlFormat.class);
+        simSizeX = saveFile.getSimSizeX();
+        simSizeY = saveFile.getSimSizeY();
+        gridOffset = saveFile.getGridOffset();
+        gridColor = saveFile.convertGridColor();
+        threadDurationMS = saveFile.getThreadDurationMS();
+        windowMinX = saveFile.getWindowMinX();
+        windowMinY = saveFile.getWindowMinY();
+    }
+
+    public static void setSimSizeX(int simSizeX) {
+        Properties.simSizeX = simSizeX;
+        save();
+    }
+
+    public static void setSimSizeY(int simSizeY) {
+        Properties.simSizeY = simSizeY;
+        save();
+    }
+
+    public static void setGridOffset(int gridOffset) {
+        Properties.gridOffset = gridOffset;
+        save();
+    }
+
+    public static void setGridColor(Color gridColor) {
+        Properties.gridColor = gridColor;
+        save();
+    }
+
+    public static void setThreadDurationMS(int threadDurationMS) {
+        Properties.threadDurationMS = threadDurationMS;
+        save();
+    }
+
+    public static void setWindowMinX(int windowMinX) {
+        Properties.windowMinX = windowMinX;
+        save();
+    }
+
+    public static void setWindowMinY(int windowMinY) {
+        Properties.windowMinY = windowMinY;
+        save();
+    }
     
     // Getters
     public static int GetSimSizeX()
     {
         return simSizeX;
     }
-    
+ 
     public static int GetSimSizeY()
     {
         return simSizeY;
     }
-    
+
     public static int GetGridOffset()
     {
         return gridOffset;
     }
-    
+
     public static Color GetGridColor()
     {
         return gridColor;
     }
-    
+
     public static int GetThreadDurationMS()
     {
         return threadDurationMS;
     }
+
     public static int GetWindowMinX()
     {
         return windowMinX;
     }
-    
+
     public static int GetWindowMinY()
     {
         return windowMinY;

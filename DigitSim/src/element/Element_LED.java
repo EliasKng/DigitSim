@@ -6,7 +6,7 @@
 package element;
 import digitsim.Draw;
 import Gestures.NodeGestures;
-import digitsim.Properties;
+import digitsim.DigitSimController;
 import element.Element;
 import javafx.scene.Group;
 import javafx.scene.input.MouseEvent;
@@ -40,31 +40,16 @@ public class Element_LED extends Element{
         pY = pY-elementHeight/2;
         numOutputs = 0; //Kein Ouptut benötigt!
         rec = Draw.drawRectangle(pX, pY, elementWidth, elementHeight, 100, 100, Color.BLACK, 0.4, 5);           //die led zeichnen
-       outputLines.add(Draw.drawLine((pX + 95), (pY + 29.5), (pX + 100), (pY + 29.5), Color.BLACK, 5));
-       outputLines.get(0).setVisible(false);  //Outputline ist unsichtbaar, muss wegen vererbung aber vorhanden sein!
+        outputLines.add(Draw.drawLine((pX + 95), (pY + 29.5), (pX + 100), (pY + 29.5), Color.BLACK, 5));
+        outputLines.get(0).setVisible(false);  //Outputline ist unsichtbaar, muss wegen vererbung aber vorhanden sein!
         indicator = Draw.drawCircle(pX + 40, pY  + 40, 5, Color.BLUE, 5, true, 65);     //TODO: wenn zustandlos hier annfangsfarbe ändern
+        indicator.setVisible(false);
         numInputs = 1; //Input mit mehr als 1 Eingang ist sinnlos!
-            inputs = new int[]{0};
-            grp =  new Group(rec, outputLines.get(0), indicator);
-            for(int i = 0; i < numInputs; i++)
-            {
-                //  * Überarbeitet von Tim 05.11.16
-                //  * Überarbeitet von Tim 21.11.16
-                // korrekte stelle für jeden eingang berechnen, egal wie viele eingänge
-                // *Überarbeitet von Elias 11.11.16
-                // Bausteine passen sich nun automatisch mit ihrer Höhe an die anzahl der Eingänge an
-                
-                double gridOffset = (double) Properties.GetGridOffset();
-                
-                if(rec.getHeight() <= (numInputs) * gridOffset) {
-                    rec.setHeight((numInputs) * gridOffset);
-                }
-                double offsetY = i * gridOffset + gridOffset - 11.5;
-                // Da rec jetzt kreis ist wird die input line auf der mittlerer höhe der led gezeichnet
-                inputLines.add(Draw.drawLine((pX - 5), pY + rec.getWidth()/2, (pX - 15), pY + rec.getWidth()/2 , Color.BLACK, 5));
-                grp.getChildren().add(inputLines.get(i));
-            }
-            //Die Hanlder hinzufügen (Beschreibung der Hander in  DraggableCanvas.java)  
+        inputs = new int[]{0};
+        grp =  new Group(rec, outputLines.get(0), indicator);
+        inputLines.add(Draw.drawLine((pX - 5), pY + rec.getWidth()/2, (pX - 15), pY + rec.getWidth()/2 , Color.BLACK, 5));
+        grp.getChildren().add(inputLines.get(0));
+        //Die Hanlder hinzufügen (Beschreibung der Hander in  DraggableCanvas.java)  
         grp.addEventFilter( MouseEvent.MOUSE_PRESSED, dNodeGestures.getOnMousePressedEventHandler());
         grp.addEventFilter( MouseEvent.MOUSE_DRAGGED, dNodeGestures.getOnMouseDraggedEventHandler());
     }
@@ -72,6 +57,7 @@ public class Element_LED extends Element{
      //Diese Methoden müssen überschrieben werden (Beschreibung in der Mutterklasse) 
     @Override
     public void update(){
+        if(DigitSimController.isLocked()){
              indicator.setVisible(true);
              if(inputs[0] == 1){
                 indicator.setStroke(Color.RED);
@@ -80,6 +66,9 @@ public class Element_LED extends Element{
               }else{
               indicator.setStroke(Color.GREEN); //TODO: wenn es ZUstandlos gibt hier Farbe
              }
+        }else{
+            indicator.setVisible(false);
+        }
         }
        
       @Override
@@ -88,6 +77,15 @@ public class Element_LED extends Element{
 			    "'LED' besitzt keine Eigenschaften",
 			    "Info",
 			    JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    @Override
+    public void reset(){ //Simple reset methode (kann natürlich überschireben werden, für spezielle Bausteine)
+        for(int i = 0; i < getInputCount(); i++){ //Alle Eingänge auf 0 setzen
+                setInput(i, 0);
+            }
+        update();
+        indicator.setVisible(false);
     }
     }   
   

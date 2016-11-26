@@ -26,7 +26,7 @@ public class ErrorHandler {
 		try {
 			FileWriter fw = new FileWriter(dataName, true); //Datei anlegen und Reinschreiben
 			BufferedWriter bw = new BufferedWriter(fw);
-			String emsg = "(" + new Date().toString() + ")" + "[ERROR IN <" + obj.getClass() + ">] " + msg;
+			String emsg = "(" + new Date().toString() + ")" + "[ERROR IN <" + obj.getClass() + ">] " + msg + "\n";
 			bw.write(emsg);
 			bw.flush();
 			bw.close();

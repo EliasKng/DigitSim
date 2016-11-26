@@ -21,14 +21,15 @@ import javax.swing.JOptionPane;
  * hat noch keine funktion
  * outputline ist bissl verschoben
  */
-public abstract class Element_SIGNAL extends Element{
+public class Element_SIGNAL extends Element{
 //Globals
     public static final String TYPE = "SIGNAL"; //Der Typ des Bausteines
     //Die Elemente aus denen der Baustein zusammengestezt ist
-    private Label number;  
+    private Label number1;  
+    private Label number2;  //Wir brauchen 2 Labels, da es ansonsten nicht Thread sicher ist
 
     //Konstruktor   
-    public Element_SIGNAL(double pX, double pY, int pInputs, NodeGestures dNodeGestures){ //Kein InputSilder, hat kein input
+    public Element_SIGNAL(double pX, double pY, NodeGestures dNodeGestures){ //Kein InputSilder, hat kein input
         //signal zeichnen
         
         //Überarbeitet von Elias
@@ -36,31 +37,18 @@ public abstract class Element_SIGNAL extends Element{
         pX = pX-elementWidth/2;
         pY = pY-elementHeight/2;
         numOutputs = 1;
+        outputs = new int[]{0};
         rec = Draw.drawRectangle(pX, pY, elementWidth, elementHeight, 10, 10, Color.BLACK, 0.4, 5);           //das Signal zeichnen
-        number = Draw.drawLabel((pX + 20), (pY - 15), "0", Color.BLACK, false, 75);                            //Das label (die  0 oder 1 im block, haben beim erstellen zuerst auf 0) 
+        number1 = Draw.drawLabel((pX + 20), (pY - 15), "0", Color.BLACK, false, 75);                            //Das label (die  0 oder 1 im block, haben beim erstellen zuerst auf 0) 
+        number2 = Draw.drawLabel((pX + 20), (pY - 15), "1", Color.RED, false, 75); 
+        number2.setVisible(false);
         outputLines.add(Draw.drawLine((pX + 85), (pY + 29.5), (pX + 100), (pY + 29.5), Color.BLACK, 5));
- 
-    numInputs = 0; //Input mit mehr als 1 Eingang ist sinnlos!
-            inputs = new int[]{0};
-            grp = new Group(rec, outputLines.get(0), number);
-            for(int i = 0; i < numInputs; i++)
-            {
-                //  * Überarbeitet von Tim 05.11.16
-                //  * Überarbeitet von Tim 21.11.16
-                // korrekte stelle für jeden eingang berechnen, egal wie viele eingänge
-                // *Überarbeitet von Elias 11.11.16
-                // Bausteine passen sich nun automatisch mit ihrer Höhe an die anzahl der Eingänge an
-                
-                double gridOffset = (double) Properties.GetGridOffset();
-                
-                if(rec.getHeight() <= (numInputs) * gridOffset) {
-                    rec.setHeight((numInputs) * gridOffset);
-                }
-                double offsetY = i * gridOffset + gridOffset - 11.5;
-                
-                inputLines.add(Draw.drawLine((pX - 5), pY + offsetY, (pX - 15), pY + offsetY, Color.BLACK, 5));
-                grp.getChildren().add(inputLines.get(i));
-            }
+        numInputs = 1; 
+        inputs = new int[]{0};
+        grp = new Group(rec, outputLines.get(0), number1, number2);
+        inputLines.add(Draw.drawLine((pX - 5), pY, (pX - 15), pY, Color.BLACK, 5)); //Wir können den Input trotzdem benutzen um den Baustein auf 0,1 zu setzen
+        inputLines.get(0).setVisible(false);
+        grp.getChildren().add(inputLines.get(0));
             
          //Die Hanlder hinzufügenn (Beschreibung der Hander in  DraggableCanvas.java)  
         grp.addEventFilter( MouseEvent.MOUSE_PRESSED, dNodeGestures.getOnMousePressedEventHandler());
@@ -68,10 +56,21 @@ public abstract class Element_SIGNAL extends Element{
     }
      //Diese Methoden müssen überschrieben werden (Beschreibung in der Mutterklasse) 
     @Override
-    public void update(){                  
+    public void update(){  
+        if(inputs[0] == 1){
+            outputs[0] = 1;
+            outputLines.get(0).setStroke(Color.RED);
+            number1.setVisible(false);
+            number2.setVisible(true);
+        }else{
+            outputs[0] = 0;
+            outputLines.get(0).setStroke(Color.BLACK);
+            number1.setVisible(true);
+            number2.setVisible(false);
+        }
     }    
     
-     @Override
+    @Override
     public void showProperties(){ //Zeigt das "Eigenschaften"-Fenster für dieses Element
         JOptionPane.showMessageDialog(null,
 			    "'SIGNAL' besitzt keine Eigenschaften",

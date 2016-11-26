@@ -24,7 +24,6 @@ import javafx.scene.shape.Line;
  * -Überarbeitet von Dome 13.11.2016
  */
 public class Element_OR extends Element{
-
     //Globals
     public static final String TYPE = "OR"; //Der Typ des Bausteines
     //Die Elemente aus denen der Baustein zusammengestezt ist
