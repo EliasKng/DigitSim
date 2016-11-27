@@ -40,7 +40,7 @@ public class Element_OR extends Element{
         pX = pX-elementWidth/2;
         pY = pY-elementHeight/2;
         numOutputs = 1;
-        rec = Draw.drawRectangle(pX, pY, elementWidth, elementHeight, 10, 10, Color.BLACK, 0.4, 5);           //das OR zeichnen
+        rec = Draw.drawRectangle(pX, pY, elementWidth, elementHeight, 10, 10, Color.BLACK, Properties.getElementOpacity(), 5);           //das OR zeichnen
         lbl = Draw.drawLabel((pX+2), (pY - 17), ">" , Color.BLACK, false, 75);
         lbl2 = Draw.drawLabel((pX+40), (pY - 15), "1" , Color.BLACK, false, 75);
         lUnderL = Draw.drawLine(pX+14.5, pY+63, pX+42, pY+63, Color.BLACK, 5);

@@ -42,7 +42,7 @@ public class Element_AND extends Element{
         pX = pX-elementWidth/2;
         pY = pY-elementHeight/2;
         numOutputs = 1;
-        rec = Draw.drawRectangle(pX, pY, elementWidth, elementHeight, 10, 10, Color.BLACK, 0.5, 5);           //das AND zeichnen
+        rec = Draw.drawRectangle(pX, pY, elementWidth, elementHeight, 10, 10, Color.BLACK, Properties.getElementOpacity(), 5);           //das AND zeichnen
         lbl = Draw.drawLabel((pX + 10), (pY - 15), "&", Color.BLACK, false, 75);
         outputLines.add(Draw.drawLine((pX + 85), (pY + 29.5), (pX + 100), (pY + 29.5), Color.BLACK, 5));
 

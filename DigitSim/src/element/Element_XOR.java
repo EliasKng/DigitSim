@@ -38,7 +38,7 @@ public class Element_XOR extends Element{
         pX = pX-elementWidth/2;
         pY = pY-elementHeight/2;
         numOutputs = 1;
-        rec = Draw.drawRectangle(pX, pY, elementWidth, elementHeight, 10, 10, Color.BLACK, 0.4, 5);           //das OR zeichnen
+        rec = Draw.drawRectangle(pX, pY, elementWidth, elementHeight, 10, 10, Color.BLACK, Properties.getElementOpacity(), 5);           //das OR zeichnen
         lbl = Draw.drawLabel((pX+2), (pY - 17), "=" , Color.BLACK, false, 75);
         lbl2 = Draw.drawLabel((pX+40), (pY - 15), "1" , Color.BLACK, false, 75);
         outputLines.add(Draw.drawLine((pX + 85), (pY + 29.5), (pX + 100), (pY + 29.5), Color.BLACK, 5)); 

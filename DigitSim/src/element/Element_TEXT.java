@@ -9,6 +9,7 @@ import digitsim.Draw;
 import Gestures.NodeGestures;
 import digitsim.DigitSimController;
 import digitsim.GenFunctions;
+import digitsim.Properties;
 import element.Element;
 import java.util.Optional;
 import javafx.scene.Group;
@@ -49,7 +50,7 @@ public class Element_TEXT extends Element{
                
         pX = text.getPrefWidth();
         pY = text.getPrefHeight();
-        rec = Draw.drawRectangle(pX, pY, elementWidth, elementHeight, 10, 10, Color.BLACK, 0.4, 5);   
+        rec = Draw.drawRectangle(pX, pY, elementWidth, elementHeight, 10, 10, Color.BLACK, Properties.getElementOpacity(), 5);   
         
         grp =  new Group(rec, text );
               

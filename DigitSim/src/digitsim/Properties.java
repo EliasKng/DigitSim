@@ -29,6 +29,10 @@ public class Properties {
     private static int windowMinX = 800;
     private static int windowMinY = 600;
     
+    //Element Stuff
+    private static double elementOpacity = 0.4;
+    
+    
         
     public static void save(){ //Einstellungen speichern
         PropertiesXmlFormat saveFile = new PropertiesXmlFormat(simSizeX, simSizeY, gridOffset, gridColor, threadDurationMS, windowMinX, windowMinY);
@@ -46,6 +50,14 @@ public class Properties {
         threadDurationMS = saveFile.getThreadDurationMS();
         windowMinX = saveFile.getWindowMinX();
         windowMinY = saveFile.getWindowMinY();
+    }
+
+    public static double getElementOpacity() {
+        return elementOpacity;
+    }
+
+    public static void setElementOpacity(double ElementOpacity) {
+        Properties.elementOpacity = ElementOpacity;
     }
 
     public static void setSimSizeX(int simSizeX) {

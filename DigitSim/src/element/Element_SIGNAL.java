@@ -38,7 +38,7 @@ public class Element_SIGNAL extends Element{
         pY = pY-elementHeight/2;
         numOutputs = 1;
         outputs = new int[]{0};
-        rec = Draw.drawRectangle(pX, pY, elementWidth, elementHeight, 10, 10, Color.BLACK, 0.4, 5);           //das Signal zeichnen
+        rec = Draw.drawRectangle(pX, pY, elementWidth, elementHeight, 10, 10, Color.BLACK, Properties.getElementOpacity(), 5);           //das Signal zeichnen
         number1 = Draw.drawLabel((pX + 20), (pY - 15), "0", Color.BLACK, false, 75);                            //Das label (die  0 oder 1 im block, haben beim erstellen zuerst auf 0) 
         number2 = Draw.drawLabel((pX + 20), (pY - 15), "1", Color.RED, false, 75); 
         number2.setVisible(false);

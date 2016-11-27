@@ -41,7 +41,7 @@ public class Element_XNOR extends Element{
         pX = pX-elementWidth/2;
         pY = pY-elementHeight/2;
         numOutputs = 1;
-        rec = Draw.drawRectangle(pX, pY, elementWidth, elementHeight, 10, 10, Color.BLACK, 0.5, 5);           //das XNOR zeichnen
+        rec = Draw.drawRectangle(pX, pY, elementWidth, elementHeight, 10, 10, Color.BLACK, Properties.getElementOpacity(), 5);           //das XNOR zeichnen
         lbl = Draw.drawLabel((pX + 15), (pY - 20), "=", Color.BLACK, false, 75);
         outputLines.add(Draw.drawLine((pX + 85), (pY + 29.5), (pX + 100), (pY + 29.5), Color.BLACK, 5));
 
