@@ -48,9 +48,6 @@ public abstract class Element { //Abstakte Klasse, nur zur Vererbung, es kann ke
         return numOutputs;
     }
     
-    
-    
-    
    
     //Abstrakte methoden MÜSSEN überschrieben werden
     abstract public void update(); //Updatet den Block (überorüft alle Inputs, durchläuft die Logik und setzt die Outputs dementsprechend (Ändert auch die Farben))

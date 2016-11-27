@@ -15,19 +15,18 @@ import element.Element_SIGNAL;
 import element.Element_TEXT;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Optional;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Group;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import pathFinder.PathFinder;
-import pathFinder.Vector2i;
 /**
  * Digitsim.fxml Controller class
  *
@@ -80,7 +79,7 @@ public class DigitSimController extends Pane{
     private ToggleButton btnLED;
     @FXML
     private ToggleButton btnSIGNAL;
-     @FXML
+    @FXML
     private ToggleButton btnTEXT;
     //Constructor (leer)
     public DigitSimController() {
@@ -107,11 +106,7 @@ public class DigitSimController extends Pane{
         simPane.addEventFilter( ScrollEvent.ANY, sceneGestures.getOnScrollEventHandler());  
         elements = new ArrayList<Element>(); //Beschreibung oben
         //Klasse für die Verbindungen    
-        allConnections = new Connection(this);
-        
-        
-        
-        
+        allConnections = new Connection(this);  
         
     }
     
@@ -186,6 +181,7 @@ public class DigitSimController extends Pane{
         btnXNOR.setToggleGroup(group);
         btnLED.setToggleGroup(group);
         btnSIGNAL.setToggleGroup(group);
+        btnTEXT.setToggleGroup(group);
     }
     
     /**
@@ -324,7 +320,13 @@ public class DigitSimController extends Pane{
           simCanvas.getChildren().add(elements.get(elements.size() -1).getGroup());
       }
       else if(btnTEXT.isSelected()){ //Text
-          elements.add(new Element_TEXT(getXAdaptGrid(event), getYAdaptGrid(event), nodeGestures));
+          TextInputDialog dialog = new TextInputDialog("");    //Eingabefesnster 
+          dialog.setTitle("Textfeld");                            
+          dialog.setHeaderText("Eingabe:");
+          Optional<String> result = dialog.showAndWait();         //Fenster wird anezeigt und eingabe gespeichert
+          if(result.get().isEmpty() || result.get().trim().equals(""))
+              return;
+          elements.add(new Element_TEXT(getXAdaptGrid(event), getYAdaptGrid(event), 30, result.get(), Color.BLACK, nodeGestures));
           simCanvas.getChildren().add(elements.get(elements.size() -1).getGroup());
       }
     }
@@ -410,6 +412,13 @@ public class DigitSimController extends Pane{
           }
     }
     
+    public void rebuildElement_TEXT(Element e, int fontSize, String content, Color color){
+              elements.add(new Element_TEXT(e.getX(), e.getY(), fontSize, content, color, nodeGestures));
+              simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
+              simCanvas.getChildren().remove(e.getGroup());
+              elements.remove(e); 
+    }
+        
     public void run(){
         elements.forEach(e -> e.update()); //Geht alle Elemente durch und Updaten sie. ACHTUNG: Lambda schreibweise! Infos -> https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html   
         allConnections.update(); //Alle Verbindungen updaten

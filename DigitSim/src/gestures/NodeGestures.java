@@ -49,25 +49,20 @@ public class NodeGestures {
         deleteItem.setOnAction(new EventHandler<ActionEvent>() { //Wird ausgelößt wenn man bei einem Element "Entfernen" auswählt
             public void handle(ActionEvent e) {
                elements = DigitSimController.getReference().getElements();
-               for(Element i : elements){ //Alle Elemente durchgehen, um das zu finden das Ausgewählt ist
-                   if(i.getGroup().hashCode() == temporaryGroup.hashCode()){ //Der HashCode eines Objektes ist immer EINMALIG, sozusagen eine "Personalnummer", eignet sich daher gut für den "Gleichheitstest"
-                       canvas.getChildren().remove(temporaryGroup); //Die "Zeichnung" entfernen, da diese bestehen bleibt wenn das Element gelöscht wird
-                       DigitSimController.getReference().getConnections().removeAllConncectionsRelatedTo(i);
-                       elements.remove(i); //Das Element entfernen
-                       break; //Schleife abbrechen, da gefunden
-                   }
+               Element temp = findElement();
+               if(temp != null){
+                   canvas.getChildren().remove(temporaryGroup); //Die "Zeichnung" entfernen, da diese bestehen bleibt wenn das Element gelöscht wird
+                   DigitSimController.getReference().getConnections().removeAllConncectionsRelatedTo(temp);
+                   elements.remove(temp); //Das Element entfernen
                }
             }});      
         
         propertiesItem.setOnAction(new EventHandler<ActionEvent>() { //Wird ausgelößt wenn man bei einem Element "Eigenschaften" auswählt
             public void handle(ActionEvent e) {
                elements = DigitSimController.getReference().getElements();
-               for(Element i : elements){ //Alle Elemente durchgehen, um das zu finden das Ausgewählt ist
-                   if(i.getGroup().hashCode() == temporaryGroup.hashCode()){ //Der HashCode eines Objektes ist immer EINMALIG, sozusagen eine "Personalnummer", eignet sich daher gut für den "Gleichheitstest"
-                       i.showProperties(); //Zeigt das "Eigenschaften"-Fenster
-                       break; //Schleife abbrechen, da gefunden
-                       
-                   }
+               Element temp = findElement();
+               if(temp != null){
+                   temp.showProperties();
                }
             }});
         
@@ -100,6 +95,7 @@ public class NodeGestures {
             }
             // Rechtsklick
             if( !event.isPrimaryButtonDown()){
+                temporaryGroup = (Group) event.getSource();
                 contextMenu.show((Node)event.getSource(), Side.RIGHT, 0, 0); //Rechtsklick-Menü anzeigen
                 event.consume(); 
             }else{//Linksklick -> Verschieben

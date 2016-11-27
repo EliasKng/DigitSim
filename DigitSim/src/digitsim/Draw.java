@@ -13,6 +13,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import pathFinder.Node;
 
 /**
@@ -162,6 +163,15 @@ public class Draw {
         l.setStroke(dColor);
         return l;
     } 
+    
+    public static Text drawText(double pX, double pY, String content, Color color, int size){ //Text zeichen
+        Text text = new Text(pX, pY, content);
+        text.setFont(new Font(size));
+        text.setStroke(color);
+        text.setFill(color);
+        text.applyCss(); //Sorgt einfach dafür dass alles ordnungsgemäß übernommen wird, ändert am aussehen natürlich nichts, da CSS gleich bleibt.
+        return text;
+    }
     
     /**
      * Baut eine Gruppe bestehend aus Linien. Die X und Y Koordinaten der Linien stecken in den beiden Arrays. Die Linien werden außerdem an das Karomuster angepasst.
