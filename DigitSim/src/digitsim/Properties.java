@@ -31,6 +31,7 @@ public class Properties {
     
     //Element Stuff
     private static double elementOpacity = 0.4;
+    private static int lineWidth = 5;
     
     
         
@@ -95,6 +96,11 @@ public class Properties {
         save();
     }
     
+    public static void setLineWidth(int width) {
+        Properties.lineWidth = width;
+        save();
+    }
+    
     // Getters
     public static int GetSimSizeX()
     {
@@ -130,4 +136,10 @@ public class Properties {
     {
         return windowMinY;
     }
+
+    public static int getLineWidth() {
+        return lineWidth;
+    }
+    
+    
 }

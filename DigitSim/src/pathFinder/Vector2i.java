@@ -59,6 +59,13 @@ public class Vector2i {
         return this;
     }
     
+    public Vector2i divide(int value) {
+        this.x /= value;
+        this.y /= value;
+        
+        return this;
+    }
+    
     public boolean equals(Object object) {
         if(!(object instanceof Vector2i)) return false;
         Vector2i vec = (Vector2i) object;

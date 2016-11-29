@@ -1,18 +1,10 @@
 package digitsim;
+import connection.Connection;
 import Gestures.DraggableCanvas;
 import Gestures.NodeGestures;
 import Gestures.SceneGestures;
-import element.Element_XOR;
-import element.Element_XNOR;
-import element.Element_OR;
-import element.Element_NOT;
-import element.Element_NOR;
-import element.Element_NAND;
-import element.Element_LED;
-import element.Element_AND;
-import element.Element;
-import element.Element_SIGNAL;
-import element.Element_TEXT;
+import connection.ConnectionLine;
+import element.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -27,6 +19,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import pathFinder.Vector2i;
 /**
  * Digitsim.fxml Controller class
  *
@@ -210,14 +203,10 @@ public class DigitSimController extends Pane{
     */  
     
     public void btnLogicToggleOnAction(ActionEvent event) {
-        //pathFinder.createArray(elements, Properties.GetSimSizeX(), Properties.GetSimSizeY(), simCanvas);
-//        PathFinder pf = new PathFinder();
-//        Vector2i start = new Vector2i(5,5);
-//        Vector2i goal = new Vector2i(50,5);
-//        
-//        Group g = new Group(Draw.drawPath(pf.findPath(start, goal, elements)));
-//        simCanvas.getChildren().add(g);
-        Properties.save();
+        Vector2i start = new Vector2i(0,0);
+        Vector2i end = new Vector2i(50,50);
+        ConnectionLine cL = new ConnectionLine(start,end,this);
+        cL.update();
     }
     
     public void mItemCloseAction(ActionEvent event){ //Programm schließen

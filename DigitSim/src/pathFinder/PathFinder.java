@@ -80,7 +80,7 @@ public class PathFinder {
                 int x = current.tile.getX();
                 int y = current.tile.getY();
                 int xi = (i % 3) -1;
-                int yi = (i / 3) -1;
+                int yi = (i / 3) -1; 
                 
                 if(!isTileAvailible(x, xi, y , yi)) continue;
                 if(isTileSolid(x, xi, y, yi)) continue;
