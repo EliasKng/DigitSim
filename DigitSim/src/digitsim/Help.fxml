@@ -5,7 +5,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="529.9998779296875" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="529.9998779296875" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
   <children>
     <TabPane layoutY="130.0" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
       <tabs>
@@ -15,29 +15,134 @@
               <panes>
                 <TitledPane animated="false" text="Ein Element/Baustein setzen">
                   <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <Pane prefHeight="255.0" prefWidth="600.0" style="-fx-background-image: url('/digitsim/data/hilfe_basics_1.png');" />
+                                 </children></AnchorPane>
                   </content>
                 </TitledPane>
                 <TitledPane animated="false" text="Zwei Bausteine verbinden">
                   <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <Pane prefHeight="255.0" prefWidth="600.0" style="-fx-background-image: url('/digitsim/data/hilfe_basics_2.png');" />
+                                 </children></AnchorPane>
                   </content>
                 </TitledPane>
                 <TitledPane animated="false" text="Zwei Kabel miteinander verbinden">
                   <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <Pane prefHeight="255.0" prefWidth="600.0" style="-fx-background-image: url('/digitsim/data/bausteinsetzen.png');" />
+                                 </children></AnchorPane>
                   </content>
                 </TitledPane>
                 <TitledPane animated="false" text="Kommentare Einfügen">
                   <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <Pane prefHeight="255.0" prefWidth="600.0" style="-fx-background-image: url('/digitsim/data/bausteinsetzen.png');" />
+                                 </children></AnchorPane>
                   </content>
                 </TitledPane>
               </panes>
             </Accordion>
           </content>
         </Tab>
-        <Tab text="Grundbausteine" />
+        <Tab text="Grundbausteine">
+               <content>
+                  <Accordion>
+                    <panes>
+                      <TitledPane animated="false" text="AND">
+                           <content>
+                              <ScrollPane prefHeight="177.0" prefWidth="594.0">
+                                <content>
+                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="255.0" prefWidth="600.0" style="-fx-background-image: url('/digitsim/data/hilfe_gbs_and.png');" />
+                                </content>
+                              </ScrollPane>
+                           </content>
+                      </TitledPane>
+                      <TitledPane animated="false" text="OR">
+                           <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <ScrollPane prefHeight="177.0" prefWidth="600.0">
+                                       <content>
+                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="255.0" prefWidth="600.0" style="-fx-background-image: url('/digitsim/data/hilfe_gbs_or.png');" />
+                                       </content>
+                                    </ScrollPane>
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                      </TitledPane>
+                      <TitledPane animated="false" text="NOT">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-image: hilfe_gbs_not.png;">
+                                 <children>
+                                    <ScrollPane prefHeight="177.0" prefWidth="600.0">
+                                       <content>
+                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="255.0" prefWidth="600.0" style="-fx-background-image: url('/digitsim/data/hilfe_gbs_not.png');" />
+                                       </content>
+                                    </ScrollPane>
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </TitledPane>
+                        <TitledPane animated="false" text="NOR">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <ScrollPane prefHeight="177.0" prefWidth="600.0">
+                                       <content>
+                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="255.0" prefWidth="600.0" style="-fx-background-image: url('/digitsim/data/hilfe_gbs_nor.png');" />
+                                       </content>
+                                    </ScrollPane>
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </TitledPane>
+                        <TitledPane animated="false" text="XOR">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <ScrollPane prefHeight="177.0" prefWidth="600.0">
+                                       <content>
+                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="255.0" prefWidth="600.0" style="-fx-background-image: url('/digitsim/data/hilfe_gbs_xor.png');" />
+                                       </content>
+                                    </ScrollPane>
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </TitledPane>
+                        <TitledPane animated="false" text="NAND">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <ScrollPane prefHeight="177.0" prefWidth="600.0">
+                                       <content>
+                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="255.0" prefWidth="600.0" style="-fx-background-image: url('/digitsim/data/hilfe_gbs_nand.png');" />
+                                       </content>
+                                    </ScrollPane>
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </TitledPane>
+                        <TitledPane animated="false" text="XNOR">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <ScrollPane prefHeight="177.0" prefWidth="600.0">
+                                       <content>
+                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="255.0" prefWidth="600.0" style="-fx-background-image: url('/digitsim/data/hilfe_gbs_xnor.png');" />
+                                       </content>
+                                    </ScrollPane>
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </TitledPane>
+                    </panes>
+                  </Accordion>
+               </content></Tab>
         <Tab text="Fehlermeldungen">
           <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
