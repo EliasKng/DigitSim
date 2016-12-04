@@ -11,6 +11,7 @@ import digitsim.Properties;
 import java.util.List;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import pathFinder.*;
 
 /**
@@ -26,6 +27,7 @@ public class ConnectionLine {
     private Vector2i start;
     private Vector2i end;
     private final int gridOffset = Properties.GetGridOffset();
+    private Color currentColor = Color.GREY; //Standart: Schwarz
     
     
     public ConnectionLine(Vector2i _start, Vector2i _end, DigitSimController d) {
@@ -72,7 +74,7 @@ public class ConnectionLine {
                     int parentX = currentNode.parent.tile.getX() * gridOffset;
                     int parentY = currentNode.parent.tile.getY() * gridOffset;
 
-                    group.getChildren().add(Draw.drawLine(parentX + 10.5, parentY + 10.5, thisX + 10.5, thisY + 10.5, Color.CORAL, Properties.getLineWidth()));
+                    group.getChildren().add(Draw.drawLine(parentX + 10.5, parentY + 10.5, thisX + 10.5, thisY + 10.5, currentColor, Properties.getLineWidth()));
                 }
             }
             
@@ -86,5 +88,26 @@ public class ConnectionLine {
     public void clear() {
         dsc.getSimCanvas().getChildren().remove(group);
         group.getChildren().clear();
+    }
+    
+    public void setColor(int nullOrOne){
+        if(nullOrOne == 1){
+            currentColor = Color.RED;
+        }else{
+            currentColor = Color.GRAY;
+        }
+        
+        for(javafx.scene.Node n : group.getChildren()){
+            Line l = (Line) n;
+            l.setStroke(currentColor);
+        }
+    }
+    
+    public void resetColor(){
+        currentColor = Color.GRAY;
+        for(javafx.scene.Node n : group.getChildren()){
+            Line l = (Line) n;
+            l.setStroke(currentColor);
+        }
     }
 }

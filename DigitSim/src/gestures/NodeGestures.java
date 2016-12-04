@@ -131,7 +131,8 @@ public class NodeGestures {
             node.setTranslateX(getValueAdaptGrid(nodeDragContext.translateAnchorX + (( event.getSceneX() - nodeDragContext.mouseAnchorX) / scale)));
             node.setTranslateY(getValueAdaptGrid(nodeDragContext.translateAnchorY + (( event.getSceneY() - nodeDragContext.mouseAnchorY) / scale)));
             
-            DigitSimController.getReference().getConnections().drawUpdate();
+            temporaryGroup = (Group) event.getSource();
+            DigitSimController.getReference().getConnections().drawUpdate(findElementNum()); //Verbindungen updaten die das Akutelle Element betreffen
             
             event.consume(); 
         }
@@ -150,5 +151,17 @@ public class NodeGestures {
                  } 
           }
          return null;
+    }
+    
+    private int findElementNum(){ //Die Nummer des Elements finden (über die akutelle gruppe)
+         elements = DigitSimController.getReference().getElements();
+         int i = -1;
+         for(Element e : elements){ //Alle Elemente durchgehen, um das zu finden das Ausgewählt ist
+             i++;
+                   if(e.getGroup().hashCode() == temporaryGroup.hashCode()){ //Der HashCode eines Objektes ist immer EINMALIG, sozusagen eine "Personalnummer", eignet sich daher gut für den "Gleichheitstest"
+                       return i;
+                 } 
+          }
+         return -1;
     }
 }

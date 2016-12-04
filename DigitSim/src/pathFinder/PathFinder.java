@@ -5,16 +5,12 @@
  */
 package pathFinder;
 
-import digitsim.Draw;
 import element.Element;
 import digitsim.Properties;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
 /**
  *
@@ -29,12 +25,6 @@ public class PathFinder {
     public PathFinder() {
         
     }
-    
-    
-    
-    
-    
-    
     
     
     

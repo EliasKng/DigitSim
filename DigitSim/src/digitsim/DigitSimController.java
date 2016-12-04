@@ -126,6 +126,10 @@ public class DigitSimController extends Pane{
                 }
                 
                if(event.isSecondaryButtonDown()){
+                   if(!isMouseOverNode(event)){
+                       result1 = null;
+                       result2 = null;
+                   }
                    int result[] = null;
                    // INPUTS DURCH KLICKEN UMSCHALTEN (TESTFUNKTION)
                    if((result = allConnections.closeToInOrOut(event)) != null && result[Connection.CETYPE] == 1){
@@ -139,7 +143,6 @@ public class DigitSimController extends Pane{
                     if(((result2 = allConnections.closeToInOrOut(event)) != null))
                     {
                         allConnections.addConnection(result1[Connection.EINDEX], result1[Connection.CETYPE] == 1, result1[Connection.CINDEX], result2[Connection.EINDEX], result2[Connection.CETYPE] == 1, result2[Connection.CINDEX]);   
-                        allConnections.drawUpdate();
                         result1 = null;
                         result2 = null;
                     }
@@ -428,5 +431,6 @@ public class DigitSimController extends Pane{
     
     private void resetElements(){
         elements.forEach(e -> e.reset()); //Alle Elemente reseten
+        allConnections.reset();
     }
 }

@@ -56,7 +56,7 @@ public class Connection { //Speichert die Verbindungen
             return;
         }
         for(ConData d : connections){ //Überprüfen ob es die verbindung schon gibt
-            if(data.indexFirstElement == indexFirstElement && data.indexSecondElement == indexSecondElement && data.indexFirst == indexFirst && data.indexSecond == indexSecond && data.typeFirst == typeFirst && data.typeSecond == typeSecond){
+            if(d.indexFirstElement == indexFirstElement && d.indexSecondElement == indexSecondElement && d.indexFirst == indexFirst && d.indexSecond == indexSecond && d.typeFirst == typeFirst && d.typeSecond == typeSecond){
                 return;
             }
         }
@@ -71,6 +71,7 @@ public class Connection { //Speichert die Verbindungen
         data.typeSecond = typeSecond;
         data.connectionLine = new ConnectionLine(dsController);
         connections.add(data);
+        drawNewLine(data);
     }
 
     /* -Bearbeitet von Tim 14.11.16 */
@@ -80,15 +81,17 @@ public class Connection { //Speichert die Verbindungen
             if ((d.typeFirst != d.typeSecond) && !d.typeFirst) // ausgang mit eingang verbunden
             {
                 dsController.getElements().get(d.indexSecondElement).setInput(d.indexSecond, dsController.getElements().get(d.indexFirstElement).getOutput(d.indexFirst));
+                d.connectionLine.setColor(dsController.getElements().get(d.indexFirstElement).getOutput(d.indexFirst)); //Farbe der Verbindung anpassen
+                
             } else if ((d.typeFirst != d.typeSecond) && d.typeFirst) // eingang mit ausgang verbunden
             {
                 dsController.getElements().get(d.indexFirstElement).setInput(d.indexFirst, dsController.getElements().get(d.indexSecondElement).getOutput(d.indexSecond));
+                d.connectionLine.setColor(dsController.getElements().get(d.indexSecondElement).getOutput(d.indexSecond)); //Farbe der Verbindung anpassen
             }
         }
     }
 
-    public void drawUpdate() {
-        for (ConData d : connections) {
+    public void drawNewLine(ConData d) {
             Vector2i start = new Vector2i();
             Vector2i end = new Vector2i();
 
@@ -110,7 +113,33 @@ public class Connection { //Speichert die Verbindungen
             d.connectionLine.setStart(start);
             d.connectionLine.setEnd(end);
             d.connectionLine.update();
+    }
+    
+    public void drawUpdate(int eIndex){
+        for(ConData d : connections){
+            if(d.indexFirstElement == eIndex || d.indexSecondElement == eIndex){
+            
+            Vector2i start = new Vector2i();
+            Vector2i end = new Vector2i();
+            if ((d.typeFirst != d.typeSecond) && !d.typeFirst) // ausgang mit eingang verbunden
+            {
+                start.setX((int)dsController.getElements().get(d.indexFirstElement).getOutputX(d.indexFirst));
+                start.setY((int)dsController.getElements().get(d.indexFirstElement).getOutputY(d.indexFirst));
+                end.setX((int)dsController.getElements().get(d.indexSecondElement).getInputX(d.indexSecond));
+                end.setY((int)dsController.getElements().get(d.indexSecondElement).getInputY(d.indexSecond));
+            } else if ((d.typeFirst != d.typeSecond) && d.typeFirst) // eingang mit ausgang verbunden
+            {
+                start.setX((int)dsController.getElements().get(d.indexFirstElement).getInputX(d.indexFirst));
+                start.setY((int)dsController.getElements().get(d.indexFirstElement).getInputY(d.indexFirst));
+                end.setX((int)dsController.getElements().get(d.indexSecondElement).getOutputX(d.indexSecond));
+                end.setY((int)dsController.getElements().get(d.indexSecondElement).getOutputY(d.indexSecond));
+            }
+            // Linien zeichenen
 
+            d.connectionLine.setStart(start);
+            d.connectionLine.setEnd(end);
+            d.connectionLine.update();
+            }
         }
     }
 
@@ -171,13 +200,21 @@ public class Connection { //Speichert die Verbindungen
         return connections.get(choice);
     }
     
-    public void removeAllConncectionsRelatedTo(Element pE){
-        for(int i = 0; i < connections.size(); i++){
-            ConData d = connections.get(i);
+    public void removeAllConncectionsRelatedTo(Element pE){ 
+        ArrayList<ConData> temp = new ArrayList<>(); //Wir müssen alle zu löschenden Verbindungen hier speichern, erklärung siehe (1)
+        for(ConData d : connections){
             if(dsController.getElements().get(d.indexFirstElement).hashCode() == pE.hashCode() || dsController.getElements().get(d.indexSecondElement).hashCode() == pE.hashCode()){
-                dsController.getSimCanvas().getChildren().remove(d.connectionLine);
-                removeConnection(d);
+                d.connectionLine.clear(); 
+                temp.add(d); //(1) würden wir hier das ConData Objekt aus connections enfernen gibt es einen Error, da die For-Schleife weiterhin versucht alles durchzulaufen, allerdings hat sich die Größe vom Array geändern wenn das Objekt entfernt wurde = IndexOutOfBoundException
             }
         }
+        for(ConData t : temp){
+            connections.remove(t);
+        }
+        temp.clear();
+    }
+    
+    public void reset(){
+        connections.forEach(d -> d.connectionLine.resetColor());
     }
 }
