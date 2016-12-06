@@ -17,8 +17,7 @@ import java.util.List;
  * @author Elias
  */
 public class PathFinder {
-    private int simSizeX = Properties.GetSimSizeX();
-    private int simSizeY = Properties.GetSimSizeY();
+    
     private int[][] tileCode;
     
     
@@ -42,7 +41,7 @@ public class PathFinder {
         List<Node> openList = new ArrayList<Node>();
         List<Node> closedList = new ArrayList<Node>();
         
-        createTileCode(elements);
+        TileCode.createTileCode(elements);
         //Startnode
         Node current = new Node(start, null, 0, getManhattanDistance(start, goal));
         openList.add(current);
@@ -72,8 +71,8 @@ public class PathFinder {
                 int xi = (i % 3) -1;
                 int yi = (i / 3) -1; 
                 
-                if(!isTileAvailible(x, xi, y , yi)) continue;
-                if(isTileSolid(x, xi, y, yi)) continue;
+                if(!TileCode.isTileAvailible(x, xi, y , yi)) continue;
+                if(TileCode.isTileSolid(x, xi, y, yi)) continue;
                 
                 
                 Vector2i a = new Vector2i(x+xi,y+yi);
@@ -84,10 +83,10 @@ public class PathFinder {
                 if(isDirectionChanged(current, node, start)) {
                     node.fCost++;
                 }
-                if(isTileInIOArea(x,xi,y,yi)) {
+                if(TileCode.isTileInIOArea(x,xi,y,yi)) {
                     node.fCost +=50;
                 }
-                if(isTileInElementArea(x,xi,y,yi)) {
+                if(TileCode.isTileInElementArea(x,xi,y,yi)) {
                     node.fCost += 5;
                 }
                 
@@ -151,121 +150,5 @@ public class PathFinder {
         double dx = tile.getX() - goal.getX();
         double dy = tile.getY() - goal.getY();
         return Math.sqrt(dx * dx + dy * dy);
-    }
-    
-    
-    /**
-     * Hat noch keine Funktion, soll später aber überprüfen, ob das "Tile" (bei und ein Kästchen (21 x 21px)) vorhanden ist bisher wird nur geprüft ob das Tile oben oder links aus dem Feld geht
-     * @return 
-     */
-    public boolean isTileAvailible(int x, int xi, int y, int yi) {
-        boolean result = true;
-        if((x+xi)<0 || (y+yi)<0) {
-            result = false;
-        }
-        return result;
-    }
-    
-    /**
-     * Wenn sich über diesem Tile ein Baustein befindet wird true zurück gegeben
-     * @return 
-     */
-    public boolean isTileSolid(int x, int xi, int y, int yi) {
-        boolean result = false;
-        int status = tileCode[x+xi][y+yi];
-        if(status == 1) {
-            result = true;
-        }
-        return result;
-    }
-    
-    /**
-     * Wenn sich über diesem Tile ein oder Ausgänge eines Elements befinden, wird true zurückgegeben
-     * @return 
-     */
-    public boolean isTileInIOArea(int x, int xi, int y, int yi) {
-        boolean result = false;
-        int status = tileCode[x+xi][y+yi];
-        if(status == 2) {
-            result = true;
-        }
-        return result;
-    }
-    
-    /**
-     * Wenn sich über diesem Tile das Umfeld einess Elements befindet (Umfeld entspricht ein Block größer als das Element), wird true returnt
-     * @return 
-     */
-    public boolean isTileInElementArea(int x, int xi, int y, int yi) {
-        boolean result = false;
-        int status = tileCode[x+xi][y+yi];
-        if(status == 3) {
-            result = true;
-        }
-        return result;
-    }
-    
-    /**
-     * Beschreibt das tileCodeArray mit Daten (wenn sich auf diesem Tile ein Block befindet, wird es auf 1 gesetzt
-     * @param elements
-     * @param width
-     * @param height
-     * @author Elias
-     */
-    public void createTileCode(ArrayList<Element> elements) {
-        int gridOffset = Properties.GetGridOffset();
-        
-        int arrayWidth = (int) Math.ceil(simSizeX / gridOffset); //Berechnet den Wert für die Weite den Arrays (jedes Kästchen soll 1 arrayplatz belegen), desshalb wird die gesamthöhe genommen, durch 21 geteilt und dann aufgerundet
-        int arrayHeight = (int) Math.ceil(simSizeY / gridOffset);
-        tileCode = new int[arrayWidth][arrayHeight]; //In diesem 2 dimensionalen array, wird gespeichert ob ein Kästchen (z.B. durch ein Element) geblockt wird
-        int eWidth = 6; //Weite der elemente (in 21 schritten) (ist 6 weil die Ausgänge & Eingänge mit dazu gezählt werden)
-        int eHeight; //Höhe der elemente (in 21 schritten)
-        int eX; //X-Koordinate des Elements (in gridOffset Schritten)
-        int eY; //Y-Koordinate des Elements (in gridOffset Schritten)
-        
-        //Diese Schleife wird für jedes Element einmal durchlaufen
-        for(Element i : elements){ //elemente durchgehen...
-            eHeight = getElementHeight(i.getInputCount());
-            eX = (int) i.getX() / gridOffset - 1;
-            eY = (int) i.getY() / gridOffset;
-            
-            for(int k = eX-1; k < (eX + eWidth+1); k++) {
-                for(int o = eY-1; o < (eY + eHeight+1); o++) {
-                    int value;
-                    if((k >= eX && k < (eX+eWidth)) && (o >= eY && o < (eY + eHeight))) {
-                        if(k == eX || k == (eX + eWidth -1)) {
-                            value = 2;
-                        } else {
-                            value = 1;
-                        }
-                    } else {
-                        value = 3;
-                    }
-                    try {
-                        if((tileCode[k][o] == 0) || value < tileCode[k][o]) {
-                            tileCode[k][o] = value;
-                        }
-                    }catch(Exception e) {
-                        System.out.println("Unstimmigkeit beim Erstellen des Arrays (PATHFINDER)");
-                    }
-                    
-                    
-                }
-            }
-        }
-    }
-    
-    /**
-     * berechnet die Höhe des standard Elements anhand seiner Anzahl con Eingängen
-     * @param inputs
-     * @return 
-     */
-    public int getElementHeight(int inputs) {
-        int h = 4;
-        if (inputs > 4) {
-            h=inputs;
-        }
-        return h;
-    }
-    
+    } 
 }
