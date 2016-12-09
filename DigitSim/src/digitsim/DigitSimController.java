@@ -3,7 +3,6 @@ import connection.Connection;
 import Gestures.DraggableCanvas;
 import Gestures.NodeGestures;
 import Gestures.SceneGestures;
-import connection.ConnectionLine;
 import element.*;
 import java.io.File;
 import java.util.ArrayList;
@@ -19,7 +18,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import pathFinder.Vector2i;
 /**
  * Digitsim.fxml Controller class
  *
@@ -206,10 +204,8 @@ public class DigitSimController extends Pane{
     */  
     
     public void btnLogicToggleOnAction(ActionEvent event) {
-        Vector2i start = new Vector2i(0,0);
-        Vector2i end = new Vector2i(50,50);
-        ConnectionLine cL = new ConnectionLine(start,end,this);
-        cL.update();
+        HapticThread hT = new HapticThread(this);
+        hT.run();
     }
     
     public void mItemCloseAction(ActionEvent event){ //Programm schließen
@@ -400,7 +396,7 @@ public class DigitSimController extends Pane{
               elements.add(new Element_XOR(e.getX() + (e.getWidth() / 2), e.getY() + (e.getHeight() / 2), inputs, nodeGestures));
               simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
               simCanvas.getChildren().remove(e.getGroup());
-              elements.remove(e);    
+              elements.remove(e);
           }
     }
     
