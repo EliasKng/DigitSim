@@ -70,8 +70,9 @@ public class Element_NAND extends Element{
                 if(rec.getHeight() <= (numInputs) * gridOffset) {
                     rec.setHeight((numInputs) * gridOffset);
                 }
-                double offsetY = i * gridOffset + gridOffset - 11.5;
-                inputLines.add(Draw.drawLine((pX - 5), pY + offsetY, (pX - 15), pY + offsetY, Color.BLACK, 5));
+                double offsetY = i * gridOffset + gridOffset - 12.5;
+                
+                inputLines.add(Draw.drawLine((pX - 5), pY + offsetY, (pX - 10), pY + offsetY, Color.BLACK, 5)); //Linie zeichnen
                 inputLines.get(i).addEventFilter(MouseEvent.MOUSE_ENTERED, GenFunctions.getOverNodeMouseHanlderEnter());
                 inputLines.get(i).addEventFilter(MouseEvent.MOUSE_EXITED, GenFunctions.getOverNodeMouseHanlderExit());
                 grp.getChildren().add(inputLines.get(i));
