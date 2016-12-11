@@ -30,7 +30,9 @@ public class NodeGestures {
     private static ArrayList<Element> elements = new ArrayList<>(); //Elemente
     private ContextMenu contextMenu;
     private Group temporaryGroup;
-   
+
+    private static boolean dragged;
+    
     private DragContext nodeDragContext = new DragContext(); //Nötige Daten für Berechnungen
 
     DraggableCanvas canvas; //Arbeitsfläche
@@ -75,6 +77,10 @@ public class NodeGestures {
 
     public EventHandler<MouseEvent> getOnMouseDraggedEventHandler() {
         return onMouseDraggedEventHandler;
+    }
+    
+    public EventHandler<MouseEvent> getOnMouseReleasedEventHandler() {
+        return onMouseReleasedEventHandler;
     }
 
     private EventHandler<MouseEvent> onMousePressedEventHandler = new EventHandler<MouseEvent>() { //Handler für "Maus klick"
@@ -122,6 +128,8 @@ public class NodeGestures {
             if( !event.isPrimaryButtonDown())
                 return;
 
+            dragged = true;
+            
             double scale = canvas.getScale(); //Scalierung
             
             Node node = (Node) event.getSource(); //Das betroffene Element bekommen
@@ -132,11 +140,24 @@ public class NodeGestures {
             node.setTranslateY(getValueAdaptGrid(nodeDragContext.translateAnchorY + (( event.getSceneY() - nodeDragContext.mouseAnchorY) / scale)));
             
             temporaryGroup = (Group) event.getSource();
-            DigitSimController.getReference().getConnections().drawUpdate(findElementNum()); //Verbindungen updaten die das Akutelle Element betreffen
+            
             
             event.consume(); 
         }
     };
+    
+    private EventHandler<MouseEvent> onMouseReleasedEventHandler = new EventHandler<MouseEvent>() { //Handler für "Drag"
+        
+        public void handle(MouseEvent event ) {
+            System.out.println(dragged);
+            if(dragged == true) {
+                dragged = false;
+                DigitSimController.getReference().getConnections().drawUpdate(findElementNum()); //Verbindungen updaten die das Akutelle Element betreffen
+            }
+            
+        }
+    };
+    
     //Anpassung eines beliebigen Volumen ans Gitter (Author: Dominik)
     private double getValueAdaptGrid(double pV){
         double offset = Properties.GetGridOffset();
