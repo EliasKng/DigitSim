@@ -141,7 +141,7 @@ public class NodeGestures {
             
             temporaryGroup = (Group) event.getSource();
             
-            
+            DigitSimController.getReference().getConnections().drawDirectLineUpdate(findElementNum()); //Verbindungen updaten die das Akutelle Element betreffen
             event.consume(); 
         }
     };

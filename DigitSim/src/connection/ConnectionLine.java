@@ -64,28 +64,33 @@ public class ConnectionLine {
         this.end = end.divide(gridOffset);
     }
     
-    public void update() {
+    public void update(boolean directLine) {
         clear();
-        path = pathFinder.findPath(start, end, dsc.getElements());
-        if(path != null) {
-            for(Node currentNode : path) {
-                if(currentNode.parent != null) {
-
-                    int thisX = currentNode.tile.getX() * gridOffset;
-                    int thisY = currentNode.tile.getY() * gridOffset;
-                    int parentX = currentNode.parent.tile.getX() * gridOffset;
-                    int parentY = currentNode.parent.tile.getY() * gridOffset;
-
-                    group.getChildren().add(Draw.drawLine(parentX + 10.5, parentY + 10.5, thisX + 10.5, thisY + 10.5, currentColor, Properties.getLineWidth()));
+        
+        if(!directLine) {
+            path = pathFinder.findPath(start, end, dsc.getElements());
+            if(path != null) {
+                for(Node currentNode : path) {
+                    if(currentNode.parent != null) {
+                        
+                        int thisX = currentNode.tile.getX() * gridOffset;
+                        int thisY = currentNode.tile.getY() * gridOffset;
+                        int parentX = currentNode.parent.tile.getX() * gridOffset;
+                        int parentY = currentNode.parent.tile.getY() * gridOffset;
+                        
+                        group.getChildren().add(Draw.drawLine(parentX + 10.5, parentY + 10.5, thisX + 10.5, thisY + 10.5, currentColor, Properties.getLineWidth()));
+                    }
                 }
-            }
             
+            } else {
+                group.getChildren().add(Draw.drawLine(start.getX() * gridOffset + 10.5, start.getY()  * gridOffset + 10.5, end.getX() * gridOffset + 10.5 ,end.getY() * gridOffset + 10.5, Color.CORAL,  Properties.getLineWidth()));
+            }
+            group.addEventFilter(MouseEvent.MOUSE_ENTERED, GenFunctions.getOverNodeMouseHanlderEnterLineGrp());
+            group.addEventFilter(MouseEvent.MOUSE_EXITED, GenFunctions.getOverNodeMouseHanlderExitLineGrp());
+        } else {
+            Line l = Draw.drawLine(start.getX() * gridOffset + 10.5, start.getY() * gridOffset + 10.5, end.getX() * gridOffset + 10.5, end.getY() * gridOffset + 10.5, currentColor, Properties.getLineWidth());
+            group.getChildren().add(l);
         }
-        else {
-            group.getChildren().add(Draw.drawLine(start.getX() * gridOffset + 10.5, start.getY()  * gridOffset + 10.5, end.getX() * gridOffset + 10.5 ,end.getY() * gridOffset + 10.5, Color.CORAL,  Properties.getLineWidth()));
-        }
-        group.addEventFilter(MouseEvent.MOUSE_ENTERED, GenFunctions.getOverNodeMouseHanlderEnterLineGrp());
-        group.addEventFilter(MouseEvent.MOUSE_EXITED, GenFunctions.getOverNodeMouseHanlderExitLineGrp());
         dsc.getSimCanvas().getChildren().add(group);
     }
     

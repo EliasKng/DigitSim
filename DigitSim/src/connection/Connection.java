@@ -112,7 +112,7 @@ public class Connection { //Speichert die Verbindungen
 
             d.connectionLine.setStart(start);
             d.connectionLine.setEnd(end);
-            d.connectionLine.update();
+            d.connectionLine.update(false);
     }
     
     public void drawUpdate(int eIndex){
@@ -138,7 +138,35 @@ public class Connection { //Speichert die Verbindungen
 
             d.connectionLine.setStart(start);
             d.connectionLine.setEnd(end);
-            d.connectionLine.update();
+            d.connectionLine.update(false);
+            }
+        }
+    }
+    
+    public void drawDirectLineUpdate(int eIndex){
+        for(ConData d : connections){
+            if(d.indexFirstElement == eIndex || d.indexSecondElement == eIndex){
+            
+            Vector2i start = new Vector2i();
+            Vector2i end = new Vector2i();
+            if ((d.typeFirst != d.typeSecond) && !d.typeFirst) // ausgang mit eingang verbunden
+            {
+                start.setX((int)dsController.getElements().get(d.indexFirstElement).getOutputX(d.indexFirst));
+                start.setY((int)dsController.getElements().get(d.indexFirstElement).getOutputY(d.indexFirst));
+                end.setX((int)dsController.getElements().get(d.indexSecondElement).getInputX(d.indexSecond));
+                end.setY((int)dsController.getElements().get(d.indexSecondElement).getInputY(d.indexSecond));
+            } else if ((d.typeFirst != d.typeSecond) && d.typeFirst) // eingang mit ausgang verbunden
+            {
+                start.setX((int)dsController.getElements().get(d.indexFirstElement).getInputX(d.indexFirst));
+                start.setY((int)dsController.getElements().get(d.indexFirstElement).getInputY(d.indexFirst));
+                end.setX((int)dsController.getElements().get(d.indexSecondElement).getOutputX(d.indexSecond));
+                end.setY((int)dsController.getElements().get(d.indexSecondElement).getOutputY(d.indexSecond));
+            }
+            // Linien zeichenen
+
+            d.connectionLine.setStart(start);
+            d.connectionLine.setEnd(end);
+            d.connectionLine.update(true);
             }
         }
     }
