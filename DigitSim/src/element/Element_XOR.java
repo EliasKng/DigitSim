@@ -10,6 +10,7 @@ import digitsim.GenFunctions;
 import Gestures.NodeGestures;
 import digitsim.Properties;
 import element.Element;
+import static element.Element.elementWidth;
 import java.util.Arrays;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
@@ -39,14 +40,18 @@ public class Element_XOR extends Element{
         pY = pY-elementHeight/2;
         numOutputs = 1;
         rec = Draw.drawRectangle(pX, pY, elementWidth, elementHeight, 10, 10, Color.BLACK, Properties.getElementOpacity(), 5);           //das OR zeichnen
+        rec.addEventFilter(MouseEvent.MOUSE_ENTERED, GenFunctions.getOverNodeMouseHanlderEnterRec());
+        rec.addEventFilter(MouseEvent.MOUSE_EXITED, GenFunctions.getOverNodeMouseHanlderExitRec());
         lbl = Draw.drawLabel((pX+2), (pY - 17), "=" , Color.BLACK, false, 75);
         lbl2 = Draw.drawLabel((pX+40), (pY - 15), "1" , Color.BLACK, false, 75);
         outputLines.add(Draw.drawLine((pX + 85), (pY + 29.5), (pX + 100), (pY + 29.5), Color.BLACK, 5)); 
+        outputLines.get(0).addEventFilter(MouseEvent.MOUSE_ENTERED, GenFunctions.getOverNodeMouseHanlderEnter());
+        outputLines.get(0).addEventFilter(MouseEvent.MOUSE_EXITED, GenFunctions.getOverNodeMouseHanlderExit());
         
             numInputs = pInputs; // 2 Da mehr keinen Sinn machen
             inputs = new int[numInputs];
             Arrays.fill(inputs, 0); //Setzt alle Inputs auf '0
-            grp = new Group(rec, lbl, outputLines.get(0), lbl2);
+            grp = new Group(lbl, outputLines.get(0), lbl2, rec);
             for(int i = 0; i < numInputs; i++)
             {
                 //  * Überarbeitet von Tim 05.11.16
@@ -63,6 +68,8 @@ public class Element_XOR extends Element{
                 double offsetY = i * gridOffset + gridOffset - 11.5;
                 
                 inputLines.add(Draw.drawLine((pX - 5), pY + offsetY, (pX - 15), pY + offsetY, Color.BLACK, 5));
+                inputLines.get(i).addEventFilter(MouseEvent.MOUSE_ENTERED, GenFunctions.getOverNodeMouseHanlderEnter());
+                inputLines.get(i).addEventFilter(MouseEvent.MOUSE_EXITED, GenFunctions.getOverNodeMouseHanlderExit());
                 grp.getChildren().add(inputLines.get(i));
             }
             

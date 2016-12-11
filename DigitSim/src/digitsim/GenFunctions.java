@@ -10,12 +10,17 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.image.Image;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -116,5 +121,89 @@ public class GenFunctions { //Laden der GUI
        Scene scene = new Scene(new Group(lbl, tf, btn));
        stage.setScene(scene);
        stage.show();//Fenster zeigen
+    }
+    
+    public static EventHandler<MouseEvent> getOverNodeMouseHanlderEnter(){
+        return new EventHandler<MouseEvent>(){
+                    @Override
+                    public void handle(MouseEvent event){
+                        if(DigitSimController.isLocked())
+                            return;
+                        Node src = (Node) event.getSource();
+                        Line line = (Line) src;
+                        line.setStroke(Color.DARKORANGE);
+                    }
+    };
+    }
+    
+    public static EventHandler<MouseEvent> getOverNodeMouseHanlderExit(){
+        return new EventHandler<MouseEvent>(){
+                    @Override
+                    public void handle(MouseEvent event){
+                        if(DigitSimController.isLocked())
+                            return;
+                        Node src = (Node) event.getSource();
+                        Line line = (Line) src;
+                        line.setStroke(Color.BLACK);
+                    }
+    };
+    }
+    
+     public static EventHandler<MouseEvent> getOverNodeMouseHanlderEnterRec(){
+        return new EventHandler<MouseEvent>(){
+                    @Override
+                    public void handle(MouseEvent event){
+                        if(DigitSimController.isLocked())
+                            return;
+                        Node src = (Node) event.getSource();
+                        Rectangle rec = (Rectangle) src;
+                        rec.setStroke(Color.DARKORANGE);
+                    }
+    };
+    }
+    
+    public static EventHandler<MouseEvent> getOverNodeMouseHanlderExitRec(){
+        return new EventHandler<MouseEvent>(){
+                    @Override
+                    public void handle(MouseEvent event){
+                        if(DigitSimController.isLocked())
+                            return;
+                        Node src = (Node) event.getSource();
+                        Rectangle rec = (Rectangle) src;
+                        rec.setStroke(Color.BLACK);
+                    }
+    };
+    }
+    
+    public static EventHandler<MouseEvent> getOverNodeMouseHanlderEnterLineGrp(){
+        return new EventHandler<MouseEvent>(){
+                    @Override
+                    public void handle(MouseEvent event){
+                        if(DigitSimController.isLocked())
+                            return;
+                        Node src = (Node) event.getSource();
+                        Group grp = (Group) src;
+                        for(int i = 0; i  < grp.getChildren().size(); i++){
+                            Line line = (Line) grp.getChildren().get(i);
+                            line.setStroke(Color.DARKORANGE);
+                        }
+                    }
+    };
+    }
+    
+    public static EventHandler<MouseEvent> getOverNodeMouseHanlderExitLineGrp(){
+        return new EventHandler<MouseEvent>(){
+                    @Override
+                    public void handle(MouseEvent event){
+                        if(DigitSimController.isLocked())
+                            return;
+                        Node src = (Node) event.getSource();
+                        Group grp = (Group) src;
+                        for(int i = 0; i  < grp.getChildren().size(); i++){
+                            Line line = (Line) grp.getChildren().get(i);
+                            line.setStroke(Color.GRAY);
+                        }
+                    }
+    };
     }
 }

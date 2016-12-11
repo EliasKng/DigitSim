@@ -9,7 +9,7 @@ import digitsim.Draw;
 import digitsim.GenFunctions;
 import Gestures.NodeGestures;
 import digitsim.Properties;
-import element.Element;
+import static element.Element.elementWidth;
 import java.util.Arrays;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
@@ -43,14 +43,18 @@ public class Element_AND extends Element{
         pY = pY-elementHeight/2;
         numOutputs = 1;
         rec = Draw.drawRectangle(pX, pY, elementWidth, elementHeight, 10, 10, Color.BLACK, Properties.getElementOpacity(), 5);           //das AND zeichnen
+        rec.addEventFilter(MouseEvent.MOUSE_ENTERED, GenFunctions.getOverNodeMouseHanlderEnterRec());
+        rec.addEventFilter(MouseEvent.MOUSE_EXITED, GenFunctions.getOverNodeMouseHanlderExitRec());
         lbl = Draw.drawLabel((pX + 10), (pY - 15), "&", Color.BLACK, false, 75);
         outputLines.add(Draw.drawLine((pX + 85), (pY + 29.5), (pX + 100), (pY + 29.5), Color.BLACK, 5));
+        outputLines.get(0).addEventFilter(MouseEvent.MOUSE_ENTERED, GenFunctions.getOverNodeMouseHanlderEnter());
+        outputLines.get(0).addEventFilter(MouseEvent.MOUSE_EXITED, GenFunctions.getOverNodeMouseHanlderExit());
 
         
             numInputs = pInputs;
             inputs = new int[numInputs];
             Arrays.fill(inputs, 0); //Setzt alle Inputs auf '0'
-            grp = new Group(rec, lbl, outputLines.get(0));
+            grp = new Group(lbl, rec, outputLines.get(0));
             for(int i = 0; i < numInputs; i++)
             {
                 //  * Überarbeitet von Tim 05.11.16
@@ -67,6 +71,8 @@ public class Element_AND extends Element{
                 double offsetY = i * gridOffset + gridOffset - 11.5;
                 
                 inputLines.add(Draw.drawLine((pX - 5), pY + offsetY, (pX - 15), pY + offsetY, Color.BLACK, 5)); //Linie zeichnen
+                inputLines.get(i).addEventFilter(MouseEvent.MOUSE_ENTERED, GenFunctions.getOverNodeMouseHanlderEnter());
+                inputLines.get(i).addEventFilter(MouseEvent.MOUSE_EXITED, GenFunctions.getOverNodeMouseHanlderExit());
                 grp.getChildren().add(inputLines.get(i)); //Linie hinzufügen
             }
             

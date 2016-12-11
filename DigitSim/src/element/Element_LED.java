@@ -7,6 +7,7 @@ package element;
 import digitsim.Draw;
 import Gestures.NodeGestures;
 import digitsim.DigitSimController;
+import digitsim.GenFunctions;
 import digitsim.Properties;
 import element.Element;
 import javafx.scene.Group;
@@ -38,18 +39,21 @@ public class Element_LED extends Element{
     //Überarbeitet von Elias
         //Der Baustein wird nun (egal bei welcher BausteinWeite/Höhe) plaziert mit der Maus als Mittelpunkt
         pX = pX-elementWidth/2;
-        pY = pY-elementHeight/2;
+        pY = pY-elementHeight/2 + 11.5;
         numOutputs = 0; //Kein Ouptut benötigt!
         rec = Draw.drawRectangle(pX, pY, elementWidth, elementHeight, 100, 100, Color.BLACK, Properties.getElementOpacity(), 5);           //die led zeichnen
+        rec.addEventFilter(MouseEvent.MOUSE_ENTERED, GenFunctions.getOverNodeMouseHanlderEnterRec());
+        rec.addEventFilter(MouseEvent.MOUSE_EXITED, GenFunctions.getOverNodeMouseHanlderExitRec());
         outputLines.add(Draw.drawLine((pX + 95), (pY + 29.5), (pX + 100), (pY + 29.5), Color.BLACK, 5));
         outputLines.get(0).setVisible(false);  //Outputline ist unsichtbaar, muss wegen vererbung aber vorhanden sein!
         indicator = Draw.drawCircle(pX + 40, pY  + 40, 5, Color.BLUE, 5, true, 65);     //TODO: wenn zustandlos hier annfangsfarbe ändern
         indicator.setVisible(false);
         numInputs = 1; //Input mit mehr als 1 Eingang ist sinnlos!
         inputs = new int[]{0};
-        grp =  new Group(rec, outputLines.get(0), indicator);
-        inputLines.add(Draw.drawLine((pX - 5), pY + rec.getWidth()/2, (pX - 15), pY + rec.getWidth()/2 , Color.BLACK, 5));
-        grp.getChildren().add(inputLines.get(0));
+        inputLines.add(Draw.drawLine((pX - 5), (Math.round((pY + (elementHeight/ 2)) / Properties.GetGridOffset()) * Properties.GetGridOffset()) - 11.5, (pX - 15), (Math.round((pY + (elementHeight/2)) / Properties.GetGridOffset()) * Properties.GetGridOffset()) - 11.5, Color.BLACK, 5));
+        inputLines.get(0).addEventFilter(MouseEvent.MOUSE_ENTERED, GenFunctions.getOverNodeMouseHanlderEnter());
+        inputLines.get(0).addEventFilter(MouseEvent.MOUSE_EXITED, GenFunctions.getOverNodeMouseHanlderExit());
+        grp =  new Group(indicator, outputLines.get(0), rec, inputLines.get(0));
         //Die Hanlder hinzufügen (Beschreibung der Hander in  DraggableCanvas.java)  
         grp.addEventFilter( MouseEvent.MOUSE_PRESSED, dNodeGestures.getOnMousePressedEventHandler());
         grp.addEventFilter( MouseEvent.MOUSE_DRAGGED, dNodeGestures.getOnMouseDraggedEventHandler());

@@ -7,13 +7,18 @@ package element;
 
 import digitsim.Draw;
 import Gestures.NodeGestures;
+import digitsim.DigitSimController;
+import digitsim.GenFunctions;
 import digitsim.Properties;
-import element.Element;
+import static element.Element.elementWidth;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
 import javax.swing.JOptionPane;
 
 /**
@@ -40,14 +45,18 @@ public class Element_NOT extends Element{
         pY = pY-elementHeight/2;
         numOutputs = 1;
         rec = Draw.drawRectangle(pX, pY, elementWidth, elementHeight, 10, 10, Color.BLACK, Properties.getElementOpacity(), 5);           //das AND zeichnen
+        rec.addEventFilter(MouseEvent.MOUSE_ENTERED, GenFunctions.getOverNodeMouseHanlderEnterRec());
+        rec.addEventFilter(MouseEvent.MOUSE_EXITED, GenFunctions.getOverNodeMouseHanlderExitRec());
         lbl = Draw.drawLabel((pX + 20), (pY - 15), "1", Color.BLACK, false, 75);                            //Das Ausrufezeichen Brauchwn wir nicht, da wir ja einen Kreis hinter das Bauteil setzten (damit es wie ein NOT aussieht)
         outputLines.add(Draw.drawLine((pX + 95), (pY + 29.5), (pX + 100), (pY + 29.5), Color.BLACK, 5));
+        outputLines.get(0).addEventFilter(MouseEvent.MOUSE_ENTERED, GenFunctions.getOverNodeMouseHanlderEnter());
+        outputLines.get(0).addEventFilter(MouseEvent.MOUSE_EXITED, GenFunctions.getOverNodeMouseHanlderExit());
         cOutput = Draw.drawCircle(pX+88, pY+29.5, 5, Color.BLACK, 5, false, 5);
 
         
             numInputs = 1; //Input mit mehr als 1 Eingang ist sinnlos!
             inputs = new int[]{0};
-            grp = new Group(rec, outputLines.get(0), lbl, cOutput);
+            grp = new Group(outputLines.get(0), lbl, cOutput, rec);
             for(int i = 0; i < numInputs; i++)
             {
                 //  * Überarbeitet von Tim 05.11.16
@@ -64,6 +73,17 @@ public class Element_NOT extends Element{
                 double offsetY = i * gridOffset + gridOffset - 11.5;
                 
                 inputLines.add(Draw.drawLine((pX - 5), pY + offsetY, (pX - 15), pY + offsetY, Color.BLACK, 5));
+                inputLines.get(i).addEventFilter(MouseEvent.MOUSE_ENTERED, GenFunctions.getOverNodeMouseHanlderEnter());
+                inputLines.get(i).addEventFilter(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>(){
+                    @Override
+                    public void handle(MouseEvent event){
+                        if(DigitSimController.isLocked())
+                            return;
+                        Node src = (Node) event.getSource();
+                        Line line = (Line) src;
+                        line.setStroke(Color.RED);
+                    }
+            });
                 grp.getChildren().add(inputLines.get(i));
             }
             

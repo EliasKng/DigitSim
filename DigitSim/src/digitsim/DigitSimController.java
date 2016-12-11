@@ -34,7 +34,8 @@ public class DigitSimController extends Pane{
     private SimThread runningThread = new SimThread(this); //Thread der, falls gestartet, immer die Elemente & Verbindungen updatet
     private static boolean locked = false; //Wenn wir das Programm starten setzen wir locked auf True, damit das Programm blokiert wird und man während der Simulation nichts ändern kann!
     private static DigitSimController refThis;
-    private Pathfinder pathFinder = new Pathfinder();
+    private int result1[] = null;
+    private int result2[] = null; 
     
      /**
      * FXML OBJEKT-Erstellungs-Bereich:
@@ -100,10 +101,6 @@ public class DigitSimController extends Pane{
         allConnections = new Connection(this);  
         
     }
-    
-    //TEST
-    int result1[] = null;
-    int result2[] = null; 
     
     
     @FXML
@@ -204,8 +201,7 @@ public class DigitSimController extends Pane{
     */  
     
     public void btnLogicToggleOnAction(ActionEvent event) {
-        HapticThread hT = new HapticThread(this);
-        hT.run();
+        //Für Tests
     }
     
     public void mItemCloseAction(ActionEvent event){ //Programm schließen
@@ -396,7 +392,7 @@ public class DigitSimController extends Pane{
               elements.add(new Element_XOR(e.getX() + (e.getWidth() / 2), e.getY() + (e.getHeight() / 2), inputs, nodeGestures));
               simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
               simCanvas.getChildren().remove(e.getGroup());
-              elements.remove(e);
+              elements.remove(e);    
           }
     }
     

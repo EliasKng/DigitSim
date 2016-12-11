@@ -29,8 +29,8 @@ public class TileCode {
             eX = (int) i.getX() / gridOffset - 1;
             eY = (int) i.getY() / gridOffset;
             
-            for(int k = eX-1; k < (eX + eWidth+1); k++) {
-                for(int o = eY-1; o < (eY + eHeight+1); o++) {
+            for(int k = eX-1; k < (eX + eWidth+2); k++) {
+                for(int o = eY-1; o < (eY + eHeight+2); o++) {
                     int value;
                     if((k >= eX && k < (eX+eWidth)) && (o >= eY && o < (eY + eHeight))) {
                         if(k == eX || k == (eX + eWidth -1)) {

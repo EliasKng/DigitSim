@@ -6,8 +6,10 @@
 package element;
 import digitsim.Draw;
 import Gestures.NodeGestures;
+import digitsim.GenFunctions;
 import digitsim.Properties;
 import element.Element;
+import static element.Element.elementWidth;
 import javafx.scene.Group;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -39,13 +41,17 @@ public class Element_SIGNAL extends Element{
         numOutputs = 1;
         outputs = new int[]{0};
         rec = Draw.drawRectangle(pX, pY, elementWidth, elementHeight, 10, 10, Color.BLACK, Properties.getElementOpacity(), 5);           //das Signal zeichnen
+        rec.addEventFilter(MouseEvent.MOUSE_ENTERED, GenFunctions.getOverNodeMouseHanlderEnterRec());
+        rec.addEventFilter(MouseEvent.MOUSE_EXITED, GenFunctions.getOverNodeMouseHanlderExitRec());
         number1 = Draw.drawLabel((pX + 20), (pY - 15), "0", Color.BLACK, false, 75);                            //Das label (die  0 oder 1 im block, haben beim erstellen zuerst auf 0) 
         number2 = Draw.drawLabel((pX + 20), (pY - 15), "1", Color.RED, false, 75); 
         number2.setVisible(false);
         outputLines.add(Draw.drawLine((pX + 85), (pY + 29.5), (pX + 100), (pY + 29.5), Color.BLACK, 5));
+        outputLines.get(0).addEventFilter(MouseEvent.MOUSE_ENTERED, GenFunctions.getOverNodeMouseHanlderEnter());
+        outputLines.get(0).addEventFilter(MouseEvent.MOUSE_EXITED, GenFunctions.getOverNodeMouseHanlderExit());
         numInputs = 1; 
         inputs = new int[]{0};
-        grp = new Group(rec, outputLines.get(0), number1, number2);
+        grp = new Group(outputLines.get(0), number1, number2, rec);
         inputLines.add(Draw.drawLine((pX - 5), pY, (pX - 15), pY, Color.BLACK, 5)); //Wir können den Input trotzdem benutzen um den Baustein auf 0,1 zu setzen
         inputLines.get(0).setVisible(false);
         grp.getChildren().add(inputLines.get(0));

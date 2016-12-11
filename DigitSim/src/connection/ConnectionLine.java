@@ -7,9 +7,11 @@ package connection;
 
 import digitsim.DigitSimController;
 import digitsim.Draw;
+import digitsim.GenFunctions;
 import digitsim.Properties;
 import java.util.List;
 import javafx.scene.Group;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import pathFinder.*;
@@ -82,6 +84,8 @@ public class ConnectionLine {
         else {
             group.getChildren().add(Draw.drawLine(start.getX() * gridOffset + 10.5, start.getY()  * gridOffset + 10.5, end.getX() * gridOffset + 10.5 ,end.getY() * gridOffset + 10.5, Color.CORAL,  Properties.getLineWidth()));
         }
+        group.addEventFilter(MouseEvent.MOUSE_ENTERED, GenFunctions.getOverNodeMouseHanlderEnterLineGrp());
+        group.addEventFilter(MouseEvent.MOUSE_EXITED, GenFunctions.getOverNodeMouseHanlderExitLineGrp());
         dsc.getSimCanvas().getChildren().add(group);
     }
     
