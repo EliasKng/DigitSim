@@ -76,6 +76,7 @@ public class Element_XOR extends Element{
          //Die Hanlder hinzufügenn (Beschreibung der Hander in  DraggableCanvas.java)  
         grp.addEventFilter( MouseEvent.MOUSE_PRESSED, dNodeGestures.getOnMousePressedEventHandler());
         grp.addEventFilter( MouseEvent.MOUSE_DRAGGED, dNodeGestures.getOnMouseDraggedEventHandler());
+        grp.addEventFilter( MouseEvent.MOUSE_RELEASED, dNodeGestures.getOnMouseReleasedEventHandler());
     }
     
     //Diese Methoden müssen überschrieben werden (Beschreibung in der Mutterklasse)
