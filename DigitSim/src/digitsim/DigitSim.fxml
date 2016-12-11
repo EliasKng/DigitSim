@@ -65,12 +65,12 @@
         </Menu>
         <Menu mnemonicParsing="false" text="Simulation">
           <items>
-            <MenuItem mnemonicParsing="false" text="Run">
+            <MenuItem fx:id="MenuSimuRun" mnemonicParsing="false" onAction="#mItemSimRunOnAction" text="Run">
               <accelerator>
                 <KeyCodeCombination alt="UP" code="R" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
               </accelerator>
             </MenuItem>
-            <MenuItem mnemonicParsing="false" text="Stop">
+            <MenuItem fx:id="MenuSimuStop" mnemonicParsing="false" onAction="#mItemSimStopOnAction" text="Stop">
               <accelerator>
                 <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
               </accelerator>
@@ -158,7 +158,7 @@
             <AnchorPane fx:id="simPane" minHeight="0.0" minWidth="0.0" prefHeight="573.0" prefWidth="674.0" />
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
               <children>
-                <ListView prefHeight="169.0" prefWidth="807.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                <ListView fx:id="outputList" prefHeight="169.0" prefWidth="807.0" stylesheets="@../stylesheets/outputList.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
               </children>
             </AnchorPane>
           </items>

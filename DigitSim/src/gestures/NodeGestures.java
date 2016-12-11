@@ -149,7 +149,6 @@ public class NodeGestures {
     private EventHandler<MouseEvent> onMouseReleasedEventHandler = new EventHandler<MouseEvent>() { //Handler für "Drag"
         
         public void handle(MouseEvent event ) {
-            System.out.println(dragged);
             if(dragged == true) {
                 dragged = false;
                 DigitSimController.getReference().getConnections().drawUpdate(findElementNum()); //Verbindungen updaten die das Akutelle Element betreffen

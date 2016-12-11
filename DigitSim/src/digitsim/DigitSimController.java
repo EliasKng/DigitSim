@@ -7,6 +7,8 @@ import element.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Optional;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -34,6 +36,7 @@ public class DigitSimController extends Pane{
     private SimThread runningThread = new SimThread(this); //Thread der, falls gestartet, immer die Elemente & Verbindungen updatet
     private static boolean locked = false; //Wenn wir das Programm starten setzen wir locked auf True, damit das Programm blokiert wird und man während der Simulation nichts ändern kann!
     private static DigitSimController refThis;
+    public static final ObservableList outputMessages = FXCollections.observableArrayList();
     private int result1[] = null;
     private int result2[] = null; 
     
@@ -43,6 +46,12 @@ public class DigitSimController extends Pane{
      */
     @FXML 
     private MenuItem mItemOpenFile;
+    @FXML
+    private MenuItem MenuSimuRun;
+    @FXML
+    private MenuItem MenuSimuStop;
+    @FXML
+    private ListView<String> outputList;
     @FXML 
     private ToggleButton btnAND;    
     @FXML
@@ -73,16 +82,19 @@ public class DigitSimController extends Pane{
     private ToggleButton btnSIGNAL;
     @FXML
     private ToggleButton btnTEXT;
+    
     //Constructor (leer)
     public DigitSimController() {
         refThis = this;
     }   
     
     @FXML
-    public void initialize() {//initialize Funktion: wird direkt beim Starten der FXML aufgerufen.
+    public void initialize() {//initialize Funktion: wird direkt beim Starten der FXML aufgerufe
         addSimCanvas(); //Handler zum erstellen neuer Elemente zur Arbeitsfläche hinzufügen & Die Arbeitsfläche reinladen
         setSliderProperties(); //Einstellungen für den Silder zum einstellen der Eingange von Grundbausteinen
-        
+        outputList.setItems(outputMessages);
+        outputList.setFocusTraversable(false);
+        outputMessages.add("[INFO]Leeres Projekt erstellen");
         simCanvas.addGrid(simCanvas.getPrefWidth(), simCanvas.getPrefHeight()); //Gitter zeichnen
         
         loadBtnGroup(); //Alle Buttons die ein Element auswählen in eine Gruppe packen, damit immer nur einer ausgewählt ist
@@ -99,7 +111,7 @@ public class DigitSimController extends Pane{
         elements = new ArrayList<Element>(); //Beschreibung oben
         //Klasse für die Verbindungen    
         allConnections = new Connection(this);  
-        
+        outputMessages.add("[INFO]Projekterstellung erfolgreich");
     }
     
     
@@ -233,10 +245,13 @@ public class DigitSimController extends Pane{
         allConnections.clear();
     }
     public void btnStartOnAction(ActionEvent event) {   
+        outputMessages.clear();
         btnStart.setDisable(true);
         btnPause.setDisable(false);
         runningThread = new SimThread(this);
+        outputMessages.add("[INFO] Starten der Simulation");
         runningThread.start(); //Den Thread starten, d.h alle Elemente & Connections werden regelmäßig geupdated
+        
         locked = true; //Programm blockieren (siehe erklärung oben)
   }     
     public void btnPauseOnAction(ActionEvent event) {   
@@ -244,8 +259,18 @@ public class DigitSimController extends Pane{
         resetElements(); //Alles resetzen
         btnPause.setDisable(true);
         btnStart.setDisable(false);
+        outputMessages.clear();
         locked = false;
     }
+    
+    public void mItemSimRunOnAction(ActionEvent event) { //Datei öffnen      
+        btnStart.fire();
+    }
+    
+    public void mItemSimStopOnAction(ActionEvent event) { //Datei öffnen      
+        btnPause.fire();
+    }
+    
     public void inputSliderOnDragDone() { //Den Wert vom Slider runden
         double value = inputSlider.getValue();
         value = Math.round(value);
@@ -313,6 +338,7 @@ public class DigitSimController extends Pane{
           elements.add(new Element_TEXT(getXAdaptGrid(event), getYAdaptGrid(event), 30, result.get(), Color.BLACK, nodeGestures));
           simCanvas.getChildren().add(elements.get(elements.size() -1).getGroup());
       }
+       outputMessages.add("[INFO]Element hinzugefügt an Position (" + event.getX() + "|" + event.getY() + ")");
     }
    
     /**
@@ -422,6 +448,7 @@ public class DigitSimController extends Pane{
     }
     
     private void resetElements(){
+        outputMessages.add("[INFO]Alle Elemente zurücksetzen..");
         elements.forEach(e -> e.reset()); //Alle Elemente reseten
         allConnections.reset();
     }

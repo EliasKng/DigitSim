@@ -1,0 +1,16 @@
+.list-view .list-cell:even {
+-fx-font-size: 13px;
+-fx-font-weight: bold;
+-fx-background-color: white;
+}
+.list-view .list-cell:odd {
+-fx-font: 13px 'Arial';
+-fx-font-weight: bold;
+-fx-background-color: #EDEDED;
+}
+.list-cell:filled:hover {
+    -fx-background-color: orange !important;
+}
+.list-cell:filled:selected {
+    -fx-background-color: yellow;
+}
