@@ -33,9 +33,9 @@ public class GenFunctions { //Laden der GUI
     /**
      * 
      */
-    public static Stage openFXML(String fxmlName, String windowTitle, String iconFileName) {
+    public static Stage openFXML(Class cl, String fxmlName, String windowTitle, String iconFileName) {
         try{ //Beschreibung des Designs/Fensters per (F)XML-Datei
-            FXMLLoader fxmlLoader = new FXMLLoader(DigitSim.class.getResource(fxmlName)); //Lädt die FXML-Datei
+            FXMLLoader fxmlLoader = new FXMLLoader(cl.getResource(fxmlName)); //Lädt die FXML-Datei
             Parent root1 = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
             stage.setTitle(windowTitle);
