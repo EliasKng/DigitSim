@@ -111,6 +111,7 @@ public class DigitSimController extends Pane{
         //EVENT FILTER (Diese werden ausgelöst sobald ein gewisses Ereignis eintritt)
         simPane.addEventFilter( MouseEvent.MOUSE_PRESSED, sceneGestures.getOnMousePressedEventHandler()); //Wenn z.b die Maus gedrückt wird, wird der getOnMousePressedEventHanlder ausgeführt
         simPane.addEventFilter( MouseEvent.MOUSE_DRAGGED, sceneGestures.getOnMouseDraggedEventHandler());
+        simPane.addEventFilter( MouseEvent.MOUSE_RELEASED, sceneGestures.getOnMouseReleasedEventHandler());
         simPane.addEventFilter( ScrollEvent.ANY, sceneGestures.getOnScrollEventHandler());  
         elements = new ArrayList<Element>(); //Beschreibung oben
         //Klasse für die Verbindungen    
@@ -262,7 +263,7 @@ public class DigitSimController extends Pane{
     }
     public void mItemPropertiesOnAction(ActionEvent event) { //Einstellungs-Fenster öffnen
         Stage stage;
-        stage = GenFunctions.openFXML(properties.PropertiesController.class,"Properties.fxml", "Einstellungen", "icon.png"); //Öffnen des "Einstellungen"-Fensters
+        stage = GenFunctions.openFXML(properties.PropertiesController.class, "Properties.fxml", "Einstellungen", "icon.png"); //Öffnen des "Einstellungen"-Fensters
         stage.setResizable(false);
     }
     public void mItemHelpOnAction(ActionEvent event) { //Hilfe öffnen
@@ -379,7 +380,7 @@ public class DigitSimController extends Pane{
      * Author: Dominik (06.11.2016)
      * --Editiert von Elias 11.11.2016
      */
-    private boolean isMouseOverNode(MouseEvent event) { //Tested ob die Maus über einem Element (Node) ist, static damit man es in DraggableCanvas.java benutzen kann
+    public boolean isMouseOverNode(MouseEvent event) { //Tested ob die Maus über einem Element (Node) ist, static damit man es in DraggableCanvas.java benutzen kann
         boolean result = false;
         
         for(Element i : elements){ //elemente durchgehen...

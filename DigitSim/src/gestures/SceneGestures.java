@@ -7,6 +7,8 @@ package Gestures;
 
 
 import javafx.event.EventHandler;
+import javafx.event.EventType;
+import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
@@ -19,7 +21,7 @@ public class SceneGestures { //Klasse für Zoom und verschiebung der Arbeitsflä
 
     private static final double MAX_SCALE = 2.0d; //Min. & Max. scalierung
     private static final double MIN_SCALE = 0.5d;
-
+    private static boolean temp = false;
     private DragContext sceneDragContext = new DragContext();
 
     DraggableCanvas simCanvas; //Arbeitsfläche
@@ -43,6 +45,10 @@ public class SceneGestures { //Klasse für Zoom und verschiebung der Arbeitsflä
     public EventHandler<MouseEvent> getOnMouseDraggedEventHandler() {
         return onMouseDraggedEventHandler;
     }
+    
+    public EventHandler<MouseEvent> getOnMouseReleasedEventHandler() {
+        return onMouseDraggedReleasedHandler;
+    }
 
     public EventHandler<ScrollEvent> getOnScrollEventHandler() {
         return onScrollEventHandler;
@@ -55,24 +61,39 @@ public class SceneGestures { //Klasse für Zoom und verschiebung der Arbeitsflä
             // right mouse button => panning
             if( !event.isSecondaryButtonDown())
                 return;
-
+            
             sceneDragContext.mouseAnchorX = event.getSceneX(); //X/Y Koordinaten der Maus speichern (später benötig)
             sceneDragContext.mouseAnchorY = event.getSceneY();
 
             sceneDragContext.translateAnchorX = simCanvas.getTranslateX(); //Die akutelle Änderungsrate speichern (später nötig)
             sceneDragContext.translateAnchorY = simCanvas.getTranslateY();
+            temp = true;
 
+        }
+
+    };
+    
+    private EventHandler<MouseEvent> onMouseDraggedReleasedHandler = new EventHandler<MouseEvent>() { //Handler für "Maus klick"
+
+        public void handle(MouseEvent event) {
+
+            temp = false;
         }
 
     };
 
     private EventHandler<MouseEvent> onMouseDraggedEventHandler = new EventHandler<MouseEvent>() {//Handler für "Drag"
         public void handle(MouseEvent event) {
-
+            
             // right mouse button => panning
             if( !event.isSecondaryButtonDown())
                 return;
-
+            if(!temp){
+                return;
+            }
+            if(NodeGestures.getContextMenu().isShowing()){
+                NodeGestures.getContextMenu().hide();
+            }
             //Berechnet den Abstand zwischen der alten und der neuen Mausposition
             simCanvas.setTranslateX(sceneDragContext.translateAnchorX + event.getSceneX() - sceneDragContext.mouseAnchorX);
             simCanvas.setTranslateY(sceneDragContext.translateAnchorY + event.getSceneY() - sceneDragContext.mouseAnchorY);

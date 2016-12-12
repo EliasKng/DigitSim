@@ -4,3 +4,9 @@
 (Mon Dec 12 16:03:58 CET 2016)[ERROR IN <class java.lang.Class>] Fehler beim laden von Help.fxml & Hilfe & icon.png
 (Mon Dec 12 16:06:14 CET 2016)[ERROR IN <class java.lang.Class>] Fehler beim laden von Help.fxml & Hilfe & icon.png
 (Mon Dec 12 16:07:36 CET 2016)[ERROR IN <class java.lang.Class>] Fehler beim laden von Help.fxml & Hilfe & icon.png
+(Mon Dec 12 19:45:03 CET 2016)[ERROR IN <class java.lang.Class>] Fehler beim laden von Properties.fxml & Einstellungen & icon.png
+(Mon Dec 12 19:47:06 CET 2016)[ERROR IN <class java.lang.Class>] Fehler beim laden von Properties.fxml & Einstellungen & icon.png
+(Mon Dec 12 19:49:20 CET 2016)[ERROR IN <class java.lang.Class>] Fehler beim laden von Properties.fxml & Einstellungen & icon.png
+(Mon Dec 12 19:49:37 CET 2016)[ERROR IN <class java.lang.Class>] Fehler beim laden von Properties.fxml & Einstellungen & icon.png
+(Mon Dec 12 19:52:35 CET 2016)[ERROR IN <class java.lang.Class>] Fehler beim laden von Properties.fxml & Einstellungen & icon.png
+(Mon Dec 12 19:57:40 CET 2016)[ERROR IN <class java.lang.Class>] Fehler beim laden von Properties.fxml & Einstellungen & icon.png

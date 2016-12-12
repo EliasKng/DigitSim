@@ -33,7 +33,7 @@ import javafx.scene.shape.Rectangle;
  */
 public class NodeGestures {
     private static ArrayList<Element> elements = new ArrayList<>(); //Elemente
-    private ContextMenu contextMenu;
+    private static ContextMenu contextMenu;
     private Group temporaryGroup;
 
     private static boolean dragged;
@@ -55,6 +55,7 @@ public class NodeGestures {
         
         deleteItem.setOnAction(new EventHandler<ActionEvent>() { //Wird ausgelößt wenn man bei einem Element "Entfernen" auswählt
             public void handle(ActionEvent e) {
+               contextMenu.hide();
                elements = DigitSimController.getReference().getElements();
                Element temp = findElement();
                if(temp != null){
@@ -66,13 +67,13 @@ public class NodeGestures {
         
         propertiesItem.setOnAction(new EventHandler<ActionEvent>() { //Wird ausgelößt wenn man bei einem Element "Eigenschaften" auswählt
             public void handle(ActionEvent e) {
+               contextMenu.hide();
                elements = DigitSimController.getReference().getElements();
                Element temp = findElement();
                if(temp != null){
                    temp.showProperties();
                }
             }});
-        
         contextMenu.getItems().addAll(deleteItem, propertiesItem);
     }
 
@@ -87,6 +88,7 @@ public class NodeGestures {
     public EventHandler<MouseEvent> getOnMouseReleasedEventHandler() {
         return onMouseReleasedEventHandler;
     }
+    
 
     private EventHandler<MouseEvent> onMousePressedEventHandler = new EventHandler<MouseEvent>() { //Handler für "Maus klick"
 
@@ -104,12 +106,18 @@ public class NodeGestures {
                 }
                 return;
             }
+            if(contextMenu.isShowing()){
+                    contextMenu.hide();
+                    return;
+            }
             // Rechtsklick
             if( !event.isPrimaryButtonDown()){
                 temporaryGroup = (Group) event.getSource();
                 contextMenu.show((Node)event.getSource(), Side.RIGHT, 0, 0); //Rechtsklick-Menü anzeigen
                 event.consume(); 
+                return;
             }else{//Linksklick -> Verschieben
+                
             nodeDragContext.mouseAnchorX = event.getSceneX(); //X/Y Koordinaten der Maus speichern (später benötig)
             nodeDragContext.mouseAnchorY = event.getSceneY();
 
@@ -125,14 +133,21 @@ public class NodeGestures {
     private EventHandler<MouseEvent> onMouseDraggedEventHandler = new EventHandler<MouseEvent>() { //Handler für "Drag"
         
         public void handle(MouseEvent event ) {
-            if(DigitSimController.getReference().isLocked()) //Schauen ob das Programm blokiert ist (erklärung: siehe DigitSimController oben)
+            if(DigitSimController.getReference().isLocked()){ //Schauen ob das Programm blokiert ist (erklärung: siehe DigitSimController oben)
                return;
+            }
+            
+            if(contextMenu.isShowing()){
+                contextMenu.hide();
+                return;
+            }
+            
             elements = DigitSimController.getReference().getElements();
 
             // left mouse button => dragging
-            if( !event.isPrimaryButtonDown())
+            if( !event.isPrimaryButtonDown()){
                 return;
-
+            }
             dragged = true;
             
             
@@ -182,6 +197,10 @@ public class NodeGestures {
                  } 
           }
          return null;
+    }
+    
+    public static ContextMenu getContextMenu(){
+        return contextMenu;
     }
     
     private int findElementNum(){ //Die Nummer des Elements finden (über die akutelle gruppe)
