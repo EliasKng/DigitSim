@@ -5,6 +5,7 @@
  */
 package pathFinder;
 
+import connection.Connection;
 import element.Element;
 import digitsim.Properties;
 import java.util.ArrayList;
@@ -37,11 +38,11 @@ public class PathFinder {
         }
     };
 
-    public List<Node> findPath(Vector2i start, Vector2i goal, ArrayList<Element> elements) {
+    public List<Node> findPath(Vector2i start, Vector2i goal, ArrayList<Element> elements, ArrayList<Connection.ConData> connections) {
         List<Node> openList = new ArrayList<Node>();
         List<Node> closedList = new ArrayList<Node>();
         
-        TileCode.createTileCode(elements);
+        TileCode.createTileCode(elements, connections);
         //Startnode
         Node current = new Node(start, null, 0, getManhattanDistance(start, goal));
         openList.add(current);
@@ -88,6 +89,10 @@ public class PathFinder {
                 }
                 if(TileCode.isTileInElementArea(x,xi,y,yi)) {
                     node.fCost += 5;
+                }
+                
+                if(TileCode.isTileOverOtherConnection(x, xi, y, yi)) {
+                    node.fCost += 10;
                 }
                 
                 if(vecInList(closedList, a) && gCost >= node.gCost) continue;

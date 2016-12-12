@@ -5,10 +5,12 @@
  */
 package connection;
 
+import connection.Connection;
 import digitsim.DigitSimController;
 import digitsim.Draw;
 import digitsim.GenFunctions;
 import digitsim.Properties;
+import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.Group;
 import javafx.scene.input.MouseEvent;
@@ -63,12 +65,18 @@ public class ConnectionLine {
     public void setEnd(Vector2i end) {
         this.end = end.divide(gridOffset);
     }
+
+    public List<Node> getPath() {
+        return path;
+    }
     
-    public void update(boolean directLine) {
+    
+    
+    public void update(boolean directLine,ArrayList<Connection.ConData> connections) {
         clear();
         
         if(!directLine) {
-            path = pathFinder.findPath(start, end, dsc.getElements());
+            path = pathFinder.findPath(start, end, dsc.getElements(), connections);
             if(path != null) {
                 for(Node currentNode : path) {
                     if(currentNode.parent != null) {

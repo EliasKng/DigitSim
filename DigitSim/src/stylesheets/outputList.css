@@ -9,7 +9,7 @@
 -fx-background-color: #EDEDED;
 }
 .list-cell:filled:hover {
-    -fx-background-color: orange !important;
+    -fx-background-color: darkorange !important;
 }
 .list-cell:filled:selected {
     -fx-background-color: yellow;

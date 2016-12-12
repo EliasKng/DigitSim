@@ -12,7 +12,7 @@
   -fx-background-radius: 7px;
 }
 .toggle-button:hover {
-    -fx-background-color: #8FD7AF;
+    -fx-background-color: darkorange;
 }
 .toggle-button:selected {
     -fx-background-color: #5FA77F;

@@ -10,7 +10,6 @@ import digitsim.Draw;
 import element.Element;
 import java.util.ArrayList;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 import pathFinder.Vector2i;
 
 /**
@@ -113,7 +112,7 @@ public class Connection { //Speichert die Verbindungen
 
             d.connectionLine.setStart(start);
             d.connectionLine.setEnd(end);
-            d.connectionLine.update(false);
+            d.connectionLine.update(false, connections);
     }
     
     public void drawUpdate(int eIndex){
@@ -139,7 +138,7 @@ public class Connection { //Speichert die Verbindungen
 
             d.connectionLine.setStart(start);
             d.connectionLine.setEnd(end);
-            d.connectionLine.update(false);
+            d.connectionLine.update(false, connections);
             }
         }
     }
@@ -167,7 +166,7 @@ public class Connection { //Speichert die Verbindungen
 
             d.connectionLine.setStart(start);
             d.connectionLine.setEnd(end);
-            d.connectionLine.update(true);
+            d.connectionLine.update(true, connections);
             }
         }
     }

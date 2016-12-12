@@ -1,8 +1,10 @@
 package pathFinder;
 
+import connection.Connection;
 import digitsim.Properties;
 import element.Element;
 import java.util.ArrayList;
+import java.util.List;
 
     /**
      * Beschreibt das tileCodeArray mit Daten (wenn sich auf diesem Tile ein Block befindet, wird es auf 1 gesetzt
@@ -14,7 +16,7 @@ public class TileCode {
     private static int simSizeX = Properties.GetSimSizeX();
     private static int simSizeY = Properties.GetSimSizeY();
 
-    public static void createTileCode(ArrayList<Element> elements) {
+    public static void createTileCode(ArrayList<Element> elements, ArrayList<Connection.ConData> connections) {
         int arrayWidth = (int) Math.ceil(simSizeX / gridOffset); //Berechnet den Wert für die Weite den Arrays (jedes Kästchen soll 1 arrayplatz belegen), desshalb wird die gesamthöhe genommen, durch 21 geteilt und dann aufgerundet
         int arrayHeight = (int) Math.ceil(simSizeY / gridOffset);
         tileCode = new int[arrayWidth][arrayHeight]; //In diesem 2 dimensionalen array, wird gespeichert ob ein Kästchen (z.B. durch ein Element) geblockt wird
@@ -34,12 +36,12 @@ public class TileCode {
                     int value;
                     if((k >= eX && k < (eX+eWidth)) && (o >= eY && o < (eY + eHeight))) {
                         if(k == eX || k == (eX + eWidth -1)) {
-                            value = 2;
+                            value = 2;  //IO Bereich eines Elements
                         } else {
-                            value = 1;
+                            value = 1;  //Element
                         }
                     } else {
-                        value = 3;
+                        value = 4;      //ElementArea
                     }
                     try {
                         if((tileCode[k][o] == 0) || value < tileCode[k][o]) {
@@ -53,7 +55,13 @@ public class TileCode {
                 }
             }
         }
+        
+        for(Connection.ConData c : connections) {
+            
+        }
     }
+    
+    
     
     /**
      * berechnet die Höhe des standard Elements anhand seiner Anzahl con Eingängen
@@ -107,13 +115,26 @@ public class TileCode {
     }
     
     /**
+     * Wenn sich über diesem Tile eine andere Verbindung liegt, wird true zurückgegeben
+     * @return 
+     */
+    public static boolean isTileOverOtherConnection(int x, int xi, int y, int yi) {
+        boolean result = false;
+        int status = tileCode[x+xi][y+yi];
+        if(status == 3) {
+            result = true;
+        }
+        return result;
+    }
+    
+    /**
      * Wenn sich über diesem Tile das Umfeld einess Elements befindet (Umfeld entspricht ein Block größer als das Element), wird true returnt
      * @return 
      */
     public static boolean isTileInElementArea(int x, int xi, int y, int yi) {
         boolean result = false;
         int status = tileCode[x+xi][y+yi];
-        if(status == 3) {
+        if(status == 4) {
             result = true;
         }
         return result;
