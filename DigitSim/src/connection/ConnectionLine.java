@@ -69,6 +69,12 @@ public class ConnectionLine {
     public List<Node> getPath() {
         return path;
     }
+
+    public Group getGroup() {
+        return group;
+    }
+    
+    
     
     
     

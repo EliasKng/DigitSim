@@ -4,7 +4,8 @@ import connection.Connection;
 import digitsim.Properties;
 import element.Element;
 import java.util.ArrayList;
-import java.util.List;
+import javafx.scene.Group;
+import javafx.scene.shape.Line;
 
     /**
      * Beschreibt das tileCodeArray mit Daten (wenn sich auf diesem Tile ein Block befindet, wird es auf 1 gesetzt
@@ -57,7 +58,22 @@ public class TileCode {
         }
         
         for(Connection.ConData c : connections) {
-            
+            for(int i = 0; i < c.connectionLine.getGroup().getChildren().size(); i++) {
+                Group g = c.connectionLine.getGroup();
+                Line line = (Line) g.getChildren().get(i);
+                int startX = (int) line.getStartX()/21;
+                int startY = (int) line.getStartY()/21;
+//                int endX = (int) line.getEndX()/21;
+//                int endY = (int) line.getEndY()/21;
+                
+                try {
+                    if((tileCode[startX][startY] == 0) || 3 < tileCode[startX][startY]) {
+                            tileCode[startX][startY] = 3;
+                        }
+                } catch (Exception e) {
+                    System.out.println("Fehler beim Erstellen des Arrays (PATHFINDER) (ConnectionToArray)");
+                }
+            }
         }
     }
     

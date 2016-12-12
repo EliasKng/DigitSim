@@ -90,9 +90,8 @@ public class PathFinder {
                 if(TileCode.isTileInElementArea(x,xi,y,yi)) {
                     node.fCost += 5;
                 }
-                
                 if(TileCode.isTileOverOtherConnection(x, xi, y, yi)) {
-                    node.fCost += 10;
+                    node.fCost += 5;
                 }
                 
                 if(vecInList(closedList, a) && gCost >= node.gCost) continue;
