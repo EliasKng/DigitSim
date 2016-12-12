@@ -53,6 +53,7 @@ public class Element_LED extends Element{
         inputLines.add(Draw.drawLine((pX - 5), (Math.round((pY + (elementHeight/ 2)) / Properties.GetGridOffset()) * Properties.GetGridOffset()) - 10.5, (pX - 10), (Math.round((pY + (elementHeight/2)) / Properties.GetGridOffset()) * Properties.GetGridOffset()) - 10.5, Color.BLACK, 5));
         inputLines.get(0).addEventFilter(MouseEvent.MOUSE_ENTERED, NodeGestures.getOverNodeMouseHanlderEnter());
         inputLines.get(0).addEventFilter(MouseEvent.MOUSE_EXITED, NodeGestures.getOverNodeMouseHanlderExit());
+        inputLines.get(0).addEventFilter(MouseEvent.MOUSE_CLICKED, NodeGestures.getOverInputMouseHanlderClicked());
         grp =  new Group(indicator, outputLines.get(0), rec, inputLines.get(0));
         //Die Hanlder hinzufügen (Beschreibung der Hander in  DraggableCanvas.java)  
         grp.addEventFilter( MouseEvent.MOUSE_PRESSED, dNodeGestures.getOnMousePressedEventHandler());

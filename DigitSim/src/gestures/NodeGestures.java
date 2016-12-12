@@ -246,6 +246,24 @@ public class NodeGestures {
         };
     }
     
+    public static EventHandler<MouseEvent> getOverInputMouseHanlderClicked(){
+        return new EventHandler<MouseEvent>(){
+            @Override
+            public void handle(MouseEvent event){
+                DigitSimController.setLastClicked("input");
+            }
+        };
+    }
+    
+    public static EventHandler<MouseEvent> getOverOutputMouseHanlderClicked(){
+        return new EventHandler<MouseEvent>(){
+            @Override
+            public void handle(MouseEvent event){
+                DigitSimController.setLastClicked("output");
+            }
+        };
+    }
+    
     public static EventHandler<MouseEvent> getOverNodeMouseHanlderClick(){
         return new EventHandler<MouseEvent>(){
             @Override

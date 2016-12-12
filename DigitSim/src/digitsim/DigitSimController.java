@@ -44,6 +44,7 @@ public class DigitSimController extends Pane{
     private int result1[] = null; //Werte der beiden Elemente, die man verbinden möchte
     private int result2[] = null; 
     private Line conLine = null; //Verbindungslinie (Diese erscheint wenn man auf einen Input/Output klickt)
+    private static String lastClicked;
 
      /**
      * FXML OBJEKT-Erstellungs-Bereich:
@@ -127,10 +128,9 @@ public class DigitSimController extends Pane{
         simPane.getChildren().addAll(simCanvas); //die Arbeitsfläche auf das Panel setzen
     }
     
-    public static DraggableCanvas getSimCanvas()
-    {
-        return simCanvas;
-    }
+    
+    
+    
     
     private void resetResults(){ //Daten die für eine Verbindung gesammelt wurden löschen
         result1 = null;
@@ -473,6 +473,29 @@ public class DigitSimController extends Pane{
         return locked;
     }
     
+    private void resetElements(){
+        outputMessages.add("[INFO]Alle Elemente zurücksetzen..");
+        elements.forEach(e -> e.reset()); //Alle Elemente reseten
+        allConnections.reset();
+    }
+    
+    public static ObservableList getOutputMessages() {
+        return outputMessages;
+    }
+        
+    //****************GET/SET*************************************************************************************
+    public static DraggableCanvas getSimCanvas() {
+        return simCanvas;
+    }
+
+    public static String getLastClicked() {
+        return lastClicked;
+    }
+
+    public static void setLastClicked(String lastClicked) {
+        DigitSimController.lastClicked = lastClicked;
+    }
+    
     public Connection getConnections(){ //Rückgabe der Verbindungen
         return allConnections;
     }
@@ -480,15 +503,4 @@ public class DigitSimController extends Pane{
     public static DigitSimController getReference(){ //Rückgabe einer Referenz (für Klassen die sonst keine besitzen)
         return refThis;
     }
-    
-    private void resetElements(){
-        outputMessages.add("[INFO]Alle Elemente zurücksetzen..");
-        elements.forEach(e -> e.reset()); //Alle Elemente reseten
-        allConnections.reset();
-    }
-    
-        public static ObservableList getOutputMessages() {
-        return outputMessages;
-    }
-    
 }
