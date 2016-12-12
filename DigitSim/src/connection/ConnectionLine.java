@@ -83,12 +83,12 @@ public class ConnectionLine {
                 }
             
             } else {
-                group.getChildren().add(Draw.drawLine(start.getX() * gridOffset + 10.5, start.getY()  * gridOffset + 10.5, end.getX() * gridOffset + 10.5 ,end.getY() * gridOffset + 10.5, Color.CORAL,  Properties.getLineWidth()));
+                group.getChildren().add(Draw.drawLine(start.getX() * gridOffset + 10.5, start.getY()  * gridOffset + 10.5, end.getX() * gridOffset + 10.5 ,end.getY() * gridOffset + 10.5, currentColor,  Properties.getLineWidth()));
             }
             group.addEventFilter(MouseEvent.MOUSE_ENTERED, GenFunctions.getOverNodeMouseHanlderEnterLineGrp());
             group.addEventFilter(MouseEvent.MOUSE_EXITED, GenFunctions.getOverNodeMouseHanlderExitLineGrp());
         } else {
-            Line l = Draw.drawLine(start.getX() * gridOffset + 10.5, start.getY() * gridOffset + 10.5, end.getX() * gridOffset + 10.5, end.getY() * gridOffset + 10.5, currentColor, Properties.getLineWidth());
+            Line l = Draw.drawLine(start.getX() * gridOffset + 10.5, start.getY() * gridOffset + 10.5, end.getX() * gridOffset + 10.5, end.getY() * gridOffset + 10.5, Color.DARKORANGE, Properties.getLineWidth());
             group.getChildren().add(l);
         }
         dsc.getSimCanvas().getChildren().add(group);

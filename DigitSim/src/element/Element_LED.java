@@ -50,7 +50,7 @@ public class Element_LED extends Element{
         indicator.setVisible(false);
         numInputs = 1; //Input mit mehr als 1 Eingang ist sinnlos!
         inputs = new int[]{0};
-        inputLines.add(Draw.drawLine((pX - 5), (Math.round((pY + (elementHeight/ 2)) / Properties.GetGridOffset()) * Properties.GetGridOffset()) - 11.5, (pX - 15), (Math.round((pY + (elementHeight/2)) / Properties.GetGridOffset()) * Properties.GetGridOffset()) - 11.5, Color.BLACK, 5));
+        inputLines.add(Draw.drawLine((pX - 5), (Math.round((pY + (elementHeight/ 2)) / Properties.GetGridOffset()) * Properties.GetGridOffset()) - 10.5, (pX - 10), (Math.round((pY + (elementHeight/2)) / Properties.GetGridOffset()) * Properties.GetGridOffset()) - 10.5, Color.BLACK, 5));
         inputLines.get(0).addEventFilter(MouseEvent.MOUSE_ENTERED, GenFunctions.getOverNodeMouseHanlderEnter());
         inputLines.get(0).addEventFilter(MouseEvent.MOUSE_EXITED, GenFunctions.getOverNodeMouseHanlderExit());
         grp =  new Group(indicator, outputLines.get(0), rec, inputLines.get(0));

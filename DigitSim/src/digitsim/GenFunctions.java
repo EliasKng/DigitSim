@@ -9,6 +9,7 @@ import element.Element;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -19,6 +20,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -132,6 +134,7 @@ public class GenFunctions { //Laden der GUI
                         Node src = (Node) event.getSource();
                         Line line = (Line) src;
                         line.setStroke(Color.DARKORANGE);
+                        line.setCursor(Cursor.HAND);
                     }
     };
     }
@@ -145,6 +148,7 @@ public class GenFunctions { //Laden der GUI
                         Node src = (Node) event.getSource();
                         Line line = (Line) src;
                         line.setStroke(Color.BLACK);
+                        line.setCursor(Cursor.DEFAULT);
                     }
     };
     }
@@ -158,6 +162,7 @@ public class GenFunctions { //Laden der GUI
                         Node src = (Node) event.getSource();
                         Rectangle rec = (Rectangle) src;
                         rec.setStroke(Color.DARKORANGE);
+                        rec.setCursor(Cursor.MOVE);
                     }
     };
     }
@@ -171,6 +176,64 @@ public class GenFunctions { //Laden der GUI
                         Node src = (Node) event.getSource();
                         Rectangle rec = (Rectangle) src;
                         rec.setStroke(Color.BLACK);
+                        rec.setCursor(Cursor.DEFAULT);
+                    }
+    };
+    }
+    
+    public static EventHandler<MouseEvent> getOverNodeMouseHanlderEnterCircle(){
+        return new EventHandler<MouseEvent>(){
+                    @Override
+                    public void handle(MouseEvent event){
+                        if(DigitSimController.isLocked())
+                            return;
+                        Node src = (Node) event.getSource();
+                        Circle c = (Circle) src;
+                        c.setStroke(Color.DARKORANGE);
+                    }
+    };
+    }
+    
+    public static EventHandler<MouseEvent> getOverNodeMouseHanlderExitCircle(){
+        return new EventHandler<MouseEvent>(){
+                    @Override
+                    public void handle(MouseEvent event){
+                        if(DigitSimController.isLocked())
+                            return;
+                        Node src = (Node) event.getSource();
+                        Circle c = (Circle) src;
+                        c.setStroke(Color.BLACK);
+                    }
+    };
+    }
+    
+    public static EventHandler<MouseEvent> getOverNodeMouseHanlderEnterCircleLine(){
+        return new EventHandler<MouseEvent>(){
+                    @Override
+                    public void handle(MouseEvent event){
+                        if(DigitSimController.isLocked())
+                            return;
+                        Node src = (Node) event.getSource();
+                        Circle c = (Circle) src;
+                        Line l = (Line) src;
+                        System.out.println("AA");
+                        c.setStroke(Color.DARKORANGE);
+                        l.setStroke(Color.DARKORANGE);
+                    }
+    };
+    }
+    
+    public static EventHandler<MouseEvent> getOverNodeMouseHanlderExitCircleLine(){
+        return new EventHandler<MouseEvent>(){
+                    @Override
+                    public void handle(MouseEvent event){
+                        if(DigitSimController.isLocked())
+                            return;
+                        Node src = (Node) event.getSource();
+                        Circle c = (Circle) src;
+                        Line l = (Line) src;
+                        c.setStroke(Color.BLACK);
+                        l.setStroke(Color.BLACK);
                     }
     };
     }

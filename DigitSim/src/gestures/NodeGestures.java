@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Side;
+import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
@@ -130,9 +131,13 @@ public class NodeGestures {
 
             dragged = true;
             
+            
+            
             double scale = canvas.getScale(); //Scalierung
             
             Node node = (Node) event.getSource(); //Das betroffene Element bekommen
+            
+            node.setCursor(Cursor.CLOSED_HAND);
             
             //-Node passt sich jetzt ans Gitter an (Author: Dominik)
             //Den Abstand zwischen der alten und der neuen Mausposition berechnen und zur Änderungsrate hinzufügen
@@ -152,6 +157,8 @@ public class NodeGestures {
             if(dragged == true) {
                 dragged = false;
                 DigitSimController.getReference().getConnections().drawUpdate(findElementNum()); //Verbindungen updaten die das Akutelle Element betreffen
+                Node node = (Node) event.getSource(); //Das betroffene Element bekommen
+                node.setCursor(Cursor.HAND);
             }
             
         }

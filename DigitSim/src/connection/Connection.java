@@ -10,6 +10,7 @@ import digitsim.Draw;
 import element.Element;
 import java.util.ArrayList;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import pathFinder.Vector2i;
 
 /**
