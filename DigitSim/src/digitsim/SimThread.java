@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package digitsim;
+import general.Properties;
 import java.lang.Thread;
 
 /**

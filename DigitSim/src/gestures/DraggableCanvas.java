@@ -5,8 +5,8 @@
  */
 package Gestures;
 
-import digitsim.Draw;
-import digitsim.Properties;
+import toolbox.Draw;
+import general.Properties;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.canvas.Canvas;

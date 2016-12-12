@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package digitsim;
+package general;
 
+import toolbox.XmlLoader;
 import javafx.scene.paint.Color;
 
 /**

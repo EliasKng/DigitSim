@@ -1,7 +1,7 @@
 package pathFinder;
 
 import connection.Connection;
-import digitsim.Properties;
+import general.Properties;
 import element.Element;
 import java.util.ArrayList;
 import javafx.scene.Group;

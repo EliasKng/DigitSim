@@ -3,7 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package digitsim;
+package toolbox;
+import toolbox.GenFunctions;
+import toolbox.ErrorHandler;
 import java.util.List;
 import javafx.scene.Group;
 import javafx.scene.canvas.GraphicsContext;

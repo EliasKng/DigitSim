@@ -5,11 +5,10 @@
  */
 package connection;
 
-import connection.Connection;
+import Gestures.NodeGestures;
 import digitsim.DigitSimController;
-import digitsim.Draw;
-import digitsim.GenFunctions;
-import digitsim.Properties;
+import toolbox.Draw;
+import general.Properties;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.Group;
@@ -99,10 +98,11 @@ public class ConnectionLine {
             } else {
                 group.getChildren().add(Draw.drawLine(start.getX() * gridOffset + 10.5, start.getY()  * gridOffset + 10.5, end.getX() * gridOffset + 10.5 ,end.getY() * gridOffset + 10.5, currentColor,  Properties.getLineWidth()));
             }
-            group.addEventFilter(MouseEvent.MOUSE_ENTERED, GenFunctions.getOverNodeMouseHanlderEnterLineGrp());
-            group.addEventFilter(MouseEvent.MOUSE_EXITED, GenFunctions.getOverNodeMouseHanlderExitLineGrp());
+            group.addEventFilter(MouseEvent.MOUSE_ENTERED, NodeGestures.getOverNodeMouseHanlderEnterLineGrp());
+            group.addEventFilter(MouseEvent.MOUSE_EXITED, NodeGestures.getOverNodeMouseHanlderExitLineGrp());
         } else {
             Line l = Draw.drawLine(start.getX() * gridOffset + 10.5, start.getY() * gridOffset + 10.5, end.getX() * gridOffset + 10.5, end.getY() * gridOffset + 10.5, Color.DARKORANGE, Properties.getLineWidth());
+            l.setOpacity(0.6);
             group.getChildren().add(l);
         }
         dsc.getSimCanvas().getChildren().add(group);

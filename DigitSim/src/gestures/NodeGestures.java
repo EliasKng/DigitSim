@@ -6,7 +6,7 @@
 package Gestures;
 
 import digitsim.DigitSimController;
-import digitsim.Properties;
+import general.Properties;
 import element.Element;
 import element.Element_SIGNAL;
 import java.util.ArrayList;
@@ -19,6 +19,10 @@ import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 
 /**
  *
@@ -190,5 +194,154 @@ public class NodeGestures {
                  } 
           }
          return -1;
+    }
+    
+    /*
+    Handler die aktiviert werden wenn die Maus über einer Note ist, 'Entered' (hier kurz Enter) wenn die Maus über der Node ist, 'Exit' wenn die Maus die Note verlässt
+    */
+       public static EventHandler<MouseEvent> getOverNodeMouseHanlderExit(){
+        return new EventHandler<MouseEvent>(){
+                    @Override
+                    public void handle(MouseEvent event){
+                        if(DigitSimController.isLocked())
+                            return;
+                        Node src = (Node) event.getSource();
+                        Line line = (Line) src;
+                        line.setStroke(Color.BLACK);
+                        line.setCursor(Cursor.DEFAULT);
+                    }
+    };
+    }
+    
+     public static EventHandler<MouseEvent> getOverNodeMouseHanlderEnterRec(){
+        return new EventHandler<MouseEvent>(){
+                    @Override
+                    public void handle(MouseEvent event){
+                        if(DigitSimController.isLocked())
+                            return;
+                        Node src = (Node) event.getSource();
+                        Rectangle rec = (Rectangle) src;
+                        rec.setStroke(Color.DARKORANGE);
+                        rec.setCursor(Cursor.MOVE);
+                    }
+    };
+    }
+    
+    public static EventHandler<MouseEvent> getOverNodeMouseHanlderExitRec(){
+        return new EventHandler<MouseEvent>(){
+                    @Override
+                    public void handle(MouseEvent event){
+                        if(DigitSimController.isLocked())
+                            return;
+                        Node src = (Node) event.getSource();
+                        Rectangle rec = (Rectangle) src;
+                        rec.setStroke(Color.BLACK);
+                        rec.setCursor(Cursor.DEFAULT);
+                    }
+    };
+    }
+    
+    public static EventHandler<MouseEvent> getOverNodeMouseHanlderEnterCircle(){
+        return new EventHandler<MouseEvent>(){
+                    @Override
+                    public void handle(MouseEvent event){
+                        if(DigitSimController.isLocked())
+                            return;
+                        Node src = (Node) event.getSource();
+                        Circle c = (Circle) src;
+                        c.setStroke(Color.DARKORANGE);
+                    }
+    };
+    }
+    
+    public static EventHandler<MouseEvent> getOverNodeMouseHanlderExitCircle(){
+        return new EventHandler<MouseEvent>(){
+                    @Override
+                    public void handle(MouseEvent event){
+                        if(DigitSimController.isLocked())
+                            return;
+                        Node src = (Node) event.getSource();
+                        Circle c = (Circle) src;
+                        c.setStroke(Color.BLACK);
+                    }
+    };
+    }
+    
+    public static EventHandler<MouseEvent> getOverNodeMouseHanlderEnterCircleLine(){
+        return new EventHandler<MouseEvent>(){
+                    @Override
+                    public void handle(MouseEvent event){
+                        if(DigitSimController.isLocked())
+                            return;
+                        Node src = (Node) event.getSource();
+                        Circle c = (Circle) src;
+                        Line l = (Line) src;
+                        System.out.println("AA");
+                        c.setStroke(Color.DARKORANGE);
+                        l.setStroke(Color.DARKORANGE);
+                    }
+    };
+    }
+    
+    public static EventHandler<MouseEvent> getOverNodeMouseHanlderExitCircleLine(){
+        return new EventHandler<MouseEvent>(){
+                    @Override
+                    public void handle(MouseEvent event){
+                        if(DigitSimController.isLocked())
+                            return;
+                        Node src = (Node) event.getSource();
+                        Circle c = (Circle) src;
+                        Line l = (Line) src;
+                        c.setStroke(Color.BLACK);
+                        l.setStroke(Color.BLACK);
+                    }
+    };
+    }
+    
+    public static EventHandler<MouseEvent> getOverNodeMouseHanlderEnterLineGrp(){
+        return new EventHandler<MouseEvent>(){
+                    @Override
+                    public void handle(MouseEvent event){
+                        if(DigitSimController.isLocked())
+                            return;
+                        Node src = (Node) event.getSource();
+                        Group grp = (Group) src;
+                        for(int i = 0; i  < grp.getChildren().size(); i++){
+                            Line line = (Line) grp.getChildren().get(i);
+                            line.setStroke(Color.DARKORANGE);
+                        }
+                    }
+    };
+    }
+    
+    public static EventHandler<MouseEvent> getOverNodeMouseHanlderExitLineGrp(){
+        return new EventHandler<MouseEvent>(){
+                    @Override
+                    public void handle(MouseEvent event){
+                        if(DigitSimController.isLocked())
+                            return;
+                        Node src = (Node) event.getSource();
+                        Group grp = (Group) src;
+                        for(int i = 0; i  < grp.getChildren().size(); i++){
+                            Line line = (Line) grp.getChildren().get(i);
+                            line.setStroke(Color.GRAY);
+                        }
+                    }
+    };
+    }
+    
+        
+    public static EventHandler<MouseEvent> getOverNodeMouseHanlderEnter(){
+        return new EventHandler<MouseEvent>(){
+                    @Override
+                    public void handle(MouseEvent event){
+                        if(DigitSimController.isLocked())
+                            return;
+                        Node src = (Node) event.getSource();
+                        Line line = (Line) src;
+                        line.setStroke(Color.DARKORANGE);
+                        line.setCursor(Cursor.HAND);
+                    }
+    };
     }
 }

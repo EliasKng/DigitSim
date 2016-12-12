@@ -5,10 +5,10 @@
  */
 package element;
 
-import digitsim.Draw;
-import digitsim.GenFunctions;
+import toolbox.Draw;
+import toolbox.GenFunctions;
 import Gestures.NodeGestures;
-import digitsim.Properties;
+import general.Properties;
 import element.Element;
 import java.util.Arrays;
 import javafx.scene.Group;
@@ -41,14 +41,14 @@ public class Element_OR extends Element{
         pY = pY-elementHeight/2;
         numOutputs = 1;
         rec = Draw.drawRectangle(pX, pY, elementWidth, elementHeight, 10, 10, Color.BLACK, Properties.getElementOpacity(), 5);           //das OR zeichnen
-        rec.addEventFilter(MouseEvent.MOUSE_ENTERED, GenFunctions.getOverNodeMouseHanlderEnterRec());
-        rec.addEventFilter(MouseEvent.MOUSE_EXITED, GenFunctions.getOverNodeMouseHanlderExitRec());
+        rec.addEventFilter(MouseEvent.MOUSE_ENTERED, NodeGestures.getOverNodeMouseHanlderEnterRec());
+        rec.addEventFilter(MouseEvent.MOUSE_EXITED, NodeGestures.getOverNodeMouseHanlderExitRec());
         lbl = Draw.drawLabel((pX+2), (pY - 17), ">" , Color.BLACK, false, 75);
         lbl2 = Draw.drawLabel((pX+40), (pY - 15), "1" , Color.BLACK, false, 75);
         lUnderL = Draw.drawLine(pX+14.5, pY+63, pX+42, pY+63, Color.BLACK, 5);
         outputLines.add(Draw.drawLine((pX + 85), (pY + 29.5), (pX + 90), (pY + 29.5), Color.BLACK, 5)); 
-        outputLines.get(0).addEventFilter(MouseEvent.MOUSE_ENTERED, GenFunctions.getOverNodeMouseHanlderEnter());
-        outputLines.get(0).addEventFilter(MouseEvent.MOUSE_EXITED, GenFunctions.getOverNodeMouseHanlderExit());
+        outputLines.get(0).addEventFilter(MouseEvent.MOUSE_ENTERED, NodeGestures.getOverNodeMouseHanlderEnter());
+        outputLines.get(0).addEventFilter(MouseEvent.MOUSE_EXITED, NodeGestures.getOverNodeMouseHanlderExit());
         
             numInputs = pInputs;
             inputs = new int[numInputs];
@@ -70,8 +70,8 @@ public class Element_OR extends Element{
                 double offsetY = i * gridOffset + gridOffset - 12.5;
                 
                 inputLines.add(Draw.drawLine((pX - 5), pY + offsetY, (pX - 10), pY + offsetY, Color.BLACK, 5)); //Linie zeichnen
-                inputLines.get(i).addEventFilter(MouseEvent.MOUSE_ENTERED, GenFunctions.getOverNodeMouseHanlderEnter());
-                inputLines.get(i).addEventFilter(MouseEvent.MOUSE_EXITED, GenFunctions.getOverNodeMouseHanlderExit());
+                inputLines.get(i).addEventFilter(MouseEvent.MOUSE_ENTERED, NodeGestures.getOverNodeMouseHanlderEnter());
+                inputLines.get(i).addEventFilter(MouseEvent.MOUSE_EXITED, NodeGestures.getOverNodeMouseHanlderExit());
                 grp.getChildren().add(inputLines.get(i));
             }
             

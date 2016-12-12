@@ -6,7 +6,7 @@
 package connection;
 
 import digitsim.DigitSimController;
-import digitsim.Draw;
+import toolbox.Draw;
 import element.Element;
 import java.util.ArrayList;
 import javafx.scene.input.MouseEvent;

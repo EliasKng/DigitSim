@@ -5,6 +5,8 @@
  */
 package digitsim;
 
+import general.Properties;
+import toolbox.GenFunctions;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Group;

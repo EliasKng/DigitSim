@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package digitsim;
+package general;
 
 import javafx.scene.paint.Color;
 import javax.xml.bind.annotation.XmlElement;

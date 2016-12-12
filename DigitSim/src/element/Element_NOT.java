@@ -5,11 +5,11 @@
  */
 package element;
 
-import digitsim.Draw;
+import toolbox.Draw;
 import Gestures.NodeGestures;
 import digitsim.DigitSimController;
-import digitsim.GenFunctions;
-import digitsim.Properties;
+import toolbox.GenFunctions;
+import general.Properties;
 import static element.Element.elementWidth;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -45,12 +45,12 @@ public class Element_NOT extends Element{
         pY = pY-elementHeight/2;
         numOutputs = 1;
         rec = Draw.drawRectangle(pX, pY, elementWidth, elementHeight, 10, 10, Color.BLACK, Properties.getElementOpacity(), 5);           //das AND zeichnen
-        rec.addEventFilter(MouseEvent.MOUSE_ENTERED, GenFunctions.getOverNodeMouseHanlderEnterRec());
-        rec.addEventFilter(MouseEvent.MOUSE_EXITED, GenFunctions.getOverNodeMouseHanlderExitRec());
+        rec.addEventFilter(MouseEvent.MOUSE_ENTERED, NodeGestures.getOverNodeMouseHanlderEnterRec());
+        rec.addEventFilter(MouseEvent.MOUSE_EXITED, NodeGestures.getOverNodeMouseHanlderExitRec());
         lbl = Draw.drawLabel((pX + 20), (pY - 15), "1", Color.BLACK, false, 75);                            //Das Ausrufezeichen Brauchwn wir nicht, da wir ja einen Kreis hinter das Bauteil setzten (damit es wie ein NOT aussieht)
         outputLines.add(Draw.drawLine((pX + 95), (pY + 29.5), (pX + 96), (pY + 29.5), Color.BLACK, 5));
-        outputLines.get(0).addEventFilter(MouseEvent.MOUSE_ENTERED, GenFunctions.getOverNodeMouseHanlderEnter());
-        outputLines.get(0).addEventFilter(MouseEvent.MOUSE_EXITED, GenFunctions.getOverNodeMouseHanlderExit());
+        outputLines.get(0).addEventFilter(MouseEvent.MOUSE_ENTERED, NodeGestures.getOverNodeMouseHanlderEnter());
+        outputLines.get(0).addEventFilter(MouseEvent.MOUSE_EXITED, NodeGestures.getOverNodeMouseHanlderExit());
         cOutput = Draw.drawCircle(pX+88, pY+29.5, 5, Color.BLACK, 5, false, 5);
 
         
@@ -73,7 +73,7 @@ public class Element_NOT extends Element{
                 double offsetY = i * gridOffset + gridOffset - 12.5;
                 
                 inputLines.add(Draw.drawLine((pX - 5), pY + offsetY, (pX - 10), pY + offsetY, Color.BLACK, 5)); //Linie zeichnen
-                inputLines.get(i).addEventFilter(MouseEvent.MOUSE_ENTERED, GenFunctions.getOverNodeMouseHanlderEnter());
+                inputLines.get(i).addEventFilter(MouseEvent.MOUSE_ENTERED, NodeGestures.getOverNodeMouseHanlderEnter());
                 inputLines.get(i).addEventFilter(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>(){
                     @Override
                     public void handle(MouseEvent event){

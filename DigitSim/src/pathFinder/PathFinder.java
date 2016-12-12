@@ -7,7 +7,6 @@ package pathFinder;
 
 import connection.Connection;
 import element.Element;
-import digitsim.Properties;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;

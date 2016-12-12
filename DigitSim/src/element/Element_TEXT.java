@@ -5,7 +5,7 @@
  */
 package element;
 
-import digitsim.Draw;
+import toolbox.Draw;
 import Gestures.NodeGestures;
 import digitsim.DigitSim;
 import digitsim.DigitSimController;
