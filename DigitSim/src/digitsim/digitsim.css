@@ -15,7 +15,7 @@
     -fx-background-color: darkorange;
 }
 .toggle-button:selected {
-    -fx-background-color: #5FA77F;
+    -fx-background-color: darkorange;
 }
 
 
