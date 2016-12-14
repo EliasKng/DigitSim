@@ -158,6 +158,9 @@ public class NodeGestures {
             
             node.setCursor(Cursor.CLOSED_HAND);
             
+            int translXBefore =(int) node.getTranslateX();
+            int translYBefore =(int) node.getTranslateY();
+            
             //-Node passt sich jetzt ans Gitter an (Author: Dominik)
             //Den Abstand zwischen der alten und der neuen Mausposition berechnen und zur Änderungsrate hinzufügen
             node.setTranslateX(getValueAdaptGrid(nodeDragContext.translateAnchorX + (( event.getSceneX() - nodeDragContext.mouseAnchorX) / scale)));
@@ -165,7 +168,10 @@ public class NodeGestures {
             
             temporaryGroup = (Group) event.getSource();
             
-            DigitSimController.getReference().getConnections().drawDirectLineUpdate(findElementNum()); //Verbindungen updaten die das Akutelle Element betreffen
+            //Nur wenn das Element auch wirklich verschoben wurde, die Linie updaten
+            if(translXBefore != node.getTranslateX() || translYBefore != node.getTranslateY()) {
+                DigitSimController.getReference().getConnections().drawDirectLineUpdate(findElementNum()); //Verbindungen updaten die das Akutelle Element betreffen
+            }
             event.consume(); 
         }
     };
