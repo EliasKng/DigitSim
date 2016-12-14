@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.paint.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.shape.*?>
 <?import java.lang.*?>
 <?import java.net.*?>
 <?import java.net.URL?>
@@ -26,15 +29,100 @@
 <?import javafx.scene.text.*?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="512.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="properties.PropertiesController">
-  <children>
-    <Label layoutX="78.0" layoutY="112.0" prefHeight="126.0" prefWidth="356.0" text="EINSTELLUNGEN">
-      <font>
-        <Font size="44.0" />
-      </font>
-    </Label>
-  </children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="properties.PropertiesController">
   <stylesheets>
     <URL value="@digitsim.css" />
   </stylesheets>
+   <children>
+      <VBox prefHeight="500.0" prefWidth="512.0">
+         <children>
+            <Pane prefHeight="135.0" prefWidth="500.0" style="-fx-background-image: url('/digitsim/data/Hilfe.png');" />
+            <Label text="Fenster">
+               <VBox.margin>
+                  <Insets left="10.0" top="10.0" />
+               </VBox.margin>
+            </Label>
+            <Line endX="412.0" startX="-100.0">
+               <VBox.margin>
+                  <Insets bottom="10.0" top="2.0" />
+               </VBox.margin>
+            </Line>
+            <HBox prefHeight="45.0" prefWidth="500.0">
+               <children>
+                  <Region prefHeight="93.0" prefWidth="22.0" />
+                  <Label text="Minimale Breite:" />
+                  <Region layoutX="331.0" layoutY="10.0" prefHeight="100.0" prefWidth="10.0" />
+                  <TextField prefHeight="31.0" prefWidth="75.0" />
+                  <Region layoutX="141.0" layoutY="10.0" prefHeight="93.0" prefWidth="22.0" />
+                  <Label text="Minimale Höhe:" />
+                  <Region layoutX="141.0" layoutY="10.0" prefHeight="100.0" prefWidth="10.0" />
+                  <TextField prefHeight="31.0" prefWidth="75.0" />
+                  <Region layoutX="394.0" layoutY="10.0" prefHeight="100.0" prefWidth="10.0" />
+               </children>
+            </HBox>
+            <HBox prefHeight="45.0" prefWidth="500.0">
+               <children>
+                  <Region prefHeight="93.0" prefWidth="22.0" />
+                  <Label text="Erneut Nachfragen beim Schließen:" />
+                  <CheckBox mnemonicParsing="false" selected="true">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </CheckBox>
+               </children>
+            </HBox>
+            <Label text="Arbeitsfläche">
+               <VBox.margin>
+                  <Insets left="10.0" top="10.0" />
+               </VBox.margin>
+            </Label>
+            <Line endX="412.0" layoutX="111.0" layoutY="143.0" startX="-100.0">
+               <VBox.margin>
+                  <Insets bottom="10.0" top="2.0" />
+               </VBox.margin>
+            </Line>
+            <HBox prefHeight="45.0" prefWidth="500.0">
+               <children>
+                  <Region prefHeight="93.0" prefWidth="22.0" />
+                  <Label text="Breite:" />
+                  <Region layoutX="331.0" layoutY="10.0" prefHeight="100.0" prefWidth="10.0" />
+                  <TextField prefHeight="31.0" prefWidth="75.0" />
+                  <Region layoutX="141.0" layoutY="10.0" prefHeight="93.0" prefWidth="22.0" />
+                  <Label text="Höhe:" />
+                  <Region layoutX="141.0" layoutY="10.0" prefHeight="100.0" prefWidth="10.0" />
+                  <TextField prefHeight="31.0" prefWidth="75.0" />
+               </children>
+            </HBox>
+            <HBox prefHeight="57.0" prefWidth="513.0">
+               <children>
+                  <Region prefHeight="93.0" prefWidth="22.0" />
+                  <Label text="Farbe:" />
+                  <Region prefHeight="100.0" prefWidth="10.0" />
+                  <ComboBox prefHeight="30.0" prefWidth="100.0" />
+               </children>
+            </HBox>
+            <Label layoutX="10.0" layoutY="263.0" text="System">
+               <VBox.margin>
+                  <Insets left="10.0" top="10.0" />
+               </VBox.margin>
+            </Label>
+            <Line endX="412.0" layoutX="111.0" layoutY="153.0" startX="-100.0">
+               <VBox.margin>
+                  <Insets bottom="10.0" top="2.0" />
+               </VBox.margin>
+            </Line>
+            <HBox prefHeight="45.0" prefWidth="500.0">
+               <children>
+                  <Region prefHeight="93.0" prefWidth="22.0" />
+                  <Label text="Takt:" />
+                  <Region layoutX="331.0" layoutY="10.0" prefHeight="100.0" prefWidth="10.0" />
+                  <TextField prefHeight="31.0" prefWidth="75.0" />
+                  <Region prefHeight="24.0" prefWidth="22.0" />
+                  <Region layoutX="141.0" layoutY="10.0" prefHeight="93.0" prefWidth="22.0" />
+                  <Label text="Achtung! Mindestens *** Hz" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
 </AnchorPane>
