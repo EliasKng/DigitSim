@@ -1,0 +1,39 @@
+
+/* 
+    Created on : 14.12.2016, 18:36:22
+    Author     : Elias
+*/
+
+
+/*---Pseudo---*/
+:focused { 
+  -fx-background-insets: -1.4, 0, 1;
+  -fx-background-radius: 1.4, 0, 0;
+  -fx-focus-color: transparent;
+}
+
+/*---Toggle-Buttons---*/
+.toggle-button {
+  -fx-background-color: transparent;
+  -fx-background-radius: 7px;
+}
+.toggle-button:hover {
+    -fx-background-color: darkorange;
+}
+.toggle-button:selected {
+    -fx-background-color: darkorange;
+}
+
+
+/*---Menü---*/
+.menuItem:hover {
+    -fx-background-color: inerit;
+}
+.menuItem:focused {
+    -fx-background-color: #4295d5;
+}
+
+/*---Slider---*/
+.slider:focused {
+    /*-fx-shadow-highlight-color: transparent;*/
+}
