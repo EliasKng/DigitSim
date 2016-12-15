@@ -1,10 +1,14 @@
 package pathFinder;
 
 import connection.Connection;
+import digitsim.DigitSimController;
+import toolbox.Draw;
 import general.Properties;
 import element.Element;
 import java.util.ArrayList;
+import java.util.List;
 import javafx.scene.Group;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 
     /**
@@ -16,8 +20,13 @@ public class TileCode {
     private static int[][] tileCode;
     private static int simSizeX = Properties.GetSimSizeX();
     private static int simSizeY = Properties.GetSimSizeY();
+    private static Group visualizeNodes = new Group();
 
-    public static void createTileCode(ArrayList<Element> elements, ArrayList<Connection.ConData> connections) {
+    public static void createTileCode(ArrayList<Element> elements, ArrayList<Connection.ConData> connections, boolean visualize) {
+        if(visualize) {
+            DigitSimController.getReference().getSimCanvas().getChildren().removeAll(visualizeNodes);
+            clearVisualizeGroup();
+        }
         int arrayWidth = (int) Math.ceil(simSizeX / gridOffset); //Berechnet den Wert für die Weite den Arrays (jedes Kästchen soll 1 arrayplatz belegen), desshalb wird die gesamthöhe genommen, durch 21 geteilt und dann aufgerundet
         int arrayHeight = (int) Math.ceil(simSizeY / gridOffset);
         tileCode = new int[arrayWidth][arrayHeight]; //In diesem 2 dimensionalen array, wird gespeichert ob ein Kästchen (z.B. durch ein Element) geblockt wird
@@ -32,17 +41,23 @@ public class TileCode {
             eX = (int) i.getX() / gridOffset - 1;
             eY = (int) i.getY() / gridOffset;
             
-            for(int k = eX-1; k < (eX + eWidth+2); k++) {
-                for(int o = eY-1; o < (eY + eHeight+2); o++) {
+            for(int k = eX-1; k < (eX + eWidth+1); k++) {
+                for(int o = eY-1; o < (eY + eHeight+1); o++) {
                     int value;
                     if((k >= eX && k < (eX+eWidth)) && (o >= eY && o < (eY + eHeight))) {
                         if(k == eX || k == (eX + eWidth -1)) {
                             value = 2;  //IO Bereich eines Elements
+                            if(visualize)
+                                visualizeNodes.getChildren().add(Draw.drawCircle(k*21+11.5, o*21+11.5, 3, Color.CORAL, 1, true, 1));
                         } else {
                             value = 1;  //Element
+                            if(visualize)
+                                visualizeNodes.getChildren().add(Draw.drawCircle(k*21+11.5, o*21+11.5, 3, Color.BLACK, 1, true, 1));
                         }
                     } else {
                         value = 4;      //ElementArea
+                        if(visualize)
+                                visualizeNodes.getChildren().add(Draw.drawCircle(k*21+11.5, o*21+11.5, 3, Color.BLUE, 1, true, 1));
                     }
                     try {
                         if((tileCode[k][o] == 0) || value < tileCode[k][o]) {
@@ -63,18 +78,20 @@ public class TileCode {
                 Line line = (Line) g.getChildren().get(i);
                 int startX = (int) line.getStartX()/21;
                 int startY = (int) line.getStartY()/21;
-//                int endX = (int) line.getEndX()/21;
-//                int endY = (int) line.getEndY()/21;
                 
                 try {
                     if((tileCode[startX][startY] == 0) || 3 < tileCode[startX][startY]) {
                             tileCode[startX][startY] = 3;
+                            if(visualize)
+                                visualizeNodes.getChildren().add(Draw.drawCircle(startX*21+11.5, startY*21+11.5, 3, Color.RED, 1, true, 1));
                         }
                 } catch (Exception e) {
                     System.out.println("Fehler beim Erstellen des Arrays (PATHFINDER) (ConnectionToArray)");
                 }
             }
         }
+        if(visualize)
+            DigitSimController.getReference().getSimCanvas().getChildren().addAll(visualizeNodes);
     }
     
     
@@ -154,5 +171,24 @@ public class TileCode {
             result = true;
         }
         return result;
+    }
+    
+    public static void visualizePath(List<Node> path) {
+        DigitSimController.getReference().getSimCanvas().getChildren().removeAll(visualizeNodes);
+        for(Node currentNode : path) {
+            if(currentNode.parent != null) {
+                        
+                double thisX = currentNode.tile.getX() * gridOffset+11.5;
+                double thisY = currentNode.tile.getY() * gridOffset+11.5;
+                        
+                visualizeNodes.getChildren().add(Draw.drawCircle(thisX, thisY, 3, Color.RED, 1, true, 1));
+            }
+        }
+        
+        DigitSimController.getReference().getSimCanvas().getChildren().addAll(visualizeNodes);
+    }
+    
+    private static void clearVisualizeGroup() {
+        visualizeNodes.getChildren().clear();
     }
 }

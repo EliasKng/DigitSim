@@ -106,6 +106,8 @@ public class ConnectionLine {
             group.getChildren().add(l);
         }
         dsc.getSimCanvas().getChildren().add(group);
+        if(general.Properties.getVisualizeTileCode())
+            group.toBack();
     }
     
     public void clear() {

@@ -24,6 +24,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
+import pathFinder.TileCode;
 /**
  * Digitsim.fxml Controller class
  *
@@ -249,6 +250,7 @@ public class DigitSimController extends Pane{
     
     public void btnLogicToggleOnAction(ActionEvent event) {
         //Für Tests
+        //TEST:
     }
     
     public void mItemCloseAction(ActionEvent event){ //Programm schließen

@@ -18,7 +18,6 @@ import java.util.List;
  */
 public class PathFinder {
     
-    private int[][] tileCode;
     
     
     public PathFinder() {
@@ -41,7 +40,7 @@ public class PathFinder {
         List<Node> openList = new ArrayList<Node>();
         List<Node> closedList = new ArrayList<Node>();
         
-        TileCode.createTileCode(elements, connections);
+        TileCode.createTileCode(elements, connections, general.Properties.getVisualizeTileCode());
         
         if(TileCode.isTileSolid(start.getX(), 0, start.getY(), 0))
             return null;
@@ -64,7 +63,8 @@ public class PathFinder {
                 }
                 openList.clear();
                 closedList.clear();
-                System.out.println("Path found!!!");
+                if(general.Properties.getVisualizeTileCode())
+                    TileCode.visualizePath(path);
                 return path;
             }
             openList.remove(current);
@@ -160,4 +160,5 @@ public class PathFinder {
         double dy = tile.getY() - goal.getY();
         return Math.sqrt(dx * dx + dy * dy);
     } 
+    
 }
