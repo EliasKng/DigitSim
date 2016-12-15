@@ -42,6 +42,12 @@ public class PathFinder {
         List<Node> closedList = new ArrayList<Node>();
         
         TileCode.createTileCode(elements, connections);
+        
+        if(TileCode.isTileSolid(start.getX(), 0, start.getY(), 0))
+            return null;
+        if(TileCode.isTileSolid(goal.getX(), 0, goal.getY(), 0))
+            return null;
+        
         //Startnode
         Node current = new Node(start, null, 0, getManhattanDistance(start, goal));
         openList.add(current);
