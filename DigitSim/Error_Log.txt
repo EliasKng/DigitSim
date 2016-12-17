@@ -10,3 +10,4 @@
 (Mon Dec 12 19:49:37 CET 2016)[ERROR IN <class java.lang.Class>] Fehler beim laden von Properties.fxml & Einstellungen & icon.png
 (Mon Dec 12 19:52:35 CET 2016)[ERROR IN <class java.lang.Class>] Fehler beim laden von Properties.fxml & Einstellungen & icon.png
 (Mon Dec 12 19:57:40 CET 2016)[ERROR IN <class java.lang.Class>] Fehler beim laden von Properties.fxml & Einstellungen & icon.png
+(Sat Dec 17 14:51:00 CET 2016)[ERROR IN <class java.lang.Class>] Fehler beim laden von Properties.fxml & Einstellungen & icon.png
