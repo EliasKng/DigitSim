@@ -126,42 +126,7 @@ public class DigitSimController extends Pane{
         simCanvas.addEventFilter(MouseEvent.MOUSE_PRESSED, getCanvasMouseKlickedEventHandler());
         simCanvas.addEventFilter(MouseEvent.MOUSE_MOVED, getCanvasMouseMovedEventHandler());
         simPane.getChildren().addAll(simCanvas); //die Arbeitsfläche auf das Panel setzen
-    }
-    
-    
-    
-    
-    
-    private void resetResults(){ //Daten die für eine Verbindung gesammelt wurden löschen
-        result1 = null;
-        result2 = null;
-        simCanvas.getChildren().remove(conLine);
-        conLine = null;
-    }
-    
-    private void processResults(MouseEvent event){ //Die Daten für eine Verbindung sammeln und gegebenenfalls eine Verbindung erstellen
-        if(result1 != null)
-               {
-                    if(((result2 = allConnections.closeToInOrOut(event)) != null)) //Alle Notwendigen Daten vorhanden -> Verbindung erstellen
-                    {
-                        allConnections.addConnection(result1[Connection.EINDEX], result1[Connection.CETYPE] == 1, result1[Connection.CINDEX], result2[Connection.EINDEX], result2[Connection.CETYPE] == 1, result2[Connection.CINDEX]);   
-                        resetResults();
-                    }
-                    return;
-               }
-               result1 = allConnections.closeToInOrOut(event);    
-               if(result1 != null){ //Erster Ausgang/Eingang ausgewählt, also eine Linie zum Mauszeiger legen
-                   if(result1[Connection.CETYPE] == 1){ //Eingang
-                       conLine = Draw.drawLine(elements.get(result1[Connection.EINDEX]).getInputX(result1[Connection.CINDEX]), elements.get(result1[Connection.EINDEX]).getInputY(result1[Connection.CINDEX]), event.getX(), event.getY(), Color.DARKORANGE, 5);
-                   }else{ //Ausgang
-                       conLine = Draw.drawLine(elements.get(result1[Connection.EINDEX]).getOutputX(result1[Connection.CINDEX]), elements.get(result1[Connection.EINDEX]).getOutputY(result1[Connection.CINDEX]), event.getX(), event.getY(), Color.DARKORANGE, 5);
-                   }
-                   conLine.setMouseTransparent(true);
-                   conLine.setOpacity(0.6);
-                   simCanvas.getChildren().add(conLine);
-               }
-    }
-    
+    }    
     
     private EventHandler getCanvasMouseKlickedEventHandler(){ //Wenn auf der Arbeitsfläche geklickt wird
         return new EventHandler<MouseEvent>(){
@@ -172,18 +137,7 @@ public class DigitSimController extends Pane{
                 }
                 if(event.isPrimaryButtonDown() && !isMouseOverNode(event)){
                     addElement(event); //Neuen Baustein einfügen
-                    resetResults();
-                }
-                
-               if(event.isSecondaryButtonDown()){
-                   if(!isMouseOverNode(event)){
-                       resetResults(); //Daten die für eine Verbindung gesammelt wurden löschen
-                   }          
-                }
-               
-              if(!event.isSecondaryButtonDown()){
-                  processResults(event); //Schauen ob eine Verbindung gelegt werden soll
-              }    
+                }  
             }
         };
     }

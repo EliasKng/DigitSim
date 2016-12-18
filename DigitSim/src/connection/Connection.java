@@ -19,6 +19,13 @@ import pathFinder.Vector2i;
 public class Connection { //Speichert die Verbindungen
 
     private DigitSimController dsController;
+    private int tempIndexFirstElement;  //temporäre Variablen (siehe    saveData(){...}  )
+    private boolean tempTypeFirst;
+    private int tempIndexFirst;
+    private int tempIndexSecondElement;      
+    private boolean tempTypeSecond;          
+    private int tempIndexSecond;      
+    private boolean tempFirstElementSet;
 
     public Connection(DigitSimController pDSController) {
         dsController = pDSController;
@@ -37,36 +44,32 @@ public class Connection { //Speichert die Verbindungen
     }
 
     public static ArrayList<ConData> connections = new ArrayList<ConData>(); //Speichert alle Verbindungne
-
+    
     /**
      * addConnection(..) Fügtt eine Verbindung zwischen ein und ausgängen von
      * verachiedenen elementen hinzu
      *
      * @author Tim
-     *
-     * @param indexFirstElement erstes element (index im main array in der
-     * Controlelr klasse elements)
-     * @param indexSecondElement zweites element (index im main array in der
-     * Controlelr klasse elements) param type: 0 für ausgang, 1 für eingang
-     * param index: index des ein oder ausgangs am element
+     *  Edit by Elias 20161218
+     * 
      */
-    public void addConnection(int indexFirstElement, boolean typeFirst, int indexFirst, int indexSecondElement, boolean typeSecond, int indexSecond) {
+    public void addConnection() {
         ConData data = new ConData();
-        if(indexFirstElement == indexSecondElement){ //Überorüfen ob es sich um die gleichen Elemente handelt
+        if(tempIndexFirstElement == tempIndexSecondElement){ //Überorüfen ob es sich um die gleichen Elemente handelt
             return;
         }
         for(ConData d : connections){ //Überprüfen ob es die verbindung schon gibt
-            if(d.indexFirstElement == indexFirstElement && d.indexSecondElement == indexSecondElement && d.indexFirst == indexFirst && d.indexSecond == indexSecond && d.typeFirst == typeFirst && d.typeSecond == typeSecond){
+            if(d.indexFirstElement == tempIndexFirstElement && d.indexSecondElement == tempIndexSecondElement && d.indexFirst == tempIndexFirst && d.indexSecond == tempIndexSecond && d.typeFirst == tempTypeFirst && d.typeSecond == tempTypeSecond){
                 return;
             }
         }
         
-        data.indexFirstElement = indexFirstElement;
-        data.indexSecondElement = indexSecondElement;
-        data.indexFirst = indexFirst;
-        data.indexSecond = indexSecond;
-        data.typeFirst = typeFirst;
-        data.typeSecond = typeSecond;
+        data.indexFirstElement = tempIndexFirstElement;
+        data.indexSecondElement = tempIndexSecondElement;
+        data.indexFirst = tempIndexFirst;
+        data.indexSecond = tempIndexSecond;
+        data.typeFirst = tempTypeFirst;
+        data.typeSecond = tempTypeSecond;
         data.connectionLine = new ConnectionLine(dsController);
         connections.add(data);
         drawNewLine(data);
@@ -244,7 +247,21 @@ public class Connection { //Speichert die Verbindungen
         connections.forEach(d -> d.connectionLine.resetColor());
     }
     
-    public void saveData() {
+    public void saveData(Element e, boolean isInput, int index) {
+        ArrayList<Element> elements = dsController.getElements();
         
+        if(tempFirstElementSet == false) {  // -> Dies ist das erste Element der Verbindungslinie, das angeklickt wird
+            tempIndexFirstElement = elements.indexOf(e);    //Findet den Index des angeklickten Elementes heraus
+            tempTypeFirst = isInput;
+            tempIndexFirst = index;
+            tempFirstElementSet = true; //Wenn diese Funktion nochmal aufgerufen wird (wenn das Ender der Verbindungslinie angeklickt wurde) soll sie dies hier nicht noch einmal durchlaufen, sondern bei "else" anfangen
+        } else {    // -> Dies ist das zweite Element der Verbindungslinie, das angeklickt wird -> Die Verbindung kann "gelegt" werden
+            tempIndexSecondElement = elements.indexOf(e);    //Findet den Index des angeklickten Elementes heraus
+            tempTypeSecond = isInput;
+            tempIndexFirst = index;
+            tempIndexSecond = index;
+            tempFirstElementSet = false;
+            addConnection();
+        }
     }
 }

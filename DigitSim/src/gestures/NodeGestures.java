@@ -383,20 +383,22 @@ public class NodeGestures {
         };
     }
         
-    public static EventHandler<MouseEvent> getOverInputMouseHanlderClicked(/*Element e*/){
+    public static EventHandler<MouseEvent> getOverInputMouseHanlderClicked(Element e, int inputIndex){
         return new EventHandler<MouseEvent>(){
             @Override
             public void handle(MouseEvent event){
-                //DigitSimController.getAllConnections().saveData(e);
+                System.out.println("InPutIndex: " +inputIndex);
+                DigitSimController.getAllConnections().saveData(e, true, inputIndex);
             }
         };
     }
     
-    public static EventHandler<MouseEvent> getOverOutputMouseHanlderClicked(/*Element e*/){
+    public static EventHandler<MouseEvent> getOverOutputMouseHanlderClicked(Element e, int outputIndex){
         return new EventHandler<MouseEvent>(){
             @Override
             public void handle(MouseEvent event){
-                //DigitSimController.getAllConnections().saveData(e);
+                System.out.println("OutPutIndex: " +outputIndex);
+                DigitSimController.getAllConnections().saveData(e, false, outputIndex);
             }
         };
     }
