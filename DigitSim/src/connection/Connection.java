@@ -60,9 +60,7 @@ public class Connection { //Speichert die Verbindungen
                 return;
             }
         }
-        if(typeFirst == typeSecond){ //Überprüfen ob es verschiedene Typen sind (z.B Input = Input wäre falsch, wird also nicht geadded)
-            return;
-        };
+        
         data.indexFirstElement = indexFirstElement;
         data.indexSecondElement = indexSecondElement;
         data.indexFirst = indexFirst;
@@ -244,5 +242,9 @@ public class Connection { //Speichert die Verbindungen
     
     public void reset(){
         connections.forEach(d -> d.connectionLine.resetColor());
+    }
+    
+    public void saveData() {
+        
     }
 }

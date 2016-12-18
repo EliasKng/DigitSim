@@ -6,8 +6,8 @@
 package Gestures;
 
 import digitsim.DigitSimController;
-import general.Properties;
 import element.Element;
+import general.Properties;
 import element.Element_SIGNAL;
 import java.util.ArrayList;
 import javafx.event.ActionEvent;
@@ -60,7 +60,7 @@ public class NodeGestures {
                Element temp = findElement();
                if(temp != null){
                    canvas.getChildren().remove(temporaryGroup); //Die "Zeichnung" entfernen, da diese bestehen bleibt wenn das Element gelöscht wird
-                   DigitSimController.getReference().getConnections().removeAllConncectionsRelatedTo(temp);
+                   DigitSimController.getAllConnections().removeAllConncectionsRelatedTo(temp);
                    elements.remove(temp); //Das Element entfernen
                }
             }});      
@@ -170,7 +170,7 @@ public class NodeGestures {
             
             //Nur wenn das Element auch wirklich verschoben wurde, die Linie updaten
             if(translXBefore != node.getTranslateX() || translYBefore != node.getTranslateY()) {
-                DigitSimController.getReference().getConnections().drawDirectLineUpdate(findElementNum()); //Verbindungen updaten die das Akutelle Element betreffen
+                DigitSimController.getAllConnections().drawDirectLineUpdate(findElementNum()); //Verbindungen updaten die das Akutelle Element betreffen
             }
             event.consume(); 
         }
@@ -181,7 +181,7 @@ public class NodeGestures {
         public void handle(MouseEvent event ) {
             if(dragged == true) {
                 dragged = false;
-                DigitSimController.getReference().getConnections().drawUpdate(findElementNum()); //Verbindungen updaten die das Akutelle Element betreffen
+                DigitSimController.getAllConnections().drawUpdate(findElementNum()); //Verbindungen updaten die das Akutelle Element betreffen
                 Node node = (Node) event.getSource(); //Das betroffene Element bekommen
                 node.setCursor(Cursor.HAND);
             }
@@ -248,24 +248,6 @@ public class NodeGestures {
                 Line line = (Line) src;
                 line.setStroke(Color.DARKORANGE);
                 line.setCursor(Cursor.HAND);
-            }
-        };
-    }
-    
-    public static EventHandler<MouseEvent> getOverInputMouseHanlderClicked(){
-        return new EventHandler<MouseEvent>(){
-            @Override
-            public void handle(MouseEvent event){
-                DigitSimController.setLastClicked("input");
-            }
-        };
-    }
-    
-    public static EventHandler<MouseEvent> getOverOutputMouseHanlderClicked(){
-        return new EventHandler<MouseEvent>(){
-            @Override
-            public void handle(MouseEvent event){
-                DigitSimController.setLastClicked("output");
             }
         };
     }
@@ -397,6 +379,24 @@ public class NodeGestures {
                     Line line = (Line) grp.getChildren().get(i);
                     line.setStroke(Color.GRAY);
                 }
+            }
+        };
+    }
+        
+    public static EventHandler<MouseEvent> getOverInputMouseHanlderClicked(/*Element e*/){
+        return new EventHandler<MouseEvent>(){
+            @Override
+            public void handle(MouseEvent event){
+                //DigitSimController.getAllConnections().saveData(e);
+            }
+        };
+    }
+    
+    public static EventHandler<MouseEvent> getOverOutputMouseHanlderClicked(/*Element e*/){
+        return new EventHandler<MouseEvent>(){
+            @Override
+            public void handle(MouseEvent event){
+                //DigitSimController.getAllConnections().saveData(e);
             }
         };
     }

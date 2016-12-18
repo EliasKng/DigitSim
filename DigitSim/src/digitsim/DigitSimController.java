@@ -37,7 +37,7 @@ public class DigitSimController extends Pane{
     private static ArrayList<Element> elements; //Alle Elemente kommen hier rein, static damit andere Klassen (einfach) darauf zugreifen können
     private static NodeGestures nodeGestures;  //Die handler für die Nodes (z.B Elemente) beziehen
     private SceneGestures sceneGestures; //Die handler für die Arbeitsfläche beziehen
-    private Connection allConnections; //Verbindungen zwischen Elementen werden hier gespeichert
+    private static Connection allConnections; //Verbindungen zwischen Elementen werden hier gespeichert
     private SimThread runningThread = new SimThread(this); //Thread der, falls gestartet, immer die Elemente & Verbindungen updatet
     private static boolean locked = false; //Wenn wir das Programm starten setzen wir locked auf True, damit das Programm blokiert wird und man während der Simulation nichts ändern kann!
     private static DigitSimController refThis;
@@ -45,7 +45,6 @@ public class DigitSimController extends Pane{
     private int result1[] = null; //Werte der beiden Elemente, die man verbinden möchte
     private int result2[] = null; 
     private Line conLine = null; //Verbindungslinie (Diese erscheint wenn man auf einen Input/Output klickt)
-    private static String lastClicked;
 
      /**
      * FXML OBJEKT-Erstellungs-Bereich:
@@ -490,15 +489,7 @@ public class DigitSimController extends Pane{
         return simCanvas;
     }
 
-    public static String getLastClicked() {
-        return lastClicked;
-    }
-
-    public static void setLastClicked(String lastClicked) {
-        DigitSimController.lastClicked = lastClicked;
-    }
-    
-    public Connection getConnections(){ //Rückgabe der Verbindungen
+    public static Connection getAllConnections() {
         return allConnections;
     }
     
