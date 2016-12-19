@@ -6,21 +6,21 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="529.9998779296875" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="642.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="529.9998779296875" prefWidth="600.0">
          <children>
-            <TabPane layoutY="130.0" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
+            <TabPane layoutY="130.0" prefHeight="512.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
                <tabs>
                   <Tab text="Die Basics">
                      <content>
-                        <Accordion>
+                        <Accordion prefHeight="474.0" prefWidth="600.0">
                            <panes>
                               <TitledPane animated="false" text="Ein Element/Baustein setzen">
                                  <content>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
-                                          <ScrollPane layoutX="14.0" layoutY="14.0" prefHeight="220.0" prefWidth="330.0">
+                                          <ScrollPane layoutX="14.0" layoutY="14.0" prefHeight="370.0" prefWidth="225.0">
                                              <content>
                                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="141.0" prefWidth="328.0">
                                                    <children>
@@ -29,7 +29,7 @@
                                                             <Font name="Arial Bold" size="20.0" />
                                                          </font>
                                                       </Text>
-                                                      <Text layoutX="1.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Um ein Element/Baustein zu setzen, wählen Sie&#10;es in der linken Seitenleiste unter dem gewün-&#10;schten Reiter aus, klicken Sie es mit der linken &#10;Maustaste an und klicken Sie erneut auf die &#10;gewünschte Position der Schaltfläche." wrappingWidth="331.21875">
+                                                      <Text layoutX="1.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Um ein Element/Baustein zu setzen, wählen Sie es in der linken Seitenleiste unter dem gewünschten Reiter aus, klicken Sie es mit der linken Maustaste an und klicken Sie erneut auf die gewünschte Position der Schaltfläche." wrappingWidth="212.21875">
                                                          <font>
                                                             <Font size="14.0" />
                                                          </font>
@@ -38,7 +38,7 @@
                                                 </AnchorPane>
                                              </content>
                                           </ScrollPane>
-                                          <ScrollPane layoutX="351.0" layoutY="14.0" prefHeight="220.0" prefWidth="240.0">
+                                          <ScrollPane layoutX="245.0" layoutY="14.0" prefHeight="370.0" prefWidth="346.0">
                                              <content>
                                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="455.0" prefWidth="455.0" style="-fx-background-image: url('/digitsim/data/h_11.png');" />
                                              </content>
@@ -51,7 +51,7 @@
                                  <content>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
-                                          <ScrollPane layoutX="14.0" layoutY="14.0" prefHeight="220.0" prefWidth="330.0">
+                                          <ScrollPane layoutX="14.0" layoutY="14.0" prefHeight="370.0" prefWidth="225.0">
                                              <content>
                                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="141.0" prefWidth="328.0">
                                                    <children>
@@ -60,7 +60,7 @@
                                                             <Font name="Arial Bold" size="20.0" />
                                                          </font>
                                                       </Text>
-                                                      <Text layoutX="1.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Um die Simulation zu starten, klicken sie den &#10;grünen Knopf in der linken unteren Ecke an.&#10;Während der Simulation können Sie die Signale&#10;Ein- und Ausschalten, jedoch keine anderen &#10;Änderungen vornehmen!" wrappingWidth="331.21875">
+                                                      <Text layoutX="1.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Um die Simulation zu starten, klicken sie den grünen Knopf in der linken unteren Ecke an. Während der Simulation können Sie die Signale Ein- und Ausschalten, jedoch keine anderen Änderungen vornehmen!" wrappingWidth="217.21875">
                                                          <font>
                                                             <Font size="14.0" />
                                                          </font>
@@ -69,7 +69,7 @@
                                                 </AnchorPane>
                                              </content>
                                           </ScrollPane>
-                                          <ScrollPane layoutX="351.0" layoutY="14.0" prefHeight="220.0" prefWidth="240.0">
+                                          <ScrollPane layoutX="241.0" layoutY="14.0" prefHeight="370.0" prefWidth="350.0">
                                              <content>
                                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="325.0" prefWidth="865.0" style="-fx-background-image: url('/digitsim/data/h_12.png');" />
                                              </content>
@@ -82,7 +82,7 @@
                                  <content>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
-                                          <ScrollPane layoutX="14.0" layoutY="14.0" prefHeight="220.0" prefWidth="330.0">
+                                          <ScrollPane layoutX="14.0" layoutY="14.0" prefHeight="370.0" prefWidth="225.0">
                                              <content>
                                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="141.0" prefWidth="328.0">
                                                    <children>
@@ -91,7 +91,7 @@
                                                             <Font name="Arial Bold" size="20.0" />
                                                          </font>
                                                       </Text>
-                                                      <Text layoutX="1.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Um edie Anzahl der Eingänge festzulegen, &#10;benutzen Sie den Schieberegler in der linken&#10;Seitenleiste und schieben Sie ihn auf die ge-&#10;wünschte Zahl.&#10;Wenn Sie die Anzahl bei einem schon gesetztem&#10;Baustein ändern wollen, klicken sie mit der &#10;rechten Maustaste auf den Baustein und wählen &#10;Sie das Menü &quot;Eigenschaften&quot;." wrappingWidth="331.21875">
+                                                      <Text layoutX="1.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Um edie Anzahl der Eingänge festzulegen, benutzen Sie den Schieberegler in der linken Seitenleiste und schieben Sie ihn auf die gewünschte Zahl. Wenn Sie die Anzahl bei einem schon gesetztem Baustein ändern wollen, klicken sie mit der rechten Maustaste auf den Baustein und wählen Sie das Menü &quot;Eigenschaften&quot;." wrappingWidth="213.21875">
                                                          <font>
                                                             <Font size="14.0" />
                                                          </font>
@@ -100,7 +100,7 @@
                                                 </AnchorPane>
                                              </content>
                                           </ScrollPane>
-                                          <ScrollPane layoutX="351.0" layoutY="14.0" prefHeight="220.0" prefWidth="240.0">
+                                          <ScrollPane layoutX="241.0" layoutY="14.0" prefHeight="370.0" prefWidth="350.0">
                                              <content>
                                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="430.0" prefWidth="450.0" style="-fx-background-image: url('/digitsim/data/h_13.png');" />
                                              </content>
@@ -121,7 +121,7 @@
                                  <content>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
-                                          <ScrollPane layoutX="14.0" layoutY="14.0" prefHeight="158.0" prefWidth="400.0">
+                                          <ScrollPane layoutX="14.0" layoutY="14.0" prefHeight="280.0" prefWidth="400.0">
                                              <content>
                                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="140.0" prefWidth="381.0">
                                                    <children>
@@ -139,7 +139,7 @@
                                                 </AnchorPane>
                                              </content>
                                           </ScrollPane>
-                                          <ScrollPane layoutX="418.0" layoutY="14.0" prefHeight="158.0" prefWidth="173.0">
+                                          <ScrollPane layoutX="418.0" layoutY="14.0" prefHeight="280.0" prefWidth="173.0">
                                              <content>
                                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="250.0" prefWidth="150.0" style="-fx-background-image: url('/digitsim/data/h_and.png');" />
                                              </content>
@@ -155,7 +155,7 @@
                                           <AnchorPane prefHeight="87.0" prefWidth="300.0" />
                                           <AnchorPane layoutX="-6.0" layoutY="-1.0" minHeight="0.0" minWidth="0.0" prefHeight="191.0" prefWidth="600.0">
                                              <children>
-                                                <ScrollPane layoutX="14.0" layoutY="14.0" prefHeight="158.0" prefWidth="400.0">
+                                                <ScrollPane layoutX="14.0" layoutY="14.0" prefHeight="280.0" prefWidth="400.0">
                                                    <content>
                                                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="143.0" prefWidth="381.0">
                                                          <children>
@@ -173,9 +173,9 @@
                                                       </AnchorPane>
                                                    </content>
                                                 </ScrollPane>
-                                                <ScrollPane layoutX="418.0" layoutY="14.0" prefHeight="158.0" prefWidth="173.0">
+                                                <ScrollPane layoutX="418.0" layoutY="14.0" prefHeight="280.0" prefWidth="173.0">
                                                    <content>
-                                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="300.0" prefWidth="153.0" style="-fx-background-image: url('/digitsim/data/h_or.png');" />
+                                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="255.0" prefWidth="153.0" style="-fx-background-image: url('/digitsim/data/h_or.png');" />
                                                    </content>
                                                 </ScrollPane>
                                              </children>
@@ -188,7 +188,7 @@
                                  <content>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
-                                          <ScrollPane layoutX="14.0" layoutY="14.0" prefHeight="158.0" prefWidth="400.0">
+                                          <ScrollPane layoutX="14.0" layoutY="14.0" prefHeight="280.0" prefWidth="400.0">
                                              <content>
                                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="140.0" prefWidth="381.0">
                                                    <children>
@@ -206,9 +206,9 @@
                                                 </AnchorPane>
                                              </content>
                                           </ScrollPane>
-                                          <ScrollPane layoutX="418.0" layoutY="14.0" prefHeight="158.0" prefWidth="173.0">
+                                          <ScrollPane layoutX="418.0" layoutY="14.0" prefHeight="280.0" prefWidth="173.0">
                                              <content>
-                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="250.0" prefWidth="150.0" style="-fx-background-image: url('/digitsim/data/h_not.png');" />
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="255.0" prefWidth="150.0" style="-fx-background-image: url('/digitsim/data/h_not.png');" />
                                              </content>
                                           </ScrollPane>
                                        </children>
@@ -219,7 +219,7 @@
                                  <content>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
-                                          <ScrollPane layoutX="14.0" layoutY="14.0" prefHeight="158.0" prefWidth="400.0">
+                                          <ScrollPane layoutX="14.0" layoutY="14.0" prefHeight="280.0" prefWidth="400.0">
                                              <content>
                                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="140.0" prefWidth="381.0">
                                                    <children>
@@ -237,7 +237,7 @@
                                                 </AnchorPane>
                                              </content>
                                           </ScrollPane>
-                                          <ScrollPane layoutX="418.0" layoutY="14.0" prefHeight="158.0" prefWidth="173.0">
+                                          <ScrollPane layoutX="418.0" layoutY="14.0" prefHeight="280.0" prefWidth="173.0">
                                              <content>
                                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="250.0" prefWidth="150.0" style="-fx-background-image: url('/digitsim/data/h_nor.png');" />
                                              </content>
@@ -250,7 +250,7 @@
                                  <content>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
-                                          <ScrollPane layoutX="14.0" layoutY="14.0" prefHeight="158.0" prefWidth="400.0">
+                                          <ScrollPane layoutX="14.0" layoutY="14.0" prefHeight="280.0" prefWidth="400.0">
                                              <content>
                                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="140.0" prefWidth="381.0">
                                                    <children>
@@ -268,7 +268,7 @@
                                                 </AnchorPane>
                                              </content>
                                           </ScrollPane>
-                                          <ScrollPane layoutX="418.0" layoutY="14.0" prefHeight="158.0" prefWidth="173.0">
+                                          <ScrollPane layoutX="418.0" layoutY="14.0" prefHeight="280.0" prefWidth="173.0">
                                              <content>
                                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="250.0" prefWidth="150.0" style="-fx-background-image: url('/digitsim/data/h_xor.png');" />
                                              </content>
@@ -281,7 +281,7 @@
                                  <content>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
-                                          <ScrollPane layoutX="14.0" layoutY="14.0" prefHeight="158.0" prefWidth="400.0">
+                                          <ScrollPane layoutX="14.0" layoutY="14.0" prefHeight="280.0" prefWidth="400.0">
                                              <content>
                                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="140.0" prefWidth="381.0">
                                                    <children>
@@ -299,7 +299,7 @@
                                                 </AnchorPane>
                                              </content>
                                           </ScrollPane>
-                                          <ScrollPane layoutX="418.0" layoutY="14.0" prefHeight="158.0" prefWidth="173.0">
+                                          <ScrollPane layoutX="418.0" layoutY="14.0" prefHeight="280.0" prefWidth="173.0">
                                              <content>
                                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="250.0" prefWidth="150.0" style="-fx-background-image: url('/digitsim/data/h_nand.png');" />
                                              </content>
@@ -312,7 +312,7 @@
                                  <content>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
-                                          <ScrollPane layoutX="14.0" layoutY="14.0" prefHeight="158.0" prefWidth="400.0">
+                                          <ScrollPane layoutX="14.0" layoutY="14.0" prefHeight="280.0" prefWidth="400.0">
                                              <content>
                                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="140.0" prefWidth="381.0">
                                                    <children>
@@ -330,7 +330,7 @@
                                                 </AnchorPane>
                                              </content>
                                           </ScrollPane>
-                                          <ScrollPane layoutX="418.0" layoutY="14.0" prefHeight="158.0" prefWidth="173.0">
+                                          <ScrollPane layoutX="418.0" layoutY="14.0" prefHeight="280.0" prefWidth="173.0">
                                              <content>
                                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="250.0" prefWidth="150.0" style="-fx-background-image: url('/digitsim/data/h_xnor.png');" />
                                              </content>
