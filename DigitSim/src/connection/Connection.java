@@ -247,16 +247,23 @@ public class Connection { //Speichert die Verbindungen
         connections.forEach(d -> d.connectionLine.resetColor());
     }
     
-    public void saveData(Element e, boolean isInput, int index) {
+    /**
+     * Wird aufgerufen (Aus der Node gestures Klasse), wenn man auf einen In/Output clickt und es werden Daten zur Erstellung einer Verbindungslinie übergeben
+     * @Author Elias
+     * @param element   Das Element (wird nur benötigt um den Index des Elementes herauszufinden (Das wievielte ELement es in der Liste mit allen Elementen ist)
+     * @param isInput   Ist true wenn auf einen Input geklickt wurde und false wenn auf einen Output geklickt wurde
+     * @param index     Gibt an, um welchen Index des IN/Output es sich handelt (index = 0 -> oberster in / output; index = 1 -> zweitoberster in /Output .....)   
+     */
+    public void saveData(Element element, boolean isInput, int index) {
         ArrayList<Element> elements = dsController.getElements();
         
         if(tempFirstElementSet == false) {  // -> Dies ist das erste Element der Verbindungslinie, das angeklickt wird
-            tempIndexFirstElement = elements.indexOf(e);    //Findet den Index des angeklickten Elementes heraus
+            tempIndexFirstElement = elements.indexOf(element);    //Findet den Index des angeklickten Elementes heraus
             tempTypeFirst = isInput;
             tempIndexFirst = index;
             tempFirstElementSet = true; //Wenn diese Funktion nochmal aufgerufen wird (wenn das Ender der Verbindungslinie angeklickt wurde) soll sie dies hier nicht noch einmal durchlaufen, sondern bei "else" anfangen
         } else {    // -> Dies ist das zweite Element der Verbindungslinie, das angeklickt wird -> Die Verbindung kann "gelegt" werden
-            tempIndexSecondElement = elements.indexOf(e);    //Findet den Index des angeklickten Elementes heraus
+            tempIndexSecondElement = elements.indexOf(element);    //Findet den Index des angeklickten Elementes heraus
             tempTypeSecond = isInput;
             tempIndexFirst = index;
             tempIndexSecond = index;
