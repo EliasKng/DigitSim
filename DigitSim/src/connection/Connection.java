@@ -10,6 +10,8 @@ import toolbox.Draw;
 import element.Element;
 import java.util.ArrayList;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import pathFinder.Vector2i;
 
 /**
@@ -26,6 +28,7 @@ public class Connection { //Speichert die Verbindungen
     private boolean tempTypeSecond;          
     private int tempIndexSecond;      
     private boolean tempFirstElementSet;
+    private Line conLine = null;
 
     public Connection(DigitSimController pDSController) {
         dsController = pDSController;
@@ -144,6 +147,10 @@ public class Connection { //Speichert die Verbindungen
         }
     }
     
+    /**
+     * Wird gebraucht um eine Direkte Verbindungslinie zu zeichnen (z.B. beim Verschieben eines Elementes)
+     * @param eIndex 
+     */
     public void drawDirectLineUpdate(int eIndex){
         for(ConData d : connections){
             if(d.indexFirstElement == eIndex || d.indexSecondElement == eIndex){
@@ -253,8 +260,9 @@ public class Connection { //Speichert die Verbindungen
      * @param element   Das Element (wird nur benötigt um den Index des Elementes herauszufinden (Das wievielte ELement es in der Liste mit allen Elementen ist)
      * @param isInput   Ist true wenn auf einen Input geklickt wurde und false wenn auf einen Output geklickt wurde
      * @param index     Gibt an, um welchen Index des IN/Output es sich handelt (index = 0 -> oberster in / output; index = 1 -> zweitoberster in /Output .....)   
+     * @param event     Das MouseEvent wird übergeben um eine direkte Verbindungslinie zu zeichnen
      */
-    public void saveData(Element element, boolean isInput, int index) {
+    public void saveData(Element element, boolean isInput, int index, MouseEvent event) {
         ArrayList<Element> elements = dsController.getElements();
         
         if(tempFirstElementSet == false) {  // -> Dies ist das erste Element der Verbindungslinie, das angeklickt wird
@@ -262,7 +270,11 @@ public class Connection { //Speichert die Verbindungen
             tempTypeFirst = isInput;
             tempIndexFirst = index;
             tempFirstElementSet = true; //Wenn diese Funktion nochmal aufgerufen wird (wenn das Ender der Verbindungslinie angeklickt wurde) soll sie dies hier nicht noch einmal durchlaufen, sondern bei "else" anfangen
+            //drawDirectLine(event, isInput, elements);
         } else {    // -> Dies ist das zweite Element der Verbindungslinie, das angeklickt wird -> Die Verbindung kann "gelegt" werden
+            dsController.getSimCanvas().getChildren().remove(conLine);//Entfernt die Verbindungslinie, die der Maus gefolgt hat
+            conLine = null;
+            
             tempIndexSecondElement = elements.indexOf(element);    //Findet den Index des angeklickten Elementes heraus
             tempTypeSecond = isInput;
             tempIndexFirst = index;
@@ -270,5 +282,19 @@ public class Connection { //Speichert die Verbindungen
             tempFirstElementSet = false;
             addConnection();
         }
+    }
+    
+    public void drawDirectLine(MouseEvent event, boolean isInput, ArrayList<Element> elements) {
+        if(isInput) {
+            
+            conLine = Draw.drawLine(elements.get(tempIndexFirstElement).getInputX(tempIndexFirst), elements.get(tempIndexFirstElement).getInputY(tempIndexFirst), event.getX(), event.getY(), Color.DARKORANGE, 5);
+            
+        } else {
+            conLine = Draw.drawLine(elements.get(tempIndexFirstElement).getOutput(tempIndexFirst), elements.get(tempIndexFirstElement).getOutputY(tempIndexFirst), event.getX(), event.getY(), Color.DARKORANGE, 5);
+        }
+        
+        conLine.setMouseTransparent(true);
+        conLine.setOpacity(0.6);
+        dsController.getSimCanvas().getChildren().add(conLine);
     }
 }

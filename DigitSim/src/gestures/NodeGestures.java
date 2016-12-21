@@ -388,7 +388,7 @@ public class NodeGestures {
             @Override
             public void handle(MouseEvent event){
                 System.out.println("InPutIndex: " +inputIndex);
-                DigitSimController.getAllConnections().saveData(e, true, inputIndex);
+                DigitSimController.getAllConnections().saveData(e, true, inputIndex, event);
             }
         };
     }
@@ -398,7 +398,7 @@ public class NodeGestures {
             @Override
             public void handle(MouseEvent event){
                 System.out.println("OutPutIndex: " +outputIndex);
-                DigitSimController.getAllConnections().saveData(e, false, outputIndex);
+                DigitSimController.getAllConnections().saveData(e, false, outputIndex, event);
             }
         };
     }
