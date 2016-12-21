@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <propertiesXmlFormat>
     <alpha>1.0</alpha>
-    <blue>0.501960813999176</blue>
-    <green>0.501960813999176</green>
+    <blue>0.9019607901573181</blue>
+    <green>0.8470588326454163</green>
     <gridOffset>21</gridOffset>
-    <red>0.9411764740943909</red>
+    <red>0.6784313917160034</red>
     <simSizeX>4000</simSizeX>
     <simSizeY>4000</simSizeY>
     <threadDurationMS>50</threadDurationMS>
