@@ -106,7 +106,7 @@ public class Element_NOR extends Element{
         }
         if(logic){                             
             outputs[0] = 0;
-            outputLines.get(0).setStroke(Color.BLACK);
+            outputLines.get(0).setStroke(Color.BLUE);
         }else{
             outputs[0] = 1;
             outputLines.get(0).setStroke(Color.RED);

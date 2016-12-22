@@ -104,7 +104,7 @@ public class Element_OR extends Element{
             outputLines.get(0).setStroke(Color.RED);
         }else{
             outputs[0] = 0;
-            outputLines.get(0).setStroke(Color.BLACK);
+            outputLines.get(0).setStroke(Color.BLUE);
         }  
     }
     

@@ -409,6 +409,9 @@ public class NodeGestures {
         return new EventHandler<MouseEvent>(){
             @Override
             public void handle(MouseEvent event){
+            if(DigitSimController.isLocked()){
+               return;   
+            }
             if(event.getButton() == MouseButton.SECONDARY){
             ContextMenu menu= new ContextMenu();
             MenuItem deleteItem = new MenuItem("Entfernen");
@@ -426,7 +429,7 @@ public class NodeGestures {
               menu.getItems().addAll(deleteItem, resetItem);   
               menu.show((Node)event.getSource(), Side.LEFT, event.getX(), event.getY());
             }else{
-                   //DigitSimController.getAllConnections().resetLastPoint(); //Sorgt dafür dass man mehrere Punkte setzen kann, was buggy ist daher auskommentiert (Kannst es aber gern mal testen!)
+                   DigitSimController.getAllConnections().resetLastPoint(); //Sorgt dafür dass man mehrere Punkte setzen kann, was buggy ist daher auskommentiert (Kannst es aber gern mal testen!)
                    DigitSimController.getReference().setConnectionPointDragging(true); 
                    DigitSimController.getReference().setCurrentConData(d);
                    Node n = (Node) event.getSource();

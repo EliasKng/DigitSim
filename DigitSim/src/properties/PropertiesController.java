@@ -163,7 +163,7 @@ public class PropertiesController implements Initializable { //Klasse für das E
 			    JOptionPane.INFORMATION_MESSAGE);
          }
 
-        if(Integer.parseInt(txtClock.getText()) <= 50){
+        if(Integer.parseInt(txtClock.getText()) <= 50 && Integer.parseInt(txtClock.getText()) >= 1){
             Properties.setThreadDurationMS(Integer.parseInt(txtClock.getText()));
         }else{
             txtClock.setText(Integer.toString(Properties.GetThreadDurationMS()));
@@ -172,6 +172,7 @@ public class PropertiesController implements Initializable { //Klasse für das E
 			    "Info",
 			    JOptionPane.INFORMATION_MESSAGE);
         }
+       setColor();
        Properties.setAskOnExit(checkClose.isSelected());
        Properties.save();
        Stage stage = (Stage) boxColor.getScene().getWindow();

@@ -72,7 +72,7 @@ public class Element_SIGNAL extends Element{
             number2.setVisible(true);
         }else{
             outputs[0] = 0;
-            outputLines.get(0).setStroke(Color.BLACK);
+            outputLines.get(0).setStroke(Color.BLUE);
             number1.setVisible(true);
             number2.setVisible(false);
         }

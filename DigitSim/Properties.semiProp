@@ -9,6 +9,6 @@
     <simSizeX>4000</simSizeX>
     <simSizeY>4000</simSizeY>
     <threadDurationMS>50</threadDurationMS>
-    <windowMinX>800</windowMinX>
+    <windowMinX>901</windowMinX>
     <windowMinY>600</windowMinY>
 </propertiesXmlFormat>
