@@ -43,6 +43,10 @@ public abstract class Element { //Abstakte Klasse, nur zur Vererbung, es kann ke
     public int[] getInputs() {
         return inputs;
     }
+    
+    public int getInput(int pIn){
+        return inputs[pIn];
+    }
 
     public int getNumOutputs() {
         return numOutputs;
@@ -134,5 +138,11 @@ public abstract class Element { //Abstakte Klasse, nur zur Vererbung, es kann ke
                 setInput(i, 0);
             }
         update();
+                for(int i = 0; i < getInputCount(); i++){
+                inputLines.get(i).setStroke(Color.BLACK);
+            }
+        for(int i = 0; i < getOutputCount(); i++){
+            outputLines.get(i).setStroke(Color.BLACK);
+        }
     }
 }

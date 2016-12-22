@@ -15,7 +15,7 @@ import javafx.scene.layout.Pane;
 
 public class DraggableCanvas extends Pane { //Arbeitsfläche
     DoubleProperty myScale = new SimpleDoubleProperty(1.0); //Standartzoom auf 1
-
+    private Canvas simGrid;
     public DraggableCanvas() {
         setPrefSize(Properties.GetSimSizeX(), Properties.GetSimSizeY()); //Standartgröße
         setStyle("-fx-background-color: white; -fx-border-color: grey;"); //Farben
@@ -31,8 +31,13 @@ public class DraggableCanvas extends Pane { //Arbeitsfläche
     * @author Elias
     * Bearbeitet von Tim 16.10.16
     */
+    public void redrawGrid(){
+        getChildren().remove(simGrid);
+        addGrid(getPrefWidth(), getPrefHeight());
+    }
+    
     public void addGrid(double width, double heigth) { //zeichnet Gitter
-        Canvas simGrid = new Canvas();
+        simGrid = new Canvas();
         GraphicsContext gc = simGrid.getGraphicsContext2D();
         simGrid.setWidth(width);
         simGrid.setHeight(heigth);
@@ -52,8 +57,6 @@ public class DraggableCanvas extends Pane { //Arbeitsfläche
                 Draw.gcDrawLine(gc, i, 0, i, h, d, Properties.GetGridColor());
                 Draw.gcDrawLine(gc, 0, i, w, i, d, Properties.GetGridColor());
         }        
-        
-
         getChildren().add(simGrid); //Die Zeichenfläche hinzufügen
 
         //Verschiebt simGrid in den Hintergrund, damit die Elemente im Vordergrund sind

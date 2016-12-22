@@ -29,6 +29,7 @@ public class Properties {
     // Window Stuff
     private static int windowMinX = 800;
     private static int windowMinY = 600;
+    private static boolean askOnExit = false;
     
     //Element Stuff
     private static double elementOpacity = 0.4;
@@ -38,7 +39,7 @@ public class Properties {
     
         
     public static void save(){ //Einstellungen speichern
-        PropertiesXmlFormat saveFile = new PropertiesXmlFormat(simSizeX, simSizeY, gridOffset, gridColor, threadDurationMS, windowMinX, windowMinY);
+        PropertiesXmlFormat saveFile = new PropertiesXmlFormat(simSizeX, simSizeY, gridOffset, gridColor, threadDurationMS, windowMinX, windowMinY, askOnExit);
         XmlLoader.saveObject("Properties.semiProp", saveFile);
     }
     
@@ -53,54 +54,62 @@ public class Properties {
         threadDurationMS = saveFile.getThreadDurationMS();
         windowMinX = saveFile.getWindowMinX();
         windowMinY = saveFile.getWindowMinY();
+        askOnExit = saveFile.getAskOnExit();
     }
+    
+    public static void reset(){
+        simSizeX = 4000;
+        simSizeY = 4000;
+        gridColor = Color.LIGHTGRAY;
+        threadDurationMS = 50;
+        windowMinX = 800;
+        windowMinY = 600;
+        askOnExit = false;
+    }
+    
 
     public static double getElementOpacity() {
         return elementOpacity;
     }
 
+    public static void setAskOnExit(boolean askOnExit) {
+      Properties.askOnExit = askOnExit;
+    }
+        
     public static void setElementOpacity(double ElementOpacity) {
         Properties.elementOpacity = ElementOpacity;
     }
 
     public static void setSimSizeX(int simSizeX) {
         Properties.simSizeX = simSizeX;
-        save();
     }
 
     public static void setSimSizeY(int simSizeY) {
         Properties.simSizeY = simSizeY;
-        save();
     }
 
     public static void setGridOffset(int gridOffset) {
         Properties.gridOffset = gridOffset;
-        save();
     }
 
     public static void setGridColor(Color gridColor) {
         Properties.gridColor = gridColor;
-        save();
     }
 
     public static void setThreadDurationMS(int threadDurationMS) {
         Properties.threadDurationMS = threadDurationMS;
-        save();
     }
 
     public static void setWindowMinX(int windowMinX) {
         Properties.windowMinX = windowMinX;
-        save();
     }
 
     public static void setWindowMinY(int windowMinY) {
         Properties.windowMinY = windowMinY;
-        save();
     }
     
     public static void setLineWidth(int width) {
         Properties.lineWidth = width;
-        save();
     }
 
     public static void setVisualizeTileCode(boolean visualizeTileCode) {
@@ -153,7 +162,7 @@ public class Properties {
         return visualizeTileCode;
     }
     
-    
-    
-    
+        public static boolean isAskOnExit() {
+        return askOnExit;
+    }  
 }

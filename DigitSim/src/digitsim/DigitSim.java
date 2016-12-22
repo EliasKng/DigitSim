@@ -14,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -47,11 +48,20 @@ public class DigitSim extends Application { //Hauptklasse
         stage = GenFunctions.openFXML(DigitSim.class, "DigitSim.fxml", "Seminator", "icon.png");
         stage.setMinWidth(Properties.GetWindowMinX());
         stage.setMinHeight(Properties.GetWindowMinY());
+        
         stage.setOnCloseRequest(
             new EventHandler<WindowEvent>() {         
                 @Override
                 public void handle(WindowEvent event) {
-                    DigitSimController.getReference().mItemCloseAction(null);
+                    if(Properties.isAskOnExit()){
+                       int confirmed = JOptionPane.showConfirmDialog(null, "Willst du das Programm wirklich schließen?", "Exit", JOptionPane.YES_NO_OPTION);
+                       if (confirmed == JOptionPane.YES_OPTION) {
+                           DigitSimController.getReference().mItemCloseAction(null);
+                       }
+                    }else{
+                        DigitSimController.getReference().mItemCloseAction(null);  
+                    }
+                    event.consume();
                 }});
     }
     

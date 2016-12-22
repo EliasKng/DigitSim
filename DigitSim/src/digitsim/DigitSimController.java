@@ -1,5 +1,4 @@
 package digitsim;
-import toolbox.Draw;
 import general.Properties;
 import toolbox.GenFunctions;
 import connection.Connection;
@@ -22,9 +21,7 @@ import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
 import javafx.stage.Stage;
-import pathFinder.TileCode;
 /**
  * Digitsim.fxml Controller class
  *
@@ -42,9 +39,6 @@ public class DigitSimController extends Pane{
     private static boolean locked = false; //Wenn wir das Programm starten setzen wir locked auf True, damit das Programm blokiert wird und man während der Simulation nichts ändern kann!
     private static DigitSimController refThis;
     private static final ObservableList outputMessages = FXCollections.observableArrayList();
-    private int result1[] = null; //Werte der beiden Elemente, die man verbinden möchte
-    private int result2[] = null; 
-    private Line conLine = null; //Verbindungslinie (Diese erscheint wenn man auf einen Input/Output klickt)
 
      /**
      * FXML OBJEKT-Erstellungs-Bereich:
@@ -149,10 +143,7 @@ public class DigitSimController extends Pane{
         return new EventHandler<MouseEvent>(){
             @Override
             public void handle(MouseEvent event){
-                if(conLine != null){
-                    conLine.setEndX(event.getX());
-                    conLine.setEndY(event.getY());
-                }
+                allConnections.updateConLine(event);
             }
         };
     }
@@ -294,7 +285,6 @@ public class DigitSimController extends Pane{
       } 
       else if(btnNOT.isSelected()){ //Not
             elements.add(new Element_NOT(getXAdaptGrid(event), getYAdaptGrid(event), 1, nodeGestures));
-            elements.get(elements.size() - 1).update(); //Damit der Output von Not gleich auf 1 geht
             simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());        
       } 
       else if(btnNOR.isSelected()){ //NOR
@@ -456,5 +446,15 @@ public class DigitSimController extends Pane{
     
     public static DigitSimController getReference(){ //Rückgabe einer Referenz (für Klassen die sonst keine besitzen)
         return refThis;
+    }
+    
+    public void reloadGridColor(){
+        simCanvas.redrawGrid();
+    }
+    
+    public void reloadMinAndMaxWindowSize(){
+        Stage stage = (Stage) simPane.getScene().getWindow();
+        stage.setMinWidth(Properties.GetWindowMinX());
+        stage.setMinHeight(Properties.GetWindowMinY());
     }
 }

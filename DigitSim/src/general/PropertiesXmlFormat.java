@@ -22,6 +22,16 @@ public class PropertiesXmlFormat {
     private int threadDurationMS;
     private int windowMinX;
     private int windowMinY;
+    private boolean askOnExit;
+
+    @XmlElement
+    public boolean getAskOnExit() {
+        return askOnExit;
+    }
+
+    public void setAskOnExit(boolean askOnExit) {
+        this.askOnExit = askOnExit;
+    }
 
     @XmlElement //Element, besteht jeweils aus set + get Funktionen
     public double getBlue() {
@@ -66,7 +76,7 @@ public class PropertiesXmlFormat {
     //Constructor (JAXB braucht einen default constructor (leeren c.))
     public PropertiesXmlFormat(){}
     
-    public PropertiesXmlFormat(int simSizeX, int simSizeY, int gridOffset, Color color, int threadDurationMS, int windowMinX, int windowMinY){
+    public PropertiesXmlFormat(int simSizeX, int simSizeY, int gridOffset, Color color, int threadDurationMS, int windowMinX, int windowMinY, boolean pAskOnExit){
         this.simSizeX = simSizeX;
         this.simSizeY = simSizeY;
         this.gridOffset = gridOffset;
@@ -77,6 +87,7 @@ public class PropertiesXmlFormat {
         this.green = color.getGreen();
         this.red = color.getRed();
         this.alpha = color.getOpacity();
+        this.askOnExit = pAskOnExit;
     } 
 
     @XmlElement

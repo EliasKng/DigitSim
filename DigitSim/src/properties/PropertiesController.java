@@ -5,6 +5,7 @@ package properties;
  * and open the template in the editor.
  */
 
+import digitsim.DigitSimController;
 import general.Properties;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -13,9 +14,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+import javax.swing.JOptionPane;
 
 /**
  * FXML Controller class
@@ -47,7 +50,7 @@ public class PropertiesController implements Initializable { //Klasse für das E
     @FXML
     private TextField txtCanvasWidth;
     @FXML
-    private ComboBox boxColor;
+    private ChoiceBox boxColor; //ChoiceBox lukas, nicht ComboBox!
     @FXML
     private CheckBox checkClose;
     @FXML
@@ -59,7 +62,7 @@ public class PropertiesController implements Initializable { //Klasse für das E
     public PropertiesController() { 
     }
     public int getColor(){   //checkt die aktuelle gridfarbe 
-             int  index = 0;   
+            int  index = 0;   
           
             if(Properties.GetGridColor().equals(Color.LIGHTBLUE)) {           //TIL to use .equals, bc == checks for same instance
             index = 0;          
@@ -81,34 +84,35 @@ public class PropertiesController implements Initializable { //Klasse für das E
     
      public void setColor(){
             String color = boxColor.getValue().toString();
-            
+            boolean change = false;
             if (color.equals("Blau")){
              Properties.setGridColor(Color.LIGHTBLUE);
+             change = true;
             }
             else if (color.equals("Grün")){
              Properties.setGridColor(Color.LIGHTGREEN);
+             change = true;
             }
             else if (color.equals("Rot")){
              Properties.setGridColor(Color.LIGHTCORAL);
+             change = true;
             }
             else if (color.equals("Grau")){
              Properties.setGridColor(Color.LIGHTGREY);
+             change = true;
             }
             else if (color.equals("Schwarz")){
              Properties.setGridColor(Color.BLACK);
+             change = true;
+            }
+            if(change){
+                DigitSimController.getReference().reloadGridColor();
             }
         } 
     
      public void reset() {                          //Zurücksetzen auf anfangswerte
-         Properties.setGridColor(Color.LIGHTGREY);
-         Properties.setWindowMinX(800);
-         Properties.setWindowMinY(600);
-         Properties.setSimSizeX(4000);
-         Properties.setSimSizeY(4000);
-         Properties.setThreadDurationMS(50);
-         Properties.setVisualizeTileCode(false);
-         
-          boxColor.getSelectionModel().select(getColor());
+         Properties.reset();
+         boxColor.getSelectionModel().select(getColor());
         
          //Window  
        txtWidth.setText(Integer.toString(Properties.GetWindowMinX()));
@@ -126,32 +130,54 @@ public class PropertiesController implements Initializable { //Klasse für das E
     }
      
      public void save() {
-      //  Properties.setGridColor(setColor());
-        Properties.setWindowMinX(Integer.parseInt(txtWidth.getText()));
-        Properties.setWindowMinY(Integer.parseInt(txtHeight.getText()));
-        Properties.setSimSizeX(Integer.parseInt(txtCanvasWidth.getText()));
-        Properties.setSimSizeY(Integer.parseInt(txtCanvasHeight.getText()));
-        Properties.setVisualizeTileCode(checkClose.isSelected());
-        Properties.setThreadDurationMS(Integer.parseInt(txtClock.getText()));
-        setColor();
-        
-        boxColor.getSelectionModel().select(getColor());
-        
-         //Window  
-       txtWidth.setText(Integer.toString(Properties.GetWindowMinX()));
-       txtHeight.setText(Integer.toString(Properties.GetWindowMinY()));
-         
-       //Canvas
-       txtCanvasWidth.setText(Integer.toString(Properties.GetSimSizeX()));
-       txtCanvasHeight.setText(Integer.toString(Properties.GetSimSizeY())); 
-       
-       //Thread
-       txtClock.setText(Integer.toString(Properties.GetThreadDurationMS()));
-       
-       //Tile-Code
-       checkClose.setSelected(Properties.getVisualizeTileCode());
-       
+         if(Integer.parseInt(txtWidth.getText()) >= 600 && Integer.parseInt(txtWidth.getText()) >= 600){
+            Properties.setWindowMinX(Integer.parseInt(txtWidth.getText()));
+            Properties.setWindowMinY(Integer.parseInt(txtHeight.getText()));
+            DigitSimController.getReference().reloadMinAndMaxWindowSize();
+        }else{
+            txtWidth.setText(Integer.toString(Properties.GetWindowMinX()));
+            txtHeight.setText(Integer.toString(Properties.GetWindowMinY()));
+            JOptionPane.showMessageDialog(null,
+			    "Angegebene Fenster Größe ist zu klein! (Min. 600 in Breite/Höhe)",
+			    "Info",
+			    JOptionPane.INFORMATION_MESSAGE);
          }
+  
+         if(Integer.parseInt(txtCanvasWidth.getText()) >= 1000 && Integer.parseInt(txtCanvasWidth.getText()) >= 1000){
+             if(Integer.parseInt(txtCanvasWidth.getText()) != Properties.GetSimSizeX() && Integer.parseInt(txtCanvasWidth.getText()) != Properties.GetSimSizeY()){
+            Properties.setSimSizeX(Integer.parseInt(txtCanvasWidth.getText()));
+            Properties.setSimSizeY(Integer.parseInt(txtCanvasHeight.getText()));
+            txtCanvasWidth.setText(Integer.toString(Properties.GetSimSizeX()));
+            txtCanvasHeight.setText(Integer.toString(Properties.GetSimSizeY())); 
+            JOptionPane.showMessageDialog(null,
+			    "Die neue Arbeitsfläche wird erst bei einem neuen Projekt sichtbar!",
+			    "Info",
+			    JOptionPane.INFORMATION_MESSAGE);
+             }
+         }else{
+            txtCanvasWidth.setText(Integer.toString(Properties.GetSimSizeX()));
+            txtCanvasHeight.setText(Integer.toString(Properties.GetSimSizeY())); 
+            JOptionPane.showMessageDialog(null,
+			    "Angegebene Fläche der Arbeitsfläche ist zu klein! (Min. 1000 in X/Y-Richtung",
+			    "Info",
+			    JOptionPane.INFORMATION_MESSAGE);
+         }
+
+        if(Integer.parseInt(txtClock.getText()) <= 50){
+            Properties.setThreadDurationMS(Integer.parseInt(txtClock.getText()));
+        }else{
+            txtClock.setText(Integer.toString(Properties.GetThreadDurationMS()));
+                        JOptionPane.showMessageDialog(null,
+			    "Angebener Takt ist zu hoch! (Max. 50Hz und Min. 1Hz)",
+			    "Info",
+			    JOptionPane.INFORMATION_MESSAGE);
+        }
+       Properties.setAskOnExit(checkClose.isSelected());
+       Properties.save();
+       Stage stage = (Stage) boxColor.getScene().getWindow();
+       stage.close(); //Fenster schließen nach dem Speichern
+       
+        }
      
      
     @Override
@@ -166,8 +192,7 @@ public class PropertiesController implements Initializable { //Klasse für das E
                 "Grau",
                 "Schwarz"
             ));
-         boxColor.getSelectionModel().select(getColor());
-         boxColor.setOnAction(e -> setColor()); //EventHandler 
+         boxColor.getSelectionModel().select(getColor()); //Handler entfern -> Einstellungen sollen erst bei "Speichern" übernommen werden
          
        //Window  
        txtWidth.setText(Integer.toString(Properties.GetWindowMinX()));
@@ -181,7 +206,7 @@ public class PropertiesController implements Initializable { //Klasse für das E
        txtClock.setText(Integer.toString(Properties.GetThreadDurationMS()));
        
        //Tile-Code
-       checkClose.setSelected(Properties.getVisualizeTileCode());
+       checkClose.setSelected(Properties.isAskOnExit());
        
        //Save
        btnSave.setOnAction(e -> save());

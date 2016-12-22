@@ -6,11 +6,13 @@
 package connection;
 
 import Gestures.NodeGestures;
+import connection.Connection.ConData;
 import digitsim.DigitSimController;
 import toolbox.Draw;
 import general.Properties;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.event.EventType;
 import javafx.scene.Group;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -31,6 +33,7 @@ public class ConnectionLine {
     private Vector2i end;
     private final int gridOffset = Properties.GetGridOffset();
     private Color currentColor = Color.GREY; //Standart: Schwarz
+    private ConData data;
     
     
     public ConnectionLine(Vector2i _start, Vector2i _end, DigitSimController d) {
@@ -40,11 +43,12 @@ public class ConnectionLine {
         end = _end.divide(gridOffset);
     }
     
-    public ConnectionLine(DigitSimController d) {
+    public ConnectionLine(DigitSimController d, ConData data) {
         dsc = d;
         pathFinder = new PathFinder();
         start = new Vector2i();
         end = new Vector2i();
+        this.data = data;
     }
     
 //*******************SET /GET***************************/
@@ -90,8 +94,9 @@ public class ConnectionLine {
                         int thisY = currentNode.tile.getY() * gridOffset;
                         int parentX = currentNode.parent.tile.getX() * gridOffset;
                         int parentY = currentNode.parent.tile.getY() * gridOffset;
-                        
-                        group.getChildren().add(Draw.drawLine(parentX + 10.5, parentY + 10.5, thisX + 10.5, thisY + 10.5, currentColor, Properties.getLineWidth()));
+                        Line l = Draw.drawLine(parentX + 10.5, parentY + 10.5, thisX + 10.5, thisY + 10.5, currentColor, Properties.getLineWidth());
+                        l.addEventFilter(MouseEvent.MOUSE_CLICKED, NodeGestures.getOverConnectionLineClicked(data));
+                        group.getChildren().add(l);
                     }
                 }
             
@@ -119,7 +124,7 @@ public class ConnectionLine {
         if(nullOrOne == 1){
             currentColor = Color.RED;
         }else{
-            currentColor = Color.GRAY;
+            currentColor = Color.BLUE;
         }
         
         for(javafx.scene.Node n : group.getChildren()){

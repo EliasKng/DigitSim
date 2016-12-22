@@ -7,18 +7,13 @@ package element;
 
 import toolbox.Draw;
 import Gestures.NodeGestures;
-import digitsim.DigitSimController;
-import toolbox.GenFunctions;
 import general.Properties;
 import static element.Element.elementWidth;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
 import javax.swing.JOptionPane;
 
 /**
@@ -89,12 +84,19 @@ public class Element_NOT extends Element{
     //Diese Methoden müssen überschrieben werden (Beschreibung in der Mutterklasse) 
     @Override
     public void update(){
+        for(int i = 0; i < numInputs; i++){
+            if(inputs[i] == 0){
+                inputLines.get(i).setStroke(Color.BLUE);
+            }else{
+                inputLines.get(i).setStroke(Color.RED);
+            }
+        }
         if(inputs[0] == 0){
             outputs[0] = 1;
             outputLines.get(0).setStroke(Color.RED);
         }else{
             outputs[0] = 0;
-            outputLines.get(0).setStroke(Color.BLACK);
+            outputLines.get(0).setStroke(Color.BLUE);
         }
     }
     

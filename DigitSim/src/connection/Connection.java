@@ -27,7 +27,7 @@ public class Connection { //Speichert die Verbindungen
     private int tempIndexSecondElement;      
     private boolean tempTypeSecond;          
     private int tempIndexSecond;      
-    private boolean tempFirstElementSet;
+    private boolean tempFirstElementSet = false;
     private Line conLine = null;
 
     public Connection(DigitSimController pDSController) {
@@ -58,7 +58,7 @@ public class Connection { //Speichert die Verbindungen
      */
     public void addConnection() {
         ConData data = new ConData();
-        if(tempIndexFirstElement == tempIndexSecondElement){ //Überorüfen ob es sich um die gleichen Elemente handelt
+        if(tempIndexFirstElement == tempIndexSecondElement || tempTypeFirst == tempTypeSecond){ //Überorüfen ob es sich um die gleichen Elemente handelt
             return;
         }
         for(ConData d : connections){ //Überprüfen ob es die verbindung schon gibt
@@ -73,7 +73,7 @@ public class Connection { //Speichert die Verbindungen
         data.indexSecond = tempIndexSecond;
         data.typeFirst = tempTypeFirst;
         data.typeSecond = tempTypeSecond;
-        data.connectionLine = new ConnectionLine(dsController);
+        data.connectionLine = new ConnectionLine(dsController, data);
         connections.add(data);
         drawNewLine(data);
     }
@@ -225,6 +225,7 @@ public class Connection { //Speichert die Verbindungen
     // Author Tim
     // bestimmte verbindung entfernen
     public void removeConnection(ConData data) {
+        data.connectionLine.clear();
         connections.remove(data);
     }
 
@@ -265,19 +266,18 @@ public class Connection { //Speichert die Verbindungen
     public void saveData(Element element, boolean isInput, int index, MouseEvent event) {
         ArrayList<Element> elements = dsController.getElements();
         
-        if(tempFirstElementSet == false) {  // -> Dies ist das erste Element der Verbindungslinie, das angeklickt wird
+        if(!tempFirstElementSet) {  // -> Dies ist das erste Element der Verbindungslinie, das angeklickt wird 
             tempIndexFirstElement = elements.indexOf(element);    //Findet den Index des angeklickten Elementes heraus
             tempTypeFirst = isInput;
             tempIndexFirst = index;
             tempFirstElementSet = true; //Wenn diese Funktion nochmal aufgerufen wird (wenn das Ender der Verbindungslinie angeklickt wurde) soll sie dies hier nicht noch einmal durchlaufen, sondern bei "else" anfangen
-            //drawDirectLine(event, isInput, elements);
-        } else {    // -> Dies ist das zweite Element der Verbindungslinie, das angeklickt wird -> Die Verbindung kann "gelegt" werden
+            drawDirectLine(event, isInput, elements);
+        } else {    // -> Dies ist das zweite Element der Verbindungslinie, das angeklickt wird -> Die Verbindung kann "gelegt" werden          
             dsController.getSimCanvas().getChildren().remove(conLine);//Entfernt die Verbindungslinie, die der Maus gefolgt hat
             conLine = null;
-            
             tempIndexSecondElement = elements.indexOf(element);    //Findet den Index des angeklickten Elementes heraus
             tempTypeSecond = isInput;
-            tempIndexFirst = index;
+            tempIndexSecond = index;
             tempIndexSecond = index;
             tempFirstElementSet = false;
             addConnection();
@@ -290,11 +290,23 @@ public class Connection { //Speichert die Verbindungen
             conLine = Draw.drawLine(elements.get(tempIndexFirstElement).getInputX(tempIndexFirst), elements.get(tempIndexFirstElement).getInputY(tempIndexFirst), event.getX(), event.getY(), Color.DARKORANGE, 5);
             
         } else {
-            conLine = Draw.drawLine(elements.get(tempIndexFirstElement).getOutput(tempIndexFirst), elements.get(tempIndexFirstElement).getOutputY(tempIndexFirst), event.getX(), event.getY(), Color.DARKORANGE, 5);
+            conLine = Draw.drawLine(elements.get(tempIndexFirstElement).getOutputX(tempIndexFirst), elements.get(tempIndexFirstElement).getOutputY(tempIndexFirst), event.getX(), event.getY(), Color.DARKORANGE, 5);
         }
         
         conLine.setMouseTransparent(true);
         conLine.setOpacity(0.6);
         dsController.getSimCanvas().getChildren().add(conLine);
+    }
+    
+    public void removeDirectLine(){
+        dsController.getSimCanvas().getChildren().remove(conLine);
+        conLine = null;
+    }
+    
+    public void updateConLine(MouseEvent event){
+        if(conLine != null){
+            conLine.setEndX(event.getX());
+            conLine.setEndY(event.getY());
+        }
     }
 }

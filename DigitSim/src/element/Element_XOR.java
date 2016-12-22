@@ -84,6 +84,13 @@ public class Element_XOR extends Element{
     //Diese Methoden müssen überschrieben werden (Beschreibung in der Mutterklasse)
     @Override
     public void update(){
+        for(int i = 0; i < numInputs; i++){
+            if(inputs[i] == 0){
+                inputLines.get(i).setStroke(Color.BLUE);
+            }else{
+                inputLines.get(i).setStroke(Color.RED);
+            }
+        }
         boolean allON = true;
         boolean allOFF = true;
         for(int i = 0; i < numInputs; i++){ //Eingänge durchiterieren & Logik überprüfen

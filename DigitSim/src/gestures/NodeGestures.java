@@ -5,6 +5,7 @@
  */
 package Gestures;
 
+import connection.Connection.ConData;
 import digitsim.DigitSimController;
 import element.Element;
 import general.Properties;
@@ -387,7 +388,6 @@ public class NodeGestures {
         return new EventHandler<MouseEvent>(){
             @Override
             public void handle(MouseEvent event){
-                System.out.println("InPutIndex: " +inputIndex);
                 DigitSimController.getAllConnections().saveData(e, true, inputIndex, event);
             }
         };
@@ -397,8 +397,24 @@ public class NodeGestures {
         return new EventHandler<MouseEvent>(){
             @Override
             public void handle(MouseEvent event){
-                System.out.println("OutPutIndex: " +outputIndex);
                 DigitSimController.getAllConnections().saveData(e, false, outputIndex, event);
+            }
+        };
+    }
+    
+    public static EventHandler<MouseEvent> getOverConnectionLineClicked(ConData d){
+        return new EventHandler<MouseEvent>(){
+            @Override
+            public void handle(MouseEvent event){
+            ContextMenu menu= new ContextMenu();
+            MenuItem deleteItem = new MenuItem("Entfernen");
+            deleteItem.setOnAction(new EventHandler<ActionEvent>() { //Wird ausgelößt wenn man bei einem Element "Entfernen" auswählt
+               public void handle(ActionEvent e) {
+               contextMenu.hide();
+               DigitSimController.getAllConnections().removeConnection(d);
+            }});      
+              menu.getItems().addAll(deleteItem);   
+              menu.show((Node)event.getSource(), Side.LEFT, event.getX(), event.getY());
             }
         };
     }
