@@ -12,7 +12,6 @@ import toolbox.Draw;
 import general.Properties;
 import java.util.ArrayList;
 import java.util.List;
-import javafx.event.EventType;
 import javafx.scene.Group;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -29,8 +28,7 @@ public class ConnectionLine {
     private DigitSimController dsc;
     private PathFinder pathFinder = null;
     private List<Node> path;
-    private Vector2i start;
-    private Vector2i end;
+    private ArrayList<Vector2i> points = new ArrayList<>();
     private final int gridOffset = Properties.GetGridOffset();
     private Color currentColor = Color.GREY; //Standart: Schwarz
     private ConData data;
@@ -39,34 +37,34 @@ public class ConnectionLine {
     public ConnectionLine(Vector2i _start, Vector2i _end, DigitSimController d) {
         dsc = d;
         pathFinder = new PathFinder();
-        start = _start.divide(gridOffset);
-        end = _end.divide(gridOffset);
+        points.add(_start.divide(gridOffset));
+        points.add(_end.divide(gridOffset));
     }
     
     public ConnectionLine(DigitSimController d, ConData data) {
         dsc = d;
         pathFinder = new PathFinder();
-        start = new Vector2i();
-        end = new Vector2i();
+        points.add(new Vector2i());
+        points.add(new Vector2i());
         this.data = data;
     }
     
 //*******************SET /GET***************************/
     
     public Vector2i getStart() {
-        return start;
+        return points.get(0);
     }
 
     public void setStart(Vector2i start) {
-        this.start = start.divide(gridOffset);
+        points.set(0, start.divide(gridOffset));
     }
 
     public Vector2i getEnd() {
-        return end;
+        return points.get(points.size() - 1);
     }
 
     public void setEnd(Vector2i end) {
-        this.end = end.divide(gridOffset);
+        points.set(points.size() - 1, end.divide(gridOffset));
     }
 
     public List<Node> getPath() {
@@ -77,43 +75,56 @@ public class ConnectionLine {
         return group;
     }
     
+    public void addPoint(Vector2i vec){ //Einen Punkt hinzufügen
+        vec = vec.divide(gridOffset);
+        Vector2i temp = points.get(points.size() - 1);
+        points.set(points.size() - 1, vec);
+        points.add(temp);
+    }
+    
+    public void removePoint(Vector2i vec){
+        points.remove(vec);
+    }
     
     
-    
-    
-    public void update(boolean directLine,ArrayList<Connection.ConData> connections) {
+    public void update(boolean directLine, ArrayList<Connection.ConData> connections) {
         clear();
         
         if(!directLine) {
-            path = pathFinder.findPath(start, end, dsc.getElements(), connections);
-            if(path != null) {
-                for(Node currentNode : path) {
-                    if(currentNode.parent != null) {
-                        
-                        int thisX = currentNode.tile.getX() * gridOffset;
-                        int thisY = currentNode.tile.getY() * gridOffset;
-                        int parentX = currentNode.parent.tile.getX() * gridOffset;
-                        int parentY = currentNode.parent.tile.getY() * gridOffset;
-                        Line l = Draw.drawLine(parentX + 10.5, parentY + 10.5, thisX + 10.5, thisY + 10.5, currentColor, Properties.getLineWidth());
-                        l.addEventFilter(MouseEvent.MOUSE_CLICKED, NodeGestures.getOverConnectionLineClicked(data));
-                        group.getChildren().add(l);
+            for(int i = 0; i < points.size() - 1; i++){
+                path = pathFinder.findPath(points.get(i), points.get(i + 1), dsc.getElements(), connections);
+                if(path != null) {
+                     for(Node currentNode : path) {
+                         if(currentNode.parent != null) {  
+                            int thisX = currentNode.tile.getX() * gridOffset;
+                            int thisY = currentNode.tile.getY() * gridOffset;
+                            int parentX = currentNode.parent.tile.getX() * gridOffset;
+                            int parentY = currentNode.parent.tile.getY() * gridOffset;
+                            Line l = Draw.drawLine(parentX + 10.5, parentY + 10.5, thisX + 10.5, thisY + 10.5, currentColor, Properties.getLineWidth());
+                            l.addEventFilter(MouseEvent.MOUSE_PRESSED, NodeGestures.getOverConnectionLineClicked(data));
+                            group.getChildren().add(l);
+                        }
                     }
-                }
             
             } else {
-                group.getChildren().add(Draw.drawLine(start.getX() * gridOffset + 10.5, start.getY()  * gridOffset + 10.5, end.getX() * gridOffset + 10.5 ,end.getY() * gridOffset + 10.5, currentColor,  Properties.getLineWidth()));
+                group.getChildren().add(Draw.drawLine(points.get(0).getX() * gridOffset + 10.5, points.get(0).getY()  * gridOffset + 10.5, points.get(points.size() - 1).getX() * gridOffset + 10.5 ,points.get(points.size() - 1).getY() * gridOffset + 10.5, currentColor,  Properties.getLineWidth()));
+            }
             }
             group.addEventFilter(MouseEvent.MOUSE_ENTERED, NodeGestures.getOverNodeMouseHanlderEnterLineGrp());
             group.addEventFilter(MouseEvent.MOUSE_EXITED, NodeGestures.getOverNodeMouseHanlderExitLineGrp());
         } else {
-            Line l = Draw.drawLine(start.getX() * gridOffset + 10.5, start.getY() * gridOffset + 10.5, end.getX() * gridOffset + 10.5, end.getY() * gridOffset + 10.5, Color.DARKORANGE, Properties.getLineWidth());
-            l.setOpacity(0.6);
-            group.getChildren().add(l);
+            for(int i = 0; i < points.size() - 1; i++){
+                Line l = Draw.drawLine(points.get(i).getX() * gridOffset + 10.5, points.get(i).getY() * gridOffset + 10.5, points.get(i + 1).getX() * gridOffset + 10.5, points.get(i + 1).getY() * gridOffset + 10.5, Color.DARKORANGE, Properties.getLineWidth());
+                l.setOpacity(0.6);
+                l.addEventFilter(MouseEvent.MOUSE_PRESSED, NodeGestures.getOverConnectionLineClicked(data));
+                group.getChildren().add(l);
+            }
         }
         dsc.getSimCanvas().getChildren().add(group);
         if(general.Properties.getVisualizeTileCode())
             group.toBack();
     }
+    
     
     public void clear() {
         dsc.getSimCanvas().getChildren().remove(group);

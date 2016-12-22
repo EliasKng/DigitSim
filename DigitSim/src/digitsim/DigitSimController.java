@@ -5,6 +5,7 @@ import connection.Connection;
 import Gestures.DraggableCanvas;
 import Gestures.NodeGestures;
 import Gestures.SceneGestures;
+import connection.Connection.ConData;
 import element.*;
 import java.io.File;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.scene.input.MouseEvent;
@@ -39,6 +41,8 @@ public class DigitSimController extends Pane{
     private static boolean locked = false; //Wenn wir das Programm starten setzen wir locked auf True, damit das Programm blokiert wird und man während der Simulation nichts ändern kann!
     private static DigitSimController refThis;
     private static final ObservableList outputMessages = FXCollections.observableArrayList();
+    private static boolean connectionPointDragging = false;
+    private static ConData currentConData = null;
 
      /**
      * FXML OBJEKT-Erstellungs-Bereich:
@@ -121,6 +125,8 @@ public class DigitSimController extends Pane{
     private void addSimCanvas() {
         simCanvas.addEventFilter(MouseEvent.MOUSE_PRESSED, getCanvasMouseKlickedEventHandler());
         simCanvas.addEventFilter(MouseEvent.MOUSE_MOVED, getCanvasMouseMovedEventHandler());
+       simCanvas.addEventFilter(MouseEvent.MOUSE_DRAGGED, getCanvasMouseDraggedEventHandler());
+        simCanvas.addEventFilter(MouseEvent.MOUSE_RELEASED, getCanvasMouseReleasedEventHandler());
         simPane.getChildren().addAll(simCanvas); //die Arbeitsfläche auf das Panel setzen
     }    
     
@@ -147,7 +153,50 @@ public class DigitSimController extends Pane{
             }
         };
     }
+    
+    private EventHandler getCanvasMouseDraggedEventHandler(){ //Falls man bereits einen Input/Output ausgewählt halt erscheint eine Linie, diese Funktion sorgt daüfr das die Linie dem Mauszeiger folgt
+        return new EventHandler<MouseEvent>(){
+            @Override
+            public void handle(MouseEvent event){
+                if(connectionPointDragging){
+                    allConnections.removeLastPoint(currentConData);
+                    allConnections.addPoint(currentConData, event, true);
+                }
+            }
+        };
+    }
+    
+    private EventHandler getCanvasMouseReleasedEventHandler(){ //Falls man bereits einen Input/Output ausgewählt halt erscheint eine Linie, diese Funktion sorgt daüfr das die Linie dem Mauszeiger folgt
+        return new EventHandler<MouseEvent>(){
+            @Override
+            public void handle(MouseEvent event){
+                if(connectionPointDragging){
+                    allConnections.removeLastPoint(currentConData);
+                    allConnections.addPoint(currentConData, event, false);
+                    connectionPointDragging = false;
+                    simCanvas.getScene().setCursor(Cursor.DEFAULT);
+                }
+            }
+        };
+    }
       
+    
+    public void setConnectionPointDragging(boolean b){
+        connectionPointDragging = b;
+    }
+    
+    public boolean getConnectionPointDragging(){
+        return connectionPointDragging;
+    }
+    
+    public  ConData getCurrentConData() {
+        return currentConData;
+    }
+
+    public void setCurrentConData(ConData currentConData) {
+        DigitSimController.currentConData = currentConData;
+    }
+    
 
     /**
     * Bildet nötige Gruppen für Togglebuttons (damit immer nur einer Selected sein kann)

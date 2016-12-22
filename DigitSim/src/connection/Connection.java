@@ -309,4 +309,23 @@ public class Connection { //Speichert die Verbindungen
             conLine.setEndY(event.getY());
         }
     }
+    
+    private Vector2i lastPoint = null;
+    
+    public void addPoint(ConData d, MouseEvent event, Boolean direct){
+        lastPoint = new Vector2i((int)event.getX(), (int)event.getY());
+        d.connectionLine.addPoint(lastPoint);
+        d.connectionLine.update(direct, connections);
+    }
+    
+    public void removeLastPoint(ConData d){
+        if(lastPoint != null){
+            d.connectionLine.removePoint(lastPoint);
+            lastPoint = null;
+        }     
+    }
+    
+    public void resetLastPoint(){
+        lastPoint = null;
+    }
 }

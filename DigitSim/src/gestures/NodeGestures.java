@@ -19,6 +19,7 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -157,8 +158,6 @@ public class NodeGestures {
             
             Node node = (Node) event.getSource(); //Das betroffene Element bekommen
             
-            node.setCursor(Cursor.CLOSED_HAND);
-            
             int translXBefore =(int) node.getTranslateX();
             int translYBefore =(int) node.getTranslateY();
             
@@ -184,7 +183,7 @@ public class NodeGestures {
                 dragged = false;
                 DigitSimController.getAllConnections().drawUpdate(findElementNum()); //Verbindungen updaten die das Akutelle Element betreffen
                 Node node = (Node) event.getSource(); //Das betroffene Element bekommen
-                node.setCursor(Cursor.HAND);
+                node.setCursor(Cursor.DEFAULT);
             }
             
         }
@@ -363,6 +362,7 @@ public class NodeGestures {
                 for(int i = 0; i  < grp.getChildren().size(); i++){
                     Line line = (Line) grp.getChildren().get(i);
                     line.setStroke(Color.DARKORANGE);
+                    line.getScene().setCursor(Cursor.HAND);
                 }
             }
         };
@@ -379,6 +379,9 @@ public class NodeGestures {
                 for(int i = 0; i  < grp.getChildren().size(); i++){
                     Line line = (Line) grp.getChildren().get(i);
                     line.setStroke(Color.GRAY);
+                    if(!DigitSimController.getReference().getConnectionPointDragging()){
+                                            line.getScene().setCursor(Cursor.DEFAULT);
+                    }
                 }
             }
         };
@@ -406,6 +409,7 @@ public class NodeGestures {
         return new EventHandler<MouseEvent>(){
             @Override
             public void handle(MouseEvent event){
+            if(event.getButton() == MouseButton.SECONDARY){
             ContextMenu menu= new ContextMenu();
             MenuItem deleteItem = new MenuItem("Entfernen");
             deleteItem.setOnAction(new EventHandler<ActionEvent>() { //Wird ausgelößt wenn man bei einem Element "Entfernen" auswählt
@@ -415,7 +419,15 @@ public class NodeGestures {
             }});      
               menu.getItems().addAll(deleteItem);   
               menu.show((Node)event.getSource(), Side.LEFT, event.getX(), event.getY());
+            }else{
+                   //DigitSimController.getAllConnections().resetLastPoint(); //Sorgt dafür dass man mehrere Punkte setzen kann, was buggy ist daher auskommentiert (Kannst es aber gern mal testen!)
+                   DigitSimController.getReference().setConnectionPointDragging(true); 
+                   DigitSimController.getReference().setCurrentConData(d);
+                   Node n = (Node) event.getSource();
+                   n.getScene().setCursor(Cursor.CLOSED_HAND);
             }
-        };
-    }
+            event.consume();
+            }  
+        };             
+    }            
 }
