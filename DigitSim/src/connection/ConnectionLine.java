@@ -28,6 +28,7 @@ public class ConnectionLine {
     private DigitSimController dsc;
     private PathFinder pathFinder = null;
     private List<Node> path;
+    private Vector2i[] resetData = new Vector2i[2];
     private ArrayList<Vector2i> points = new ArrayList<>();
     private final int gridOffset = Properties.GetGridOffset();
     private Color currentColor = Color.GREY; //Standart: Schwarz
@@ -35,6 +36,8 @@ public class ConnectionLine {
     
     
     public ConnectionLine(Vector2i _start, Vector2i _end, DigitSimController d) {
+        resetData[0] = _start;
+        resetData[1] = _end;
         dsc = d;
         pathFinder = new PathFinder();
         points.add(_start.divide(gridOffset));
@@ -49,6 +52,14 @@ public class ConnectionLine {
         this.data = data;
     }
     
+    public void reset(ArrayList<Connection.ConData> connections){
+        clear();
+        points.clear();
+        points.add(resetData[0]);
+        points.add(resetData[1]);
+        update(false, connections);
+    }
+    
 //*******************SET /GET***************************/
     
     public Vector2i getStart() {
@@ -57,6 +68,7 @@ public class ConnectionLine {
 
     public void setStart(Vector2i start) {
         points.set(0, start.divide(gridOffset));
+        resetData[0] = start;
     }
 
     public Vector2i getEnd() {
@@ -65,6 +77,7 @@ public class ConnectionLine {
 
     public void setEnd(Vector2i end) {
         points.set(points.size() - 1, end.divide(gridOffset));
+        resetData[1] = end;
     }
 
     public List<Node> getPath() {

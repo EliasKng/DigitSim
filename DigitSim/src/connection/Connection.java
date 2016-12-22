@@ -328,4 +328,8 @@ public class Connection { //Speichert die Verbindungen
     public void resetLastPoint(){
         lastPoint = null;
     }
+    
+    public void resetCon(ConData d){
+        d.connectionLine.reset(connections);
+    }
 }
