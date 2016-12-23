@@ -137,7 +137,7 @@
                     <ToggleButton fx:id="btnSIGNAL" layoutX="118.0" layoutY="101.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/signal.png');" />
                     <ToggleButton fx:id="btnAND21" layoutX="27.0" layoutY="14.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/SUBCIRCUIT.png');" />
                     <ToggleButton fx:id="btnTEXT" layoutX="119.0" layoutY="14.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/Textfeld.png');" />
-                              <ToggleButton fx:id="btnAND211" layoutX="27.0" layoutY="198.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/THUMBSWITCH.png');" />
+                              <ToggleButton fx:id="btnTHUMBSWITCH" layoutX="27.0" layoutY="198.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/THUMBSWITCH.png');" />
                               <Label alignment="CENTER" layoutX="2.0" layoutY="254.0" prefHeight="27.0" prefWidth="110.0" text="THUMBSWITCH" />
                   </children>
                 </AnchorPane>
