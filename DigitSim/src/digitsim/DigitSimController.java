@@ -364,6 +364,10 @@ public class DigitSimController extends Pane{
           elements.add(new Element_THUMBSWITCH(getXAdaptGrid(event), getYAdaptGrid(event), nodeGestures));
           simCanvas.getChildren().add(elements.get(elements.size() -1).getGroup());
       }
+      else if(btnOR.isSelected()){ //7Seg
+          elements.add(new Element_7SEG(getXAdaptGrid(event), getYAdaptGrid(event), nodeGestures));
+          simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
+      }
       else if(btnTEXT.isSelected()){ //Text
           TextInputDialog dialog = new TextInputDialog("");    //Eingabefesnster 
           dialog.setTitle("Textfeld");                            

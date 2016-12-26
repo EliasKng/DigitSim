@@ -133,12 +133,15 @@
                     <Label alignment="CENTER" layoutX="106.0" layoutY="74.0" prefHeight="27.0" prefWidth="85.0" text="TEXTFELD" />
                     <Label alignment="CENTER" layoutX="14.0" layoutY="159.0" prefHeight="27.0" prefWidth="85.0" text="LED" />
                     <Label alignment="CENTER" layoutX="106.0" layoutY="159.0" prefHeight="27.0" prefWidth="85.0" text="SIGNAL" />
+                    <Label alignment="CENTER" layoutX="2.0" layoutY="254.0" prefHeight="27.0" prefWidth="110.0" text="THUMBSWITCH" />
+                    <Label alignment="CENTER" layoutX="94.0" layoutY="274.0" prefHeight="27.0" prefWidth="110.0" text="7 Segment" />
                     <ToggleButton fx:id="btnLED" layoutX="32.0" layoutY="101.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-image: url('/digitsim/data/LED.png');" />
                     <ToggleButton fx:id="btnSIGNAL" layoutX="118.0" layoutY="101.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/signal.png');" />
                     <ToggleButton fx:id="btnAND21" layoutX="27.0" layoutY="14.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/SUBCIRCUIT.png');" />
                     <ToggleButton fx:id="btnTEXT" layoutX="119.0" layoutY="14.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/Textfeld.png');" />
-                              <ToggleButton fx:id="btnTHUMBSWITCH" layoutX="27.0" layoutY="198.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/THUMBSWITCH.png');" />
-                              <Label alignment="CENTER" layoutX="2.0" layoutY="254.0" prefHeight="27.0" prefWidth="110.0" text="THUMBSWITCH" />
+                    <ToggleButton fx:id="btnTHUMBSWITCH" layoutX="27.0" layoutY="198.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/THUMBSWITCH.png');" />
+                    <ToggleButton fx:id="btn7SEG" layoutX="119.0" layoutY="198.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/7Seg.png');" />
+                              
                   </children>
                 </AnchorPane>
               </content>
