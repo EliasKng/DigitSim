@@ -23,8 +23,8 @@ public class Element_7SEG extends Element{
     public static final String TYPE = "7SEG"; //Der Typ des Bausteines
     //Die Elemente aus denen der Baustein zusammengestezt ist
     private Element thisElement = this; //Referenz auf sich selbst
-    private int elementHeight = 120;
-    private int elementWidth = 80;
+    private int elementHeight = 210;
+    private int elementWidth = 164;
     //private ArrayList<Line> segments = new ArrayList<Line>();
             
     //Constructor
@@ -68,17 +68,23 @@ public class Element_7SEG extends Element{
         }
         
         //************Die Segmente der 7SEG anzeige werden hier "Erstellt"
-        Group seg0 = new Group();
-        Line lineSeg0 = Draw.drawLine(pX+18.5, pY+18.5, pX+60.5, pY+18.5, Color.BLACK, 5);
+        Group seg = new Group();
+        Line lineSeg0 = Draw.drawLine(pX+45, pY+21, pX+120, pY+21, Color.BLACK, 5);
         //Rectangle rectSeg0 = new Rectangle(3.535,3.535, Color.RED);
 //        Rectangle rectSeg0 = Draw.drawRectangle(pX+18.5, pY+18.5, 3.535,3.535,0,0,Color.RED,1,0);
 //        rectSeg0.getTransforms().add(new Rotate(45,pX+23,pY+18));
-        Line lineSeg1 = Draw.drawLine(pX+60.5, pY+60.5, pX+60.5, pY+18.5, Color.BLACK, 5);
-        seg0.getChildren().addAll(lineSeg0, lineSeg1);
+        Line lineSeg1 = Draw.drawLine(pX+126, pY+25, pX+126, pY+100, Color.BLACK, 5);
+        Line lineSeg2 = Draw.drawLine(pX+126, pY+110, pX+126, pY+185, Color.BLACK, 5);
+        Line lineSeg3 = Draw.drawLine(pX+45, pY+189, pX+120, pY+189, Color.BLACK, 5);
+        Line lineSeg4 = Draw.drawLine(pX+39, pY+110, pX+39, pY+185, Color.BLACK, 5);
+        Line lineSeg5 = Draw.drawLine(pX+39, pY+25, pX+39, pY+100, Color.BLACK, 5);
+        Line lineSeg6 = Draw.drawLine(pX+45, pY+105, pX+121, pY+105, Color.BLACK, 5);
+        
+        seg.getChildren().addAll(lineSeg0, lineSeg1, lineSeg2, lineSeg3, lineSeg4, lineSeg5, lineSeg6);
 
         //segments.add(seg0);
         
-        grp.getChildren().add(seg0);
+        grp.getChildren().add(seg);
          //Die Hanlder hinzufügenn (Beschreibung der Hander in  DraggableCanvas.java)  
         grp.addEventFilter( MouseEvent.MOUSE_PRESSED, dNodeGestures.getOnMousePressedEventHandler());
         grp.addEventFilter( MouseEvent.MOUSE_DRAGGED, dNodeGestures.getOnMouseDraggedEventHandler());
