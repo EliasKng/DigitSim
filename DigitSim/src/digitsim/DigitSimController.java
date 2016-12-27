@@ -88,6 +88,8 @@ public class DigitSimController extends Pane{
     private ToggleButton btnTEXT;
     @FXML
     private ToggleButton btnTHUMBSWITCH; 
+    @FXML
+    private ToggleButton btn7SEG;
     
     //Constructor (leer)
     public DigitSimController() {
@@ -217,6 +219,7 @@ public class DigitSimController extends Pane{
         btnSIGNAL.setToggleGroup(group);
         btnTEXT.setToggleGroup(group);
         btnTHUMBSWITCH.setToggleGroup(group); 
+        btn7SEG.setToggleGroup(group);
     }
     
     /**
@@ -364,8 +367,8 @@ public class DigitSimController extends Pane{
           elements.add(new Element_THUMBSWITCH(getXAdaptGrid(event), getYAdaptGrid(event), nodeGestures));
           simCanvas.getChildren().add(elements.get(elements.size() -1).getGroup());
       }
-      else if(btnOR.isSelected()){ //7Seg
-          elements.add(new Element_7SEG(getXAdaptGrid(event), getYAdaptGrid(event), nodeGestures));
+      else if(btn7SEG.isSelected()){ //7Seg
+          elements.add(new Element_7SEG(getXAdaptGrid(event), getYAdaptGrid(event), 4, nodeGestures));
           simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
       }
       else if(btnTEXT.isSelected()){ //Text
