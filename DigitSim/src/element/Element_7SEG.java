@@ -17,7 +17,13 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Rotate;
 
-
+/**
+ *
+ * @author Anthony, Niklas und Elias
+ *
+ *TODO: Logik +  Segmente schöner
+ * 
+ */
 public class Element_7SEG extends Element{
     //Globals
     public static final String TYPE = "7SEG"; //Der Typ des Bausteines
@@ -38,7 +44,7 @@ public class Element_7SEG extends Element{
         pY = pY-elementHeight/2;
         numOutputs = 0;
         
-        rec = Draw.drawRectangle(pX, pY, elementWidth, elementHeight, 10, 10, Color.BLACK, Properties.getElementOpacity(), 5);           //das OR zeichnen
+        rec = Draw.drawRectangle(pX, pY, elementWidth, elementHeight, 10, 10, Color.BLACK, Properties.getElementOpacity(), 5);           
         rec.addEventFilter(MouseEvent.MOUSE_ENTERED, NodeGestures.getOverNodeMouseHanlderEnterRec());
         rec.addEventFilter(MouseEvent.MOUSE_EXITED, NodeGestures.getOverNodeMouseHanlderExitRec());
         outputLines.add(Draw.drawLine((pX + 95), (pY + 29.5), (pX + 100), (pY + 29.5), Color.BLACK, 5));
