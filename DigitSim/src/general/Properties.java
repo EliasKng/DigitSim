@@ -34,7 +34,7 @@ public class Properties {
     //Element Stuff
     private static double elementOpacity = 0.4;
     private static int lineWidth = 5;
-    private static boolean visualizeTileCode = true;
+    private static boolean visualizeTileCode = false;
     
     
         

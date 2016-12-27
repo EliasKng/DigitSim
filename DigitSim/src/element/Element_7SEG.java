@@ -51,7 +51,6 @@ public class Element_7SEG extends Element{
         outputLines.get(0).setVisible(false);  //Outputline ist unsichtbaar, muss wegen vererbung aber vorhanden sein!
         
         
-        
         numInputs = pInputs;
         inputs = new int[numInputs];
         Arrays.fill(inputs, 0); //Setzt alle Inputs auf '0
@@ -87,10 +86,10 @@ public class Element_7SEG extends Element{
         Line lineSeg6 = Draw.drawLine(pX+45, pY+105, pX+121, pY+105, Color.BLACK, 5);
         
         seg.getChildren().addAll(lineSeg0, lineSeg1, lineSeg2, lineSeg3, lineSeg4, lineSeg5, lineSeg6);
-
-        //segments.add(seg0);
+        
         
         grp.getChildren().add(seg);
+        rec.toFront();
          //Die Hanlder hinzufügenn (Beschreibung der Hander in  DraggableCanvas.java)  
         grp.addEventFilter( MouseEvent.MOUSE_PRESSED, dNodeGestures.getOnMousePressedEventHandler());
         grp.addEventFilter( MouseEvent.MOUSE_DRAGGED, dNodeGestures.getOnMouseDraggedEventHandler());
