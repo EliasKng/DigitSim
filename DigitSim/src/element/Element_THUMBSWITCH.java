@@ -21,18 +21,21 @@ import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javax.swing.JOptionPane;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+
 
 /**
  * 
  * @author lukas und Millo
  * 
  * überarbeitet lukas (23.12.2016) - outputs erzeugen
- * überarbeitet llukas (25.12.2016) - plus,minus und zählen von 0h - fh
- * lukas (27.12.2016) -zählt jetzt bis eingestellte zah)
+ * überarbeitet lukas (25.12.2016) - plus,minus und zählen von 0h - fh
+ * überarbeitet lukas (27.12.2016) - zählt jetzt bis eingestellte zahl
+ * überarbeitet lukas (02.01.2017) - number passt größe an und outputs gehen
  * TODO: delete wenn zu hohe/niedrige zahl
- * TODO: update()
- * TODO: fontsize anpassen wenn 2stellig
+ * TODO: erzeugt manchmal ne Exeption
+ * TODO: einstellungen -> rebuild
  * 
  */
 
@@ -40,7 +43,7 @@ public class Element_THUMBSWITCH extends Element{
     //Globals
     public static final String TYPE = "THUMBSWITCH"; //Der Typ des Bausteines
     //Die Elemente aus denen der Baustein zusammengestezt ist
-    private Label number;  
+    private Text number;  
     private Rectangle recUp;
     private Rectangle recDown;
     private Label lblUp;
@@ -49,18 +52,22 @@ public class Element_THUMBSWITCH extends Element{
     private String numbString;
     private int numbMax;
     private int numbMin;
-   
+    private Label test;
+    
     
     //Konstruktor   
     public Element_THUMBSWITCH(double pX, double pY, NodeGestures dNodeGestures){ //Kein InputSilder, hat kein input
         
-              
         //Überarbeitet von Elias
         //Der Baustein wird nun (egal bei welcher BausteinWeite/Höhe) plaziert mit der Maus als Mittelpunkt
         pX = pX-elementWidth/2;
         pY = pY-elementHeight/2;
         
-         showProperties();   
+         showProperties();
+         //*********************************************
+         test = Draw.drawLabel(pX, pY + 75, "xx", Color.DARKTURQUOISE, false, 50);
+         //********************************************
+         
         rec = Draw.drawRectangle(pX, pY, elementWidth, elementHeight, 10, 10, Color.BLACK, Properties.getElementOpacity(), 5);           //das Signal zeichnen
         rec.addEventFilter(MouseEvent.MOUSE_ENTERED, NodeGestures.getOverNodeMouseHanlderEnterRec());
         rec.addEventFilter(MouseEvent.MOUSE_EXITED, NodeGestures.getOverNodeMouseHanlderExitRec());
@@ -76,14 +83,17 @@ public class Element_THUMBSWITCH extends Element{
         recUp.setOnMouseClicked(e -> plus());
         recDown.setOnMouseClicked(e -> minus());
         
-       // lblUp = Draw.drawLabel(recUp.getX() + 10, recUp.getY() - 10, "+", Color.BLACK, false, 40);
-       //lblDown = Draw.drawLabel(recDown.getX() + 10, recDown.getY() - 10, "-", Color.BLACK, false, 40);
+       // lblUp = Draw.drawLabel(recUp.getX() + (recUp.getWidth()/4), recUp.getY() - (recUp.getHeight()/2), "+", Color.BLACK, false, 50);
+       // lblDown = Draw.drawLabel(recDown.getX() + (recDown.getWidth()/4), recDown.getY() - (recDown.getHeight()/2), "-", Color.BLACK, false, 50);
         
-        number = Draw.drawLabel((pX + 20), (pY - 15), "0", Color.BLACK, false, 75);  
+        number = Draw.drawText(pX +(elementWidth/4), pY +(elementHeight/1.25) , "0", Color.BLACK, 75);  //elementWidth/height sind hier immernoch gleich
         
-        grp = new Group( number, rec, recUp, recDown);
-                
-         Arrays.fill(outputs, 0); //Setzt alle outputs auf '0'
+        
+        //*********************************************************
+        grp = new Group( number, rec, recUp, recDown, test /*, lblUp, lblDown*/);
+        //***************************************+
+        
+        Arrays.fill(outputs, 0); //Setzt alle outputs auf '0'
             
             for(int i = 0; i < numOutputs; i++){
                 
@@ -97,10 +107,10 @@ public class Element_THUMBSWITCH extends Element{
                 outputLines.add(Draw.drawLine((pX + 85), pY + offsetY, (pX + 90), pY + offsetY, Color.BLACK, 5)); //Linie zeichnen
                 outputLines.get(i).addEventFilter(MouseEvent.MOUSE_ENTERED, NodeGestures.getOverNodeMouseHanlderEnter());
                 outputLines.get(i).addEventFilter(MouseEvent.MOUSE_EXITED, NodeGestures.getOverNodeMouseHanlderExit());
-                outputLines.get(i).addEventFilter(MouseEvent.MOUSE_CLICKED, NodeGestures.getOverOutputMouseHanlderClicked(this, 0));
-                grp.getChildren().add(outputLines.get(i)); //Linie hinzufügen   
-    
+                outputLines.get(i).addEventFilter(MouseEvent.MOUSE_CLICKED, NodeGestures.getOverOutputMouseHanlderClicked(this, i));
+                grp.getChildren().add(outputLines.get(i)); //Linie hinzufügen  
             }
+            
         numInputs = 1; 
         inputs = new int[]{0};
         
@@ -123,7 +133,8 @@ public class Element_THUMBSWITCH extends Element{
             numbInt = numbMin;
         }
         numbString = Integer.toBinaryString(numbInt);
-        setLabel(numbInt);
+        setLabel();
+        test.setText(numbString);
     }
     
     public void minus(){
@@ -133,60 +144,21 @@ public class Element_THUMBSWITCH extends Element{
             numbInt = numbMax;
         }
         numbString = Integer.toBinaryString(numbInt);
-        setLabel(numbInt);
+        setLabel();
+        test.setText(numbString);
     }
 
-    public void setLabel(int x){
-        x = x - numbMin;
+    public void setLabel(){
+       int x = numbInt - numbMin;
         number.setText(Integer.toHexString(x));
-    }
-    
-    @Override
-    public void update() {                          //hier werden den outputs ihre werte zugewiesen
-        for (int i = 0; i <= numOutputs; i++) {    //jedem ausgang wird "seine" stelle aus der binarynummer zugewiesen mit charAt()
-            ///outputs[i] = number.getText().charAt(i);
-          // outputs[i] = numbString.charAt(i);
-        } 
-        //char[] charArray = numbString.toCharArray();      
-       // outputs[0] = numbString.charAt(0);
-       // outputs[1] = numbString.charAt(1);
-        
-    }
-
-    @Override
-    public void showProperties() {
-      TextInputDialog dialog = new TextInputDialog("2");
-        dialog.setTitle("Thumbswitch");
-        dialog.setHeaderText("Ausgänge");
-        dialog.setContentText("Anzahl:");
-      
-      Optional<String> result = dialog.showAndWait();
-          
-          if (Integer.parseInt(result.get()) >= 9){
-            Alert alert = new Alert(AlertType.INFORMATION);
-            alert.setTitle("Thumbswitch");
-            alert.setHeaderText("Ausgänge");
-            alert.setContentText("Maximal 8 Ausgänge!");
-            alert.showAndWait();
-            
-           //************
+        if(number.getText().length() != 1){
+            number.setFont(Font.font (number.getFont().getName(), 60));
+            number.setX(getX() + (elementWidth/7));
+        }else{
+            number.setFont(Font.font (number.getFont().getName(), 75));
+            number.setX(getX() + (elementWidth/4));
         }
-          else if (Integer.parseInt(result.get()) <2){
-            Alert alert = new Alert(AlertType.INFORMATION);
-            alert.setTitle("Thumbswitch");
-            alert.setHeaderText("Ausgänge");
-            alert.setContentText("Minimum 2 Ausgänge!");
-            alert.showAndWait();
-            //*******************+
-        }
-          else if (result.isPresent()){
-            numOutputs = Integer.parseInt(result.get());
-            outputs = new int[Integer.parseInt(result.get()) - 1];
-            
-            } 
-         
-        adjustNumbLength();
-    }     
+    }
     
     public void adjustNumbLength(){
         
@@ -235,6 +207,63 @@ public class Element_THUMBSWITCH extends Element{
         
          numbString = Integer.toBinaryString(numbInt);
     }
+    
+    @Override
+    public void update() {   //hier werden den outputs ihre werte zugewiesen    <ThisTookMeWayTooLong.png>
+        
+        StringBuilder builder = new StringBuilder(numbString);       //NumbString wird reversed(umgekehrt),  
+        String reversedNumbString = builder.reverse().toString();    // da .charAt() von links nach rechts zählt
+        
+        for(int i = 0; i < numOutputs; i++){   
+                                                                      // es wird nacheinander jede Stelle der ReversedNumbString durchgegangen                                                      
+            if(Character.getNumericValue(reversedNumbString.charAt(i)) == 1){ //Wenn die Stelle in unserer binären String 1 ist, setzen wir logischerweise auch                 
+                outputs[i] = 1;                                      //den Output auf 1 und die Linie rot
+                outputLines.get(i).setStroke(Color.RED);
+            }else{
+                outputs[i] = 0;
+                outputLines.get(i).setStroke(Color.BLUE);
+            }
+        }
+    }
+    
+       
+
+    @Override
+    public void showProperties() {      
+      TextInputDialog dialog = new TextInputDialog("2");
+        dialog.setTitle("Thumbswitch");
+        dialog.setHeaderText("Ausgänge");
+        dialog.setContentText("Anzahl:");
+      
+      Optional<String> result = dialog.showAndWait();
+          
+          if (Integer.parseInt(result.get()) > 8){
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Thumbswitch");
+            alert.setHeaderText("Ausgänge");
+            alert.setContentText("Maximal 8 Ausgänge!");
+            alert.showAndWait();
+            
+           //************
+        }
+           if (Integer.parseInt(result.get()) < 2){
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Thumbswitch");
+            alert.setHeaderText("Ausgänge");
+            alert.setContentText("Minimum 2 Ausgänge!");
+            alert.showAndWait();
+            //*******************+
+        } 
+           if (result.isPresent()){
+            numOutputs = Integer.parseInt(result.get());
+            outputs = new int[Integer.parseInt(result.get()) ];
+            
+        } 
+         
+        adjustNumbLength();
+    }     
+    
+    
 }
     
     
