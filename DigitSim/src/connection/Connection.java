@@ -14,12 +14,14 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import pathFinder.Vector2i;
 
+
+
 /**
  *
  * @author Tim
  */
 public class Connection { //Speichert die Verbindungen
-
+    
     private DigitSimController dsController;
     private int tempIndexFirstElement;  //temporäre Variablen (siehe    saveData(){...}  )
     private boolean tempTypeFirst;
@@ -29,7 +31,10 @@ public class Connection { //Speichert die Verbindungen
     private int tempIndexSecond;      
     private boolean tempFirstElementSet = false;
     private Line conLine = null;
-
+    private ConnectionType tempConnectionType;  //Legt den Typ der Verbindung fest (Siehe ConnectionType Klasse
+    private ConnectionType tempECTypeFirst;     //Legt den Typ des zuerst angeklickten Elementes fest
+    private ConnectionType tempECTypeSecond;    //Legt den Typ des als zweites angeklickten Elementes fest
+    
     public Connection(DigitSimController pDSController) {
         dsController = pDSController;
     }
@@ -37,6 +42,7 @@ public class Connection { //Speichert die Verbindungen
     // -Bearbeitet von Tim 21.11.16
     public class ConData // Daten einer Verbindung
     {
+        private ConnectionType connectionType;
         public int indexFirstElement;       // index des ersten elements im array
         public boolean typeFirst;           // ein oder ausgang
         public int indexFirst;              // index des jeweiligen ein oder ausgangs am ersten element
@@ -262,8 +268,9 @@ public class Connection { //Speichert die Verbindungen
      * @param isInput   Ist true wenn auf einen Input geklickt wurde und false wenn auf einen Output geklickt wurde
      * @param index     Gibt an, um welchen Index des IN/Output es sich handelt (index = 0 -> oberster in / output; index = 1 -> zweitoberster in /Output .....)   
      * @param event     Das MouseEvent wird übergeben um eine direkte Verbindungslinie zu zeichnen
+     * @param cEType    Kann entweder E oder C (Elemend oder ConnectionLine) sein. Legt also einfach nur den Typ des angeklickten Elementes oder ConnectionLine 
      */
-    public void saveData(Element element, boolean isInput, int index, MouseEvent event) {
+    public void saveData(Element element, boolean isInput, int index, MouseEvent event, ConnectionType cEType) {
         ArrayList<Element> elements = dsController.getElements();
         
         if(!tempFirstElementSet) {  // -> Dies ist das erste Element der Verbindungslinie, das angeklickt wird 
@@ -272,6 +279,8 @@ public class Connection { //Speichert die Verbindungen
             tempIndexFirst = index;
             tempFirstElementSet = true; //Wenn diese Funktion nochmal aufgerufen wird (wenn das Ender der Verbindungslinie angeklickt wurde) soll sie dies hier nicht noch einmal durchlaufen, sondern bei "else" anfangen
             drawDirectLine(event, isInput, elements);
+            tempECTypeFirst = cEType;
+            
         } else {    // -> Dies ist das zweite Element der Verbindungslinie, das angeklickt wird -> Die Verbindung kann "gelegt" werden          
             dsController.getSimCanvas().getChildren().remove(conLine);//Entfernt die Verbindungslinie, die der Maus gefolgt hat
             conLine = null;
@@ -280,6 +289,7 @@ public class Connection { //Speichert die Verbindungen
             tempIndexSecond = index;
             tempIndexSecond = index;
             tempFirstElementSet = false;
+            tempECTypeSecond = cEType;
             addConnection();
         }
     }
@@ -331,5 +341,25 @@ public class Connection { //Speichert die Verbindungen
     
     public void resetCon(ConData d){
         d.connectionLine.reset(connections);
+    }
+    
+    /**
+     * Erstellt den Typ der Connection
+     * @Author Elias
+     */
+    private void processConnectionType() {
+        if(tempECTypeFirst == ConnectionType.E) {
+            if(tempECTypeSecond == ConnectionType.E) {
+                tempConnectionType = ConnectionType.EE;
+            } else {
+                tempConnectionType = ConnectionType.EC;
+            }
+        } else {
+            if(tempECTypeSecond == ConnectionType.C) {
+                tempConnectionType = ConnectionType.CC;
+            } else {
+                tempConnectionType = ConnectionType.EC;
+            }
+        }
     }
 }

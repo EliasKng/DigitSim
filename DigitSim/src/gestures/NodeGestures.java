@@ -6,6 +6,7 @@
 package Gestures;
 
 import connection.Connection.ConData;
+import connection.ConnectionType;
 import digitsim.DigitSimController;
 import element.Element;
 import general.Properties;
@@ -391,7 +392,7 @@ public class NodeGestures {
         return new EventHandler<MouseEvent>(){
             @Override
             public void handle(MouseEvent event){
-                DigitSimController.getAllConnections().saveData(e, true, inputIndex, event);
+                DigitSimController.getAllConnections().saveData(e, true, inputIndex, event, ConnectionType.E);
             }
         };
     }
@@ -400,7 +401,7 @@ public class NodeGestures {
         return new EventHandler<MouseEvent>(){
             @Override
             public void handle(MouseEvent event){
-                DigitSimController.getAllConnections().saveData(e, false, outputIndex, event);
+                DigitSimController.getAllConnections().saveData(e, false, outputIndex, event, ConnectionType.E);
             }
         };
     }
