@@ -461,16 +461,26 @@ public class DigitSimController extends Pane{
               simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
               simCanvas.getChildren().remove(e.getGroup());
               elements.remove(e);    
+          }else if(e.getClass().equals(Element_THUMBSWITCH.class)){
+              elements.add(new Element_THUMBSWITCH(e.getX() + (e.getWidth() / 2), e.getY() + (e.getHeight() / 2), nodeGestures));
+              simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
+              simCanvas.getChildren().remove(e.getGroup());
+              elements.remove(e);    
           }
     }
-    
+       
     public void rebuildElement_TEXT(Element e, int fontSize, String content, Color color){
               elements.add(new Element_TEXT(e.getX(), e.getY(), fontSize, content, color, nodeGestures));
               simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
               simCanvas.getChildren().remove(e.getGroup());
               elements.remove(e); 
     }
-        
+    
+    public void closeElement_THUMBSWITCH(Element e){
+            simCanvas.getChildren().remove(e.getGroup());
+            elements.remove(e); 
+    }
+    
     public void run(){
         elements.forEach(e -> e.update()); //Geht alle Elemente durch und Updaten sie. ACHTUNG: Lambda schreibweise! Infos -> https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html   
         allConnections.update(); //Alle Verbindungen updaten

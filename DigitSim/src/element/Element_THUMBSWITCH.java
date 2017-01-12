@@ -13,6 +13,8 @@ import static element.Element.*;
 import general.Properties;
 import java.util.Arrays;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.Group;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -53,7 +55,8 @@ public class Element_THUMBSWITCH extends Element{
     private int numbMax;
     private int numbMin;
     private Label test;
-    
+    private Element thisEl = this;
+    private boolean y;
     
     //Konstruktor   
     public Element_THUMBSWITCH(double pX, double pY, NodeGestures dNodeGestures){ //Kein InputSilder, hat kein input
@@ -63,9 +66,9 @@ public class Element_THUMBSWITCH extends Element{
         pX = pX-elementWidth/2;
         pY = pY-elementHeight/2;
         
-         showProperties();
+         properties();
          //*********************************************
-         test = Draw.drawLabel(pX, pY + 75, "xx", Color.DARKTURQUOISE, false, 50);
+        // test = Draw.drawLabel(pX, pY + 75, "xx", Color.DARKTURQUOISE, false, 50);
          //********************************************
          
         rec = Draw.drawRectangle(pX, pY, elementWidth, elementHeight, 10, 10, Color.BLACK, Properties.getElementOpacity(), 5);           //das Signal zeichnen
@@ -83,17 +86,17 @@ public class Element_THUMBSWITCH extends Element{
         recUp.setOnMouseClicked(e -> plus());
         recDown.setOnMouseClicked(e -> minus());
         
-       // lblUp = Draw.drawLabel(recUp.getX() + (recUp.getWidth()/4), recUp.getY() - (recUp.getHeight()/2), "+", Color.BLACK, false, 50);
-       // lblDown = Draw.drawLabel(recDown.getX() + (recDown.getWidth()/4), recDown.getY() - (recDown.getHeight()/2), "-", Color.BLACK, false, 50);
+       // lblUp = Draw.drawLabel(recUp.getX() + (recUp.getWidth()/6), recUp.getY() - (recUp.getHeight()/1.5), "+", Color.BLACK, false, 50);
+        //lblDown = Draw.drawLabel(recDown.getX() + (recDown.getWidth()/6), recDown.getY() - (recDown.getHeight() /1.5), "-", Color.BLACK, false, 50);
         
         number = Draw.drawText(pX +(elementWidth/4), pY +(elementHeight/1.25) , "0", Color.BLACK, 75);  //elementWidth/height sind hier immernoch gleich
         
         
         //*********************************************************
-        grp = new Group( number, rec, recUp, recDown, test /*, lblUp, lblDown*/);
+        grp = new Group( number, rec, recUp, recDown /*,lblUp, lblDown */);
         //***************************************+
         
-        Arrays.fill(outputs, 0); //Setzt alle outputs auf '0'
+         Arrays.fill(outputs, 0); //Setzt alle outputs auf '0'
             
             for(int i = 0; i < numOutputs; i++){
                 
@@ -134,7 +137,7 @@ public class Element_THUMBSWITCH extends Element{
         }
         numbString = Integer.toBinaryString(numbInt);
         setLabel();
-        test.setText(numbString);
+       // test.setText(numbString);
     }
     
     public void minus(){
@@ -145,7 +148,7 @@ public class Element_THUMBSWITCH extends Element{
         }
         numbString = Integer.toBinaryString(numbInt);
         setLabel();
-        test.setText(numbString);
+       // test.setText(numbString);
     }
 
     public void setLabel(){
@@ -160,7 +163,7 @@ public class Element_THUMBSWITCH extends Element{
         }
     }
     
-    public void adjustNumbLength(){
+    public void adjustNumbLength(){ //wird beim erstellen und ändern aufgerufen
         
          if(numOutputs == 2){
              
@@ -208,6 +211,68 @@ public class Element_THUMBSWITCH extends Element{
          numbString = Integer.toBinaryString(numbInt);
     }
     
+    public void properties(){
+    TextInputDialog dialog = new TextInputDialog("2");
+        dialog.setTitle("Thumbswitch");
+        dialog.setHeaderText("Ausgänge");
+        dialog.setContentText("Anzahl:");
+       
+      
+      //Optional<String> result = dialog.showAndWait();
+        String result;
+        dialog.showAndWait();
+               
+         result = dialog.getResult();
+         boolean x = true;
+         
+         while(x == true){
+            
+            dialog.setOnCloseRequest(e -> {
+                y = true;
+            });
+          if (Integer.parseInt(result) > 4){
+              
+              Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Thumbswitch");
+              alert.setHeaderText("Ausgänge");
+              alert.setContentText("Maximal 4 Ausgänge!");
+              
+              alert.showAndWait();
+              dialog.showAndWait();
+              result = dialog.getResult();
+              
+              x = true;
+          
+            }else if (Integer.parseInt(result) < 2){
+               
+               Alert alert = new Alert(AlertType.INFORMATION);
+               alert.setTitle("Thumbswitch");
+               alert.setHeaderText("Ausgänge");
+               alert.setContentText("Minimum 2 Ausgänge!");
+               
+               alert.showAndWait();
+              dialog.showAndWait();
+              result = dialog.getResult();
+               
+              x = true;
+           
+            //*******************+
+            }/*else if(y == true){
+               numOutputs = 2;
+               outputs = new int[2];
+               x = false;
+              DigitSimController.getReference().closeElement_THUMBSWITCH(thisEl);
+            }*/else {
+              numOutputs = Integer.parseInt(result);
+              outputs = new int[Integer.parseInt(result) ];
+              x = false;
+            
+            } 
+         
+        } 
+        adjustNumbLength();
+    }
+    
     @Override
     public void update() {   //hier werden den outputs ihre werte zugewiesen    <ThisTookMeWayTooLong.png>
         
@@ -226,45 +291,13 @@ public class Element_THUMBSWITCH extends Element{
         }
     }
     
-       
-
     @Override
-    public void showProperties() {      
-      TextInputDialog dialog = new TextInputDialog("2");
-        dialog.setTitle("Thumbswitch");
-        dialog.setHeaderText("Ausgänge");
-        dialog.setContentText("Anzahl:");
-      
-      Optional<String> result = dialog.showAndWait();
-          
-          if (Integer.parseInt(result.get()) > 8){
-            Alert alert = new Alert(AlertType.INFORMATION);
-            alert.setTitle("Thumbswitch");
-            alert.setHeaderText("Ausgänge");
-            alert.setContentText("Maximal 8 Ausgänge!");
-            alert.showAndWait();
-            
-           //************
-        }
-           if (Integer.parseInt(result.get()) < 2){
-            Alert alert = new Alert(AlertType.INFORMATION);
-            alert.setTitle("Thumbswitch");
-            alert.setHeaderText("Ausgänge");
-            alert.setContentText("Minimum 2 Ausgänge!");
-            alert.showAndWait();
-            //*******************+
-        } 
-           if (result.isPresent()){
-            numOutputs = Integer.parseInt(result.get());
-            outputs = new int[Integer.parseInt(result.get()) ];
-            
-        } 
-         
-        adjustNumbLength();
-    }     
-    
+    public void showProperties() {   
+       DigitSimController.getReference().rebuildElement(thisEl, 0);
+    } 
     
 }
+  
     
     
 
