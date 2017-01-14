@@ -44,7 +44,7 @@ public class TileCode {
             for(int k = eX-1; k < (eX + eWidth+1); k++) {
                 for(int o = eY-1; o < (eY + eHeight+1); o++) {
                     int value;
-                    if((k >= eX && k < (eX+eWidth)) && (o >= eY && o < (eY + eHeight))) {
+                    if((k >= eX && k < (eX+eWidth)) && (o >= eY-1 && o < (eY + eHeight))) {
                         if(k == eX || k == (eX + eWidth -1)) {
                             value = 2;  //IO Bereich eines Elements
                             if(visualize)
