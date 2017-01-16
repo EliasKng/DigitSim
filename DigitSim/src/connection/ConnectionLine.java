@@ -33,8 +33,6 @@ public class ConnectionLine {
     private final int gridOffset = Properties.GetGridOffset();
     private Color currentColor = Color.GREY; //Standart: Schwarz
     private ConData data;
-    private List<AnchorPoint> anchorPoints; //Vorgegebene Punkte, durch welche die Linie verlaufen muss
-    
     
     
     public ConnectionLine(Vector2i _start, Vector2i _end, DigitSimController d) {
