@@ -11,8 +11,6 @@ import digitsim.DigitSimController;
 import toolbox.Draw;
 import general.Properties;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import javafx.scene.Group;
 import javafx.scene.input.MouseEvent;
@@ -29,23 +27,15 @@ public class ConnectionLine {
     private Group group = new Group();
     private DigitSimController dsc;
     private PathFinder pathFinder = null;
-    private List<Node> nodePath;
-    private List<List<Node>> pathParts; //Gibt die einzelnen "Teile" des Paths an (von anchorPoint zu anchorPoint)
+    private List<Node> path;
     private Vector2i[] resetData = new Vector2i[2];
     private ArrayList<Vector2i> points = new ArrayList<>();
     private final int gridOffset = Properties.GetGridOffset();
     private Color currentColor = Color.GREY; //Standart: Schwarz
     private ConData data;
-    private List<AnchorPoint> anchorPoints = new ArrayList(); //Vorgegebene Punkte, durch welche die Linie verlaufen muss
+    private List<AnchorPoint> anchorPoints; //Vorgegebene Punkte, durch welche die Linie verlaufen muss
     
-    private Comparator<AnchorPoint> anchorPointSorter = new Comparator<AnchorPoint>() {
-        @Override
-        public int compare(AnchorPoint aP0, AnchorPoint aP1) {
-            if(aP1.getIndex() < aP0.getIndex()) return +1;
-            if(aP1.getIndex() > aP0.getIndex()) return -1;
-            return 0;
-        }
-    };
+    
     
     public ConnectionLine(Vector2i _start, Vector2i _end, DigitSimController d) {
         resetData[0] = _start;
@@ -92,8 +82,8 @@ public class ConnectionLine {
         resetData[1] = end;
     }
 
-    public List<Node> getNodePath() {
-        return nodePath;
+    public List<Node> getPath() {
+        return path;
     }
 
     public Group getGroup() {
@@ -123,12 +113,6 @@ public class ConnectionLine {
         anchorPoints.add(aP);
     }
     
-    public void addAnchorPoint(AnchorPoint aP, int index) {
-        incrementIndexFrom(index);
-        anchorPoints.add(aP);
-        Collections.sort(anchorPoints, anchorPointSorter);  
-    }
-    
     public AnchorPoint getAnchorPoint(int index) {
         return anchorPoints.get(index);
     }
@@ -147,9 +131,9 @@ public class ConnectionLine {
         
         if(!directLine) {
             for(int i = 0; i < points.size() - 1; i++){
-                nodePath = pathFinder.findPath(points.get(i), points.get(i + 1), dsc.getElements(), connections);
-                if(nodePath != null) {
-                     for(Node currentNode : nodePath) {
+                path = pathFinder.findPath(points.get(i), points.get(i + 1), dsc.getElements(), connections);
+                if(path != null) {
+                     for(Node currentNode : path) {
                          if(currentNode.parent != null) {  
                             int thisX = currentNode.tile.getX() * gridOffset;
                             int thisY = currentNode.tile.getY() * gridOffset;
@@ -204,47 +188,6 @@ public class ConnectionLine {
         for(javafx.scene.Node n : group.getChildren()){
             Line l = (Line) n;
             l.setStroke(currentColor);
-        }
-    }
-    
-    /**
-     * Erhöht den Index der AnchorPoints list ab einem gewissen Index
-     * @param index Ab diesem Index wird inkrementiert (dieser eingeschlossen)
-     */
-    private void incrementIndexFrom(int index) {
-        int aPLL = anchorPoints.size();  //anchorPointsListLength
-        for(int i = index; i < aPLL; i++) {
-            AnchorPoint aP = anchorPoints.get(i);
-            aP.incrementIndex();
-            anchorPoints.set(i, aP);
-        }
-    }
-    
-    /**
-     * Testet den anchorPointSorter (oben beschrieben) auf seine Funktionalität
-     */
-    public void testTheSorter() {
-        anchorPoints.add(new AnchorPoint(3,new Vector2i(0,0)));
-        anchorPoints.add(new AnchorPoint(2,new Vector2i(0,0)));
-        anchorPoints.add(new AnchorPoint(1,new Vector2i(0,0)));
-        anchorPoints.add(new AnchorPoint(5,new Vector2i(0,0)));
-        anchorPoints.add(new AnchorPoint(4,new Vector2i(0,0)));
-        anchorPoints.add(new AnchorPoint(6,new Vector2i(0,0)));
-        
-        
-        
-        int c=0;
-        for(AnchorPoint aP : anchorPoints) {
-            System.out.println("aP#" +c +": " +aP.getIndex());
-            c++;
-        }
-        
-        Collections.sort(anchorPoints, anchorPointSorter);
-        
-        c=0;
-        for(AnchorPoint aP : anchorPoints) {
-            System.out.println("aP#" +c +": " +aP.getIndex());
-            c++;
         }
     }
 }

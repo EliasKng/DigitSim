@@ -27,10 +27,6 @@ public class AnchorPoint {
     public void setIndex(int index) {
         this.index = index;
     }
-    
-    public void incrementIndex() {
-        this.index++;
-    }
 
     public Vector2i getCoords() {
         return coords;
