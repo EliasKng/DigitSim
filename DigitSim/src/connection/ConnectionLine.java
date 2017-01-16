@@ -100,30 +100,6 @@ public class ConnectionLine {
     public void removePoint(Vector2i vec){
         points.remove(vec);
     }
-
-    public List<AnchorPoint> getAnchorPoints() {
-        return anchorPoints;
-    }
-
-    public void setAnchorPoints(List<AnchorPoint> anchorPoints) {
-        this.anchorPoints = anchorPoints;
-    }
-    
-    public void addAnchorPoint(AnchorPoint aP) {
-        anchorPoints.add(aP);
-    }
-    
-    public AnchorPoint getAnchorPoint(int index) {
-        return anchorPoints.get(index);
-    }
-    
-    public void removeAnchorPoints(AnchorPoint aP) {
-        anchorPoints.remove(aP);
-    }
-    
-    public void removeAnchorPoints(int index) {
-        anchorPoints.remove(index);
-    }
     
     
     public void update(boolean directLine, ArrayList<Connection.ConData> connections) {
@@ -145,9 +121,9 @@ public class ConnectionLine {
                         }
                     }
             
-                } else {
-                    group.getChildren().add(Draw.drawLine(points.get(0).getX() * gridOffset + 10.5, points.get(0).getY()  * gridOffset + 10.5, points.get(points.size() - 1).getX() * gridOffset + 10.5 ,points.get(points.size() - 1).getY() * gridOffset + 10.5, currentColor,  Properties.getLineWidth()));
-                }
+            } else {
+                group.getChildren().add(Draw.drawLine(points.get(0).getX() * gridOffset + 10.5, points.get(0).getY()  * gridOffset + 10.5, points.get(points.size() - 1).getX() * gridOffset + 10.5 ,points.get(points.size() - 1).getY() * gridOffset + 10.5, currentColor,  Properties.getLineWidth()));
+            }
             }
             group.addEventFilter(MouseEvent.MOUSE_ENTERED, NodeGestures.getOverNodeMouseHanlderEnterLineGrp());
             group.addEventFilter(MouseEvent.MOUSE_EXITED, NodeGestures.getOverNodeMouseHanlderExitLineGrp());
