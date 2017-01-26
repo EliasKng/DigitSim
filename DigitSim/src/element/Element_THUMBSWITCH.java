@@ -4,17 +4,12 @@ Thumbswitch von Lukas und Millo
 package element;
 
 //Importe
-import javafx.scene.shape.*;
 import toolbox.Draw;
-import toolbox.GenFunctions;
 import Gestures.NodeGestures;
 import digitsim.DigitSimController;
 import static element.Element.*;
 import general.Properties;
 import java.util.Arrays;
-import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.scene.Group;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -86,14 +81,16 @@ public class Element_THUMBSWITCH extends Element{
         recUp.setOnMouseClicked(e -> plus());
         recDown.setOnMouseClicked(e -> minus());
         
-       // lblUp = Draw.drawLabel(recUp.getX() + (recUp.getWidth()/6), recUp.getY() - (recUp.getHeight()/1.5), "+", Color.BLACK, false, 50);
-        //lblDown = Draw.drawLabel(recDown.getX() + (recDown.getWidth()/6), recDown.getY() - (recDown.getHeight() /1.5), "-", Color.BLACK, false, 50);
+       lblUp = Draw.drawLabel(recUp.getX() + (recUp.getWidth()/6) - 2, recUp.getY() - (recUp.getHeight()/1.5) + 8, "+", Color.BLACK, false, 40);
+       lblDown = Draw.drawLabel(recDown.getX() + (recDown.getWidth()/6) + 1, recDown.getY() - (recDown.getHeight() /1.5), "-", Color.BLACK, false, 50);
+       lblUp.setMouseTransparent(true);
+       lblDown.setMouseTransparent(true);
         
-        number = Draw.drawText(pX +(elementWidth/4), pY +(elementHeight/1.25) , "0", Color.BLACK, 75);  //elementWidth/height sind hier immernoch gleich
+        number = Draw.drawText(pX +(elementWidth/4) - 2, pY +(elementHeight/1.25) , "0", Color.BLACK, 75);  //elementWidth/height sind hier immernoch gleich
         
         
         //*********************************************************
-        grp = new Group( number, rec, recUp, recDown /*,lblUp, lblDown */);
+        grp = new Group( number, rec, recUp, recDown ,lblUp, lblDown );
         //***************************************+
         
          Arrays.fill(outputs, 0); //Setzt alle outputs auf '0'
@@ -153,7 +150,7 @@ public class Element_THUMBSWITCH extends Element{
 
     public void setLabel(){
        int x = numbInt - numbMin;
-        number.setText(Integer.toHexString(x));
+        number.setText(Integer.toHexString(x).toUpperCase());
         if(number.getText().length() != 1){
             number.setFont(Font.font (number.getFont().getName(), 60));
             number.setX(getX() + (elementWidth/7));

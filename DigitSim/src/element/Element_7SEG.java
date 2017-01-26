@@ -106,19 +106,6 @@ public class Element_7SEG extends Element{
                 inputLines.get(i).setStroke(Color.RED);
             }
         }
-        boolean logic = false;
-        for(int i = 0; i < numInputs; i++){ //Eingänge durchiterieren & Logik überprüfen
-            if(inputs[i] == 1){
-                logic = true;
-            }
-        }
-        if(logic){                             
-            outputs[0] = 1;
-            outputLines.get(0).setStroke(Color.RED);
-        }else{
-            outputs[0] = 0;
-            outputLines.get(0).setStroke(Color.BLUE);
-        }  
     }
     
     @Override
