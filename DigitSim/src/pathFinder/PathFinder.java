@@ -86,9 +86,9 @@ public class PathFinder {
                 double hCost = getManhattanDistance(a, goal);
                 Node node = new Node(a,current, gCost, hCost);
                 
-                if(isDirectionChanged(current, node, start)) {
-                    node.fCost++;
-                }
+//                if(isDirectionChanged(current, node, start)) {
+//                    node.fCost++;
+//                }
                 if(TileCode.isTileInIOArea(x,xi,y,yi)) {
                     node.fCost +=50;
                 }
@@ -112,6 +112,7 @@ public class PathFinder {
     
     private boolean isDirectionChanged(Node current, Node node, Vector2i start) {
         if(current.parent != null) {
+            
             int parentX = current.parent.tile.getX();
             int parentY = current.parent.tile.getY();
             int currentX = current.tile.getX();
@@ -119,22 +120,22 @@ public class PathFinder {
             int nodeX = node.tile.getX();
             int nodeY = node.tile.getY(); 
             
-//            System.out.println("parentX: \t" +parentX);
-//            System.out.println("parentY: \t" +parentY);
-//            System.out.println("currentX: \t" +currentX);
-//            System.out.println("currentY: \t" +currentY);
-//            System.out.println("nodeX: \t\t" +nodeX);
-//            System.out.println("nodeY: \t\t" +nodeY);
+            System.out.println("parentX: \t" +parentX);
+            System.out.println("parentY: \t" +parentY);
+            System.out.println("currentX: \t" +currentX);
+            System.out.println("currentY: \t" +currentY);
+            System.out.println("nodeX: \t\t" +nodeX);
+            System.out.println("nodeY: \t\t" +nodeY);
             
             if(((parentX == currentX) && (parentX == nodeX))    ||    ((parentY == currentY) && (parentY == nodeY))) {
-//                System.out.println("Direction Stayed");
+                System.out.println("Direction Stayed");
                 return false;
             } else {
-//                System.out.println("Direction CHanged");
+                System.out.println("Direction CHanged");
                 return true;
             }
         }
-//        System.out.println("No Parent");
+        System.out.println("No Parent");
         return false;
     }
     

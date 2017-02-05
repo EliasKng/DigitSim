@@ -93,6 +93,7 @@ public class ConnectionLine {
         Vector2i temp = points.get(points.size() - 1);
         points.set(points.size() - 1, vec);
         points.add(temp);
+        System.out.println("addPoint ConnectionLine-Class");
     }
     
     public void removePoint(Vector2i vec){
