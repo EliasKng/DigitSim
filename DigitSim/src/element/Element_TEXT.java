@@ -40,7 +40,7 @@ import javafx.stage.StageStyle;
 public class Element_TEXT extends Element{
    
 //Globals
-    public static final String TYPE = "TEXT"; //Der Typ des Bausteines
+    public static final Type TYPE = Type.TEXT; //Der Typ des Bausteines
     //Die Elemente aus denen der Baustein zusammengestezt ist
     private Text text;  
     private Element thisEl = this;

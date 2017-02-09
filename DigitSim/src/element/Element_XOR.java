@@ -25,7 +25,7 @@ import javafx.scene.paint.Color;
 public class Element_XOR extends Element{
 
     //Globals
-    public static final String TYPE = "XOR"; //Der Typ des Bausteines
+    public static final Type TYPE = Type.XOR; //Der Typ des Bausteines
     //Die Elemente aus denen der Baustein zusammengestezt ist
     private Label lbl;
     private Label lbl2;

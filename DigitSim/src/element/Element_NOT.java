@@ -25,7 +25,7 @@ import javax.swing.JOptionPane;
 public class Element_NOT extends Element{
 
     //Globals
-    public static final String TYPE = "NOT"; //Der Typ des Bausteines
+    public static final Type TYPE = Type.NOT; //Der Typ des Bausteines
     //Die Elemente aus denen der Baustein zusammengestezt ist
     private Label lbl;
     private Circle cOutput;

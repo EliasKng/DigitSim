@@ -27,7 +27,7 @@ import javafx.scene.paint.Color;
 public class Element_XNOR extends Element{
 
     //Globals
-    public static final String TYPE = "XNOR"; //Der Typ des Bausteines
+    public static final Type TYPE = Type.XNOR;; //Der Typ des Bausteines
    //Die Elemente aus denen der Baustein zusammengestezt ist
     private Label lbl;
     private Element thisElement = this; //Referenz auf sich selbst

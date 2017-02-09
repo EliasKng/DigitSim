@@ -25,7 +25,7 @@ import javax.swing.JOptionPane;
  */
 public class Element_SIGNAL extends Element{
 //Globals
-    public static final String TYPE = "SIGNAL"; //Der Typ des Bausteines
+    public static final Type TYPE = Type.SIGNAL; //Der Typ des Bausteines
     //Die Elemente aus denen der Baustein zusammengestezt ist
     private Label number1;  
     private Label number2;  //Wir brauchen 2 Labels, da es ansonsten nicht Thread sicher ist

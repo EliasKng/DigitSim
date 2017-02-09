@@ -28,7 +28,7 @@ import javafx.scene.shape.Line;
 public class Element_NOR extends Element{
 
     //Globals
-    public static final String TYPE = "NOR"; //Der Typ des Bausteines
+    public static final Type TYPE = Type.NOR; //Der Typ des Bausteines
     //Die Elemente aus denen der Baustein zusammengestezt ist
     private Label lbl;
     private Label lbl2;

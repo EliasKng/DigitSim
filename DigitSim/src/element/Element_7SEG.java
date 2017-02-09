@@ -26,7 +26,7 @@ import javafx.scene.transform.Rotate;
  */
 public class Element_7SEG extends Element{
     //Globals
-    public static final String TYPE = "7SEG"; //Der Typ des Bausteines
+    public static final Type TYPE = Type.SEVENSEG;
     //Die Elemente aus denen der Baustein zusammengestezt ist
     private Element thisElement = this; //Referenz auf sich selbst
     private int elementHeight = 210;

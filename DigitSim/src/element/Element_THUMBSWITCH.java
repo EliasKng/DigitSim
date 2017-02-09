@@ -37,8 +37,7 @@ import javafx.scene.text.Text;
  */
 
 public class Element_THUMBSWITCH extends Element{
-    //Globals
-    public static final String TYPE = "THUMBSWITCH"; //Der Typ des Bausteines
+    public static final Type TYPE = Type.THUMBSWITCH; //Der Typ des Bausteines
     //Die Elemente aus denen der Baustein zusammengestezt ist
     private Text number;  
     private Rectangle recUp;

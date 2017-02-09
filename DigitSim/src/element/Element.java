@@ -21,9 +21,9 @@ import javafx.scene.shape.Rectangle;
  * Die Klasse ist die Mutterklasse/Mainclass für die Elemente
  * Alle zukünftigen Elemente müssen von dieser Klasse erben und die vorgeschriebenen Methoden implementieren. ALs Beispiel kann z.b das Element_AND genutzt werden!
  */
-public abstract class Element { //Abstakte Klasse, nur zur Vererbung, es kann kein direktes Object dieser Klasse erstellt werden
+public abstract class Element implements ElementType{ //Abstakte Klasse, nur zur Vererbung, es kann kein direktes Object dieser Klasse erstellt werden
     //Globals für ALLE Elemente
-    public static final String TYPE = "ELEMENT"; //Benutzen wir als eine Art "ENUM"
+    protected String payload = ""; //Für normale Bausteine nutzlos, aber komplexer brauchen diese z.B. bool-block speicher darin gleichung, memory speichert pfad zur binären Tabelle etc etc.
     protected Group grp; //Protected da die Erbenden Klassen auch auf diese zugreifen können (geht bei private nicht!)
     protected int numOutputs; //Anzahl In und Outputs
     public int numInputs;
@@ -34,6 +34,14 @@ public abstract class Element { //Abstakte Klasse, nur zur Vererbung, es kann ke
     protected ArrayList<Line> inputLines = new ArrayList<>(); //Die linien der inputs
     protected ArrayList<Line> outputLines = new ArrayList<>(); //Die linien der outputs
     protected Rectangle rec; //Jeder Baustein wird ein Recheck als "Hülle" haben.
+
+    public String getPayload() {
+        return payload;
+    }
+
+    public void setPayload(String payload) {
+        this.payload = payload;
+    }
     
     //Setter/getter
     public Group getGroup(){

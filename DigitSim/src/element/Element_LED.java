@@ -27,7 +27,7 @@ import javax.swing.JOptionPane;
 public class Element_LED extends Element{
    
 //Globals
-    public static final String TYPE = "LED"; //Der Typ des Bausteines
+    public static final Type TYPE = Type.LED; //Der Typ des Bausteines
     //Die Elemente aus denen der Baustein zusammengestezt ist
     private Circle indicator;  
     

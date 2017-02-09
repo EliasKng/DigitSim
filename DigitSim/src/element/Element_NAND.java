@@ -28,7 +28,7 @@ import javafx.scene.shape.Circle;
 public class Element_NAND extends Element{
 
     //Globals
-    public static final String TYPE = "NAND"; //Der Typ des Bausteines
+    public static final Type TYPE = Type.NAND; //Der Typ des Bausteines
    //Die Elemente aus denen der Baustein zusammengestezt ist
     private Circle cOutput;
     private Label lbl;
