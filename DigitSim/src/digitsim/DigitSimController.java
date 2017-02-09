@@ -24,6 +24,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javax.swing.JOptionPane;
 /**
  * Digitsim.fxml Controller class
  *
@@ -43,6 +44,7 @@ public class DigitSimController extends Pane{
     private static final ObservableList outputMessages = FXCollections.observableArrayList();
     private static boolean connectionPointDragging = false;
     private static ConData currentConData = null;
+    private String currentProjectPath = "";
 
      /**
      * FXML OBJEKT-Erstellungs-Bereich:
@@ -50,10 +52,16 @@ public class DigitSimController extends Pane{
      */
     @FXML 
     private MenuItem mItemOpenFile;
+    @FXML 
+    private MenuItem mItemSaveFileAs;
+    @FXML 
+    private MenuItem mItemSaveFile;
     @FXML
     private MenuItem MenuSimuRun;
     @FXML
     private MenuItem MenuSimuStop;
+    @FXML
+    private MenuItem mItemNewFile;
     @FXML
     private ListView<String> outputList;
     @FXML 
@@ -259,9 +267,45 @@ public class DigitSimController extends Pane{
         System.exit(0);
     }
     
-    public void mItemOpenFileAction(ActionEvent event) { //Datei öffnen      
+    public void mItemOpenFileAction(ActionEvent event) { //Datei öffnen  
+        if(currentProjectPath != ""){
+          int confirmed = JOptionPane.showConfirmDialog(null, "Ungespeichertes geht verloren! Dennoch fortfahren?", "Neues Projekt", JOptionPane.YES_NO_OPTION);
+            if (confirmed == JOptionPane.NO_OPTION) {
+                return;
+            }  
+        }
         File selectedFile = chooseFile("DigitSimFiles (*.dgs)", "*.dgs");  //Datei Auswählen
+        if(selectedFile.exists() && selectedFile.canRead() && selectedFile.getPath().endsWith(".dgs")){
+            this.clearElements();
+            currentProjectPath = selectedFile.getPath();
+            //To-Do
+        }
     }
+    
+    public void mItemSaveFileAction(ActionEvent event) { //Datei öffnen      
+        if(currentProjectPath == ""){
+            mItemSaveFileAsAction(null);
+        }else{
+            //To-Do
+        }
+    }
+        
+    public void mItemSaveFileAsAction(ActionEvent event) { //Datei öffnen      
+        File selectedFile = chooseFile("DigitSimFiles (*.dgs)", "*.dgs");  //Datei Auswählen
+        if(selectedFile.exists() && selectedFile.canRead() && selectedFile.getPath().endsWith(".dgs")){
+            currentProjectPath = selectedFile.getPath();
+            mItemSaveFileAction(null);  
+        }
+    }
+    public void mItemNewFileAction(ActionEvent event) { //Datei öffnen      
+       int confirmed = JOptionPane.showConfirmDialog(null, "Ungespeichertes geht verloren! Dennoch fortfahren?", "Neues Projekt", JOptionPane.YES_NO_OPTION);
+            if (confirmed == JOptionPane.YES_OPTION) {
+                this.clearElements();
+                currentProjectPath = "";
+            }
+    } 
+
+        
     public void mItemPropertiesOnAction(ActionEvent event) { //Einstellungs-Fenster öffnen
         Stage stage;
         stage = GenFunctions.openFXML(properties.PropertiesController.class, "Properties.fxml", "Einstellungen", "icon.png"); //Öffnen des "Einstellungen"-Fensters
@@ -274,7 +318,7 @@ public class DigitSimController extends Pane{
         stage.setResizable(false);
     }
     
-    public void mItemNewOnAction(ActionEvent event) { //Hilfe öffnen  
+    public void clearElements() { //Hilfe öffnen  
         elements.clear();
         simCanvas.getChildren().clear();
         simCanvas.addGrid(simCanvas.getPrefWidth(), simCanvas.getPrefHeight());
