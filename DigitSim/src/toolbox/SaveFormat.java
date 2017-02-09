@@ -16,130 +16,155 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class SaveFormat implements element.ElementType{
     //Element
-    Type type;
-    double ePosX,ePosY;
-    int eNumInputs, eNumOutputs;
-    String payload;
+    int numElements;
+    Type[] type;
+    double[] ePosX,ePosY;
+    int[] eNumInputs, eNumOutputs;
+    String[] payload;
     
     //Verbindung
-    int indexFirstElement;       // index des ersten elements im array
-    boolean typeFirst;           // ein oder ausgang
-    int indexFirst;              // index des jeweiligen ein oder ausgangs am ersten element
-    int indexSecondElement;      // index des zweiten elements im array
-    boolean typeSecond;          // ein oder ausgang
-    int indexSecond;             // index des jeweiligen ein oder ausgangs am zweiten element
+    int numConnections;
+    int[] indexFirstElement;       // index des ersten elements im array
+    boolean[] typeFirst;           // ein oder ausgang
+    int[] indexFirst;              // index des jeweiligen ein oder ausgangs am ersten element
+    int[] indexSecondElement;      // index des zweiten elements im array
+    boolean[] typeSecond;          // ein oder ausgang
+    int[] indexSecond;             // index des jeweiligen ein oder ausgangs am zweiten element
     
-    public SaveFormat(){}
+    public SaveFormat(int numElements, int numConnections){
+        this.numElements = numElements;
+        this.numConnections = numConnections;
+        type = new Type[numElements];
+        ePosX = new double[numElements];
+        ePosY = new double[numElements];
+        eNumInputs = new int[numElements];
+        eNumOutputs = new int[numElements];
+        payload = new String[numElements];
+        
+        indexFirstElement = new int[numConnections];
+        typeFirst = new boolean[numConnections];
+        indexFirst = new int[numConnections];
+        indexSecondElement = new int[numConnections];
+        typeSecond = new boolean[numConnections];
+        indexSecond = new int[numConnections];
+    }
 
-    @XmlElement
-    public Type getType() {
+    //Einstellungen
+    int simSizeX;
+    int simSizeY;    
+
+    public int getNumElements() {
+        return numElements;
+    }
+
+    public void setNumElements(int numElements) {
+        this.numElements = numElements;
+    }
+
+    public Type[] getType() {
         return type;
     }
 
-    public void setType(Type type) {
+    public void setType(Type[] type) {
         this.type = type;
     }
 
-    @XmlElement
-    public double getePosX() {
+    public double[] getePosX() {
         return ePosX;
     }
 
-    public void setePosX(double ePosX) {
+    public void setePosX(double[] ePosX) {
         this.ePosX = ePosX;
     }
 
-    @XmlElement
-    public double getePosY() {
+    public double[] getePosY() {
         return ePosY;
     }
 
-    public void setePosY(double ePosY) {
+    public void setePosY(double[] ePosY) {
         this.ePosY = ePosY;
     }
 
-    @XmlElement
-    public int geteNumInputs() {
+    public int[] geteNumInputs() {
         return eNumInputs;
     }
 
-    public void seteNumInputs(int eNumInputs) {
+    public void seteNumInputs(int[] eNumInputs) {
         this.eNumInputs = eNumInputs;
     }
 
-    @XmlElement
-    public int geteNumOutputs() {
+    public int[] geteNumOutputs() {
         return eNumOutputs;
     }
 
-    public void seteNumOutputs(int eNumOutputs) {
+    public void seteNumOutputs(int[] eNumOutputs) {
         this.eNumOutputs = eNumOutputs;
     }
 
-    @XmlElement
-    public String getPayload() {
+    public String[] getPayload() {
         return payload;
     }
 
-    public void setPayload(String payload) {
+    public void setPayload(String[] payload) {
         this.payload = payload;
     }
 
-    @XmlElement
-    public int getIndexFirstElement() {
+    public int getNumConnections() {
+        return numConnections;
+    }
+
+    public void setNumConnections(int numConnections) {
+        this.numConnections = numConnections;
+    }
+
+    public int[] getIndexFirstElement() {
         return indexFirstElement;
     }
 
-    public void setIndexFirstElement(int indexFirstElement) {
+    public void setIndexFirstElement(int[] indexFirstElement) {
         this.indexFirstElement = indexFirstElement;
     }
 
-    @XmlElement
-    public boolean getTypeFirst() {
+    public boolean[] getTypeFirst() {
         return typeFirst;
     }
 
-    public void setTypeFirst(boolean typeFirst) {
+    public void setTypeFirst(boolean[] typeFirst) {
         this.typeFirst = typeFirst;
     }
 
-    @XmlElement
-    public int getIndexFirst() {
+    public int[] getIndexFirst() {
         return indexFirst;
     }
 
-    public void setIndexFirst(int indexFirst) {
+    public void setIndexFirst(int[] indexFirst) {
         this.indexFirst = indexFirst;
     }
 
-    @XmlElement
-    public int getIndexSecondElement() {
+    public int[] getIndexSecondElement() {
         return indexSecondElement;
     }
 
-    public void setIndexSecondElement(int indexSecondElement) {
+    public void setIndexSecondElement(int[] indexSecondElement) {
         this.indexSecondElement = indexSecondElement;
     }
 
-    @XmlElement
-    public boolean getTypeSecond() {
+    public boolean[] getTypeSecond() {
         return typeSecond;
     }
 
-    public void setTypeSecond(boolean typeSecond) {
+    public void setTypeSecond(boolean[] typeSecond) {
         this.typeSecond = typeSecond;
     }
 
-    @XmlElement
-    public int getIndexSecond() {
+    public int[] getIndexSecond() {
         return indexSecond;
     }
 
-    public void setIndexSecond(int indexSecond) {
+    public void setIndexSecond(int[] indexSecond) {
         this.indexSecond = indexSecond;
     }
 
-    @XmlElement
     public int getSimSizeX() {
         return simSizeX;
     }
@@ -148,7 +173,6 @@ public class SaveFormat implements element.ElementType{
         this.simSizeX = simSizeX;
     }
 
-    @XmlElement
     public int getSimSizeY() {
         return simSizeY;
     }
@@ -156,9 +180,5 @@ public class SaveFormat implements element.ElementType{
     public void setSimSizeY(int simSizeY) {
         this.simSizeY = simSizeY;
     }
-    
-    //Einstellungen
-    int simSizeX;
-    int simSizeY;    
     
 }

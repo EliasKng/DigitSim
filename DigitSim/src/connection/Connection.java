@@ -238,6 +238,10 @@ public class Connection { //Speichert die Verbindungen
     public ArrayList<ConData> getConnectionData() { //Verbindungen zurückgeben
         return connections;
     }
+    
+    public ConData getConData(int t){
+        return connections.get(t);
+    }
 
     public ConData getSpecificConnectionData(int choice) { //Einzelne Verbindungen zurückgeben
         return connections.get(choice);
@@ -362,5 +366,9 @@ public class Connection { //Speichert die Verbindungen
                 tempConnectionType = ConnectionType.EC;
             }
         }
+    }
+    
+    public int size(){
+        return connections.size();
     }
 }

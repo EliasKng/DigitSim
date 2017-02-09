@@ -60,6 +60,10 @@ public abstract class Element implements ElementType{ //Abstakte Klasse, nur zur
         return numOutputs;
     }
     
+    public int getNumInputs(){
+        return numInputs;
+    }
+    
    
     //Abstrakte methoden MÜSSEN überschrieben werden
     abstract public void update(); //Updatet den Block (überorüft alle Inputs, durchläuft die Logik und setzt die Outputs dementsprechend (Ändert auch die Farben))

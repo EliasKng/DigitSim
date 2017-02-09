@@ -25,6 +25,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
+import toolbox.SaveFormat;
 /**
  * Digitsim.fxml Controller class
  *
@@ -278,7 +279,7 @@ public class DigitSimController extends Pane{
         if(selectedFile.exists() && selectedFile.canRead() && selectedFile.getPath().endsWith(".dgs")){
             this.clearElements();
             currentProjectPath = selectedFile.getPath();
-            //To-Do
+            //loadProject();
         }
     }
     
@@ -286,7 +287,7 @@ public class DigitSimController extends Pane{
         if(currentProjectPath == ""){
             mItemSaveFileAsAction(null);
         }else{
-            //To-Do
+            //saveProject();
         }
     }
         
@@ -362,6 +363,32 @@ public class DigitSimController extends Pane{
         fc.getExtensionFilters().add(extFilter);
         File selectedFile = fc.showOpenDialog(null);  
         return selectedFile;
+    }
+    
+    public void saveProject(){
+        SaveFormat project = new SaveFormat(elements.size(), allConnections.size());
+        project.setSimSizeX(Properties.GetSimSizeX());
+        project.setSimSizeY(Properties.GetSimSizeY());
+        for(int i = 0; i < elements.size(); i++){
+            project.getPayload()[i] = elements.get(i).getPayload();
+            project.geteNumInputs()[i] = elements.get(i).getNumInputs();
+            project.geteNumOutputs()[i] = elements.get(i).getNumOutputs();
+            project.getePosX()[i] = elements.get(i).getX();
+            project.getePosY()[i] = elements.get(i).getY();
+        }
+        for(int i = 0; i < allConnections.size(); i++){
+            project.getIndexFirst()[i] = allConnections.getConData(i).indexFirst;
+            project.getIndexFirstElement()[i] = allConnections.getConData(i).indexFirstElement;
+            project.getIndexSecond()[i] = allConnections.getConData(i).indexSecond;
+            project.getIndexSecondElement()[i] = allConnections.getConData(i).indexSecondElement;
+            project.getTypeFirst()[i] = allConnections.getConData(i).typeFirst;
+            project.getTypeSecond()[i] = allConnections.getConData(i).typeSecond;
+        }
+        toolbox.XmlLoader.saveObject(currentProjectPath, project);
+    }
+    
+    public void loadProject(){
+        SaveFormat project = (SaveFormat) toolbox.XmlLoader.loadObject(currentProjectPath, SaveFormat.class);
     }
     
     /**
