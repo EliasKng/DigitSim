@@ -27,7 +27,8 @@ public class ConnectionLine {
     private Group group = new Group();
     private DigitSimController dsc;
     private PathFinder pathFinder = null;
-    private List<Node> path;
+    //private List<Node> path;
+    private ArrayList<List<Node>> completePath = new ArrayList();
     private Vector2i[] resetData = new Vector2i[2];
     private ArrayList<Vector2i> points = new ArrayList<>();
     private final int gridOffset = Properties.GetGridOffset();
@@ -80,9 +81,6 @@ public class ConnectionLine {
         resetData[1] = end;
     }
 
-    public List<Node> getPath() {
-        return path;
-    }
 
     public Group getGroup() {
         return group;
@@ -105,10 +103,21 @@ public class ConnectionLine {
         clear();
         
         if(!directLine) {
-            for(int i = 0; i < points.size() - 1; i++){
-                path = pathFinder.findPath(points.get(i), points.get(i + 1), dsc.getElements(), connections);
-                if(path != null) {
-                     for(Node currentNode : path) {
+            boolean errorOccured =false;
+            for(int i = 0; i < points.size() -1; i++) { //Versuche kompletten Pfad mit dem Pathfinder zu erzeugen
+                if(!errorOccured) {
+                    List<Node> path = pathFinder.findPath(points.get(i), points.get(i + 1), dsc.getElements(), connections);
+                    if(path == null) {
+                        errorOccured = true;
+                    } else {
+                        completePath.add(path);
+                    }
+                }
+            }
+                
+            if(!errorOccured) { //Wenn der Pfad erfolgreich mit dem Pathfinder generiert werden konnte, wird er jetzt gezeichnet -> sonst werden direkte Linien gemalt
+                for(List<Node> pathPart : completePath){
+                     for(Node currentNode : pathPart) {
                          if(currentNode.parent != null) {  
                             int thisX = currentNode.tile.getX() * gridOffset;
                             int thisY = currentNode.tile.getY() * gridOffset;
@@ -119,18 +128,19 @@ public class ConnectionLine {
                             group.getChildren().add(l);
                         }
                     }
-            
-                } else {
-                    Vector2i parentPoint = null;
-                    for(Vector2i v : points) {
-                        if(parentPoint != null) {
-                            group.getChildren().add(Draw.drawLine(parentPoint.getX() * gridOffset + 10.5, parentPoint.getY()  * gridOffset + 10.5, v.getX() * gridOffset + 10.5 ,v.getY() * gridOffset + 10.5, currentColor,  Properties.getLineWidth()));
-                        }
-                        
-                        parentPoint = v;
+                }
+
+            } else {
+                Vector2i parentPoint = null;
+                for(Vector2i v : points) {
+                    if(parentPoint != null) {
+                        group.getChildren().add(Draw.drawLine(parentPoint.getX() * gridOffset + 10.5, parentPoint.getY()  * gridOffset + 10.5, v.getX() * gridOffset + 10.5 ,v.getY() * gridOffset + 10.5, currentColor,  Properties.getLineWidth()));
                     }
+
+                    parentPoint = v;
                 }
             }
+            
             group.addEventFilter(MouseEvent.MOUSE_ENTERED, NodeGestures.getOverNodeMouseHanlderEnterLineGrp());
             group.addEventFilter(MouseEvent.MOUSE_EXITED, NodeGestures.getOverNodeMouseHanlderExitLineGrp());
         } else {
@@ -148,6 +158,7 @@ public class ConnectionLine {
     
     
     public void clear() {
+        completePath.clear();
         dsc.getSimCanvas().getChildren().remove(group);
         group.getChildren().clear();
     }
