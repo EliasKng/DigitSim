@@ -379,7 +379,7 @@ public class NodeGestures {
                 Group grp = (Group) src;
                 for(int i = 0; i  < grp.getChildren().size(); i++){
                     Line line = (Line) grp.getChildren().get(i);
-                    line.setStroke(Color.GRAY);
+                    line.setStroke(Color.GREEN);
                     if(!DigitSimController.getReference().getConnectionPointDragging()){
                                             line.getScene().setCursor(Cursor.DEFAULT);
                     }

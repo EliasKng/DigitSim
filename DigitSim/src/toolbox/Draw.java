@@ -212,8 +212,4 @@ public class Draw {
         }
         return g;
     }
-    
-    
-    
-
 }

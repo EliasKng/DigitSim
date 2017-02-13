@@ -31,7 +31,7 @@ public class ConnectionLine {
     private Vector2i[] resetData = new Vector2i[2];
     private ArrayList<Vector2i> points = new ArrayList<>();
     private final int gridOffset = Properties.GetGridOffset();
-    private Color currentColor = Color.GREY; //Standart: Schwarz
+    private Color currentColor = Color.GREEN; //Standart: Schwarz
     private ConData data;
     
     
@@ -120,9 +120,16 @@ public class ConnectionLine {
                         }
                     }
             
-            } else {
-                group.getChildren().add(Draw.drawLine(points.get(0).getX() * gridOffset + 10.5, points.get(0).getY()  * gridOffset + 10.5, points.get(points.size() - 1).getX() * gridOffset + 10.5 ,points.get(points.size() - 1).getY() * gridOffset + 10.5, currentColor,  Properties.getLineWidth()));
-            }
+                } else {
+                    Vector2i parentPoint = null;
+                    for(Vector2i v : points) {
+                        if(parentPoint != null) {
+                            group.getChildren().add(Draw.drawLine(parentPoint.getX() * gridOffset + 10.5, parentPoint.getY()  * gridOffset + 10.5, v.getX() * gridOffset + 10.5 ,v.getY() * gridOffset + 10.5, currentColor,  Properties.getLineWidth()));
+                        }
+                        
+                        parentPoint = v;
+                    }
+                }
             }
             group.addEventFilter(MouseEvent.MOUSE_ENTERED, NodeGestures.getOverNodeMouseHanlderEnterLineGrp());
             group.addEventFilter(MouseEvent.MOUSE_EXITED, NodeGestures.getOverNodeMouseHanlderExitLineGrp());
