@@ -52,8 +52,7 @@ public class PathFinder {
         openList.add(current);
         
         while(openList.size() > 0) {
-            //sortiert die nodeliste nach der fCost der einzelnen Nodes (siehe NodeComparator)
-            Collections.sort(openList, nodeSorter);
+            Collections.sort(openList, nodeSorter); //sortiert die nodeliste nach der fCost der einzelnen Nodes (siehe NodeComparator)
             current = openList.get(0);
             if(current.tile.equals(goal)) {
                 List<Node> path = new ArrayList<Node>();
@@ -86,9 +85,6 @@ public class PathFinder {
                 double hCost = getManhattanDistance(a, goal);
                 Node node = new Node(a,current, gCost, hCost);
                 
-//                if(isDirectionChanged(current, node, start)) {
-//                    node.fCost++;
-//                }
                 if(TileCode.isTileInIOArea(x,xi,y,yi)) {
                     node.fCost +=50;
                 }
@@ -160,6 +156,5 @@ public class PathFinder {
         double dx = tile.getX() - goal.getX();
         double dy = tile.getY() - goal.getY();
         return Math.sqrt(dx * dx + dy * dy);
-    } 
-    
+    }     
 }
