@@ -91,7 +91,6 @@ public class ConnectionLine {
         Vector2i temp = points.get(points.size() - 1);
         points.set(points.size() - 1, vec);
         points.add(temp);
-        System.out.println("addPoint ConnectionLine-Class");
     }
     
     public void removePoint(Vector2i vec){
@@ -134,7 +133,9 @@ public class ConnectionLine {
                 Vector2i parentPoint = null;
                 for(Vector2i v : points) {
                     if(parentPoint != null) {
-                        group.getChildren().add(Draw.drawLine(parentPoint.getX() * gridOffset + 10.5, parentPoint.getY()  * gridOffset + 10.5, v.getX() * gridOffset + 10.5 ,v.getY() * gridOffset + 10.5, currentColor,  Properties.getLineWidth()));
+                        Line l = Draw.drawLine(parentPoint.getX() * gridOffset + 10.5, parentPoint.getY()  * gridOffset + 10.5, v.getX() * gridOffset + 10.5 ,v.getY() * gridOffset + 10.5, currentColor,  Properties.getLineWidth());
+                        l.addEventFilter(MouseEvent.MOUSE_PRESSED, NodeGestures.getOverConnectionLineClicked(data));
+                        group.getChildren().add(l);
                     }
 
                     parentPoint = v;
