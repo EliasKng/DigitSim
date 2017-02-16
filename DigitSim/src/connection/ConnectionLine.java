@@ -169,7 +169,7 @@ public class ConnectionLine {
         pointGroup.getChildren().clear();
     }
     
-    public void setColor(int nullOrOne){
+    public void setColor(int nullOrOne){    //Andert die Farbe einer Verbindungslinie (Linie + Kreis)
         if(nullOrOne == 1){
             currentColor = Color.RED;
         }else{
