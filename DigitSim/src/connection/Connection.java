@@ -83,6 +83,19 @@ public class Connection { //Speichert die Verbindungen
         connections.add(data);
         drawNewLine(data);
     }
+    
+    public void addConnection(int indexFirstElement, int indexSecondElement, int indexFirst, int indexSecond, boolean typeSecond, boolean typeFirst){
+        ConData data = new ConData();
+        data.indexFirstElement = indexFirstElement;
+        data.indexSecondElement = indexSecondElement;
+        data.indexFirst = indexFirst;
+        data.indexSecond = indexSecond;
+        data.typeFirst = typeSecond;
+        data.typeSecond = typeFirst;
+        data.connectionLine = new ConnectionLine(dsController, data);
+        connections.add(data);
+        drawNewLine(data);
+    }
 
     /* -Bearbeitet von Tim 14.11.16 */
     public void update() //Geht alle Verbindungen durch und schaltet sie durch

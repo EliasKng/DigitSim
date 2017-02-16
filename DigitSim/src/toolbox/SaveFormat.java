@@ -53,6 +53,7 @@ public class SaveFormat implements element.ElementType{
     int simSizeX;
     int simSizeY;    
 
+    @XmlElement
     public int getNumElements() {
         return numElements;
     }
@@ -61,6 +62,7 @@ public class SaveFormat implements element.ElementType{
         this.numElements = numElements;
     }
 
+    @XmlElement
     public Type[] getType() {
         return type;
     }
@@ -68,7 +70,7 @@ public class SaveFormat implements element.ElementType{
     public void setType(Type[] type) {
         this.type = type;
     }
-
+@XmlElement
     public double[] getePosX() {
         return ePosX;
     }
@@ -76,7 +78,7 @@ public class SaveFormat implements element.ElementType{
     public void setePosX(double[] ePosX) {
         this.ePosX = ePosX;
     }
-
+@XmlElement
     public double[] getePosY() {
         return ePosY;
     }
@@ -84,7 +86,7 @@ public class SaveFormat implements element.ElementType{
     public void setePosY(double[] ePosY) {
         this.ePosY = ePosY;
     }
-
+@XmlElement
     public int[] geteNumInputs() {
         return eNumInputs;
     }
@@ -92,7 +94,7 @@ public class SaveFormat implements element.ElementType{
     public void seteNumInputs(int[] eNumInputs) {
         this.eNumInputs = eNumInputs;
     }
-
+@XmlElement
     public int[] geteNumOutputs() {
         return eNumOutputs;
     }
@@ -100,7 +102,7 @@ public class SaveFormat implements element.ElementType{
     public void seteNumOutputs(int[] eNumOutputs) {
         this.eNumOutputs = eNumOutputs;
     }
-
+@XmlElement
     public String[] getPayload() {
         return payload;
     }
@@ -108,7 +110,7 @@ public class SaveFormat implements element.ElementType{
     public void setPayload(String[] payload) {
         this.payload = payload;
     }
-
+@XmlElement
     public int getNumConnections() {
         return numConnections;
     }
@@ -116,14 +118,14 @@ public class SaveFormat implements element.ElementType{
     public void setNumConnections(int numConnections) {
         this.numConnections = numConnections;
     }
-
+@XmlElement
     public int[] getIndexFirstElement() {
         return indexFirstElement;
     }
 
     public void setIndexFirstElement(int[] indexFirstElement) {
         this.indexFirstElement = indexFirstElement;
-    }
+    }@XmlElement
 
     public boolean[] getTypeFirst() {
         return typeFirst;
@@ -132,7 +134,7 @@ public class SaveFormat implements element.ElementType{
     public void setTypeFirst(boolean[] typeFirst) {
         this.typeFirst = typeFirst;
     }
-
+@XmlElement
     public int[] getIndexFirst() {
         return indexFirst;
     }
@@ -140,7 +142,7 @@ public class SaveFormat implements element.ElementType{
     public void setIndexFirst(int[] indexFirst) {
         this.indexFirst = indexFirst;
     }
-
+@XmlElement
     public int[] getIndexSecondElement() {
         return indexSecondElement;
     }
@@ -148,7 +150,7 @@ public class SaveFormat implements element.ElementType{
     public void setIndexSecondElement(int[] indexSecondElement) {
         this.indexSecondElement = indexSecondElement;
     }
-
+@XmlElement
     public boolean[] getTypeSecond() {
         return typeSecond;
     }
@@ -156,7 +158,7 @@ public class SaveFormat implements element.ElementType{
     public void setTypeSecond(boolean[] typeSecond) {
         this.typeSecond = typeSecond;
     }
-
+@XmlElement
     public int[] getIndexSecond() {
         return indexSecond;
     }
@@ -164,7 +166,7 @@ public class SaveFormat implements element.ElementType{
     public void setIndexSecond(int[] indexSecond) {
         this.indexSecond = indexSecond;
     }
-
+@XmlElement
     public int getSimSizeX() {
         return simSizeX;
     }
@@ -172,11 +174,11 @@ public class SaveFormat implements element.ElementType{
     public void setSimSizeX(int simSizeX) {
         this.simSizeX = simSizeX;
     }
-
+@XmlElement
     public int getSimSizeY() {
         return simSizeY;
     }
-
+@XmlElement
     public void setSimSizeY(int simSizeY) {
         this.simSizeY = simSizeY;
     }

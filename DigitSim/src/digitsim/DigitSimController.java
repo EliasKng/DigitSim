@@ -439,7 +439,7 @@ public class DigitSimController extends Pane{
             }
         }
         for(int i = 0; i < project.getNumConnections(); i++){
-            
+            allConnections.addConnection(project.getIndexFirstElement()[i], project.getIndexSecondElement()[i], project.getIndexFirst()[i], project.getIndexSecond()[i], project.getTypeFirst()[i], project.getTypeSecond()[i]);
         }
     }
     

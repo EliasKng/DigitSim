@@ -48,12 +48,13 @@ public class Element_TEXT extends Element{
    
 //Konstruktor   
    public Element_TEXT(double pX, double pY, int fontSize, String content, Color color,NodeGestures dNodeGestures){
+       this.setPayload(content);
        curentColor = color;
         numInputs = 0;
         numOutputs = 0;
         inputs = new int[]{};
         outputs = new int[]{};
-        text = Draw.drawText(pX, pY, content, curentColor, fontSize);
+        text = Draw.drawText(pX, pY, payload, curentColor, fontSize);
         rec = Draw.drawRectangle(pX - 5, pY - text.getFont().getSize(), text.getLayoutBounds().getWidth() + 10, text.getLayoutBounds().getHeight() + 5, 10, 10, Color.BLACK, 0, 2);  
         rec.setVisible(false);
         grp =  new Group(rec, text);         
@@ -116,7 +117,7 @@ public class Element_TEXT extends Element{
         lbl3.setFont(new Font(14)); //Schriftgröße
         lbl3.setPrefHeight(20); //Größe
         lbl3.setPrefWidth(85);
-        TextField tf = new TextField(){ //textfeld um die inputs einzugeben
+        TextField tf = new TextField(){
             @Override public void replaceText(int start, int end, String text) {//Diese funktionen werden ausgeführt wenn man den text ändert
                 if (text.matches("[0-9]") || text == "") {//Überorüfen ob nur zahlen eingegeben wurden
                    super.replaceText(start, end, text);//Ja
@@ -138,7 +139,7 @@ public class Element_TEXT extends Element{
         tf.setTranslateY(5);
         tf.setPrefHeight(20);
         tf.setPrefWidth(100);
-        TextField tf2 = new TextField(text.getText());
+        TextField tf2 = new TextField(payload);
         tf2.setTranslateX(90);
         tf2.setTranslateY(35);
         tf2.setPrefHeight(20);
