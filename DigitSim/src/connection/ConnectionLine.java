@@ -154,8 +154,8 @@ public class ConnectionLine {
                 group.getChildren().add(l);
             }
         }
-        dsc.getSimCanvas().getChildren().add(group);
         dsc.getSimCanvas().getChildren().add(pointGroup);
+        dsc.getSimCanvas().getChildren().add(group);
         if(general.Properties.getVisualizeTileCode())
             group.toBack();
     }
@@ -180,10 +180,16 @@ public class ConnectionLine {
             Line l = (Line) n;
             l.setStroke(currentColor);
         }
+        
+        for(javafx.scene.Node n : pointGroup.getChildren()){
+            Circle c = (Circle) n;
+            c.setStroke(currentColor);
+            c.setFill(currentColor);
+        }
     }
     
     public void resetColor(){
-        currentColor = Color.GRAY;
+        currentColor = Color.GREEN;
         for(javafx.scene.Node n : group.getChildren()){
             Line l = (Line) n;
             l.setStroke(currentColor);
