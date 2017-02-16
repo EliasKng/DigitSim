@@ -255,7 +255,7 @@ public class DigitSimController extends Pane{
     * -Bearbeitet von Dominik 31.10.16
     * -Bearbeitet von Dominik 12.11.16
     */  
-    
+        
     public void btnLogicToggleOnAction(ActionEvent event) {
         //Für Tests
         //TEST:
@@ -287,14 +287,16 @@ public class DigitSimController extends Pane{
     public void mItemSaveFileAction(ActionEvent event) { //Datei öffnen      
         if(currentProjectPath == ""){
             mItemSaveFileAsAction(null);
-        }else{
-            //saveProject();
         }
+        //saveProject(); 
     }
         
     public void mItemSaveFileAsAction(ActionEvent event) { //Datei öffnen      
         File selectedFile = chooseFile("DigitSimFiles (*.dgs)", "*.dgs");  //Datei Auswählen
-        if(selectedFile.exists() && selectedFile.canRead() && selectedFile.getPath().endsWith(".dgs")){
+        if(selectedFile.exists() && selectedFile.canRead()){
+            if(!selectedFile.getPath().endsWith(".dgs")){
+                selectedFile = new File(selectedFile.getPath() + ".dgs");
+            }
             currentProjectPath = selectedFile.getPath();
             mItemSaveFileAction(null);  
         }
@@ -390,6 +392,55 @@ public class DigitSimController extends Pane{
     
     public void loadProject(){
         SaveFormat project = (SaveFormat) toolbox.XmlLoader.loadObject(currentProjectPath, SaveFormat.class);
+        if(Properties.GetSimSizeX() < project.getSimSizeX() || Properties.GetSimSizeY() < project.getSimSizeY()){
+            Properties.setSimSizeX(project.getSimSizeX());
+            Properties.setSimSizeY(project.getSimSizeY());
+            this.simCanvas.setMaxHeight(Properties.GetSimSizeY());
+            this.simCanvas.setMaxWidth(Properties.GetSimSizeX());
+            this.clearElements();
+        }
+        for(int i = 0; i < project.getNumElements(); i++){
+            if(project.getType()[i] == ElementType.Type.AND){
+                 elements.add(new Element_AND(project.getePosX()[i], project.getePosY()[i], project.geteNumInputs()[i], nodeGestures));
+                 simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
+            }else if(project.getType()[i] == ElementType.Type.SEVENSEG){
+                elements.add(new Element_7SEG(project.getePosX()[i], project.getePosY()[i], project.geteNumInputs()[i], nodeGestures));
+                 simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
+            }else if(project.getType()[i] == ElementType.Type.LED){
+                elements.add(new Element_LED(project.getePosX()[i], project.getePosY()[i], project.geteNumInputs()[i], nodeGestures));
+                 simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
+            }else if(project.getType()[i] == ElementType.Type.NAND){
+                elements.add(new Element_NAND(project.getePosX()[i], project.getePosY()[i], project.geteNumInputs()[i], nodeGestures));
+                 simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
+            }else if(project.getType()[i] == ElementType.Type.NOR){
+                elements.add(new Element_NOR(project.getePosX()[i], project.getePosY()[i], project.geteNumInputs()[i], nodeGestures));
+                 simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
+            }else if(project.getType()[i] == ElementType.Type.NOT){
+                elements.add(new Element_NOT(project.getePosX()[i], project.getePosY()[i], project.geteNumInputs()[i], nodeGestures));
+                 simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
+            }else if(project.getType()[i] == ElementType.Type.OR){
+                elements.add(new Element_OR(project.getePosX()[i], project.getePosY()[i], project.geteNumInputs()[i], nodeGestures));
+                 simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
+            }else if(project.getType()[i] == ElementType.Type.SIGNAL){
+                elements.add(new Element_SIGNAL(project.getePosX()[i], project.getePosY()[i], nodeGestures));
+                 simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
+            }else if(project.getType()[i] == ElementType.Type.TEXT){
+                elements.add(new Element_TEXT(project.getePosX()[i], project.getePosY()[i], 20,project.getPayload()[i], Color.BLACK, nodeGestures));
+                 simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
+            }else if(project.getType()[i] == ElementType.Type.THUMBSWITCH){
+                elements.add(new Element_THUMBSWITCH(project.getePosX()[i], project.getePosY()[i], nodeGestures));
+                 simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
+            }else if(project.getType()[i] == ElementType.Type.XNOR){
+                elements.add(new Element_XNOR(project.getePosX()[i], project.getePosY()[i], project.geteNumInputs()[i], nodeGestures));
+                 simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
+            }else if(project.getType()[i] == ElementType.Type.XOR){
+                elements.add(new Element_XOR(project.getePosX()[i], project.getePosY()[i], project.geteNumInputs()[i], nodeGestures));
+                 simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
+            }
+        }
+        for(int i = 0; i < project.getNumConnections(); i++){
+            
+        }
     }
     
     /**
