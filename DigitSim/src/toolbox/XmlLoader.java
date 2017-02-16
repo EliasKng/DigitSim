@@ -6,6 +6,7 @@
 package toolbox;
 
 import java.io.File;
+import java.io.IOException;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
@@ -24,6 +25,14 @@ public class XmlLoader {
         Object o = null;
         try{
             File xmlfile = new File(path); //Datei öffnen
+            if(!xmlfile.exists()){
+                try{
+                     xmlfile.createNewFile();
+                }catch(IOException e){
+                     System.out.println(e);
+                     ErrorHandler.printError(s, "JAXB-Error beim erstellen einer nicht vorhandenen Datei");
+                }
+            }
             JAXBContext jaxbContext = JAXBContext.newInstance(s); //Die Klasse festlegen, aus welcher das Object gebaut wird
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller(); //Die Formatierung erstellen
             o = jaxbUnmarshaller.unmarshal(xmlfile); //Das Object laden

@@ -31,6 +31,10 @@ public class SaveFormat implements element.ElementType{
     boolean[] typeSecond;          // ein oder ausgang
     int[] indexSecond;             // index des jeweiligen ein oder ausgangs am zweiten element
     
+    public SaveFormat(){
+        
+    }
+    
     public SaveFormat(int numElements, int numConnections){
         this.numElements = numElements;
         this.numConnections = numConnections;
@@ -125,8 +129,9 @@ public class SaveFormat implements element.ElementType{
 
     public void setIndexFirstElement(int[] indexFirstElement) {
         this.indexFirstElement = indexFirstElement;
-    }@XmlElement
-
+    }
+    
+    @XmlElement
     public boolean[] getTypeFirst() {
         return typeFirst;
     }
@@ -178,7 +183,7 @@ public class SaveFormat implements element.ElementType{
     public int getSimSizeY() {
         return simSizeY;
     }
-@XmlElement
+
     public void setSimSizeY(int simSizeY) {
         this.simSizeY = simSizeY;
     }

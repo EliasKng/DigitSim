@@ -270,17 +270,15 @@ public class DigitSimController extends Pane{
     }
     
     public void mItemOpenFileAction(ActionEvent event) { //Datei öffnen  
-        if(currentProjectPath != ""){
           int confirmed = JOptionPane.showConfirmDialog(null, "Ungespeichertes geht verloren! Dennoch fortfahren?", "Neues Projekt", JOptionPane.YES_NO_OPTION);
             if (confirmed == JOptionPane.NO_OPTION) {
                 return;
             }  
-        }
         File selectedFile = chooseFile("DigitSimFiles (*.dgs)", "*.dgs");  //Datei Auswählen
         if(selectedFile.exists() && selectedFile.canRead() && selectedFile.getPath().endsWith(".dgs")){
             this.clearElements();
             currentProjectPath = selectedFile.getPath();
-            //loadProject();
+            loadProject();
         }
     }
     
@@ -288,19 +286,18 @@ public class DigitSimController extends Pane{
         if(currentProjectPath == ""){
             mItemSaveFileAsAction(null);
         }
-        //saveProject(); 
+        saveProject(); 
     }
         
     public void mItemSaveFileAsAction(ActionEvent event) { //Datei öffnen      
-        File selectedFile = chooseFile("DigitSimFiles (*.dgs)", "*.dgs");  //Datei Auswählen
-        if(selectedFile.exists() && selectedFile.canRead()){
+        File selectedFile = getFilePath("DigitSimFiles (*.dgs)", "*.dgs");  //Datei Auswählen
             if(!selectedFile.getPath().endsWith(".dgs")){
                 selectedFile = new File(selectedFile.getPath() + ".dgs");
             }
             currentProjectPath = selectedFile.getPath();
             mItemSaveFileAction(null);  
-        }
     }
+    
     public void mItemNewFileAction(ActionEvent event) { //Datei öffnen      
        int confirmed = JOptionPane.showConfirmDialog(null, "Ungespeichertes geht verloren! Dennoch fortfahren?", "Neues Projekt", JOptionPane.YES_NO_OPTION);
             if (confirmed == JOptionPane.YES_OPTION) {
@@ -367,11 +364,20 @@ public class DigitSimController extends Pane{
         File selectedFile = fc.showOpenDialog(null);  
         return selectedFile;
     }
+    public File getFilePath(String description, String extension){ //Die Funktion öffnet einen Filebrowser um eine Datei auszuwählen und lädt dise anschließend.
+        FileChooser fc = new FileChooser();
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(description, extension);
+        fc.getExtensionFilters().add(extFilter);
+        File selectedFile = fc.showSaveDialog(null);  
+        return selectedFile;
+    }
     
     public void saveProject(){
         SaveFormat project = new SaveFormat(elements.size(), allConnections.size());
         project.setSimSizeX(Properties.GetSimSizeX());
         project.setSimSizeY(Properties.GetSimSizeY());
+        project.setNumElements(elements.size());
+        project.setNumConnections(allConnections.getConnectionData().size());
         for(int i = 0; i < elements.size(); i++){
             project.getPayload()[i] = elements.get(i).getPayload();
             project.geteNumInputs()[i] = elements.get(i).getNumInputs();
@@ -391,6 +397,7 @@ public class DigitSimController extends Pane{
     }
     
     public void loadProject(){
+        System.out.println(currentProjectPath);
         SaveFormat project = (SaveFormat) toolbox.XmlLoader.loadObject(currentProjectPath, SaveFormat.class);
         if(Properties.GetSimSizeX() < project.getSimSizeX() || Properties.GetSimSizeY() < project.getSimSizeY()){
             Properties.setSimSizeX(project.getSimSizeX());

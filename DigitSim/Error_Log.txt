@@ -11,3 +11,6 @@
 (Mon Dec 12 19:52:35 CET 2016)[ERROR IN <class java.lang.Class>] Fehler beim laden von Properties.fxml & Einstellungen & icon.png
 (Mon Dec 12 19:57:40 CET 2016)[ERROR IN <class java.lang.Class>] Fehler beim laden von Properties.fxml & Einstellungen & icon.png
 (Sat Dec 17 14:51:00 CET 2016)[ERROR IN <class java.lang.Class>] Fehler beim laden von Properties.fxml & Einstellungen & icon.png
+(Thu Feb 16 17:55:05 CET 2017)[ERROR IN <class java.lang.Class>] JAXB-Error beim abbilden
+(Thu Feb 16 17:57:50 CET 2017)[ERROR IN <class java.lang.Class>] JAXB-Error beim abbilden
+(Thu Feb 16 17:59:43 CET 2017)[ERROR IN <class java.lang.Class>] JAXB-Error beim abbilden
