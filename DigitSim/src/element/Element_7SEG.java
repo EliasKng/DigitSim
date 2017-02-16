@@ -157,4 +157,5 @@ public class Element_7SEG extends Element{
     public void showProperties(){ //Zeigt das "Eigenschaften"-Fenster für dieses Element
         GenFunctions.showBasicElementProperties(numInputs, thisElement);
     }
+
 }
