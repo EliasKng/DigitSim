@@ -418,6 +418,7 @@ public class NodeGestures {
             MenuItem deleteItem = new MenuItem("Entfernen");
             MenuItem resetItem = new MenuItem("Zurücksetzen");
             deleteItem.setOnAction(new EventHandler<ActionEvent>() { //Wird ausgelößt wenn man bei einem Element "Entfernen" auswählt
+                
                public void handle(ActionEvent e) {
                contextMenu.hide();
                DigitSimController.getAllConnections().removeConnection(d);
@@ -429,6 +430,7 @@ public class NodeGestures {
             }});     
               menu.getItems().addAll(deleteItem, resetItem);   
               menu.show((Node)event.getSource(), Side.LEFT, event.getX(), event.getY());
+              
             }else{
                    DigitSimController.getAllConnections().resetLastPoint(); //Sorgt dafür dass man mehrere Punkte setzen kann, was buggy ist daher auskommentiert (Kannst es aber gern mal testen!)
                    DigitSimController.getReference().setConnectionPointDragging(true); 

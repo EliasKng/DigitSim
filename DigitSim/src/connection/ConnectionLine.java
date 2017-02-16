@@ -15,6 +15,7 @@ import java.util.List;
 import javafx.scene.Group;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import pathFinder.*;
 
@@ -25,6 +26,7 @@ import pathFinder.*;
 public class ConnectionLine {
     
     private Group group = new Group();
+    private Group pointGroup = new Group();
     private DigitSimController dsc;
     private PathFinder pathFinder = null;
     //private List<Node> path;
@@ -100,7 +102,7 @@ public class ConnectionLine {
     
     public void update(boolean directLine, ArrayList<Connection.ConData> connections) {
         clear();
-        
+        addPointGroup();
         if(!directLine) {
             boolean errorOccured =false;
             for(int i = 0; i < points.size() -1; i++) { //Versuche kompletten Pfad mit dem Pathfinder zu erzeugen
@@ -153,6 +155,7 @@ public class ConnectionLine {
             }
         }
         dsc.getSimCanvas().getChildren().add(group);
+        dsc.getSimCanvas().getChildren().add(pointGroup);
         if(general.Properties.getVisualizeTileCode())
             group.toBack();
     }
@@ -161,7 +164,9 @@ public class ConnectionLine {
     public void clear() {
         completePath.clear();
         dsc.getSimCanvas().getChildren().remove(group);
+        dsc.getSimCanvas().getChildren().remove(pointGroup);
         group.getChildren().clear();
+        pointGroup.getChildren().clear();
     }
     
     public void setColor(int nullOrOne){
@@ -183,5 +188,13 @@ public class ConnectionLine {
             Line l = (Line) n;
             l.setStroke(currentColor);
         }
+    }
+    
+    public void addPointGroup() {
+        for(int i = 0; i < points.size();i++) {
+            Circle c = Draw.drawCircle(points.get(i).getX()*this.gridOffset+10.5, points.get(i).getY()*this.gridOffset + 10.5, 5, currentColor, 1, true, 1);
+            pointGroup.getChildren().add(c);
+        }
+        
     }
 }

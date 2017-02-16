@@ -330,7 +330,6 @@ public class Connection { //Speichert die Verbindungen
         lastPoint = new Vector2i((int)event.getX(), (int)event.getY());
         d.connectionLine.addPoint(lastPoint);
         d.connectionLine.update(direct, connections);
-        System.out.println("addPoint Connection-Class");
     }
     
     public void removeLastPoint(ConData d){

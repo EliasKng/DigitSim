@@ -259,6 +259,7 @@ public class DigitSimController extends Pane{
     public void btnLogicToggleOnAction(ActionEvent event) {
         //Für Tests
         //TEST:
+        allConnections.getConData(0).connectionLine.addPointGroup();
     }
     
     public void mItemCloseAction(ActionEvent event){ //Programm schließen
