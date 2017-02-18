@@ -14,31 +14,7 @@
                <tabs>
                   <Tab text="Über den Seminator">
                      <content>
-                        <AnchorPane prefHeight="200.0" prefWidth="200.0">
-                           <children>
-                              <Text layoutX="14.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Der Seminator ist ein Projekt, welches auf dem aktuellen Stand zur digitalen Simulation von Schaltungen dient.&#10;&#10;" wrappingWidth="542.81689453125" />
-                              <Text layoutX="14.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Über den Seminator ">
-                                 <font>
-                                    <Font name="System Bold" size="30.0" />
-                                 </font>
-                              </Text>
-                              <Text fill="RED" layoutX="11.0" layoutY="183.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dominik Grabetz&#10;Tim Farahani&#10;Elias König&#10;Lukas Mettler">
-                                 <font>
-                                    <Font name="System Bold" size="20.0" />
-                                 </font>
-                              </Text>
-                              <Text layoutX="259.0" layoutY="183.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Camillo Krause genannt Barman&#10;Luca Rutschann&#10;Niklas Uhr&#10;Christoph Fischer&#10;Anthony Schäufle">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Text>
-                              <Text layoutX="11.0" layoutY="156.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DAS TEAM">
-                                 <font>
-                                    <Font size="30.0" />
-                                 </font>
-                              </Text>
-                           </children>
-                        </AnchorPane>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-image: url('/digitsim/data/help.png');" />
                      </content>
                   </Tab>
                   <Tab text="Die Basics">
@@ -49,9 +25,9 @@
                                  <content>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
-                                          <ScrollPane layoutX="14.0" layoutY="14.0" prefHeight="370.0" prefWidth="225.0">
+                                          <ScrollPane layoutX="14.0" layoutY="14.0" prefHeight="171.0" prefWidth="225.0">
                                              <content>
-                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="141.0" prefWidth="328.0">
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="168.0" prefWidth="219.0">
                                                    <children>
                                                       <Text layoutX="1.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Einen Baustein setzen" wrappingWidth="383.21875">
                                                          <font>
@@ -69,7 +45,7 @@
                                           </ScrollPane>
                                           <ScrollPane layoutX="245.0" layoutY="14.0" prefHeight="370.0" prefWidth="346.0">
                                              <content>
-                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="455.0" prefWidth="455.0" style="-fx-background-image: url('/digitsim/data/h_11.png');" />
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="358.0" prefWidth="336.0" style="-fx-background-image: url('/digitsim/data/h_11.png');" />
                                              </content>
                                           </ScrollPane>
                                        </children>
@@ -80,9 +56,9 @@
                                  <content>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
-                                          <ScrollPane layoutX="14.0" layoutY="14.0" prefHeight="370.0" prefWidth="225.0">
+                                          <ScrollPane layoutX="14.0" layoutY="14.0" prefHeight="173.0" prefWidth="225.0">
                                              <content>
-                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="141.0" prefWidth="328.0">
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="170.0" prefWidth="221.0">
                                                    <children>
                                                       <Text layoutX="1.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Die Simulation starten" wrappingWidth="383.21875">
                                                          <font>
@@ -100,7 +76,7 @@
                                           </ScrollPane>
                                           <ScrollPane layoutX="241.0" layoutY="14.0" prefHeight="370.0" prefWidth="350.0">
                                              <content>
-                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="325.0" prefWidth="865.0" style="-fx-background-image: url('/digitsim/data/h_12.png');" />
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="325.0" prefWidth="341.0" style="-fx-background-image: url('/digitsim/data/h_12.png');" />
                                              </content>
                                           </ScrollPane>
                                        </children>
@@ -111,9 +87,9 @@
                                  <content>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
-                                          <ScrollPane layoutX="14.0" layoutY="14.0" prefHeight="370.0" prefWidth="225.0">
+                                          <ScrollPane layoutX="14.0" layoutY="14.0" prefHeight="222.0" prefWidth="225.0">
                                              <content>
-                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="141.0" prefWidth="328.0">
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="211.0" prefWidth="220.0">
                                                    <children>
                                                       <Text layoutX="1.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Eingänge festlegen" wrappingWidth="383.21875">
                                                          <font>
@@ -131,7 +107,7 @@
                                           </ScrollPane>
                                           <ScrollPane layoutX="241.0" layoutY="14.0" prefHeight="370.0" prefWidth="350.0">
                                              <content>
-                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="430.0" prefWidth="450.0" style="-fx-background-image: url('/digitsim/data/h_13.png');" />
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="363.0" prefWidth="342.0" style="-fx-background-image: url('/digitsim/data/h_13.png');" />
                                              </content>
                                           </ScrollPane>
                                        </children>
