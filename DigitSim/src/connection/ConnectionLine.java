@@ -194,6 +194,11 @@ public class ConnectionLine {
             Line l = (Line) n;
             l.setStroke(currentColor);
         }
+        for(javafx.scene.Node n : pointGroup.getChildren()){
+            Circle c = (Circle) n;
+            c.setStroke(currentColor);
+            c.setFill(currentColor);
+        }
     }
     
     public void addPointGroup() {
