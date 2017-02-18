@@ -102,10 +102,10 @@ public class Element_XOR extends Element{
         }
         if(allON || allOFF){
             outputs[0] = 0;
-            outputLines.get(0).setStroke(Color.BLUE);
+//            outputLines.get(0).setStroke(Color.BLUE);
         }else{
             outputs[0] = 1;
-            outputLines.get(0).setStroke(Color.RED);
+//            outputLines.get(0).setStroke(Color.RED);
         }  
     }
     

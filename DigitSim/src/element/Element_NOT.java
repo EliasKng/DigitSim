@@ -93,10 +93,10 @@ public class Element_NOT extends Element{
 //        }
         if(inputs[0] == 0){
             outputs[0] = 1;
-            outputLines.get(0).setStroke(Color.RED);
+//            outputLines.get(0).setStroke(Color.RED);
         }else{
             outputs[0] = 0;
-            outputLines.get(0).setStroke(Color.BLUE);
+//            outputLines.get(0).setStroke(Color.BLUE);
         }
     }
     

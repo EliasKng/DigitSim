@@ -138,7 +138,7 @@ public abstract class Element implements ElementType{ //Abstakte Klasse, nur zur
         if(pInput >= 0 && pInput < numInputs){
             inputs[pInput] = pValue;
             if(pValue == 1){
-                inputLines.get(pInput).setStroke(Color.RED);
+                //inputLines.get(pInput).setStroke(Color.RED);
             }else{
                 inputLines.get(pInput).setStroke(Color.BLACK);
             }
