@@ -67,12 +67,12 @@ public class Element_SIGNAL extends Element{
     public void update(){  
         if(inputs[0] == 1){
             outputs[0] = 1;
-            outputLines.get(0).setStroke(Color.RED);
+//            outputLines.get(0).setStroke(Color.RED);
             number1.setVisible(false);
             number2.setVisible(true);
         }else{
             outputs[0] = 0;
-            outputLines.get(0).setStroke(Color.BLUE);
+//            outputLines.get(0).setStroke(Color.BLUE);
             number1.setVisible(true);
             number2.setVisible(false);
         }

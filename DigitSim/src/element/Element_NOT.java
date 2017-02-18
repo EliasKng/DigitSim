@@ -84,13 +84,13 @@ public class Element_NOT extends Element{
     //Diese Methoden müssen überschrieben werden (Beschreibung in der Mutterklasse) 
     @Override
     public void update(){
-        for(int i = 0; i < numInputs; i++){
-            if(inputs[i] == 0){
-                inputLines.get(i).setStroke(Color.BLUE);
-            }else{
-                inputLines.get(i).setStroke(Color.RED);
-            }
-        }
+//        for(int i = 0; i < numInputs; i++){
+//            if(inputs[i] == 0){
+//                inputLines.get(i).setStroke(Color.BLUE);
+//            }else{
+//                inputLines.get(i).setStroke(Color.RED);
+//            }
+//        }
         if(inputs[0] == 0){
             outputs[0] = 1;
             outputLines.get(0).setStroke(Color.RED);

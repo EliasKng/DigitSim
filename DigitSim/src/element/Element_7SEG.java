@@ -5,18 +5,16 @@
  */
 package element;
 
-import toolbox.Draw;
 import toolbox.GenFunctions;
 import Gestures.NodeGestures;
 import general.Properties;
 import java.util.Arrays;
 import javafx.scene.Group;
+import javafx.scene.effect.Bloom;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import toolbox.Draw;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.transform.Rotate;
 
 /**
  *
@@ -92,6 +90,7 @@ public class Element_7SEG extends Element{
         this.lineSeg4 = Draw.drawLine(pX+39, pY+110, pX+39, pY+185, Color.BLACK, 5);
         this.lineSeg5 = Draw.drawLine(pX+39, pY+25, pX+39, pY+100, Color.BLACK, 5);
         this.lineSeg6 = Draw.drawLine(pX+45, pY+105, pX+121, pY+105, Color.BLACK, 5);
+        this.lineSeg0.setEffect(new Bloom());
         
         seg.getChildren().addAll(lineSeg0, lineSeg1, lineSeg2, lineSeg3, lineSeg4, lineSeg5, lineSeg6);
         
@@ -108,13 +107,13 @@ public class Element_7SEG extends Element{
     //Diese Methoden müssen überschrieben werden (Beschreibung in der Mutterklasse)
     @Override
     public void update(){
-        for(int i = 0; i < numInputs; i++){
-            if(inputs[i] == 0){
-                inputLines.get(i).setStroke(Color.BLUE);
-            }else{
-                inputLines.get(i).setStroke(Color.RED);
-            }
-        }
+//        for(int i = 0; i < numInputs; i++){
+//            if(inputs[i] == 0){
+//                inputLines.get(i).setStroke(Color.BLUE);
+//            }else{
+//                inputLines.get(i).setStroke(Color.RED);
+//            }
+//        }
     if(inputs[0] == 1){
             lineSeg0.setStroke(Color.RED);
             }else if (inputs[0] == 0){

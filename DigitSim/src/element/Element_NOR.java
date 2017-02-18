@@ -91,13 +91,13 @@ public class Element_NOR extends Element{
     //Diese Methoden müssen überschrieben werden (Beschreibung in der Mutterklasse)
     @Override
     public void update(){
-        for(int i = 0; i < numInputs; i++){
-            if(inputs[i] == 0){
-                inputLines.get(i).setStroke(Color.BLUE);
-            }else{
-                inputLines.get(i).setStroke(Color.RED);
-            }
-        }
+//        for(int i = 0; i < numInputs; i++){
+//            if(inputs[i] == 0){
+//                inputLines.get(i).setStroke(Color.BLUE);
+//            }else{
+//                inputLines.get(i).setStroke(Color.RED);
+//            }
+//        }
         boolean logic = false;
         for(int i = 0; i < numInputs; i++){ //Eingänge durchiterieren & Logik überprüfen
             if(inputs[i] == 1){

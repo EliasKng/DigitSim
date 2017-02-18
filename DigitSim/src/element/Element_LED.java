@@ -65,13 +65,13 @@ public class Element_LED extends Element{
     @Override
     public void update(){
         if(DigitSimController.isLocked()){
-            for(int i = 0; i < numInputs; i++){
-            if(inputs[i] == 0){
-                inputLines.get(i).setStroke(Color.BLUE);
-            }else{
-                inputLines.get(i).setStroke(Color.RED);
-            }
-        }
+//            for(int i = 0; i < numInputs; i++){
+//                if(inputs[i] == 0){
+//                    inputLines.get(i).setStroke(Color.BLUE);
+//                }else{
+//                    inputLines.get(i).setStroke(Color.RED);
+//                }
+//            }
              indicator.setVisible(true);
              if(inputs[0] == 1){
                 indicator.setStroke(Color.RED);
