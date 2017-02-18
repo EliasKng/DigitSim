@@ -24,6 +24,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javax.swing.JOptionPane;
 import toolbox.SaveFormat;
 /**
@@ -309,12 +310,12 @@ public class DigitSimController extends Pane{
         
     public void mItemPropertiesOnAction(ActionEvent event) { //Einstellungs-Fenster öffnen
         Stage stage;
-        stage = GenFunctions.openFXML(properties.PropertiesController.class, "Properties.fxml", "Einstellungen", "icon.png"); //Öffnen des "Einstellungen"-Fensters
+        stage = GenFunctions.openFXML(properties.PropertiesController.class, "Properties.fxml", "Einstellungen", "icon.png", StageStyle.DECORATED); //Öffnen des "Einstellungen"-Fensters
         stage.setResizable(false);
     }
     public void mItemHelpOnAction(ActionEvent event) { //Hilfe öffnen
         Stage stage;
-        stage = GenFunctions.openFXML(help.HelpController.class,"Help.fxml", "Hilfe", "icon.png"); //Öffnen des "Hilfe"-Fensters
+        stage = GenFunctions.openFXML(help.HelpController.class,"Help.fxml", "Hilfe", "icon.png", StageStyle.DECORATED); //Öffnen des "Hilfe"-Fensters
         stage.setWidth(600);
         stage.setResizable(false);
     }

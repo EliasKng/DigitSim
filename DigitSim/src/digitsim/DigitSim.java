@@ -1,16 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package digitsim;
 
 import general.Properties;
 import toolbox.GenFunctions;
 import javafx.application.Application;
 import javafx.event.EventHandler;
-import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
@@ -22,13 +15,13 @@ import javax.swing.JOptionPane;
  * @author Elias
  */
 public class DigitSim extends Application { //Hauptklasse
+    private static Stage splashScreen; //Ladefenster
     private static Stage stage; //Hauptfenster
-    private static Stage loadingStage; //Loading Screen
     @Override
-    public void start(Stage primaryStage) { //Wird nach dem launch ausgeführt
-        
+    public void start(Stage primaryStage) throws InterruptedException { //Wird nach dem launch ausgeführt
+        loadSplashScreen();
+        splashScreen.show();
         stage = primaryStage;
-        openMainWindow();
           
     }
     
@@ -44,11 +37,11 @@ public class DigitSim extends Application { //Hauptklasse
     /**
      * Öffnet das Hauptfenster (den Seminator)
      */
-    private static void openMainWindow() {
-        stage = GenFunctions.openFXML(DigitSim.class, "DigitSim.fxml", "Seminator", "icon.png");
+    public static void loadMainWindow() {
+        stage = GenFunctions.openFXML(DigitSim.class, "DigitSim.fxml", "Seminator", "icon.png", StageStyle.DECORATED);
         stage.setMinWidth(Properties.GetWindowMinX());
         stage.setMinHeight(Properties.GetWindowMinY());
-        
+        stage.show();
         stage.setOnCloseRequest(
             new EventHandler<WindowEvent>() {         
                 @Override
@@ -65,17 +58,12 @@ public class DigitSim extends Application { //Hauptklasse
                 }});
     }
     
-    /**
-     * GEHT NOCH NICHT!
-     * @author Elias
-     */
-    public static void openLoadingWindow() { 
-        loadingStage.initStyle(StageStyle.UNDECORATED);
-        Group root = new Group();
-        Scene scene = new Scene(root, 100, 100);
-
-        loadingStage.setScene(scene);
-        loadingStage.show();
+    public static void loadSplashScreen() {
+        splashScreen = GenFunctions.openFXML(splashScreen.DigitSimSplashController.class, "DigitSimSplash.fxml", "SplashScreen", "icon.png", StageStyle.UNDECORATED);
+    }
+    
+    public static void hideSplashScreen() {
+        splashScreen.hide();
     }
     
     /**

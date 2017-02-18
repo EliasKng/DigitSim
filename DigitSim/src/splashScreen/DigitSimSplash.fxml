@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="249.99989318847656" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="splashScreen.DigitSimSplashController">
+  <children>
+    <ImageView id="Ladescreen.png" fitHeight="250" fitWidth="600.0" layoutX="0.0" layoutY="0.0">
+      <image>
+        <Image url="@../digitsim/data/Ladescreen.png" preserveRatio="true" smooth="true" />
+      </image>
+    </ImageView>
+  </children>
+  <stylesheets>
+    <URL value="@../stylesheets/digitsimsplash.css" />
+  </stylesheets>
+</AnchorPane>
