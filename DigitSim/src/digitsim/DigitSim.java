@@ -41,7 +41,7 @@ public class DigitSim extends Application { //Hauptklasse
         stage = GenFunctions.openFXML(DigitSim.class, "DigitSim.fxml", "Seminator", "icon.png", StageStyle.DECORATED);
         stage.setMinWidth(Properties.GetWindowMinX());
         stage.setMinHeight(Properties.GetWindowMinY());
-        stage.show();
+
         stage.setOnCloseRequest(
             new EventHandler<WindowEvent>() {         
                 @Override
@@ -64,6 +64,10 @@ public class DigitSim extends Application { //Hauptklasse
     
     public static void hideSplashScreen() {
         splashScreen.hide();
+    }
+    
+    public static void showMainWindow() {
+        stage.show();
     }
     
     /**

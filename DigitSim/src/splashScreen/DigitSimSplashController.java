@@ -32,11 +32,12 @@ public class DigitSimSplashController implements Initializable {
         @Override
         public void run() {
             try {
+                Platform.runLater(digitsim.DigitSim::loadMainWindow);    
+                
                 Thread.sleep(5000);
-                
-                Platform.runLater(digitsim.DigitSim::loadMainWindow);                
+                         
                 Platform.runLater(digitsim.DigitSim::hideSplashScreen);
-                
+                Platform.runLater(digitsim.DigitSim::showMainWindow);
             } catch (InterruptedException ex) {
                 Logger.getLogger(DigitSimSplashController.class.getName()).log(Level.SEVERE, null, ex);
             }
