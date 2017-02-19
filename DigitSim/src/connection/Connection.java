@@ -51,11 +51,11 @@ public class Connection {
         this.dsc = dsc;
     }
     
-    public Connection(Vector2i start, MouseEvent event, DigitSimController dsc) {
+    public Connection(Vector2i start, DigitSimController dsc) {
         AnchorPoint startAP = new AnchorPoint(0, start);
         this.anchorPoints.add(startAP);
         this.dsc = dsc;
-        this.followMouseThread = new LineMouseFollower(start, event, dsc);
+        this.followMouseThread = new LineMouseFollower(start, dsc);
         this.followMouseThread.start();
     }
 
@@ -65,11 +65,11 @@ public class Connection {
         this.dsc = dsc;
     }
     
-    public Connection(Color currentColor, DigitSimController dsc, Element element, boolean isInput, int index, MouseEvent event) {
+    public Connection(Color currentColor, DigitSimController dsc, Element element, boolean isInput, int index) {
         this.startPartner = new ConnectionPartner(element, isInput, index);
         this.currentColor = currentColor;
         this.dsc = dsc;
-        this.followMouseThread = new LineMouseFollower(processPartner(startPartner), event, dsc);
+        this.followMouseThread = new LineMouseFollower(processPartner(startPartner), dsc);
         this.followMouseThread.start();
     }
 
