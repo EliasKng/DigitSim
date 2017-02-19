@@ -5,7 +5,7 @@
  */
 package Gestures;
 
-import connection.ConnectionUpdater;
+import connection.ConnectionHandler;
 import digitsim.DigitSimController;
 import element.Element;
 import general.Properties;
@@ -181,7 +181,7 @@ public class NodeGestures {
         public void handle(MouseEvent event ) {
             if(dragged == true) {
                 dragged = false;
-                ConnectionUpdater.updateAllConnectionsRelatedToElement(findElementNum()); //Verbindungen updaten die das Akutelle Element betreffen
+                ConnectionHandler.updateAllConnectionsRelatedToElement(findElementNum()); //Verbindungen updaten die das Akutelle Element betreffen
                 Node node = (Node) event.getSource(); //Das betroffene Element bekommen
                 node.setCursor(Cursor.DEFAULT);
             }

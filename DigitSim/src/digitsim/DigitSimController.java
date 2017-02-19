@@ -5,7 +5,9 @@ import Gestures.DraggableCanvas;
 import Gestures.NodeGestures;
 import Gestures.SceneGestures;
 import connection.Connection;
+import connection.ConnectionHandler;
 import element.*;
+import general.Vector2i;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +25,7 @@ import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javax.swing.JOptionPane;
@@ -46,6 +49,8 @@ public class DigitSimController extends Pane{
     private static final ObservableList outputMessages = FXCollections.observableArrayList();
     private static boolean connectionPointDragging = false;
     private String currentProjectPath = "";
+    private boolean unfinishedConnection = false;
+    private Vector2i mouseCoords = new Vector2i();
 
      /**
      * FXML OBJEKT-Erstellungs-Bereich:
@@ -159,7 +164,9 @@ public class DigitSimController extends Pane{
         return new EventHandler<MouseEvent>(){
             @Override
             public void handle(MouseEvent event){
-//                allConnectionsOLD.updateConLine(event);
+                if(DigitSimController.getReference().isUnfinishedConnection()) {
+                    mouseCoords.set((int) event.getX(),(int) event.getY());
+                }
             }
         };
     }
@@ -312,7 +319,7 @@ public class DigitSimController extends Pane{
         elements.clear();
         simCanvas.getChildren().clear();
         simCanvas.addGrid(simCanvas.getPrefWidth(), simCanvas.getPrefHeight());
-//        allConnectionsOLD.clear();
+        ConnectionHandler.removeAllConnections();
     }
     public void btnStartOnAction(ActionEvent event) {   
         outputMessages.clear();
@@ -544,7 +551,7 @@ public class DigitSimController extends Pane{
     
     
     public void rebuildElement(Element e, int inputs){ //Löscht ein Element und baut es neu auf mit den gegebenen Inputs
-//          allConnectionsOLD.removeAllConncectionsRelatedTo(e);
+        ConnectionHandler.removeAllConnectionsRelatedToElement(e);
           if(e.getClass().equals(Element_AND.class)){ //Rausfinden um welches Element es sich handelt
               elements.add(new Element_AND(e.getX() + (e.getWidth() / 2), e.getY() + (e.getHeight() / 2), inputs, nodeGestures)); //Element aufbau wie oben bei addElement() [Bei X/Y die hälfte der Höhe und Weite abziehen um die richtige Position zu bekommen]
               simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
@@ -586,10 +593,13 @@ public class DigitSimController extends Pane{
     public void addConnection(Element e, boolean isInput, int index, MouseEvent event) {
         
         if(allConnections.isEmpty()) {
-            allConnections.add(new Connection(Color.GREEN, this, e, isInput, index, event));
+            this.unfinishedConnection = true;
+            allConnections.add(new Connection(Color.GREEN, this, e, isInput, index));
         } else if (allConnections.get(allConnections.size()-1).getEndPartner() != null) {
-            allConnections.add(new Connection(Color.GREEN, this, e, isInput, index, event));
+            this.unfinishedConnection = true;
+            allConnections.add(new Connection(Color.GREEN, this, e, isInput, index));
         } else {
+            this.unfinishedConnection = false;
             allConnections.get(allConnections.size()-1).finishLine(e, isInput, index);
         }
         System.out.println(allConnections.get(allConnections.size()-1).getFollowMouseThread().isInterrupted());
@@ -621,7 +631,7 @@ public class DigitSimController extends Pane{
     private void resetElements(){
         outputMessages.add("[INFO]Alle Elemente zurücksetzen..");
         elements.forEach(e -> e.reset()); //Alle Elemente reseten
-//        allConnectionsOLD.reset();
+        
     }
     
     public static ObservableList getOutputMessages() {
@@ -649,8 +659,28 @@ public class DigitSimController extends Pane{
         DigitSimController.allConnections = allConnections;
     }
     
+    public static void removeConnectionFromAllConnections(Connection c) {
+        allConnections.remove(c);
+    }
+    
+    public static void clearConnections() {
+        allConnections.clear();
+    }
+    
     public ArrayList<Element> getElements(){ //Über diese Methode können andere Klassen auf die Elemente zugreifen
         return elements;
+    }
+    
+    public boolean isUnfinishedConnection() {
+        return this.unfinishedConnection;
+    }
+
+    public Vector2i getMouseCoords() {
+        return mouseCoords;
+    }
+
+    public void setMouseCoords(Vector2i mouseCoords) {
+        this.mouseCoords = mouseCoords;
     }
     
     

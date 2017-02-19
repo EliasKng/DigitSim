@@ -115,7 +115,7 @@ public class Connection {
      * Aktualisiert die komplette Linie (Farbe & Verlauf)!
      */
     public void updateLine() {
-        removeLine(this.lineGroup, this.pointGroup);    //Entfernt die alte Linie
+        removeLine();    //Entfernt die alte Linie
         
         resetAttributes();
         
@@ -129,10 +129,10 @@ public class Connection {
      * @param lines Die Gruppe der Linien (aus welchen die gesamte Linie besteht
      * @param points Die Gruppe der AnchorPoints welche die GesamtLinie beinhaltet
      */
-    public void removeLine(Group lines, Group points) {
-        if((points != null) && (lines != null)) {
-            this.dsc.getSimCanvas().getChildren().remove(lines);
-            this.dsc.getSimCanvas().getChildren().remove(points);
+    public void removeLine() {
+        if((this.pointGroup != null) && (this.lineGroup != null)) {
+            this.dsc.getSimCanvas().getChildren().remove(this.lineGroup);
+            this.dsc.getSimCanvas().getChildren().remove(this.pointGroup);
         }
     }
     
