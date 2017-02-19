@@ -4,6 +4,9 @@
  * and open the template in the editor.
  */
 package pathFinder;
+
+import general.Vector2i;
+
 /**
  *
  * @author Elias

@@ -6,381 +6,408 @@
 package connection;
 
 import digitsim.DigitSimController;
-import toolbox.Draw;
 import element.Element;
+import general.Properties;
+import general.Vector2i;
 import java.util.ArrayList;
+import java.util.List;
+import javafx.scene.Group;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
-import pathFinder.Vector2i;
-
-
+import pathFinder.Node;
+import pathFinder.PathFinder;
+import toolbox.Draw;
 
 /**
  *
- * @author Tim
+ * @author Elias
  */
-public class Connection { //Speichert die Verbindungen
+public class Connection {
+    //Globals
+    private List<AnchorPoint> anchorPoints = new ArrayList();   //alle Punkte durch die die Linie verläuft + Anfang & Ende
+    private Color currentColor;                                 //Farbe der Linie
+    private DigitSimController dsc;                             //Abbild vom DigitSimController
+    private LineMouseFollower followMouseThread;                //Thread der dafür sorgt, dass eine Linie der Maus folgt
+    private ConnectionPartner startPartner;                     //VerbindungsLinienPartner (start)
+    private ConnectionPartner endPartner;                       //VerbindungsLinienPartner (ende)
+    private boolean directLine = false;                         // wird die Linie direkt verlegt oder nicht
+    private PathFinder pathFinder = new PathFinder();
     
-    private DigitSimController dsController;
-    private int tempIndexFirstElement;  //temporäre Variablen (siehe    saveData(){...}  )
-    private boolean tempTypeFirst;
-    private int tempIndexFirst;
-    private int tempIndexSecondElement;      
-    private boolean tempTypeSecond;          
-    private int tempIndexSecond;      
-    private boolean tempFirstElementSet = false;
-    private Line conLine = null;
-    private ConnectionType tempConnectionType;  //Legt den Typ der Verbindung fest (Siehe ConnectionType Klasse
-    private ConnectionType tempECTypeFirst;     //Legt den Typ des zuerst angeklickten Elementes fest
-    private ConnectionType tempECTypeSecond;    //Legt den Typ des als zweites angeklickten Elementes fest
+    //Zum Zeichen relevante Globals
+    private Group lineGroup = new Group();                                    //Gruppe von Linien (die die gesamte Linie darstellt)
+    private Group pointGroup = new Group();                                   //Gruppe von Punkten (anchorPoints, durch die die Linie verlaufen muss)
     
-    public Connection(DigitSimController pDSController) {
-        dsController = pDSController;
+
+    //Konstruktoren
+    public Connection(Vector2i start, Vector2i end, Color currentColor, DigitSimController dsc) {
+        AnchorPoint startAP = new AnchorPoint(0, start);
+        AnchorPoint endAP = new AnchorPoint(1, end);
+        this.anchorPoints.add(startAP);
+        this.anchorPoints.add(endAP);
+        
+        this.currentColor = currentColor;
+        this.dsc = dsc;
+    }
+    
+    public Connection(Vector2i start, MouseEvent event, DigitSimController dsc) {
+        AnchorPoint startAP = new AnchorPoint(0, start);
+        this.anchorPoints.add(startAP);
+        this.dsc = dsc;
+        this.followMouseThread = new LineMouseFollower(start, event, dsc);
+        this.followMouseThread.start();
     }
 
-    // -Bearbeitet von Tim 21.11.16
-    public class ConData // Daten einer Verbindung
-    {
-        private ConnectionType connectionType;
-        public int indexFirstElement;       // index des ersten elements im array
-        public boolean typeFirst;           // ein oder ausgang
-        public int indexFirst;              // index des jeweiligen ein oder ausgangs am ersten element
-        public int indexSecondElement;      // index des zweiten elements im array
-        public boolean typeSecond;          // ein oder ausgang
-        public int indexSecond;             // index des jeweiligen ein oder ausgangs am zweiten element
-        public ConnectionLine connectionLine; // Elias KLasse zum Zeichnen von conenctions
+    public Connection(Color currentColor, DigitSimController dsc, Connection partnerConnection, AnchorPoint partnerAnchorPoint) {
+        this.startPartner = new ConnectionPartner(partnerConnection, partnerAnchorPoint);
+        this.currentColor = currentColor;
+        this.dsc = dsc;
+    }
+    
+    public Connection(Color currentColor, DigitSimController dsc, Element element, boolean isInput, int index, MouseEvent event) {
+        this.startPartner = new ConnectionPartner(element, isInput, index);
+        this.currentColor = currentColor;
+        this.dsc = dsc;
+        this.followMouseThread = new LineMouseFollower(processPartner(startPartner), event, dsc);
+        this.followMouseThread.start();
     }
 
-    public static ArrayList<ConData> connections = new ArrayList<ConData>(); //Speichert alle Verbindungne
+    
+    
+    /**************************Methoden*******************************/
     
     /**
-     * addConnection(..) Fügtt eine Verbindung zwischen ein und ausgängen von
-     * verachiedenen elementen hinzu
-     *
-     * @author Tim
-     *  Edit by Elias 20161218
-     * 
+     * wenn der LineMouseFollower aktiv ist und auf den Linienpartner geklickt wird, soll diese Funktion aufgerufen werden
+     * @param end Die Endkoordinate der Linie (nun bekannt)
      */
-    public void addConnection() {
-        ConData data = new ConData();
-        if(tempIndexFirstElement == tempIndexSecondElement || tempTypeFirst == tempTypeSecond){ //Überorüfen ob es sich um die gleichen Elemente handelt
-            return;
+    public void finishLine(Vector2i end) { 
+        this.followMouseThread.interrupt();
+        AnchorPoint endAP = new AnchorPoint(1, end);
+        this.anchorPoints.add(endAP);
+        this.updateLine();
+    }
+    
+    /**
+     * wenn der LineMouseFollower aktiv ist und auf den Linienpartner geklickt wird, soll diese Funktion aufgerufen werden
+     * @param element hier wird das Elemnt des verbindungsendes übergeben
+     * @param isInput true: ist ein Iput false: is kein Input
+     * @param index des IN-/Outputs
+     */
+    public void finishLine(Element element, boolean isInput, int index) { 
+        this.endPartner = new ConnectionPartner(element, isInput, index);
+        this.followMouseThread.interrupt();
+        this.updateLine();
+    }
+    
+    /**
+     * wenn der LineMouseFollower aktiv ist und auf den Linienpartner geklickt wird, soll diese Funktion aufgerufen werden
+     * @param connection hier wird die Verbindungslinie übergeben, mit welcher diese Verbindungslinie verbunden werden soll
+     * @param anchorPoint hier wird der AnchorPoint übergeben (mit dem die Linie verbunden werden wird)
+     */
+    public void finishLine(Connection connection, AnchorPoint anchorPoint) { 
+        this.endPartner = new ConnectionPartner(connection, anchorPoint);
+        this.followMouseThread.interrupt();
+        this.updateLine();
+    }
+    
+    /**
+     * Aktualisiert die komplette Linie (Farbe & Verlauf)!
+     */
+    public void updateLine() {
+        removeLine(this.lineGroup, this.pointGroup);    //Entfernt die alte Linie
+        
+        resetAttributes();
+        
+        createConnection();
+        
+        drawConnection();
+    }
+    
+    /**
+     * Entfernt die Linie & AnchorPoints aus dem dsc
+     * @param lines Die Gruppe der Linien (aus welchen die gesamte Linie besteht
+     * @param points Die Gruppe der AnchorPoints welche die GesamtLinie beinhaltet
+     */
+    public void removeLine(Group lines, Group points) {
+        if((points != null) && (lines != null)) {
+            this.dsc.getSimCanvas().getChildren().remove(lines);
+            this.dsc.getSimCanvas().getChildren().remove(points);
         }
-        for(ConData d : connections){ //Überprüfen ob es die verbindung schon gibt
-            if(d.indexFirstElement == tempIndexFirstElement && d.indexSecondElement == tempIndexSecondElement && d.indexFirst == tempIndexFirst && d.indexSecond == tempIndexSecond && d.typeFirst == tempTypeFirst && d.typeSecond == tempTypeSecond){
-                return;
-            }
+    }
+    
+    /**
+     * Erstellt aus den Attributen die Linie und speichert sie in lineGroup und pointGroup
+     */
+    public void createConnection() {
+        processPartners();
+        createLineGroup();
+        createPointGroup();
+    }
+    
+    /**
+     * "Malt" die aktuelle Linie auf den dsc
+     */
+    public void drawConnection() {
+        this.dsc.getSimCanvas().getChildren().addAll(this.lineGroup, this.pointGroup);
+    }
+    
+    /**
+     * Aktualisiert die Farbe der Verbindung
+     */
+    public void updateLineColor() {
+        for(javafx.scene.Node n : this.lineGroup.getChildren()){
+            Line l = (Line) n;
+            l.setStroke(currentColor);
         }
         
-        data.indexFirstElement = tempIndexFirstElement;
-        data.indexSecondElement = tempIndexSecondElement;
-        data.indexFirst = tempIndexFirst;
-        data.indexSecond = tempIndexSecond;
-        data.typeFirst = tempTypeFirst;
-        data.typeSecond = tempTypeSecond;
-        data.connectionLine = new ConnectionLine(dsController, data);
-        connections.add(data);
-        drawNewLine(data);
-    }
-    
-    public void addConnection(int indexFirstElement, int indexSecondElement, int indexFirst, int indexSecond, boolean typeSecond, boolean typeFirst){
-        ConData data = new ConData();
-        data.indexFirstElement = indexFirstElement;
-        data.indexSecondElement = indexSecondElement;
-        data.indexFirst = indexFirst;
-        data.indexSecond = indexSecond;
-        data.typeFirst = typeSecond;
-        data.typeSecond = typeFirst;
-        data.connectionLine = new ConnectionLine(dsController, data);
-        connections.add(data);
-        drawNewLine(data);
-    }
-
-    /* -Bearbeitet von Tim 14.11.16 */
-    public void update() //Geht alle Verbindungen durch und schaltet sie durch
-    {
-        for (ConData d : connections) {
-            if ((d.typeFirst != d.typeSecond) && !d.typeFirst) // ausgang mit eingang verbunden
-            {
-                dsController.getElements().get(d.indexSecondElement).setInput(d.indexSecond, dsController.getElements().get(d.indexFirstElement).getOutput(d.indexFirst));
-                d.connectionLine.setColor(dsController.getElements().get(d.indexFirstElement).getOutput(d.indexFirst)); //Farbe der Verbindung anpassen
-                
-            } else if ((d.typeFirst != d.typeSecond) && d.typeFirst) // eingang mit ausgang verbunden
-            {
-                dsController.getElements().get(d.indexFirstElement).setInput(d.indexFirst, dsController.getElements().get(d.indexSecondElement).getOutput(d.indexSecond));
-                d.connectionLine.setColor(dsController.getElements().get(d.indexSecondElement).getOutput(d.indexSecond)); //Farbe der Verbindung anpassen
-            }
-        }
-    }
-
-    public void drawNewLine(ConData d) {
-            Vector2i start = new Vector2i();
-            Vector2i end = new Vector2i();
-
-            if ((d.typeFirst != d.typeSecond) && !d.typeFirst) // ausgang mit eingang verbunden
-            {
-                start.setX((int)dsController.getElements().get(d.indexFirstElement).getOutputX(d.indexFirst));
-                start.setY((int)dsController.getElements().get(d.indexFirstElement).getOutputY(d.indexFirst));
-                end.setX((int)dsController.getElements().get(d.indexSecondElement).getInputX(d.indexSecond));
-                end.setY((int)dsController.getElements().get(d.indexSecondElement).getInputY(d.indexSecond));
-            } else if ((d.typeFirst != d.typeSecond) && d.typeFirst) // eingang mit ausgang verbunden
-            {
-                start.setX((int)dsController.getElements().get(d.indexFirstElement).getInputX(d.indexFirst));
-                start.setY((int)dsController.getElements().get(d.indexFirstElement).getInputY(d.indexFirst));
-                end.setX((int)dsController.getElements().get(d.indexSecondElement).getOutputX(d.indexSecond));
-                end.setY((int)dsController.getElements().get(d.indexSecondElement).getOutputY(d.indexSecond));
-            }
-            // Linien zeichenen
-
-            d.connectionLine.setStart(start);
-            d.connectionLine.setEnd(end);
-            d.connectionLine.update(false, connections);
-    }
-    
-    public void drawUpdate(int eIndex){
-        for(ConData d : connections){
-            if(d.indexFirstElement == eIndex || d.indexSecondElement == eIndex){
-            
-                Vector2i start = new Vector2i();
-                Vector2i end = new Vector2i();
-                if ((d.typeFirst != d.typeSecond) && !d.typeFirst) // ausgang mit eingang verbunden
-                {
-                    start.setX((int)dsController.getElements().get(d.indexFirstElement).getOutputX(d.indexFirst));
-                    start.setY((int)dsController.getElements().get(d.indexFirstElement).getOutputY(d.indexFirst));
-                    end.setX((int)dsController.getElements().get(d.indexSecondElement).getInputX(d.indexSecond));
-                    end.setY((int)dsController.getElements().get(d.indexSecondElement).getInputY(d.indexSecond));
-                } else if ((d.typeFirst != d.typeSecond) && d.typeFirst) // eingang mit ausgang verbunden
-                {
-                    start.setX((int)dsController.getElements().get(d.indexFirstElement).getInputX(d.indexFirst));
-                    start.setY((int)dsController.getElements().get(d.indexFirstElement).getInputY(d.indexFirst));
-                    end.setX((int)dsController.getElements().get(d.indexSecondElement).getOutputX(d.indexSecond));
-                    end.setY((int)dsController.getElements().get(d.indexSecondElement).getOutputY(d.indexSecond));
-                }
-                // Linien zeichenen
-
-                d.connectionLine.setStart(start);
-                d.connectionLine.setEnd(end);
-                d.connectionLine.update(false, connections);
-            }
+        for(javafx.scene.Node n : this.pointGroup.getChildren()){
+            Circle c = (Circle) n;
+            c.setStroke(currentColor);
+            c.setFill(currentColor);
         }
     }
     
     /**
-     * Wird gebraucht um eine Direkte Verbindungslinie zu zeichnen (z.B. beim Verschieben eines Elementes)
-     * @param eIndex 
+     * Erstellt Aus den beiden "Verbindungspartnern" Den start und das Ende der Linie (und speichert diese als AnchorPoint)
      */
-    public void drawDirectLineUpdate(int eIndex){
-        for(ConData d : connections){
-            if(d.indexFirstElement == eIndex || d.indexSecondElement == eIndex){
-            
-            Vector2i start = new Vector2i();
-            Vector2i end = new Vector2i();
-            if ((d.typeFirst != d.typeSecond) && !d.typeFirst) // ausgang mit eingang verbunden
-            {
-                start.setX((int)dsController.getElements().get(d.indexFirstElement).getOutputX(d.indexFirst));
-                start.setY((int)dsController.getElements().get(d.indexFirstElement).getOutputY(d.indexFirst));
-                end.setX((int)dsController.getElements().get(d.indexSecondElement).getInputX(d.indexSecond));
-                end.setY((int)dsController.getElements().get(d.indexSecondElement).getInputY(d.indexSecond));
-            } else if ((d.typeFirst != d.typeSecond) && d.typeFirst) // eingang mit ausgang verbunden
-            {
-                start.setX((int)dsController.getElements().get(d.indexFirstElement).getInputX(d.indexFirst));
-                start.setY((int)dsController.getElements().get(d.indexFirstElement).getInputY(d.indexFirst));
-                end.setX((int)dsController.getElements().get(d.indexSecondElement).getOutputX(d.indexSecond));
-                end.setY((int)dsController.getElements().get(d.indexSecondElement).getOutputY(d.indexSecond));
-            }
-            // Linien zeichenen
-
-            d.connectionLine.setStart(start);
-            d.connectionLine.setEnd(end);
-            d.connectionLine.update(true, connections);
-            }
+    public void processPartners() {
+        int indexStart = 0;
+        int indexEnd;
+        
+        //Suche passenden Index für den Endpunkt -> wenn es sonst keine Punkte gibt, muss er 1 sein und sonst den höchsten Index der Liste haben
+        if(anchorPoints.isEmpty()) {
+            indexEnd = 1;
+        } else {
+            indexEnd = anchorPoints.size()-1;
         }
+        
+        Vector2i startCoords = processPartner(this.startPartner);
+        Vector2i endCoords = processPartner(this.endPartner);
+        AnchorPoint start = new AnchorPoint(indexStart, startCoords);
+        AnchorPoint end = new AnchorPoint(indexEnd, endCoords);
+        this.anchorPoints.add(start);
+        this.anchorPoints.add(end);
     }
-
+    
     /**
-     * @author tim sehen ob nah an einem input geklickt wurde (erstes von 2)
+     * Kreiert Koordinaten aus einem partner
+     * @param partner in dem Verbindungspartner (partner) befinden sich alle nötigen Informationen um Koordinaten zu bestimmen
+     * @return 
      */
-    public static final int EINDEX = 0; // element index
-    public static final int CINDEX = 1; // connection index
-    public static final int CETYPE = 2; // input(1) oder output(0)
-
-    public int[] closeToInOrOut(MouseEvent event) {
-        int result[] = new int[3];
-        for (int n = 0; n < dsController.getElements().size(); n++) {
-            // schauen ob in der nähe eines inputs geklickt wurde
-            for (int i = 0; i < dsController.getElements().get(n).numInputs; i++) {
-                double dInX = dsController.getElements().get(n).getInputX(i);
-                double dInY = dsController.getElements().get(n).getInputY(i);
-                if (Draw.isInArea(event.getX(), event.getY(), dInX, dInY, 5)) {
-                    result[EINDEX] = n; // element index
-                    result[CINDEX] = i; // input index
-                    result[CETYPE] = 1; // es ist ein input
-                    return result;
-                }
-            }
-
-            // schauen ob in der nähe eines outputs geklickt wurde
-            for (int i = 0; i < dsController.getElements().get(n).getNumOutputs(); i++) {
-                double dInX = dsController.getElements().get(n).getOutputX(i);
-                double dInY = dsController.getElements().get(n).getOutputY(i);
-                if (Draw.isInArea(event.getX(), event.getY(), dInX, dInY, 5)) {
-                    result[EINDEX] = n; // element index
-                    result[CINDEX] = i; // output index
-                    result[CETYPE] = 0; // es ist ein output
-                    return result;
-                }
+    public Vector2i processPartner(ConnectionPartner partner) {
+        if(partner.getPartnerType() == PartnerType.CONNECTIONLINE) {    //es handelt sich um eine Verbindungslinie -> Koordinaten des AnchorPoints?
+            Vector2i coords = new Vector2i(partner.getanchorPoint().getCoords().getX(),partner.getanchorPoint().getCoords().getY());//Koordinaten setzen sich aus der x&y koordinate des AnchorPoints zustanden
+            return coords;
+        }
+        if(partner.getPartnerType() == PartnerType.ELEMENT) {   //Es handelt sich um ein Element -> In/Output?
+            Element element = partner.getelement();
+            Vector2i coords = new Vector2i();
+            
+            if(partner.isIsInput()) {   //Es handelt sich um einen Input (die Koordinate von einem Inputs wird hier bestimmt)
+                coords.setX((int) element.getInputX(partner.getIndex()));
+                coords.setY((int) element.getInputY(partner.getIndex()));
+                return coords;
+            } else {                    //Es handelt sich um einen Output (die Koordinate von einem Ouputs wird hier bestimmt)
+                coords.setX((int) element.getOutputX(partner.getIndex()));
+                coords.setY((int) element.getOutputY(partner.getIndex()));
+                return coords;
             }
         }
+        System.out.println("Unbekannte Art von Verbindungspartnerart!"); //wenn man hier angelangt, dann wird diese Art von Partner noch nicht unterstützt
         return null;
     }
-
-    //Author: Dominik
-    //Löscht alle Verbindungen
-    public void clear() {
-        connections.clear();
-    }
-
-    // Author Tim
-    // bestimmte verbindung entfernen
-    public void removeConnection(ConData data) {
-        data.connectionLine.clear();
-        connections.remove(data);
-    }
-
-    public ArrayList<ConData> getConnectionData() { //Verbindungen zurückgeben
-        return connections;
-    }
     
-    public ConData getConData(int t){
-        return connections.get(t);
-    }
-
-    public ConData getSpecificConnectionData(int choice) { //Einzelne Verbindungen zurückgeben
-        return connections.get(choice);
-    }
-    
-    public void removeAllConncectionsRelatedTo(Element pE){ 
-        ArrayList<ConData> temp = new ArrayList<>(); //Wir müssen alle zu löschenden Verbindungen hier speichern, erklärung siehe (1)
-        for(ConData d : connections){
-            if(dsController.getElements().get(d.indexFirstElement).hashCode() == pE.hashCode() || dsController.getElements().get(d.indexSecondElement).hashCode() == pE.hashCode()){
-                d.connectionLine.clear(); 
-                temp.add(d); //(1) würden wir hier das ConData Objekt aus connections enfernen gibt es einen Error, da die For-Schleife weiterhin versucht alles durchzulaufen, allerdings hat sich die Größe vom Array geändern wenn das Objekt entfernt wurde = IndexOutOfBoundException
-            }
+    /**
+     * erstellt die Verbindungslinie
+     */
+    public void createLineGroup() {
+        ArrayList<List<Node>> completePath = getPath();
+        
+        if(!this.directLine) {
+            createLineGroupFromNodeList(completePath);
+        } else {
+            createDirectLineGroup();
         }
-        for(ConData t : temp){
-            connections.remove(t);
-        }
-        temp.clear();
     }
     
-    public void reset(){
-        connections.forEach(d -> d.connectionLine.resetColor());
+    public void createPointGroup() {
+        int gridOffset = general.Properties.GetGridOffset();
+        for(AnchorPoint ap : this.anchorPoints) {
+            Circle c = Draw.drawCircle(ap.getCoords().getX()*gridOffset+10.5, ap.getCoords().getY()*gridOffset+10.5, 5, currentColor, 1, true, 1);
+            pointGroup.getChildren().add(c);
+        }
     }
     
     /**
-     * Wird aufgerufen (Aus der Node gestures Klasse), wenn man auf einen In/Output clickt und es werden Daten zur Erstellung einer Verbindungslinie übergeben
-     * @Author Elias
-     * @param element   Das Element (wird nur benötigt um den Index des Elementes herauszufinden (Das wievielte ELement es in der Liste mit allen Elementen ist)
-     * @param isInput   Ist true wenn auf einen Input geklickt wurde und false wenn auf einen Output geklickt wurde
-     * @param index     Gibt an, um welchen Index des IN/Output es sich handelt (index = 0 -> oberster in / output; index = 1 -> zweitoberster in /Output .....)   
-     * @param event     Das MouseEvent wird übergeben um eine direkte Verbindungslinie zu zeichnen
-     * @param cEType    Kann entweder E oder C (Elemend oder ConnectionLine) sein. Legt also einfach nur den Typ des angeklickten Elementes oder ConnectionLine 
+     * Erstellt eine Liniengruppe aus einer Nodeliste
+     * @param completePath 
      */
-    public void saveData(Element element, boolean isInput, int index, MouseEvent event, ConnectionType cEType) {
-        ArrayList<Element> elements = dsController.getElements();
+    public void createLineGroupFromNodeList(ArrayList<List<Node>> completePath) {
+        List<Node> nodePath = new ArrayList();
         
-        if(!tempFirstElementSet) {  // -> Dies ist das erste Element der Verbindungslinie, das angeklickt wird 
-            tempIndexFirstElement = elements.indexOf(element);    //Findet den Index des angeklickten Elementes heraus
-            tempTypeFirst = isInput;
-            tempIndexFirst = index;
-            tempFirstElementSet = true; //Wenn diese Funktion nochmal aufgerufen wird (wenn das Ender der Verbindungslinie angeklickt wurde) soll sie dies hier nicht noch einmal durchlaufen, sondern bei "else" anfangen
-            drawDirectLine(event, isInput, elements);
-            tempECTypeFirst = cEType;
-            
-        } else {    // -> Dies ist das zweite Element der Verbindungslinie, das angeklickt wird -> Die Verbindung kann "gelegt" werden          
-            dsController.getSimCanvas().getChildren().remove(conLine);//Entfernt die Verbindungslinie, die der Maus gefolgt hat
-            conLine = null;
-            tempIndexSecondElement = elements.indexOf(element);    //Findet den Index des angeklickten Elementes heraus
-            tempTypeSecond = isInput;
-            tempIndexSecond = index;
-            tempIndexSecond = index;
-            tempFirstElementSet = false;
-            tempECTypeSecond = cEType;
-            addConnection();
-        }
-    }
-    
-    public void drawDirectLine(MouseEvent event, boolean isInput, ArrayList<Element> elements) {
-        if(isInput) {
-            
-            conLine = Draw.drawLine(elements.get(tempIndexFirstElement).getInputX(tempIndexFirst), elements.get(tempIndexFirstElement).getInputY(tempIndexFirst), event.getX(), event.getY(), Color.DARKORANGE, 5);
-            
-        } else {
-            conLine = Draw.drawLine(elements.get(tempIndexFirstElement).getOutputX(tempIndexFirst), elements.get(tempIndexFirstElement).getOutputY(tempIndexFirst), event.getX(), event.getY(), Color.DARKORANGE, 5);
+        //Lässt die "Liste aus Listen" zu nur einer Liste werden
+        for(List<Node> i : completePath) {
+            for(Node n : i) {
+                nodePath.add(n);
+            }
         }
         
-        conLine.setMouseTransparent(true);
-        conLine.setOpacity(0.6);
-        dsController.getSimCanvas().getChildren().add(conLine);
-    }
-    
-    public void removeDirectLine(){
-        dsController.getSimCanvas().getChildren().remove(conLine);
-        conLine = null;
-    }
-    
-    public void updateConLine(MouseEvent event){
-        if(conLine != null){
-            conLine.setEndX(event.getX());
-            conLine.setEndY(event.getY());
+        List<Node> vertexNodes = findVertexNodes(nodePath);
+        double gO = general.Properties.GetGridOffset(); //grid Offset
+        int lineWidth = Properties.getLineWidth();
+        
+        for(Node n : vertexNodes) {
+            System.out.println("VNodeXY: " +n.tile.getX() +" : " +n.tile.getY());
         }
-    }
+        
+        Node child = null;
+        //verbinde alle Eckpunkte
+        for(Node n : vertexNodes) {
+            if(child != null) {
+                Line line = Draw.drawLine(child.tile.getX()*gO+10.5, child.tile.getY()*gO+10.5, n.tile.getX()*gO+10.5, n.tile.getY()*gO+10.5, this.currentColor, lineWidth);
+                this.lineGroup.getChildren().add(line);
+            } 
+            child = n;
+        }
+        
+    } 
     
-    private Vector2i lastPoint = null;
-    
-    public void addPoint(ConData d, MouseEvent event, Boolean direct){
-        lastPoint = new Vector2i((int)event.getX(), (int)event.getY());
-        d.connectionLine.addPoint(lastPoint);
-        d.connectionLine.update(direct, connections);
-    }
-    
-    public void removeLastPoint(ConData d){
-        if(lastPoint != null){
-            d.connectionLine.removePoint(lastPoint);
-            lastPoint = null;
-        }     
-    }
-    
-    public void resetLastPoint(){
-        lastPoint = null;
-    }
-    
-    public void resetCon(ConData d){
-        d.connectionLine.reset(connections);
+    /**
+     * erstellt aus den anchorPoints einen NodePath mit dem PathFinder
+     * @return 
+     */
+    public ArrayList<List<Node>> getPath() {
+        ArrayList<List<Node>> completePath = new ArrayList();
+        
+        for(int i = 0; i < anchorPoints.size() -1; i++) { //Versuche kompletten Pfad mit dem Pathfinder zu erzeugen
+            List<Node> path = pathFinder.findPath(anchorPoints.get(i).getCoords(), anchorPoints.get(i + 1).getCoords(), dsc.getElements(), dsc.getAllConnections());
+            if(path == null) {
+                this.directLine = true;
+                return null;
+            } else {
+                completePath.add(path);
+            }
+        }
+        return completePath;
     }
     
     /**
-     * Erstellt den Typ der Connection
-     * @Author Elias
+     * Findet aus einer Liste von Nodes die Eckpunkte heraus
+     * @param allNodes  die Liste, von welcher die Eckpunke gesucht werden sollen
+     * @return Eckpunkte
      */
-    private void processConnectionType() {
-        if(tempECTypeFirst == ConnectionType.E) {
-            if(tempECTypeSecond == ConnectionType.E) {
-                tempConnectionType = ConnectionType.EE;
-            } else {
-                tempConnectionType = ConnectionType.EC;
+    public List<Node> findVertexNodes(List<Node> allNodes) {
+        List<Node> vertexNodes = new ArrayList();
+        
+        //Füge Start Node hinzu
+        vertexNodes.add(allNodes.get(0));
+        
+        //Finde EckPunkte
+        for(int i = 1; i < allNodes.size()-1; i++) {
+            Node node = allNodes.get(i);
+            Node parent = allNodes.get(i+1);
+            Node child = allNodes.get(i-1);
+            
+            //Überprüft ob sich die Richtung geändert hat
+            if(didDirectionChange(node, child, parent)) {
+                vertexNodes.add(node);
             }
+        }
+        //Füge End-Node hinzu
+        vertexNodes.add(allNodes.get(allNodes.size()-1));
+        
+        return vertexNodes;
+    }
+    
+    /**
+     * überprüft ob sich die Richtung geändert hat
+     */
+    public boolean didDirectionChange(Node node, Node child, Node parent) {
+        boolean didXChange;
+        boolean didYChange;
+                
+        if((child.tile.getX()==node.tile.getX()) && (node.tile.getX() == parent.tile.getX())) {
+            didXChange = false;
         } else {
-            if(tempECTypeSecond == ConnectionType.C) {
-                tempConnectionType = ConnectionType.CC;
-            } else {
-                tempConnectionType = ConnectionType.EC;
+            didXChange = true;
+        }
+            
+        if((child.tile.getY()==node.tile.getY()) && (node.tile.getY() == parent.tile.getY())) {
+            didYChange = false;
+        } else {
+            didYChange = true;
+        }
+         
+        
+        if(didXChange && didYChange) {
+            return true;
+        }
+        return false;
+    }
+    
+    /**
+     * Erstellt aus den AnchorPoints eine direkt verlegte Linie
+     */
+    public void createDirectLineGroup() {
+        Vector2i parentPoint = null;
+        for(AnchorPoint ap : anchorPoints) {
+            if(parentPoint != null) {
+                Line l = Draw.drawLine(parentPoint, ap.getCoords(), currentColor, Properties.getLineWidth());
+                this.lineGroup.getChildren().add(l);
             }
+            parentPoint = ap.getCoords();
         }
     }
     
-    public int size(){
-        return connections.size();
+    /**
+     * setzt sämtliche Parameter auf die Standartwerte zurück
+     */
+    public void resetAttributes() {
+        this.anchorPoints = new ArrayList();
+        this.directLine = false;
+        this.lineGroup = new Group();
+        this.pointGroup = new Group();
+    }
+    
+
+    
+    //**********************GET/SET************************/
+    
+    public List<AnchorPoint> getAnchorPoints() {
+        return anchorPoints;
+    }
+
+    public Color getCurrentColor() {
+        return currentColor;
+    }
+
+    public DigitSimController getDsc() {
+        return dsc;
+    }
+
+    public LineMouseFollower getFollowMouseThread() {
+        return followMouseThread;
+    }
+
+    public Group getLineGroup() {
+        return lineGroup;
+    }
+
+    public Group getPointGroup() {
+        return pointGroup;
+    }
+
+    public void setCurrentColor(Color currentColor) {
+        this.currentColor = currentColor;
+        updateLineColor();
+    }
+
+    public ConnectionPartner getStartPartner() {
+        return startPartner;
+    }
+
+    public ConnectionPartner getEndPartner() {
+        return endPartner;
     }
 }

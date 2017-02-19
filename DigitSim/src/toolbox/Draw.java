@@ -4,8 +4,7 @@
  * and open the template in the editor.
  */
 package toolbox;
-import toolbox.GenFunctions;
-import toolbox.ErrorHandler;
+import general.Vector2i;
 import java.util.List;
 import javafx.scene.Group;
 import javafx.scene.canvas.GraphicsContext;
@@ -139,6 +138,20 @@ public class Draw {
         return circle;
     }
     
+    public static Circle drawCircle(Vector2i coords, double dRadius, Color dColor, double alpha, boolean fill, double lineWidth){ //Kreis zeichen
+        Circle circle = new Circle( coords.getX(), coords.getY(), dRadius);
+        circle.setStroke(dColor);
+        circle.setStrokeWidth(lineWidth);
+        if(fill) {
+            circle.setFill(dColor.deriveColor(1, 1, 1, alpha));            
+        }
+        else {
+            circle.setFill(Color.TRANSPARENT);
+        }
+
+        return circle;
+    }
+    
     public static Rectangle drawRectangle(double dX, double dY, double dWidth, double dHeight, double dArcHeight, double dArcWidth, Color dColor, double alpha, double strokeWidth){//Rechteck zeichen
         Rectangle rec = new Rectangle(dX, dY, dWidth, dHeight);
         rec.setStroke(dColor);
@@ -161,6 +174,13 @@ public class Draw {
     
     public static Line drawLine(double p1X, double p1Y, double p2X, double p2Y, Color dColor,double dWidth){
         Line l = new Line(p1X, p1Y, p2X, p2Y);
+        l.setStrokeWidth(dWidth);
+        l.setStroke(dColor);
+        return l;
+    } 
+    
+    public static Line drawLine(Vector2i start, Vector2i end, Color dColor,double dWidth){
+        Line l = new Line(start.getX(), start.getY(), end.getX(), end.getY());
         l.setStrokeWidth(dWidth);
         l.setStroke(dColor);
         return l;

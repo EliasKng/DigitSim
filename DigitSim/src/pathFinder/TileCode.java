@@ -22,7 +22,7 @@ public class TileCode {
     private static int simSizeY = Properties.GetSimSizeY();
     private static Group visualizeNodes = new Group();
 
-    public static void createTileCode(ArrayList<Element> elements, ArrayList<Connection.ConData> connections, boolean visualize) {
+    public static void createTileCode(ArrayList<Element> elements, List<Connection> connections, boolean visualize) {
         if(visualize) {
             DigitSimController.getReference().getSimCanvas().getChildren().removeAll(visualizeNodes);
             clearVisualizeGroup();
@@ -72,21 +72,23 @@ public class TileCode {
             }
         }
         
-        for(Connection.ConData c : connections) {
-            for(int i = 0; i < c.connectionLine.getGroup().getChildren().size(); i++) {
-                Group g = c.connectionLine.getGroup();
-                Line line = (Line) g.getChildren().get(i);
-                int startX = (int) line.getStartX()/21;
-                int startY = (int) line.getStartY()/21;
-                
-                try {
-                    if((tileCode[startX][startY] == 0) || 3 < tileCode[startX][startY]) {
-                            tileCode[startX][startY] = 3;
-                            if(visualize)
-                                visualizeNodes.getChildren().add(Draw.drawCircle(startX*21+11.5, startY*21+11.5, 3, Color.RED, 1, true, 1));
-                        }
-                } catch (Exception e) {
-                    System.out.println("Fehler beim Erstellen des Arrays (PATHFINDER) (ConnectionToArray)");
+        if(connections.size() > 1) {
+            for(Connection c : connections) {
+                for(int i = 0; i < c.getLineGroup().getChildren().size(); i++) {
+                    Group g = c.getLineGroup();
+                    Line line = (Line) g.getChildren().get(i);
+                    int startX = (int) line.getStartX()/21;
+                    int startY = (int) line.getStartY()/21;
+
+                    try {
+                        if((tileCode[startX][startY] == 0) || 3 < tileCode[startX][startY]) {
+                                tileCode[startX][startY] = 3;
+                                if(visualize)
+                                    visualizeNodes.getChildren().add(Draw.drawCircle(startX*21+11.5, startY*21+11.5, 3, Color.RED, 1, true, 1));
+                            }
+                    } catch (Exception e) {
+                        System.out.println("Fehler beim Erstellen des Arrays (PATHFINDER) (ConnectionToArray)");
+                    }
                 }
             }
         }

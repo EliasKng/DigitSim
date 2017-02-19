@@ -1,14 +1,14 @@
 package digitsim;
 import general.Properties;
 import toolbox.GenFunctions;
-import connection.Connection;
 import Gestures.DraggableCanvas;
 import Gestures.NodeGestures;
 import Gestures.SceneGestures;
-import connection.Connection.ConData;
+import connection.Connection;
 import element.*;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -39,13 +39,12 @@ public class DigitSimController extends Pane{
     private static ArrayList<Element> elements; //Alle Elemente kommen hier rein, static damit andere Klassen (einfach) darauf zugreifen können
     private static NodeGestures nodeGestures;  //Die handler für die Nodes (z.B Elemente) beziehen
     private SceneGestures sceneGestures; //Die handler für die Arbeitsfläche beziehen
-    private static Connection allConnections; //Verbindungen zwischen Elementen werden hier gespeichert
+    private static List<Connection> allConnections = new ArrayList(); //Alle Verbindungen werden hier gespeichert
     private SimThread runningThread = new SimThread(this); //Thread der, falls gestartet, immer die Elemente & Verbindungen updatet
     private static boolean locked = false; //Wenn wir das Programm starten setzen wir locked auf True, damit das Programm blokiert wird und man während der Simulation nichts ändern kann!
     private static DigitSimController refThis;
     private static final ObservableList outputMessages = FXCollections.observableArrayList();
     private static boolean connectionPointDragging = false;
-    private static ConData currentConData = null;
     private String currentProjectPath = "";
 
      /**
@@ -128,7 +127,6 @@ public class DigitSimController extends Pane{
         simPane.addEventFilter( ScrollEvent.ANY, sceneGestures.getOnScrollEventHandler());  
         elements = new ArrayList<Element>(); //Beschreibung oben
         //Klasse für die Verbindungen    
-        allConnections = new Connection(this);  
         outputMessages.add("[INFO]Projekterstellung erfolgreich");
     }
     
@@ -161,7 +159,7 @@ public class DigitSimController extends Pane{
         return new EventHandler<MouseEvent>(){
             @Override
             public void handle(MouseEvent event){
-                allConnections.updateConLine(event);
+//                allConnectionsOLD.updateConLine(event);
             }
         };
     }
@@ -171,8 +169,8 @@ public class DigitSimController extends Pane{
             @Override
             public void handle(MouseEvent event){
                 if(connectionPointDragging){
-                    allConnections.removeLastPoint(currentConData);
-                    allConnections.addPoint(currentConData, event, true);
+//                    allConnectionsOLD.removeLastPoint(currentConData);
+//                    allConnectionsOLD.addPoint(currentConData, event, true);
                 }
             }
         };
@@ -183,8 +181,8 @@ public class DigitSimController extends Pane{
             @Override
             public void handle(MouseEvent event){
                 if(connectionPointDragging){
-                    allConnections.removeLastPoint(currentConData);
-                    allConnections.addPoint(currentConData, event, false);
+//                    allConnectionsOLD.removeLastPoint(currentConData);
+//                    allConnectionsOLD.addPoint(currentConData, event, false);
                     connectionPointDragging = false;
                     simCanvas.getScene().setCursor(Cursor.DEFAULT);
                 }
@@ -201,15 +199,6 @@ public class DigitSimController extends Pane{
         return connectionPointDragging;
     }
     
-    public  ConData getCurrentConData() {
-        return currentConData;
-    }
-
-    public void setCurrentConData(ConData currentConData) {
-        DigitSimController.currentConData = currentConData;
-    }
-    
-
     /**
     * Bildet nötige Gruppen für Togglebuttons (damit immer nur einer Selected sein kann)
     * 
@@ -260,7 +249,6 @@ public class DigitSimController extends Pane{
     public void btnLogicToggleOnAction(ActionEvent event) {
         //Für Tests
         //TEST:
-        allConnections.getConData(0).connectionLine.addPointGroup();
     }
     
     public void mItemCloseAction(ActionEvent event){ //Programm schließen
@@ -324,7 +312,7 @@ public class DigitSimController extends Pane{
         elements.clear();
         simCanvas.getChildren().clear();
         simCanvas.addGrid(simCanvas.getPrefWidth(), simCanvas.getPrefHeight());
-        allConnections.clear();
+//        allConnectionsOLD.clear();
     }
     public void btnStartOnAction(ActionEvent event) {   
         outputMessages.clear();
@@ -374,27 +362,27 @@ public class DigitSimController extends Pane{
     }
     
     public void saveProject(){
-        SaveFormat project = new SaveFormat(elements.size(), allConnections.size());
-        project.setSimSizeX(Properties.GetSimSizeX());
-        project.setSimSizeY(Properties.GetSimSizeY());
-        project.setNumElements(elements.size());
-        project.setNumConnections(allConnections.getConnectionData().size());
-        for(int i = 0; i < elements.size(); i++){
-            project.getPayload()[i] = elements.get(i).getPayload();
-            project.geteNumInputs()[i] = elements.get(i).getNumInputs();
-            project.geteNumOutputs()[i] = elements.get(i).getNumOutputs();
-            project.getePosX()[i] = elements.get(i).getX();
-            project.getePosY()[i] = elements.get(i).getY();
-        }
-        for(int i = 0; i < allConnections.size(); i++){
-            project.getIndexFirst()[i] = allConnections.getConData(i).indexFirst;
-            project.getIndexFirstElement()[i] = allConnections.getConData(i).indexFirstElement;
-            project.getIndexSecond()[i] = allConnections.getConData(i).indexSecond;
-            project.getIndexSecondElement()[i] = allConnections.getConData(i).indexSecondElement;
-            project.getTypeFirst()[i] = allConnections.getConData(i).typeFirst;
-            project.getTypeSecond()[i] = allConnections.getConData(i).typeSecond;
-        }
-        toolbox.XmlLoader.saveObject(currentProjectPath, project);
+//        SaveFormat project = new SaveFormat(elements.size(), allConnectionsOLD.size());
+//        project.setSimSizeX(Properties.GetSimSizeX());
+//        project.setSimSizeY(Properties.GetSimSizeY());
+//        project.setNumElements(elements.size());
+//        project.setNumConnections(allConnectionsOLD.getConnectionData().size());
+//        for(int i = 0; i < elements.size(); i++){
+//            project.getPayload()[i] = elements.get(i).getPayload();
+//            project.geteNumInputs()[i] = elements.get(i).getNumInputs();
+//            project.geteNumOutputs()[i] = elements.get(i).getNumOutputs();
+//            project.getePosX()[i] = elements.get(i).getX();
+//            project.getePosY()[i] = elements.get(i).getY();
+//        }
+//        for(int i = 0; i < allConnectionsOLD.size(); i++){
+//            project.getIndexFirst()[i] = allConnectionsOLD.getConData(i).indexFirst;
+//            project.getIndexFirstElement()[i] = allConnectionsOLD.getConData(i).indexFirstElement;
+//            project.getIndexSecond()[i] = allConnectionsOLD.getConData(i).indexSecond;
+//            project.getIndexSecondElement()[i] = allConnectionsOLD.getConData(i).indexSecondElement;
+//            project.getTypeFirst()[i] = allConnectionsOLD.getConData(i).typeFirst;
+//            project.getTypeSecond()[i] = allConnectionsOLD.getConData(i).typeSecond;
+//        }
+//        toolbox.XmlLoader.saveObject(currentProjectPath, project);
     }
     
     public void loadProject(){
@@ -445,9 +433,6 @@ public class DigitSimController extends Pane{
                 elements.add(new Element_XOR(project.getePosX()[i], project.getePosY()[i], project.geteNumInputs()[i], nodeGestures));
                  simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
             }
-        }
-        for(int i = 0; i < project.getNumConnections(); i++){
-            allConnections.addConnection(project.getIndexFirstElement()[i], project.getIndexSecondElement()[i], project.getIndexFirst()[i], project.getIndexSecond()[i], project.getTypeFirst()[i], project.getTypeSecond()[i]);
         }
     }
     
@@ -556,12 +541,10 @@ public class DigitSimController extends Pane{
         return Math.round(event.getY() / Properties.GetGridOffset()) * Properties.GetGridOffset();
     }
     
-    public ArrayList<Element> getElements(){ //Über diese Methode können andere Klassen auf die Elemente zugreifen
-        return elements;
-    }
+    
     
     public void rebuildElement(Element e, int inputs){ //Löscht ein Element und baut es neu auf mit den gegebenen Inputs
-          allConnections.removeAllConncectionsRelatedTo(e);
+//          allConnectionsOLD.removeAllConncectionsRelatedTo(e);
           if(e.getClass().equals(Element_AND.class)){ //Rausfinden um welches Element es sich handelt
               elements.add(new Element_AND(e.getX() + (e.getWidth() / 2), e.getY() + (e.getHeight() / 2), inputs, nodeGestures)); //Element aufbau wie oben bei addElement() [Bei X/Y die hälfte der Höhe und Weite abziehen um die richtige Position zu bekommen]
               simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
@@ -599,7 +582,20 @@ public class DigitSimController extends Pane{
               elements.remove(e);    
           }
     }
-       
+    
+    public void addConnection(Element e, boolean isInput, int index, MouseEvent event) {
+        
+        if(allConnections.isEmpty()) {
+            allConnections.add(new Connection(Color.GREEN, this, e, isInput, index, event));
+        } else if (allConnections.get(allConnections.size()-1).getEndPartner() != null) {
+            allConnections.add(new Connection(Color.GREEN, this, e, isInput, index, event));
+        } else {
+            allConnections.get(allConnections.size()-1).finishLine(e, isInput, index);
+        }
+        System.out.println(allConnections.get(allConnections.size()-1).getFollowMouseThread().isInterrupted());
+        
+    }
+    
     public void rebuildElement_TEXT(Element e, int fontSize, String content, Color color){
               elements.add(new Element_TEXT(e.getX(), e.getY(), fontSize, content, color, nodeGestures));
               simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
@@ -614,7 +610,7 @@ public class DigitSimController extends Pane{
     
     public void run(){
         elements.forEach(e -> e.update()); //Geht alle Elemente durch und Updaten sie. ACHTUNG: Lambda schreibweise! Infos -> https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html   
-        allConnections.update(); //Alle Verbindungen updaten
+//        allConnectionsOLD.update(); //Alle Verbindungen updaten
     }
     
     //Methode und Boolean sind jetzt static für LED (und signal vlcht?) *Lukas*
@@ -625,7 +621,7 @@ public class DigitSimController extends Pane{
     private void resetElements(){
         outputMessages.add("[INFO]Alle Elemente zurücksetzen..");
         elements.forEach(e -> e.reset()); //Alle Elemente reseten
-        allConnections.reset();
+//        allConnectionsOLD.reset();
     }
     
     public static ObservableList getOutputMessages() {
@@ -636,10 +632,6 @@ public class DigitSimController extends Pane{
     public static DraggableCanvas getSimCanvas() {
         return simCanvas;
     }
-
-    public static Connection getAllConnections() {
-        return allConnections;
-    }
     
     public static DigitSimController getReference(){ //Rückgabe einer Referenz (für Klassen die sonst keine besitzen)
         return refThis;
@@ -648,6 +640,22 @@ public class DigitSimController extends Pane{
     public void reloadGridColor(){
         simCanvas.redrawGrid();
     }
+
+    public static List<Connection> getAllConnections() {
+        return allConnections;
+    }
+
+    public static void setAllConnections(List<Connection> allConnections) {
+        DigitSimController.allConnections = allConnections;
+    }
+    
+    public ArrayList<Element> getElements(){ //Über diese Methode können andere Klassen auf die Elemente zugreifen
+        return elements;
+    }
+    
+    
+    
+    
     
     public void reloadMinAndMaxWindowSize(){
         Stage stage = (Stage) simPane.getScene().getWindow();

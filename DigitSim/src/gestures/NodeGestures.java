@@ -5,8 +5,7 @@
  */
 package Gestures;
 
-import connection.Connection.ConData;
-import connection.ConnectionType;
+import connection.ConnectionUpdater;
 import digitsim.DigitSimController;
 import element.Element;
 import general.Properties;
@@ -63,7 +62,7 @@ public class NodeGestures {
                Element temp = findElement();
                if(temp != null){
                    canvas.getChildren().remove(temporaryGroup); //Die "Zeichnung" entfernen, da diese bestehen bleibt wenn das Element gelöscht wird
-                   DigitSimController.getAllConnections().removeAllConncectionsRelatedTo(temp);
+//                   DigitSimController.getAllConnectionsOLD().removeAllConncectionsRelatedTo(temp);
                    elements.remove(temp); //Das Element entfernen
                }
             }});      
@@ -171,7 +170,7 @@ public class NodeGestures {
             
             //Nur wenn das Element auch wirklich verschoben wurde, die Linie updaten
             if(translXBefore != node.getTranslateX() || translYBefore != node.getTranslateY()) {
-                DigitSimController.getAllConnections().drawDirectLineUpdate(findElementNum()); //Verbindungen updaten die das Akutelle Element betreffen
+               //ConnectionUpdater.updateAllConnectionsRelatedToElement(findElementNum()); //Verbindungen updaten die das Akutelle Element betreffen
             }
             event.consume(); 
         }
@@ -182,7 +181,7 @@ public class NodeGestures {
         public void handle(MouseEvent event ) {
             if(dragged == true) {
                 dragged = false;
-                DigitSimController.getAllConnections().drawUpdate(findElementNum()); //Verbindungen updaten die das Akutelle Element betreffen
+                ConnectionUpdater.updateAllConnectionsRelatedToElement(findElementNum()); //Verbindungen updaten die das Akutelle Element betreffen
                 Node node = (Node) event.getSource(); //Das betroffene Element bekommen
                 node.setCursor(Cursor.DEFAULT);
             }
@@ -210,16 +209,16 @@ public class NodeGestures {
         return contextMenu;
     }
     
-    private int findElementNum(){ //Die Nummer des Elements finden (über die akutelle gruppe)
+    private Element findElementNum(){ //Die Nummer des Elements finden (über die akutelle gruppe)
          elements = DigitSimController.getReference().getElements();
          int i = -1;
          for(Element e : elements){ //Alle Elemente durchgehen, um das zu finden das Ausgewählt ist
              i++;
                    if(e.getGroup().hashCode() == temporaryGroup.hashCode()){ //Der HashCode eines Objektes ist immer EINMALIG, sozusagen eine "Personalnummer", eignet sich daher gut für den "Gleichheitstest"
-                       return i;
+                       return e;
                  } 
           }
-         return -1;
+         return null;
     }
     
     /*
@@ -392,7 +391,8 @@ public class NodeGestures {
         return new EventHandler<MouseEvent>(){
             @Override
             public void handle(MouseEvent event){
-                DigitSimController.getAllConnections().saveData(e, true, inputIndex, event, ConnectionType.E);
+                DigitSimController dsc = DigitSimController.getReference();
+                dsc.addConnection(e, true, inputIndex, event);
             }
         };
     }
@@ -401,12 +401,13 @@ public class NodeGestures {
         return new EventHandler<MouseEvent>(){
             @Override
             public void handle(MouseEvent event){
-                DigitSimController.getAllConnections().saveData(e, false, outputIndex, event, ConnectionType.E);
+                DigitSimController dsc = DigitSimController.getReference();
+                dsc.addConnection(e, false, outputIndex, event);
             }
         };
     }
     
-    public static EventHandler<MouseEvent> getOverConnectionLineClicked(ConData d){
+    public static EventHandler<MouseEvent> getOverConnectionLineClicked(/*ConData d*/){
         return new EventHandler<MouseEvent>(){
             @Override
             public void handle(MouseEvent event){
@@ -421,20 +422,20 @@ public class NodeGestures {
                 
                public void handle(ActionEvent e) {
                contextMenu.hide();
-               DigitSimController.getAllConnections().removeConnection(d);
+//               DigitSimController.getAllConnectionsOLD().removeConnection(d);
             }});      
             resetItem.setOnAction(new EventHandler<ActionEvent>() { //Wird ausgelößt wenn man bei einem Element "Entfernen" auswählt
                public void handle(ActionEvent e) {
                contextMenu.hide();
-               DigitSimController.getAllConnections().resetCon(d);
+//               DigitSimController.getAllConnectionsOLD().resetCon(d);
             }});     
               menu.getItems().addAll(deleteItem, resetItem);   
               menu.show((Node)event.getSource(), Side.LEFT, event.getX(), event.getY());
               
             }else{
-                   DigitSimController.getAllConnections().resetLastPoint(); //Sorgt dafür dass man mehrere Punkte setzen kann, was buggy ist daher auskommentiert (Kannst es aber gern mal testen!)
+//                   DigitSimController.getAllConnectionsOLD().resetLastPoint(); //Sorgt dafür dass man mehrere Punkte setzen kann, was buggy ist daher auskommentiert (Kannst es aber gern mal testen!)
                    DigitSimController.getReference().setConnectionPointDragging(true); 
-                   DigitSimController.getReference().setCurrentConData(d);
+//                   DigitSimController.getReference().setCurrentConData(d);
                    Node n = (Node) event.getSource();
                    n.getScene().setCursor(Cursor.CLOSED_HAND);
             }

@@ -6,6 +6,7 @@
 package pathFinder;
 
 import connection.Connection;
+import general.Vector2i;
 import element.Element;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,7 +37,10 @@ public class PathFinder {
         }
     };
 
-    public List<Node> findPath(Vector2i start, Vector2i goal, ArrayList<Element> elements, ArrayList<Connection.ConData> connections) {
+    public List<Node> findPath(Vector2i start, Vector2i goal, ArrayList<Element> elements, List<Connection> connections) {
+        int gridOffet = general.Properties.GetGridOffset();
+        start.divide(gridOffet);
+        goal.divide(gridOffet);
         List<Node> openList = new ArrayList<Node>();
         List<Node> closedList = new ArrayList<Node>();
         
@@ -60,6 +64,7 @@ public class PathFinder {
                     path.add(current);
                     current = current.parent;
                 }
+                path.add(current);
                 openList.clear();
                 closedList.clear();
                 if(general.Properties.getVisualizeTileCode())
