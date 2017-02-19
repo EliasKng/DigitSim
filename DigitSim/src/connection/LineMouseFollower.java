@@ -32,7 +32,7 @@ public class LineMouseFollower extends Thread {
 
     @Override
     public void run() {
-        
+       
        while(!this.isInterrupted()) {
            removeLine();
            this.mouseCoords = new Vector2i(dsc.getMouseCoords());
@@ -44,7 +44,6 @@ public class LineMouseFollower extends Thread {
     }
     
     private void drawLine() {   //MAlt die Linie auf dem dsc
-        Platform.setImplicitExit(false);
         dsc.getSimCanvas().getChildren().add(this.line);
     }
     

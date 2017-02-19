@@ -69,7 +69,7 @@ public class Connection {
         this.currentColor = currentColor;
         this.dsc = dsc;
         this.followMouseThread = new LineMouseFollower(processPartner(startPartner), dsc);
-        this.followMouseThread.start();
+        this.followMouseThread.run();
     }
 
     
