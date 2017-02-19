@@ -12,7 +12,6 @@ import general.Vector2i;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.Group;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
@@ -109,6 +108,32 @@ public class Connection {
         this.endPartner = new ConnectionPartner(connection, anchorPoint);
         this.followMouseThread.interrupt();
         this.updateLine();
+    }
+    
+    /**
+     * Ändert die Farbe dieser Verbindung
+     * @param color 
+     */
+    public void changeColor(Color color) {
+        this.currentColor = color;    
+        updateColor();
+    }
+    
+    /**
+     * Aktualisiert die Verbindungsfarbe nach der currentColor
+     */
+    public void updateColor() {
+        
+        for(javafx.scene.Node n : this.lineGroup.getChildren()){
+            Line l = (Line) n;
+            l.setStroke(currentColor);
+        }
+        
+        for(javafx.scene.Node n : this.pointGroup.getChildren()){
+            Circle c = (Circle) n;
+            c.setStroke(currentColor);
+            c.setFill(currentColor);
+        }
     }
     
     /**

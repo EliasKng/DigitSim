@@ -8,6 +8,7 @@ package connection;
 import digitsim.DigitSimController;
 import element.Element;
 import java.util.List;
+import javafx.scene.paint.Color;
 
 /**
  *
@@ -63,5 +64,30 @@ public class ConnectionHandler {
             c = null;       //Objekt wird für dem Garbage-Collector freigegeben (wird gelöscht)
         }
         DigitSimController.clearConnections();
+    }
+    
+    public static void updateConnectionsColor() {
+        List<Connection> allConnections = DigitSimController.getReference().getAllConnections();
+        for(Connection c : allConnections) {
+            ConnectionPartner cP0 = c.getStartPartner();
+            ConnectionPartner cP1 = c.getEndPartner();
+            
+            //Wenn ein Teil der Verbindung ein ELement und Output ist, dann...
+            int stateCP0 = -1;
+            int stateCP1 = -1;
+            if((cP0.getPartnerType() == PartnerType.ELEMENT) && !(cP0.isIsInput())) {
+                stateCP0 = cP0.getelement().getOutput(cP0.getIndex());
+            } else if((cP1.getPartnerType() == PartnerType.ELEMENT) && !(cP1.isIsInput())) {
+                stateCP1 = cP1.getelement().getOutput(cP1.getIndex());
+            } //HIER MUSS SPÄTER NOCH DIE LOGIK FÜR VERBINDUNGEN ZU ANDEREN CONNECTIONS BESCHRIEBEN WERDEN
+            
+            if(stateCP0 != -1 && stateCP1 != -1) {  //Sowohl partner 1 als auch partner 2 ist ein Ouput!
+                if(stateCP0 == stateCP1) {
+                    
+                }
+            } else {
+                
+            }
+        }
     }
 }
