@@ -8,13 +8,40 @@ package connection;
 import digitsim.DigitSimController;
 import element.Element;
 import java.util.List;
-import javafx.scene.paint.Color;
+import digitsim.*;
 
 /**
  *
  * @author Elias
  */
 public class ConnectionHandler {
+    
+    /**
+     * @author Tim
+     * provisorisch erstmal hier, da ich keinen geeigneen platz gefunde habe
+     * @param index index deselements
+     * @return element mit diesem index
+     */
+    public static Element getElementByIndex(int index) {
+        if(index <= DigitSimController.getReference().getElements().size())
+            return DigitSimController.getReference().getElements().get(index);
+        else
+            return null;
+    }
+    
+    public static int getElementIndex(Element e) {
+        int size = DigitSimController.getReference().getElements().size();
+        int result = -1;
+        
+        for(int i = 0; i < size; i++) {
+            Element current = DigitSimController.getReference().getElements().get(i);
+            
+            if(current.hashCode() == e.hashCode()) {
+                result = i;
+            }
+        }
+        return result;
+    }
     
     /**
      * Aktualisiert alle Verbindungen die mit dem Element verbunden Sind
