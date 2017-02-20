@@ -8,40 +8,12 @@ package connection;
 import digitsim.DigitSimController;
 import element.Element;
 import java.util.List;
-import digitsim.*;
 
 /**
  *
  * @author Elias
  */
 public class ConnectionHandler {
-    
-    /**
-     * @author Tim
-     * provisorisch erstmal hier, da ich keinen geeigneen platz gefunde habe
-     * @param index index deselements
-     * @return element mit diesem index
-     */
-    public static Element getElementByIndex(int index) {
-        if(index <= DigitSimController.getReference().getElements().size())
-            return DigitSimController.getReference().getElements().get(index);
-        else
-            return null;
-    }
-    
-    public static int getElementIndex(Element e) {
-        int size = DigitSimController.getReference().getElements().size();
-        int result = -1;
-        
-        for(int i = 0; i < size; i++) {
-            Element current = DigitSimController.getReference().getElements().get(i);
-            
-            if(current.hashCode() == e.hashCode()) {
-                result = i;
-            }
-        }
-        return result;
-    }
     
     /**
      * Aktualisiert alle Verbindungen die mit dem Element verbunden Sind
@@ -93,15 +65,25 @@ public class ConnectionHandler {
         DigitSimController.clearConnections();
     }
     
-    public static void updateConnectionsColor() {
+    /**
+     * Aktualisiert alle Verbindungen & damit auch die Elemente
+     */
+    public static void updateConnectionStates() {
         List<Connection> allConnections = DigitSimController.getReference().getAllConnections();
-        for(Connection c : allConnections) {
-            ConnectionPartner cP0 = c.getStartPartner();
+        allConnections.stream().forEach((c) -> {
+            updateConnectionState(c);
+        });
+    }
+    
+    public static void updateConnectionState(Connection c) {
+        ConnectionPartner cP0 = c.getStartPartner();
             ConnectionPartner cP1 = c.getEndPartner();
             
-            //Wenn ein Teil der Verbindung ein ELement und Output ist, dann...
+            
             int stateCP0 = -1;
             int stateCP1 = -1;
+            
+            //Wenn ein Teil der Verbindung ein ELement und Output ist, dann...
             if((cP0.getPartnerType() == PartnerType.ELEMENT) && !(cP0.isIsInput())) {
                 stateCP0 = cP0.getelement().getOutput(cP0.getIndex());
             } else if((cP1.getPartnerType() == PartnerType.ELEMENT) && !(cP1.isIsInput())) {
@@ -109,12 +91,86 @@ public class ConnectionHandler {
             } //HIER MUSS SPÄTER NOCH DIE LOGIK FÜR VERBINDUNGEN ZU ANDEREN CONNECTIONS BESCHRIEBEN WERDEN
             
             if(stateCP0 != -1 && stateCP1 != -1) {  //Sowohl partner 1 als auch partner 2 ist ein Ouput!
-                if(stateCP0 == stateCP1) {
-                    
+                if(stateCP0 != stateCP1) {          //Die beiden Outputs sind nicht gleich -> undefiniert!
+                    setConnectionState(ConnectionState.UNDEFINED, c);
+                } else if((stateCP0 == 0) && (stateCP1 == 0)) {     //Die beiden outputs sind gleich & null
+                    setConnectionState(ConnectionState.LOW, c);
+                } else {                                            //Die beiden outputs sind gleich & eins
+                    setConnectionState(ConnectionState.HIGH, c);
                 }
             } else {
-                
+                switch(stateCP0) {
+                    case -1:
+                        break;
+                        
+                    case 0:
+                        setConnectionState(ConnectionState.LOW, c);
+                        break;
+                    
+                    case 1:
+                        setConnectionState(ConnectionState.HIGH, c);
+                        break;
+                    
+                    default:
+                        break;
+                }
+                switch(stateCP0) {
+                    case -1:
+                        break;
+                        
+                    case 0:
+                        setConnectionState(ConnectionState.LOW, c);
+                        break;
+                    
+                    case 1:
+                        setConnectionState(ConnectionState.HIGH, c);
+                        break;
+                    
+                    default:
+                        break;
+                }
+            }
+    }
+    
+    /**
+     * setzt den "state" einer bestimmten Connection   
+     * @param cS state
+     * @param c  connection
+     */
+    public static void setConnectionState(ConnectionState cS, Connection c) {
+        c.setState(cS);
+    }
+    
+    /**
+     * @author Tim
+     * provisorisch erstmal hier, da ich keinen geeigneen platz gefunde habe
+     * ermittelt das Element aus seinem Index
+     * @param index index deselements
+     * @return element mit diesem index
+     */
+    public static Element getElementByIndex(int index) {
+        if(index <= DigitSimController.getReference().getElements().size())
+            return DigitSimController.getReference().getElements().get(index);
+        else
+            return null;
+    }
+    
+    /**
+     * ermittelt den Index eines Elements
+     * @param e Element
+     * @return  Index
+     */
+    public static int getElementIndex(Element e) {
+        int size = DigitSimController.getReference().getElements().size();
+        int result = -1;
+        
+        for(int i = 0; i < size; i++) {
+            Element current = DigitSimController.getReference().getElements().get(i);
+            
+            if(current.hashCode() == e.hashCode()) {
+                result = i;
             }
         }
+        return result;
     }
 }

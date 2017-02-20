@@ -26,13 +26,13 @@ import toolbox.Draw;
 public class Connection {
     //Globals
     private List<AnchorPoint> anchorPoints = new ArrayList();   //alle Punkte durch die die Linie verläuft + Anfang & Ende
-    private Color currentColor;                                 //Farbe der Linie
     private DigitSimController dsc;                             //Abbild vom DigitSimController
     private LineMouseFollower followMouseThread;                //Thread der dafür sorgt, dass eine Linie der Maus folgt
     private ConnectionPartner startPartner;                     //VerbindungsLinienPartner (start)
     private ConnectionPartner endPartner;                       //VerbindungsLinienPartner (ende)
     private boolean directLine = false;                         // wird die Linie direkt verlegt oder nicht
     private PathFinder pathFinder = new PathFinder();
+    private ConnectionState state = ConnectionState.DEFAULT;                              //Für die Simulation relevant -> gibt den Digitalen Status der Verbindung an (An/Aus/Undefiniert)
     
     //Zum Zeichen relevante Globals
     private Group lineGroup = new Group();                                    //Gruppe von Linien (die die gesamte Linie darstellt)
@@ -40,13 +40,12 @@ public class Connection {
     
 
     //Konstruktoren
-    public Connection(Vector2i start, Vector2i end, Color currentColor, DigitSimController dsc) {
+    public Connection(Vector2i start, Vector2i end, DigitSimController dsc) {
         AnchorPoint startAP = new AnchorPoint(0, start);
         AnchorPoint endAP = new AnchorPoint(1, end);
         this.anchorPoints.add(startAP);
         this.anchorPoints.add(endAP);
         
-        this.currentColor = currentColor;
         this.dsc = dsc;
     }
     
@@ -58,15 +57,13 @@ public class Connection {
         this.followMouseThread.start();
     }
 
-    public Connection(Color currentColor, DigitSimController dsc, Connection partnerConnection, AnchorPoint partnerAnchorPoint) {
+    public Connection(DigitSimController dsc, Connection partnerConnection, AnchorPoint partnerAnchorPoint) {
         this.startPartner = new ConnectionPartner(partnerConnection, partnerAnchorPoint);
-        this.currentColor = currentColor;
         this.dsc = dsc;
     }
     
-    public Connection(Color currentColor, DigitSimController dsc, Element element, boolean isInput, int index) {
+    public Connection(DigitSimController dsc, Element element, boolean isInput, int index) {
         this.startPartner = new ConnectionPartner(element, isInput, index);
-        this.currentColor = currentColor;
         this.dsc = dsc;
         this.followMouseThread = new LineMouseFollower(processPartner(startPartner), dsc);
         this.followMouseThread.start();
@@ -111,28 +108,23 @@ public class Connection {
     }
     
     /**
-     * Ändert die Farbe dieser Verbindung
-     * @param color 
-     */
-    public void changeColor(Color color) {
-        this.currentColor = color;    
-        updateColor();
-    }
-    
-    /**
      * Aktualisiert die Verbindungsfarbe nach der currentColor
      */
     public void updateColor() {
+        Color color = getColorFromState();
+        
+        
+        
         
         for(javafx.scene.Node n : this.lineGroup.getChildren()){
             Line l = (Line) n;
-            l.setStroke(currentColor);
+            l.setStroke(color);
         }
         
         for(javafx.scene.Node n : this.pointGroup.getChildren()){
             Circle c = (Circle) n;
-            c.setStroke(currentColor);
-            c.setFill(currentColor);
+            c.setStroke(color);
+            c.setFill(color);
         }
     }
     
@@ -175,22 +167,6 @@ public class Connection {
      */
     public void drawConnection() {
         this.dsc.getSimCanvas().getChildren().addAll(this.lineGroup, this.pointGroup);
-    }
-    
-    /**
-     * Aktualisiert die Farbe der Verbindung
-     */
-    public void updateLineColor() {
-        for(javafx.scene.Node n : this.lineGroup.getChildren()){
-            Line l = (Line) n;
-            l.setStroke(currentColor);
-        }
-        
-        for(javafx.scene.Node n : this.pointGroup.getChildren()){
-            Circle c = (Circle) n;
-            c.setStroke(currentColor);
-            c.setFill(currentColor);
-        }
     }
     
     /**
@@ -258,9 +234,10 @@ public class Connection {
     
     public void createPointGroup() {
         int gridOffset = general.Properties.GetGridOffset();
+        Color c = getColorFromState();
         for(AnchorPoint ap : this.anchorPoints) {
-            Circle c = Draw.drawCircle(ap.getCoords().getX()*gridOffset+10.5, ap.getCoords().getY()*gridOffset+10.5, 5, currentColor, 1, true, 1);
-            pointGroup.getChildren().add(c);
+            Circle circle = Draw.drawCircle(ap.getCoords().getX()*gridOffset+10.5, ap.getCoords().getY()*gridOffset+10.5, 5, c, 1, true, 1);
+            pointGroup.getChildren().add(circle);
         }
     }
     
@@ -288,9 +265,10 @@ public class Connection {
         
         Node child = null;
         //verbinde alle Eckpunkte
+        Color c = getColorFromState();
         for(Node n : vertexNodes) {
             if(child != null) {
-                Line line = Draw.drawLine(child.tile.getX()*gO+10.5, child.tile.getY()*gO+10.5, n.tile.getX()*gO+10.5, n.tile.getY()*gO+10.5, this.currentColor, lineWidth);
+                Line line = Draw.drawLine(child.tile.getX()*gO+10.5, child.tile.getY()*gO+10.5, n.tile.getX()*gO+10.5, n.tile.getY()*gO+10.5, c, lineWidth);
                 this.lineGroup.getChildren().add(line);
             } 
             child = n;
@@ -376,9 +354,10 @@ public class Connection {
      */
     public void createDirectLineGroup() {
         Vector2i parentPoint = null;
+        Color c = getColorFromState();
         for(AnchorPoint ap : anchorPoints) {
             if(parentPoint != null) {
-                Line l = Draw.drawLine(parentPoint, ap.getCoords(), currentColor, Properties.getLineWidth());
+                Line l = Draw.drawLine(parentPoint, ap.getCoords(), c, Properties.getLineWidth());
                 this.lineGroup.getChildren().add(l);
             }
             parentPoint = ap.getCoords();
@@ -395,6 +374,25 @@ public class Connection {
         this.pointGroup = new Group();
     }
     
+    public Color getColorFromState() {
+        switch(this.state) {
+            case HIGH:
+                return Color.RED;
+            
+            case LOW:
+                return Color.BLUE;
+                
+            case UNDEFINED:
+                return Color.YELLOW;
+                
+            case DEFAULT:
+                return Color.GREEN;
+                
+            default:
+                return Color.BLACK;
+        }
+    }
+    
 
     
     //**********************GET/SET************************/
@@ -404,7 +402,7 @@ public class Connection {
     }
 
     public Color getCurrentColor() {
-        return currentColor;
+        return getColorFromState();
     }
 
     public DigitSimController getDsc() {
@@ -423,16 +421,20 @@ public class Connection {
         return pointGroup;
     }
 
-    public void setCurrentColor(Color currentColor) {
-        this.currentColor = currentColor;
-        updateLineColor();
-    }
-
     public ConnectionPartner getStartPartner() {
         return startPartner;
     }
 
     public ConnectionPartner getEndPartner() {
         return endPartner;
+    }
+
+    public ConnectionState getState() {
+        return state;
+    }
+
+    public void setState(ConnectionState state) {
+        this.state = state;
+        updateColor();
     }
 }
