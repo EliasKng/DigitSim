@@ -27,7 +27,6 @@ public class Connection {
     //Globals
     private List<AnchorPoint> anchorPoints = new ArrayList();   //alle Punkte durch die die Linie verläuft + Anfang & Ende
     private DigitSimController dsc;                             //Abbild vom DigitSimController
-    private LineMouseFollower followMouseThread;                //Thread der dafür sorgt, dass eine Linie der Maus folgt
     private ConnectionPartner startPartner;                     //VerbindungsLinienPartner (start)
     private ConnectionPartner endPartner;                       //VerbindungsLinienPartner (ende)
     private boolean directLine = false;                         // wird die Linie direkt verlegt oder nicht
@@ -53,8 +52,6 @@ public class Connection {
         AnchorPoint startAP = new AnchorPoint(0, start);
         this.anchorPoints.add(startAP);
         this.dsc = dsc;
-        this.followMouseThread = new LineMouseFollower(start, dsc);
-        this.followMouseThread.start();
     }
 
     public Connection(DigitSimController dsc, Connection partnerConnection, AnchorPoint partnerAnchorPoint) {
@@ -65,8 +62,6 @@ public class Connection {
     public Connection(DigitSimController dsc, Element element, boolean isInput, int index) {
         this.startPartner = new ConnectionPartner(element, isInput, index);
         this.dsc = dsc;
-        this.followMouseThread = new LineMouseFollower(processPartner(startPartner), dsc);
-        this.followMouseThread.start();
     }
 
     
@@ -78,7 +73,7 @@ public class Connection {
      * @param end Die Endkoordinate der Linie (nun bekannt)
      */
     public void finishLine(Vector2i end) { 
-        this.followMouseThread.interrupt();
+        dsc.removeTemporaryLine();
         AnchorPoint endAP = new AnchorPoint(1, end);
         this.anchorPoints.add(endAP);
         this.updateLine();
@@ -91,8 +86,8 @@ public class Connection {
      * @param index des IN-/Outputs
      */
     public void finishLine(Element element, boolean isInput, int index) { 
+        dsc.removeTemporaryLine();
         this.endPartner = new ConnectionPartner(element, isInput, index);
-        this.followMouseThread.interrupt();
         this.updateLine();
     }
     
@@ -102,8 +97,8 @@ public class Connection {
      * @param anchorPoint hier wird der AnchorPoint übergeben (mit dem die Linie verbunden werden wird)
      */
     public void finishLine(Connection connection, AnchorPoint anchorPoint) { 
+        dsc.removeTemporaryLine();
         this.endPartner = new ConnectionPartner(connection, anchorPoint);
-        this.followMouseThread.interrupt();
         this.updateLine();
     }
     
@@ -134,17 +129,15 @@ public class Connection {
     public void updateLine() {
         removeLine();    //Entfernt die alte Linie
         
-        resetAttributes();
+        resetAttributes(); //Setzt die Attribute zurück
         
-        createConnection();
+        createConnection(); //erstellt die Verbindung (berechnen)
         
-        drawConnection();
+        drawConnection();   //malt die berechnete VErbindung
     }
     
     /**
      * Entfernt die Linie & AnchorPoints aus dem dsc
-     * @param lines Die Gruppe der Linien (aus welchen die gesamte Linie besteht
-     * @param points Die Gruppe der AnchorPoints welche die GesamtLinie beinhaltet
      */
     public void removeLine() {
         if((this.pointGroup != null) && (this.lineGroup != null)) {
@@ -409,10 +402,6 @@ public class Connection {
         return dsc;
     }
 
-    public LineMouseFollower getFollowMouseThread() {
-        return followMouseThread;
-    }
-
     public Group getLineGroup() {
         return lineGroup;
     }
@@ -435,6 +424,11 @@ public class Connection {
 
     public void setState(State state) {
         this.state = state;
+        updateColor();
+    }
+    
+    public void resetState() {
+        this.state = state.DEFAULT;
         updateColor();
     }
 }

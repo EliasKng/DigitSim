@@ -18,6 +18,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
+import javafx.scene.Group;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.scene.input.MouseEvent;
@@ -51,6 +52,7 @@ public class DigitSimController extends Pane{
     private String currentProjectPath = "";
     private boolean unfinishedConnection = false;
     private Vector2i mouseCoords = new Vector2i();
+    private Line temporaryLine;//In dieser gruppe steckt die orangene halb durchsichtige Linie (beim Verlegen von Connections)
 
      /**
      * FXML OBJEKT-Erstellungs-Bereich:
@@ -165,7 +167,18 @@ public class DigitSimController extends Pane{
             @Override
             public void handle(MouseEvent event){
                 if(DigitSimController.getReference().isUnfinishedConnection()) {
-                    mouseCoords.set((int) event.getX(),(int) event.getY());
+                    Connection c = allConnections.get(allConnections.size()-1);
+                    Vector2i coords = c.processPartner(c.getStartPartner());
+                    Line l = toolbox.Draw.drawLine(coords.getX(), coords.getY(), event.getX(), event.getY(), Color.DARKORANGE, 5);
+                    l.setOpacity(0.6);
+                    
+                    if(temporaryLine != null) {
+                        getSimCanvas().getChildren().remove(temporaryLine);
+                    }
+                    
+                    temporaryLine = l;
+                    getSimCanvas().getChildren().add(l);
+                    l.toBack();
                 }
             }
         };
@@ -603,7 +616,6 @@ public class DigitSimController extends Pane{
             this.unfinishedConnection = false;
             allConnections.get(allConnections.size()-1).finishLine(e, isInput, index);
         }
-        System.out.println(allConnections.get(allConnections.size()-1).getFollowMouseThread().isInterrupted());
         
     }
     
@@ -682,6 +694,10 @@ public class DigitSimController extends Pane{
 
     public void setMouseCoords(Vector2i mouseCoords) {
         this.mouseCoords = mouseCoords;
+    }
+    
+    public void removeTemporaryLine() {
+        getSimCanvas().getChildren().remove(this.temporaryLine);
     }
     
     
