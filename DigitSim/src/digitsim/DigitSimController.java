@@ -256,6 +256,7 @@ public class DigitSimController extends Pane{
     public void btnLogicToggleOnAction(ActionEvent event) {
         //Für Tests
         //TEST:
+        run();
     }
     
     public void mItemCloseAction(ActionEvent event){ //Programm schließen
@@ -594,10 +595,10 @@ public class DigitSimController extends Pane{
         
         if(allConnections.isEmpty()) {
             this.unfinishedConnection = true;
-            allConnections.add(new Connection(Color.GREEN, this, e, isInput, index));
+            allConnections.add(new Connection(this, e, isInput, index));
         } else if (allConnections.get(allConnections.size()-1).getEndPartner() != null) {
             this.unfinishedConnection = true;
-            allConnections.add(new Connection(Color.GREEN, this, e, isInput, index));
+            allConnections.add(new Connection(this, e, isInput, index));
         } else {
             this.unfinishedConnection = false;
             allConnections.get(allConnections.size()-1).finishLine(e, isInput, index);
@@ -620,7 +621,7 @@ public class DigitSimController extends Pane{
     
     public void run(){
         elements.forEach(e -> e.update()); //Geht alle Elemente durch und Updaten sie. ACHTUNG: Lambda schreibweise! Infos -> https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html   
-//        allConnectionsOLD.update(); //Alle Verbindungen updaten
+        ConnectionHandler.updateConnectionStates();
     }
     
     //Methode und Boolean sind jetzt static für LED (und signal vlcht?) *Lukas*

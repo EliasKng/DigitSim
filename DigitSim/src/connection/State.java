@@ -9,6 +9,6 @@ package connection;
  *
  * @author Elias
  */
-public enum ConnectionState{
+public enum State{
     HIGH, LOW, UNDEFINED, DEFAULT
 };

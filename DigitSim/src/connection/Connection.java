@@ -32,7 +32,7 @@ public class Connection {
     private ConnectionPartner endPartner;                       //VerbindungsLinienPartner (ende)
     private boolean directLine = false;                         // wird die Linie direkt verlegt oder nicht
     private PathFinder pathFinder = new PathFinder();
-    private ConnectionState state = ConnectionState.DEFAULT;                              //Für die Simulation relevant -> gibt den Digitalen Status der Verbindung an (An/Aus/Undefiniert)
+    private State state = State.DEFAULT;                              //Für die Simulation relevant -> gibt den Digitalen Status der Verbindung an (An/Aus/Undefiniert)
     
     //Zum Zeichen relevante Globals
     private Group lineGroup = new Group();                                    //Gruppe von Linien (die die gesamte Linie darstellt)
@@ -383,7 +383,7 @@ public class Connection {
                 return Color.BLUE;
                 
             case UNDEFINED:
-                return Color.YELLOW;
+                return Color.GOLD;
                 
             case DEFAULT:
                 return Color.GREEN;
@@ -429,11 +429,11 @@ public class Connection {
         return endPartner;
     }
 
-    public ConnectionState getState() {
+    public State getState() {
         return state;
     }
 
-    public void setState(ConnectionState state) {
+    public void setState(State state) {
         this.state = state;
         updateColor();
     }
