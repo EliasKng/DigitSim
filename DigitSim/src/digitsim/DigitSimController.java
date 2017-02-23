@@ -351,6 +351,7 @@ public class DigitSimController extends Pane{
         btnPause.setDisable(true);
         btnStart.setDisable(false);
         outputMessages.clear();
+        outputMessages.add("[Info]Simulation beendet!");
         locked = false;
     }
     
