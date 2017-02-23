@@ -18,7 +18,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
-import javafx.scene.Group;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.scene.input.MouseEvent;
@@ -347,6 +346,7 @@ public class DigitSimController extends Pane{
   }     
     public void btnPauseOnAction(ActionEvent event) {   
         runningThread.interrupt(); //Den Thread anhalten
+        ConnectionHandler.resetConnectionStates();
         resetElements(); //Alles resetzen
         btnPause.setDisable(true);
         btnStart.setDisable(false);

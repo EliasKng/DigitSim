@@ -5,6 +5,8 @@
  */
 package connection;
 
+import javafx.scene.paint.Color;
+
 /**
  *
  * @author Elias
@@ -12,3 +14,4 @@ package connection;
 public enum State{
     HIGH, LOW, UNDEFINED, DEFAULT
 };
+

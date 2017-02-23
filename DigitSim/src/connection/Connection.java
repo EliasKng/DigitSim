@@ -106,7 +106,7 @@ public class Connection {
      * Aktualisiert die Verbindungsfarbe nach der currentColor
      */
     public void updateColor() {
-        Color color = getColorFromState();
+        Color color = HandleState.getColorFromState(this.state);
         
         
         
@@ -195,7 +195,7 @@ public class Connection {
             return coords;
         }
         if(partner.getPartnerType() == PartnerType.ELEMENT) {   //Es handelt sich um ein Element -> In/Output?
-            Element element = partner.getelement();
+            Element element = partner.getElement();
             Vector2i coords = new Vector2i();
             
             if(partner.isIsInput()) {   //Es handelt sich um einen Input (die Koordinate von einem Inputs wird hier bestimmt)
@@ -227,7 +227,7 @@ public class Connection {
     
     public void createPointGroup() {
         int gridOffset = general.Properties.GetGridOffset();
-        Color c = getColorFromState();
+        Color c = HandleState.getColorFromState(this.state);
         for(AnchorPoint ap : this.anchorPoints) {
             Circle circle = Draw.drawCircle(ap.getCoords().getX()*gridOffset+10.5, ap.getCoords().getY()*gridOffset+10.5, 5, c, 1, true, 1);
             pointGroup.getChildren().add(circle);
@@ -258,7 +258,7 @@ public class Connection {
         
         Node child = null;
         //verbinde alle Eckpunkte
-        Color c = getColorFromState();
+        Color c = HandleState.getColorFromState(this.state);
         for(Node n : vertexNodes) {
             if(child != null) {
                 Line line = Draw.drawLine(child.tile.getX()*gO+10.5, child.tile.getY()*gO+10.5, n.tile.getX()*gO+10.5, n.tile.getY()*gO+10.5, c, lineWidth);
@@ -347,7 +347,7 @@ public class Connection {
      */
     public void createDirectLineGroup() {
         Vector2i parentPoint = null;
-        Color c = getColorFromState();
+        Color c = HandleState.getColorFromState(this.state);
         for(AnchorPoint ap : anchorPoints) {
             if(parentPoint != null) {
                 Line l = Draw.drawLine(parentPoint, ap.getCoords(), c, Properties.getLineWidth());
@@ -367,26 +367,16 @@ public class Connection {
         this.pointGroup = new Group();
     }
     
-    public Color getColorFromState() {
-        switch(this.state) {
-            case HIGH:
-                return Color.RED;
-            
-            case LOW:
-                return Color.BLUE;
-                
-            case UNDEFINED:
-                return Color.GOLD;
-                
-            case DEFAULT:
-                return Color.GREEN;
-                
-            default:
-                return Color.BLACK;
+    
+    
+    public void updatePartnerState() {
+        if((this.startPartner.getPartnerType() == PartnerType.ELEMENT)&&(this.startPartner.isIsInput())) {
+            this.startPartner.getElement().setInput(startPartner.getIndex(), HandleState.getIntFromState(state));
+        }
+        if((this.endPartner.getPartnerType() == PartnerType.ELEMENT)&&(this.endPartner.isIsInput())) {
+            this.endPartner.getElement().setInput(endPartner.getIndex(), HandleState.getIntFromState(state));
         }
     }
-    
-
     
     //**********************GET/SET************************/
     
@@ -395,7 +385,7 @@ public class Connection {
     }
 
     public Color getCurrentColor() {
-        return getColorFromState();
+        return HandleState.getColorFromState(this.state);
     }
 
     public DigitSimController getDsc() {
@@ -425,6 +415,7 @@ public class Connection {
     public void setState(State state) {
         this.state = state;
         updateColor();
+        updatePartnerState();
     }
     
     public void resetState() {

@@ -24,10 +24,10 @@ public class ConnectionHandler {
         
         for(Connection c : allConnections) {
             boolean isAlreadyUpdated = false;
-            if(c.getStartPartner().getelement() == e) {
+            if(c.getStartPartner().getElement() == e) {
                 isAlreadyUpdated = true;
                 c.updateLine();
-            } if((c.getEndPartner().getelement() == e) && !isAlreadyUpdated) {
+            } if((c.getEndPartner().getElement() == e) && !isAlreadyUpdated) {
                 c.updateLine();
             }
         }
@@ -40,10 +40,10 @@ public class ConnectionHandler {
     public static void removeAllConnectionsRelatedToElement(Element e) { 
         for(Connection c : DigitSimController.getReference().getAllConnections()) {
             boolean remove = false;
-            if(c.getStartPartner().getelement() == e) 
+            if(c.getStartPartner().getElement() == e) 
                 remove = true;
                 
-            if((c.getEndPartner().getelement() == e) && !remove) 
+            if((c.getEndPartner().getElement() == e) && !remove) 
                 remove = true;
             
             if(remove) {
@@ -82,16 +82,12 @@ public class ConnectionHandler {
 
         int stateCP0 = -1;
         int stateCP1 = -1;
-
-        System.out.println("A");
         
         //Wenn ein Teil der Verbindung ein ELement und Output ist, dann...
         if((cP0.getPartnerType() == PartnerType.ELEMENT) && !(cP0.isIsInput())) {
-            stateCP0 = cP0.getelement().getOutput(cP0.getIndex());
-            System.out.println("B");
+            stateCP0 = cP0.getElement().getOutput(cP0.getIndex());
         } if((cP1.getPartnerType() == PartnerType.ELEMENT) && !(cP1.isIsInput())) {
-            stateCP1 = cP1.getelement().getOutput(cP1.getIndex());
-            System.out.println("C");
+            stateCP1 = cP1.getElement().getOutput(cP1.getIndex());
         } //HIER MUSS SPÄTER NOCH DIE LOGIK FÜR VERBINDUNGEN ZU ANDEREN CONNECTIONS BESCHRIEBEN WERDEN
 
         System.out.println(stateCP0 +" : " +stateCP1);
@@ -137,6 +133,23 @@ public class ConnectionHandler {
                     break;
             }
         }
+    }
+    
+    /**
+     * Setzt die States ALLER Connections zurück (auf DEFAULT)
+     */
+    public static void resetConnectionStates() {
+        for(Connection c : DigitSimController.getReference().getAllConnections()) {
+            resetConnectionState(c);
+        }
+    }
+    
+    /**
+     * Setzt den state einer bestimmten Connection zurück
+     * @param c 
+     */
+    public static void resetConnectionState(Connection c) {
+        c.resetState();
     }
     
     /**

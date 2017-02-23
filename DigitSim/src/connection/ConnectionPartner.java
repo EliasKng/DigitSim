@@ -46,11 +46,11 @@ public class ConnectionPartner {
         this.partnerType = partnerType;
     }
 
-    public Element getelement() {
+    public Element getElement() {
         return element;
     }
 
-    public void setelement(Element element) {
+    public void setElement(Element element) {
         this.element = element;
     }
 
