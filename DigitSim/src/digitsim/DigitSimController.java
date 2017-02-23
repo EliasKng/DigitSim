@@ -641,7 +641,7 @@ public class DigitSimController extends Pane{
         return locked;
     }
     
-    private void resetElements(){
+    public void resetElements(){
         outputMessages.add("[INFO]Alle Elemente zurücksetzen..");
         elements.forEach(e -> e.reset()); //Alle Elemente reseten
         

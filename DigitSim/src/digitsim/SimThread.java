@@ -21,16 +21,21 @@ public class SimThread extends Thread { //Ein Thread kann nebenbei laufen (auf e
 
     @Override
     public void run() { //Diese Funktion arbeitet der Thread ab
+        int duration = 1000 / Properties.GetThreadDurationMS();
+        System.out.println("########################################" + duration);
         while (!this.isInterrupted()) { //Man kann den Thread mit thread.interrupt() den befehl zum stoppen geben, hier wird geprüft ob dies passiert ist
             Long diff = System.currentTimeMillis(); //Die Aktuelle zeit in Millis auslesen
             dsController.run(); //Alle Elemente updaten etc.
             Math.abs(diff -= System.currentTimeMillis()); //Rausfinden wieviel Zeit vergangen ist (Differenz)
             try{
-            this.wait(Properties.GetThreadDurationMS() - clampDiff(diff)); //50ms Warten, Wir ziehen die Differenz ab, damit wir IMMER 50ms haben SPRICH: Unser Simulator läuft im Normalfall mit einer Frequenz von 20Hz
+                if(duration - clampDiff(diff) > 0){
+                   this.wait(duration - clampDiff(diff)); //50ms Warten, Wir ziehen die Differenz ab, damit wir IMMER 50ms haben SPRICH: Unser Simulator läuft im Normalfall mit einer Frequenz von 20Hz 
+                }
             }catch(Exception e){
                 //Nichts tun! Es wird abgebrochen sobald die 50s vorbei sind.
             }
         }
+        DigitSimController.getReference().resetElements();
     }
     
     public long clampDiff(long diff) {
