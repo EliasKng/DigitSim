@@ -64,6 +64,7 @@ public class DigitSim extends Application { //Hauptklasse
     
     public static void hideSplashScreen() {
         splashScreen.hide();
+        splashScreen = null; //Referenz löschen, denn eine Stage existiert solange eine Referenz auf diese existiert (sie ist halt nur unsichtbar (hidden)), deshalb auf null setzen
     }
     
     public static void showMainWindow() {

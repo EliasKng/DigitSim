@@ -391,6 +391,9 @@ public class NodeGestures {
         return new EventHandler<MouseEvent>(){
             @Override
             public void handle(MouseEvent event){
+                if(DigitSimController.isLocked()){
+               return;   
+            }
                 DigitSimController dsc = DigitSimController.getReference();
                 dsc.addConnection(e, true, inputIndex, event);
             }
@@ -401,6 +404,9 @@ public class NodeGestures {
         return new EventHandler<MouseEvent>(){
             @Override
             public void handle(MouseEvent event){
+                if(DigitSimController.isLocked()){
+               return;   
+            }
                 DigitSimController dsc = DigitSimController.getReference();
                 dsc.addConnection(e, false, outputIndex, event);
             }
