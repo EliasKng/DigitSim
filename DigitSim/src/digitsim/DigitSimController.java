@@ -628,8 +628,9 @@ public class DigitSimController extends Pane{
     }
     
     public void closeElement_THUMBSWITCH(Element e){
-            simCanvas.getChildren().remove(e.getGroup());
-            elements.remove(e); 
+        ConnectionHandler.removeAllConnectionsRelatedToElement(e);
+        simCanvas.getChildren().remove(e.getGroup());
+        elements.remove(e); 
     }
     
     public void run(){

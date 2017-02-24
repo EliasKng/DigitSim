@@ -62,7 +62,7 @@ public class NodeGestures {
                Element temp = findElement();
                if(temp != null){
                    canvas.getChildren().remove(temporaryGroup); //Die "Zeichnung" entfernen, da diese bestehen bleibt wenn das Element gelöscht wird
-//                   DigitSimController.getAllConnectionsOLD().removeAllConncectionsRelatedTo(temp);
+                   ConnectionHandler.removeAllConnectionsRelatedToElement(temp);
                    elements.remove(temp); //Das Element entfernen
                }
             }});      
@@ -329,7 +329,6 @@ public class NodeGestures {
                 Node src = (Node) event.getSource();
                 Circle c = (Circle) src;
                 Line l = (Line) src;
-                System.out.println("AA");
                 c.setStroke(Color.DARKORANGE);
                 l.setStroke(Color.DARKORANGE);
             }

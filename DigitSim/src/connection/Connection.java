@@ -252,10 +252,6 @@ public class Connection {
         double gO = general.Properties.GetGridOffset(); //grid Offset
         int lineWidth = Properties.getLineWidth();
         
-        for(Node n : vertexNodes) {
-            System.out.println("VNodeXY: " +n.tile.getX() +" : " +n.tile.getY());
-        }
-        
         Node child = null;
         //verbinde alle Eckpunkte
         Color c = HandleState.getColorFromState(this.state);

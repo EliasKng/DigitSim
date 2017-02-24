@@ -48,7 +48,6 @@ public class GenFunctions { //Laden der GUI
             
         } catch(Exception e) { //Error
             ErrorHandler.printError(GenFunctions.class, "Fehler beim laden von " + fxmlName + " & " + windowTitle + " & " + iconFileName);
-            System.out.println("NOW!");
             e.printStackTrace();
         }
         return null;

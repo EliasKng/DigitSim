@@ -89,9 +89,6 @@ public class ConnectionHandler {
         } if((cP1.getPartnerType() == PartnerType.ELEMENT) && !(cP1.isIsInput())) {
             stateCP1 = cP1.getElement().getOutput(cP1.getIndex());
         } //HIER MUSS SPÄTER NOCH DIE LOGIK FÜR VERBINDUNGEN ZU ANDEREN CONNECTIONS BESCHRIEBEN WERDEN
-
-        System.out.println(stateCP0 +" : " +stateCP1);
-        
         
         if(stateCP0 != -1 && stateCP1 != -1) {  //Sowohl partner 1 als auch partner 2 ist ein Ouput!
             if(stateCP0 != stateCP1) {          //Die beiden Outputs sind nicht gleich -> undefiniert!

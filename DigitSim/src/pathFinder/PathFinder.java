@@ -121,22 +121,12 @@ public class PathFinder {
             int nodeX = node.tile.getX();
             int nodeY = node.tile.getY(); 
             
-            System.out.println("parentX: \t" +parentX);
-            System.out.println("parentY: \t" +parentY);
-            System.out.println("currentX: \t" +currentX);
-            System.out.println("currentY: \t" +currentY);
-            System.out.println("nodeX: \t\t" +nodeX);
-            System.out.println("nodeY: \t\t" +nodeY);
-            
             if(((parentX == currentX) && (parentX == nodeX))    ||    ((parentY == currentY) && (parentY == nodeY))) {
-                System.out.println("Direction Stayed");
                 return false;
             } else {
-                System.out.println("Direction CHanged");
                 return true;
             }
         }
-        System.out.println("No Parent");
         return false;
     }
     
