@@ -697,7 +697,7 @@ public class DigitSimController extends Pane{
     public int findElementIndex(Element e){
         for(int t = 0; t < elements.size(); t++){
             if(elements.get(t).hashCode() == e.hashCode()){
-                return i;
+                return t;
             }
         }
         return -1;
