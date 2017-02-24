@@ -107,4 +107,9 @@ public class Element_NOT extends Element{
 			    "Info",
 			    JOptionPane.INFORMATION_MESSAGE);
     }
+    
+    @Override
+    public String getTypeName() {
+        return TYPE.name();
+    }
 }

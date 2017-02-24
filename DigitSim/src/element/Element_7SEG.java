@@ -157,4 +157,9 @@ public class Element_7SEG extends Element{
         GenFunctions.showBasicElementProperties(numInputs, thisElement);
     }
 
+    @Override
+    public String getTypeName() {
+        return TYPE.name();
+    }
+
 }

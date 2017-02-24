@@ -101,5 +101,10 @@ public class Element_LED extends Element{
         update();
         indicator.setVisible(false);
     }
+    
+    @Override
+    public String getTypeName() {
+        return TYPE.name();
+    }
     }   
   

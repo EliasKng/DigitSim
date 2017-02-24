@@ -194,6 +194,11 @@ public class Element_TEXT extends Element{
        stage.setScene(scene);
        stage.show();//Fenster zeigen
     }
+    
+    @Override
+    public String getTypeName() {
+        return TYPE.name();
+    }
     }
        
     

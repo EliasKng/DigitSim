@@ -86,5 +86,9 @@ public class Element_SIGNAL extends Element{
 			    JOptionPane.INFORMATION_MESSAGE);
     }
     
+    @Override
+    public String getTypeName() {
+        return TYPE.name();
+    }
     }
 

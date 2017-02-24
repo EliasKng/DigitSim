@@ -112,4 +112,9 @@ public class Element_OR extends Element{
     public void showProperties(){ //Zeigt das "Eigenschaften"-Fenster für dieses Element
         GenFunctions.showBasicElementProperties(numInputs, thisElement);
     }
+    
+    @Override
+    public String getTypeName() {
+        return TYPE.name();
+    }
 }

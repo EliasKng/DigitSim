@@ -384,78 +384,70 @@ public class DigitSimController extends Pane{
     }
     
     public void saveProject(){
-//        SaveFormat project = new SaveFormat(elements.size(), allConnectionsOLD.size());
-//        project.setSimSizeX(Properties.GetSimSizeX());
-//        project.setSimSizeY(Properties.GetSimSizeY());
-//        project.setNumElements(elements.size());
-//        project.setNumConnections(allConnectionsOLD.getConnectionData().size());
-//        for(int i = 0; i < elements.size(); i++){
-//            project.getPayload()[i] = elements.get(i).getPayload();
-//            project.geteNumInputs()[i] = elements.get(i).getNumInputs();
-//            project.geteNumOutputs()[i] = elements.get(i).getNumOutputs();
-//            project.getePosX()[i] = elements.get(i).getX();
-//            project.getePosY()[i] = elements.get(i).getY();
-//        }
-//        for(int i = 0; i < allConnectionsOLD.size(); i++){
-//            project.getIndexFirst()[i] = allConnectionsOLD.getConData(i).indexFirst;
-//            project.getIndexFirstElement()[i] = allConnectionsOLD.getConData(i).indexFirstElement;
-//            project.getIndexSecond()[i] = allConnectionsOLD.getConData(i).indexSecond;
-//            project.getIndexSecondElement()[i] = allConnectionsOLD.getConData(i).indexSecondElement;
-//            project.getTypeFirst()[i] = allConnectionsOLD.getConData(i).typeFirst;
-//            project.getTypeSecond()[i] = allConnectionsOLD.getConData(i).typeSecond;
-//        }
-//        toolbox.XmlLoader.saveObject(currentProjectPath, project);
+        SaveFormat project = new SaveFormat(elements.size(), 0); //Format in welcher das Prokekt geschrieben wird
+        project.setSimSizeX(Properties.GetSimSizeX());
+        project.setSimSizeY(Properties.GetSimSizeY());
+        project.setNumElements(elements.size());
+        for(int i = 0; i < elements.size(); i++){
+            project.getType()[i] = elements.get(i).getTypeName();
+            project.getPayload()[i] = elements.get(i).getPayload();
+            project.geteNumInputs()[i] = elements.get(i).getNumInputs();
+            project.geteNumOutputs()[i] = elements.get(i).getNumOutputs();
+            project.getePosX()[i] = elements.get(i).getX();
+            project.getePosY()[i] = elements.get(i).getY();
+        }
+        toolbox.XmlLoader.saveObject(currentProjectPath, project);
     }
     
-    public void loadProject(){
-        System.out.println(currentProjectPath);
-        SaveFormat project = (SaveFormat) toolbox.XmlLoader.loadObject(currentProjectPath, SaveFormat.class);
-        if(Properties.GetSimSizeX() < project.getSimSizeX() || Properties.GetSimSizeY() < project.getSimSizeY()){
+    public void loadProject(){ //Ein Projekt laden
+        SaveFormat project = (SaveFormat) toolbox.XmlLoader.loadObject(currentProjectPath, SaveFormat.class); //Die Datei lesen
+        if(Properties.GetSimSizeX() < project.getSimSizeX() || Properties.GetSimSizeY() < project.getSimSizeY()){ //Einstellungen anpassen
             Properties.setSimSizeX(project.getSimSizeX());
             Properties.setSimSizeY(project.getSimSizeY());
             this.simCanvas.setMaxHeight(Properties.GetSimSizeY());
             this.simCanvas.setMaxWidth(Properties.GetSimSizeX());
             this.clearElements();
         }
-        for(int i = 0; i < project.getNumElements(); i++){
-            if(project.getType()[i] == ElementType.Type.AND){
+        for(int i = 0; i < project.getNumElements(); i++){ //Elemente laden (nach jeweiligen Typ)
+            if(project.getType()[i].equals(ElementType.Type.AND.name())){
                  elements.add(new Element_AND(project.getePosX()[i], project.getePosY()[i], project.geteNumInputs()[i], nodeGestures));
                  simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
-            }else if(project.getType()[i] == ElementType.Type.SEVENSEG){
+            }else if(project.getType()[i].equals(ElementType.Type.SEVENSEG.name())){
                 elements.add(new Element_7SEG(project.getePosX()[i], project.getePosY()[i], project.geteNumInputs()[i], nodeGestures));
                  simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
-            }else if(project.getType()[i] == ElementType.Type.LED){
+            }else if(project.getType()[i].equals(ElementType.Type.LED.name())){
                 elements.add(new Element_LED(project.getePosX()[i], project.getePosY()[i], project.geteNumInputs()[i], nodeGestures));
                  simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
-            }else if(project.getType()[i] == ElementType.Type.NAND){
+            }else if(project.getType()[i].equals(ElementType.Type.NAND.name())){
                 elements.add(new Element_NAND(project.getePosX()[i], project.getePosY()[i], project.geteNumInputs()[i], nodeGestures));
                  simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
-            }else if(project.getType()[i] == ElementType.Type.NOR){
+            }else if(project.getType()[i].equals(ElementType.Type.NOR.name())){
                 elements.add(new Element_NOR(project.getePosX()[i], project.getePosY()[i], project.geteNumInputs()[i], nodeGestures));
                  simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
-            }else if(project.getType()[i] == ElementType.Type.NOT){
+            }else if(project.getType()[i].equals(ElementType.Type.NOT.name())){
                 elements.add(new Element_NOT(project.getePosX()[i], project.getePosY()[i], project.geteNumInputs()[i], nodeGestures));
                  simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
-            }else if(project.getType()[i] == ElementType.Type.OR){
+            }else if(project.getType()[i].equals(ElementType.Type.OR.name())){
                 elements.add(new Element_OR(project.getePosX()[i], project.getePosY()[i], project.geteNumInputs()[i], nodeGestures));
                  simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
-            }else if(project.getType()[i] == ElementType.Type.SIGNAL){
+            }else if(project.getType()[i].equals(ElementType.Type.SIGNAL.name())){
                 elements.add(new Element_SIGNAL(project.getePosX()[i], project.getePosY()[i], nodeGestures));
                  simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
-            }else if(project.getType()[i] == ElementType.Type.TEXT){
+            }else if(project.getType()[i].equals(ElementType.Type.TEXT.name())){
                 elements.add(new Element_TEXT(project.getePosX()[i], project.getePosY()[i], 20,project.getPayload()[i], Color.BLACK, nodeGestures));
                  simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
-            }else if(project.getType()[i] == ElementType.Type.THUMBSWITCH){
+            }else if(project.getType()[i].equals(ElementType.Type.THUMBSWITCH.name())){
                 elements.add(new Element_THUMBSWITCH(project.getePosX()[i], project.getePosY()[i], nodeGestures));
                  simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
-            }else if(project.getType()[i] == ElementType.Type.XNOR){
+            }else if(project.getType()[i].equals(ElementType.Type.XNOR.name())){
                 elements.add(new Element_XNOR(project.getePosX()[i], project.getePosY()[i], project.geteNumInputs()[i], nodeGestures));
                  simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
-            }else if(project.getType()[i] == ElementType.Type.XOR){
+            }else if(project.getType()[i].equals(ElementType.Type.XOR.name())){
                 elements.add(new Element_XOR(project.getePosX()[i], project.getePosY()[i], project.geteNumInputs()[i], nodeGestures));
                  simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
             }
         }
+        //CONNECTIONS LADEN (comming soon)
     }
     
     /**

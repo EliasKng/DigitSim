@@ -292,6 +292,10 @@ public class Element_THUMBSWITCH extends Element{
        DigitSimController.getReference().rebuildElement(thisEl, 0);
     } 
     
+    @Override
+    public String getTypeName() {
+        return TYPE.name();
+    }
 }
   
     
