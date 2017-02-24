@@ -694,9 +694,14 @@ public class DigitSimController extends Pane{
         getSimCanvas().getChildren().remove(this.temporaryLine);
     }
     
-    
-    
-    
+    public int findElementIndex(Element e){
+        for(int t = 0; t < elements.size(); t++){
+            if(elements.get(t).hashCode() == e.hashCode()){
+                return i;
+            }
+        }
+        return -1;
+    }
     
     public void reloadMinAndMaxWindowSize(){
         Stage stage = (Stage) simPane.getScene().getWindow();
