@@ -35,7 +35,6 @@ public class SimThread extends Thread { //Ein Thread kann nebenbei laufen (auf e
                 //Nichts tun! Es wird abgebrochen sobald die 50s vorbei sind.
             }
         }
-        DigitSimController.getReference().resetElements();
     }
     
     public long clampDiff(long diff) {

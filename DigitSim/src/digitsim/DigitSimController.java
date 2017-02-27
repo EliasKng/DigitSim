@@ -346,8 +346,8 @@ public class DigitSimController extends Pane{
   }     
     public void btnPauseOnAction(ActionEvent event) {   
         runningThread.interrupt(); //Den Thread anhalten
-        ConnectionHandler.resetConnectionStates();
-        resetElements(); //Alles resetzen
+        ConnectionHandler.resetConnectionStates();  //Alle Verbindungen resetten
+        resetElements(); //Alle ELemente resetten
         btnPause.setDisable(true);
         btnStart.setDisable(false);
         outputMessages.clear();

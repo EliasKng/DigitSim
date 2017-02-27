@@ -27,8 +27,10 @@ public class ConnectionHandler {
             if(c.getStartPartner().getElement() == e) {
                 isAlreadyUpdated = true;
                 c.updateLine();
-            } if((c.getEndPartner().getElement() == e) && !isAlreadyUpdated) {
-                c.updateLine();
+            } if(c.getEndPartner() != null) {
+                if((c.getEndPartner().getElement() == e) && !isAlreadyUpdated) {
+                    c.updateLine();
+                }
             }
         }
     }
