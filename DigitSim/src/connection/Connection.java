@@ -63,6 +63,13 @@ public class Connection {
         this.startPartner = new ConnectionPartner(element, isInput, index);
         this.dsc = dsc;
     }
+    
+    public Connection(DigitSimController dsc, ConnectionPartner startPartner, ConnectionPartner endPartner){
+        this.dsc = dsc;
+        this.startPartner = startPartner;
+        this.endPartner = endPartner;
+        this.updateLine();
+    }
 
     
     

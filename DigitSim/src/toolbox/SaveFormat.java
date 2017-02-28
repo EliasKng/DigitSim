@@ -22,24 +22,111 @@ public class SaveFormat implements element.ElementType{
     int[] eNumInputs, eNumOutputs; //Anzahl in- & outputs
     String[] payload; //Payload (siehe Element.java)
     
+    
+    //Connection(2xPartner)
+    int numConnections;
+    String[][] conType;
+    //Falls Element:
+    int[][] conElementIndex;
+    boolean[][] conInOrOutput;
+    int[][] conIOIndex;
+    
+    //Falls Connection + Anchor Point
+    int[][] conIndex;
+    double[][] conX;  //Anchor Point
+    double[][] conY; //Anchor Point
+    
     public SaveFormat(){
         
     }
     
     public SaveFormat(int numElements, int numConnections){
         this.numElements = numElements;
+        this.numConnections = numConnections;
         type = new String[numElements];
         ePosX = new double[numElements];
         ePosY = new double[numElements];
         eNumInputs = new int[numElements];
         eNumOutputs = new int[numElements];
         payload = new String[numElements];
+        conType = new String[numConnections][2];
+        conElementIndex = new int[numConnections][2];
+        conInOrOutput = new boolean[numConnections][2];
+        conIOIndex = new int[numConnections][2];
+        conIndex = new int[numConnections][2];
+        conX = new double[numConnections][2];
+        conY = new double[numConnections][2];
     }
 
     //Einstellungen
     int simSizeX;
     int simSizeY;    
+    @XmlElement
+    public int getNumConnections() {
+        return numConnections;
+    }
 
+    public void setNumConnections(int numConnections) {
+        this.numConnections = numConnections;
+    }
+    
+    @XmlElement
+    public String[][] getConType() {
+        return conType;
+    }
+
+    public void setConType(String[][] conType) {
+        this.conType = conType;
+    }
+    @XmlElement
+    public int[][] getConElementIndex() {
+        return conElementIndex;
+    }
+
+    public void setConElementIndex(int[][] conElementIndex) {
+        this.conElementIndex = conElementIndex;
+    }
+    @XmlElement
+    public boolean[][] getConInOrOutput() {
+        return conInOrOutput;
+    }
+
+    public void setConInOrOutput(boolean[][] conInOrOutput) {
+        this.conInOrOutput = conInOrOutput;
+    }
+    @XmlElement
+    public int[][] getConIOIndex() {
+        return conIOIndex;
+    }
+
+    public void setConIOIndex(int[][] conIOIndex) {
+        this.conIOIndex = conIOIndex;
+    }
+    @XmlElement
+    public int[][] getConIndex() {
+        return conIndex;
+    }
+
+    public void setConIndex(int[][] conIndex) {
+        this.conIndex = conIndex;
+    }
+    @XmlElement
+    public double[][] getConX() {
+        return conX;
+    }
+
+    public void setConX(double[][] conX) {
+        this.conX = conX;
+    }
+    @XmlElement
+    public double[][] getConY() {
+        return conY;
+    }
+
+    public void setConY(double[][] conY) {
+        this.conY = conY;
+    }
+ 
     @XmlElement
     public int getNumElements() {
         return numElements;

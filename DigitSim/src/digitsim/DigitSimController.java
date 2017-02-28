@@ -6,6 +6,8 @@ import Gestures.NodeGestures;
 import Gestures.SceneGestures;
 import connection.Connection;
 import connection.ConnectionHandler;
+import connection.ConnectionPartner;
+import connection.PartnerType;
 import element.*;
 import general.Vector2i;
 import java.io.File;
@@ -384,7 +386,7 @@ public class DigitSimController extends Pane{
     }
     
     public void saveProject(){
-        SaveFormat project = new SaveFormat(elements.size(), 0); //Format in welcher das Prokekt geschrieben wird
+        SaveFormat project = new SaveFormat(elements.size(), allConnections.size()); //Format in welcher das Prokekt geschrieben wird
         project.setSimSizeX(Properties.GetSimSizeX());
         project.setSimSizeY(Properties.GetSimSizeY());
         project.setNumElements(elements.size());
@@ -396,6 +398,31 @@ public class DigitSimController extends Pane{
             project.getePosX()[i] = elements.get(i).getX();
             project.getePosY()[i] = elements.get(i).getY();
         }
+        for(int i = 0; i < allConnections.size(); i++){
+            if(allConnections.get(i).getStartPartner().getPartnerType() == PartnerType.ELEMENT){
+                project.getConType()[i][0] = PartnerType.ELEMENT.name();
+                project.getConElementIndex()[i][0]  = this.findElementIndex(allConnections.get(i).getStartPartner().getElement());
+                project.getConInOrOutput()[i][0]  = allConnections.get(i).getStartPartner().isIsInput();
+                project.getConIOIndex()[i][0]  = allConnections.get(i).getStartPartner().getIndex();
+            }else{
+                project.getConType()[i][1]  = PartnerType.CONNECTIONLINE.name();
+                project.getConIndex()[i][0]  = this.findConnectionIndex(allConnections.get(i).getStartPartner().getconnection());
+                project.getConX()[i][0]  = allConnections.get(i).getStartPartner().getanchorPoint().getCoords().getX();
+                project.getConY()[i][0]  = allConnections.get(i).getStartPartner().getanchorPoint().getCoords().getY();
+            }
+            if(allConnections.get(i).getEndPartner().getPartnerType() == PartnerType.ELEMENT){
+                project.getConType()[i][1]  = PartnerType.ELEMENT.name();
+                project.getConElementIndex()[i][1] = this.findElementIndex(allConnections.get(i).getEndPartner().getElement());
+                project.getConInOrOutput()[i][1] = allConnections.get(i).getEndPartner().isIsInput();
+                project.getConIOIndex()[i][1] = allConnections.get(i).getEndPartner().getIndex();
+            }else{
+                project.getConType()[i][1]  = PartnerType.CONNECTIONLINE.name();
+                project.getConIndex()[i][1] = this.findConnectionIndex(allConnections.get(i).getEndPartner().getconnection());
+                project.getConX()[i][1] = allConnections.get(i).getEndPartner().getanchorPoint().getCoords().getX();
+                project.getConY()[i][1]= allConnections.get(i).getEndPartner().getanchorPoint().getCoords().getY();
+            }
+        }
+        
         toolbox.XmlLoader.saveObject(currentProjectPath, project);
     }
     
@@ -447,7 +474,16 @@ public class DigitSimController extends Pane{
                  simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
             }
         }
-        //CONNECTIONS LADEN (comming soon)
+
+        //Connections laden die von Element zu Element gehen
+        for(int i = 0; i < project.getNumConnections(); i++){
+            if(project.getConType()[i][0].equals(PartnerType.ELEMENT.name()) && project.getConType()[i][1].equals(PartnerType.ELEMENT.name())){
+                ConnectionPartner startPartner = new ConnectionPartner(elements.get(project.getConElementIndex()[i][0]), project.getConInOrOutput()[i][0], project.getConIOIndex()[i][0]);
+                ConnectionPartner endPartner = new ConnectionPartner(elements.get(project.getConElementIndex()[i][1]), project.getConInOrOutput()[i][1], project.getConIOIndex()[i][1]);
+                allConnections.add(new Connection(this, startPartner, endPartner));
+                System.out.println("LOL2");
+            }
+        }
     }
     
     /**
@@ -697,6 +733,15 @@ public class DigitSimController extends Pane{
     public int findElementIndex(Element e){
         for(int t = 0; t < elements.size(); t++){
             if(elements.get(t).hashCode() == e.hashCode()){
+                return t;
+            }
+        }
+        return -1;
+    }
+    
+    public int findConnectionIndex(Connection c) {
+        for(int t = 0; t < allConnections.size(); t++){
+            if(allConnections.get(t).hashCode() == c.hashCode()){
                 return t;
             }
         }
