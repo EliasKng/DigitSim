@@ -24,17 +24,18 @@ public class SaveFormat implements element.ElementType{
     
     
     //Connection(2xPartner)
-    int numConnections;
-    String[][] conType;
+    int numConnections; //Anzhal Verbindungen
+    String[][] conType; //Typ                                          ---> Index 1 = index der Verbindung     index 2 = Start- oder EndPartner
     //Falls Element:
-    int[][] conElementIndex;
-    boolean[][] conInOrOutput;
-    int[][] conIOIndex;
+    int[][] conElementIndex; //Element index
+    boolean[][] conInOrOutput; //Input oder Output?
+    int[][] conIOIndex; //Index des In-Outputs
     
     //Falls Connection + Anchor Point
-    int[][] conIndex;
-    double[][] conX;  //Anchor Point
-    double[][] conY; //Anchor Point
+    int[][] conIndex; //Index der Verbindung in der Liste "allConnections"
+    int[][] conX;  //Anchor Point
+    int[][] conY; //Anchor Point
+    int[][] conAnchorIndex;  //Index des Anchor Points
     
     public SaveFormat(){
         
@@ -54,13 +55,24 @@ public class SaveFormat implements element.ElementType{
         conInOrOutput = new boolean[numConnections][2];
         conIOIndex = new int[numConnections][2];
         conIndex = new int[numConnections][2];
-        conX = new double[numConnections][2];
-        conY = new double[numConnections][2];
+        conX = new int[numConnections][2];
+        conY = new int[numConnections][2];
+        conAnchorIndex = new int[numConnections][2];
     }
 
     //Einstellungen
     int simSizeX;
     int simSizeY;    
+    @XmlElement
+    public int[][] getConAnchorIndex() {
+        return conAnchorIndex;
+    }
+
+    public void setConAnchorIndex(int[][] conAnchorIndex) {
+        this.conAnchorIndex = conAnchorIndex;
+    }
+    
+    
     @XmlElement
     public int getNumConnections() {
         return numConnections;
@@ -111,19 +123,19 @@ public class SaveFormat implements element.ElementType{
         this.conIndex = conIndex;
     }
     @XmlElement
-    public double[][] getConX() {
+    public int[][] getConX() {
         return conX;
     }
 
-    public void setConX(double[][] conX) {
+    public void setConX(int[][] conX) {
         this.conX = conX;
     }
     @XmlElement
-    public double[][] getConY() {
+    public int[][] getConY() {
         return conY;
     }
 
-    public void setConY(double[][] conY) {
+    public void setConY(int[][] conY) {
         this.conY = conY;
     }
  
