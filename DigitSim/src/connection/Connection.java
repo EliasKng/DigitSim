@@ -36,6 +36,7 @@ public class Connection {
     //Zum Zeichen relevante Globals
     private Group lineGroup = new Group();                                    //Gruppe von Linien (die die gesamte Linie darstellt)
     private Group pointGroup = new Group();                                   //Gruppe von Punkten (anchorPoints, durch die die Linie verlaufen muss)
+    private Group tempLineGroup = new Group();                                // in dieser gruppe wird die "orangene Linie" gespeichert
     
 
     //Konstruktoren
@@ -187,8 +188,15 @@ public class Connection {
         Vector2i endCoords = processPartner(this.endPartner);
         AnchorPoint start = new AnchorPoint(indexStart, startCoords);
         AnchorPoint end = new AnchorPoint(indexEnd, endCoords);
-        this.anchorPoints.add(start);
-        this.anchorPoints.add(end);
+        if(anchorPoints.size() > 1) {
+            this.anchorPoints.set(0, start);
+            this.anchorPoints.set(anchorPoints.size()-1, end);
+        }
+        else {
+            this.anchorPoints.clear();
+            this.anchorPoints.add(start);
+            this.anchorPoints.add(end);
+        }
     }
     
     /**
@@ -379,6 +387,29 @@ public class Connection {
         if((this.endPartner.getPartnerType() == PartnerType.ELEMENT)&&(this.endPartner.isIsInput())) {
             this.endPartner.getElement().setInput(endPartner.getIndex(), HandleState.getIntFromState(state));
         }
+    }
+    
+    public void drawDirectPreLine() {
+        processPartners();
+        
+        if(this.tempLineGroup != null) {
+            this.dsc.getSimCanvas().getChildren().remove(this.tempLineGroup);
+        }
+        
+        this.tempLineGroup.getChildren().clear();
+        
+        AnchorPoint childPoint = null;
+        
+        for(AnchorPoint aP : this.anchorPoints) {
+            if(childPoint != null) {
+                Line l = Draw.drawLine(childPoint.coords, aP.coords, Color.DARKORANGE, 5);
+                l.setOpacity(0.6);
+                this.tempLineGroup.getChildren().add(l);
+            } 
+            childPoint = aP;
+        }    
+        
+        this.dsc.getChildren().add(this.tempLineGroup);
     }
     
     //**********************GET/SET************************/

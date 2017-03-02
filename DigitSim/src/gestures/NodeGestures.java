@@ -158,6 +158,8 @@ public class NodeGestures {
             
             Node node = (Node) event.getSource(); //Das betroffene Element bekommen
             
+            
+            
             int translXBefore =(int) node.getTranslateX();
             int translYBefore =(int) node.getTranslateY();
             
@@ -170,6 +172,7 @@ public class NodeGestures {
             
             //Nur wenn das Element auch wirklich verschoben wurde, die Linie updaten
             if(translXBefore != node.getTranslateX() || translYBefore != node.getTranslateY()) {
+                connection.ConnectionHandler.drawDirectPreLinesRelatedToElement(findElementNum());
                //ConnectionUpdater.updateAllConnectionsRelatedToElement(findElementNum()); //Verbindungen updaten die das Akutelle Element betreffen
             }
             event.consume(); 

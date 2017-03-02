@@ -190,4 +190,32 @@ public class ConnectionHandler {
         }
         return result;
     }
+    
+    /**
+     * gibt eine Liste von Verbindungen zurück, welche mit diesem einen Element in Verbindung stehen
+     * @param e
+     * @return 
+     */
+    public static ArrayList<Connection> getAllConnectionsRelatedToElement(Element e) {
+       ArrayList<Connection> connections = new ArrayList();
+       
+       Iterator<Connection> c = DigitSimController.getAllConnections().iterator();
+        
+        while(c.hasNext()) {
+            Connection con = c.next();
+            
+            if((con.getStartPartner().getElement() == e) || (con.getEndPartner().getElement() == e)) {
+                connections.add(con);
+            }
+        }
+        return connections;
+    }
+    
+    public static void drawDirectPreLinesRelatedToElement(Element e) {
+        ArrayList<Connection> connections = getAllConnectionsRelatedToElement(e);
+        
+        for(Connection c : connections) {
+            c.drawDirectPreLine();
+        }
+    }
 }
