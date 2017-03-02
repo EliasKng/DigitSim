@@ -7,6 +7,8 @@ package connection;
 
 import digitsim.DigitSimController;
 import element.Element;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -40,18 +42,14 @@ public class ConnectionHandler {
      * @param e 
      */
     public static void removeAllConnectionsRelatedToElement(Element e) { 
-        for(Connection c : DigitSimController.getReference().getAllConnections()) {
-            boolean remove = false;
-            if(c.getStartPartner().getElement() == e) 
-                remove = true;
-                
-            if((c.getEndPartner().getElement() == e) && !remove) 
-                remove = true;
+        Iterator<Connection> c = DigitSimController.getAllConnections().iterator();
+        
+        while(c.hasNext()) {
+            Connection con = c.next();
             
-            if(remove) {
-                DigitSimController.getReference().removeConnectionFromAllConnections(c);    //entfernt die Linie aus der allConnections Liste
-                c.removeLine(); //linie wird aus dem DraggableCanvas entfernt
-                c = null;       //Objekt wird für dem Garbage-Collector freigegeben (wird gelöscht)
+            if((con.getStartPartner().getElement() == e) || (con.getEndPartner().getElement() == e)) {
+                con.removeLine();  
+                c.remove();
             }
         }
     }
@@ -60,7 +58,7 @@ public class ConnectionHandler {
      * Entfernt ALLE Verbindungen
      */
     public static void removeAllConnections() {
-        for(Connection c : DigitSimController.getReference().getAllConnections()) {
+        for(Connection c : DigitSimController.getAllConnections()) {
             c.removeLine(); //linie wird aus dem DraggableCanvas entfernt
             c = null;       //Objekt wird für dem Garbage-Collector freigegeben (wird gelöscht)
         }
