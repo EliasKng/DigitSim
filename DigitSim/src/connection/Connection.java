@@ -36,7 +36,7 @@ public class Connection {
     private State state = State.DEFAULT;                              //Für die Simulation relevant -> gibt den Digitalen Status der Verbindung an (An/Aus/Undefiniert)
     
     //Zum Zeichen relevante Globals
-    private Group lineGroup = new Group();                                    //Gruppe von Linien (die die gesamte Linie darstellt)
+    private Group lineGroup = new Group();                            //Gruppe von Linien (die die gesamte Linie darstellt)
     private Group pointGroup = new Group();                                   //Gruppe von Punkten (anchorPoints, durch die die Linie verlaufen muss)
     private Group tempGroup = new Group();                                // in dieser gruppe wird die "orangene Linie" gespeichert
     
@@ -118,10 +118,9 @@ public class Connection {
     public void updateColor() {
         Color color = HandleState.getColorFromState(this.state);
         
-        
-        
-        
-        for(javafx.scene.Node n : this.lineGroup.getChildren()){
+        List<javafx.scene.Node> allNodes = getAllNodesFromLineGroup();
+                
+        for(javafx.scene.Node n : allNodes) {
             Line l = (Line) n;
             l.setStroke(color);
         }
@@ -134,7 +133,9 @@ public class Connection {
     }
     
     public void setSpecialColor(Color color) {
-        for(javafx.scene.Node n : this.lineGroup.getChildren()){
+        List<javafx.scene.Node> allNodes = getAllNodesFromLineGroup();
+                
+        for(javafx.scene.Node n : allNodes) {
             Line l = (Line) n;
             l.setStroke(color);
         }
@@ -269,30 +270,31 @@ public class Connection {
      * @param completePath 
      */
     public void createLineGroupFromNodeList(ArrayList<List<Node>> completePath) {
-        List<Node> nodePath = new ArrayList();
         
-        //Lässt die "Liste aus Listen" zu nur einer Liste werden
-        for(List<Node> i : completePath) {
-            for(Node n : i) {
-                nodePath.add(n);
-            }
-        }
-        
-        List<Node> vertexNodes = findVertexNodes(nodePath);
         double gO = general.Properties.GetGridOffset(); //grid Offset
         int lineWidth = Properties.getLineWidth();
-        
-        Node child = null;
-        //verbinde alle Eckpunkte
         Color c = HandleState.getColorFromState(this.state);
-        for(Node n : vertexNodes) {
-            if(child != null) {
-                Line line = Draw.drawLine(child.tile.getX()*gO+10.5, child.tile.getY()*gO+10.5, n.tile.getX()*gO+10.5, n.tile.getY()*gO+10.5, c, lineWidth);
-                this.lineGroup.getChildren().add(line);
-            } 
-            child = n;
-        }
         
+        
+        
+        for(List<Node> vertexNodeList : completePath) {
+            Node child = null;
+            //verbinde alle Eckpunkte
+            Group tempGroup = new Group(); //in dieser Gruppe werden alle Linien von AnchorPoint zu AnchorPoint gespeichert
+            for(Node n : vertexNodeList) {
+                
+                if(child != null) {
+                    Line line = Draw.drawLine(child.tile.getX()*gO+10.5, child.tile.getY()*gO+10.5, n.tile.getX()*gO+10.5, n.tile.getY()*gO+10.5, c, lineWidth);
+                    
+                    tempGroup.getChildren().add(line);
+                } 
+                child = n;
+            }
+            AnchorPoint aP0 = this.anchorPoints.get(completePath.indexOf(vertexNodeList));
+            AnchorPoint aP1 = this.anchorPoints.get(completePath.indexOf(vertexNodeList)+1);
+            tempGroup.addEventFilter(MouseEvent.MOUSE_CLICKED, NodeGestures.getOverConnectionLinePartClicked(aP0,aP1));
+            this.lineGroup.getChildren().add(tempGroup);
+        }
     } 
     
     /**
@@ -379,7 +381,7 @@ public class Connection {
             if(parentPoint != null) {
                 Line l = Draw.drawLine(parentPoint.getCoords(), ap.getCoords(), c, Properties.getLineWidth());
                 l.addEventFilter(MouseEvent.MOUSE_CLICKED, NodeGestures.getOverConnectionLinePartClicked(parentPoint, ap));
-                this.lineGroup.getChildren().add(l);
+                this.lineGroup.getChildren().add(new Group(l));
             }
             parentPoint = ap;
         }
@@ -437,6 +439,19 @@ public class Connection {
             dsc.getSimCanvas().getChildren().remove(tempGroup);
             this.tempGroup.getChildren().clear();
         }
+    }
+    
+    public List<javafx.scene.Node> getAllNodesFromLineGroup() {
+        List<javafx.scene.Node> allNodes = new ArrayList();
+        
+        for(javafx.scene.Node n : this.lineGroup.getChildren()) {
+            Group g = (Group) n;
+            for(javafx.scene.Node node : g.getChildren()) {
+                allNodes.add(node);
+            }
+        }
+        
+        return allNodes;
     }
     
     //**********************GET/SET************************/
