@@ -132,6 +132,10 @@ public class Connection {
         }
     }
     
+    /**
+     * ändert die Farbe der Verbindung auf die Angegebene
+     * @param color 
+     */
     public void setSpecialColor(Color color) {
         List<javafx.scene.Node> allNodes = getAllNodesFromLineGroup();
                 
@@ -155,6 +159,15 @@ public class Connection {
     }
     
     /**
+     * Erstellt aus den Attributen die Linie und speichert sie in lineGroup und pointGroup
+     */
+    public void createConnection() {
+        processPartners();
+        createLineGroup();
+        createPointGroup();
+    }
+    
+    /**
      * Entfernt die Linie & AnchorPoints aus dem dsc
      */
     public void removeLine() {
@@ -162,15 +175,6 @@ public class Connection {
             this.dsc.getSimCanvas().getChildren().remove(this.lineGroup);
             this.dsc.getSimCanvas().getChildren().remove(this.pointGroup);
         }
-    }
-    
-    /**
-     * Erstellt aus den Attributen die Linie und speichert sie in lineGroup und pointGroup
-     */
-    public void createConnection() {
-        processPartners();
-        createLineGroup();
-        createPointGroup();
     }
     
     /**
@@ -257,6 +261,7 @@ public class Connection {
     public void createPointGroup() {
         int gridOffset = general.Properties.GetGridOffset();
         Color c = HandleState.getColorFromState(this.state);
+        
         for(AnchorPoint ap : this.anchorPoints) {
             Circle circle = Draw.drawCircle(ap.getCoords().getX(), ap.getCoords().getY(), 5, c, 1, true, 1);
             circle.addEventFilter(MouseEvent.MOUSE_ENTERED, NodeGestures.getOverNodeMouseHanlderEnterCircle(circle));
@@ -398,7 +403,9 @@ public class Connection {
     }
     
     
-    
+    /**
+     * Setzt den State der Verbindung auf die Inputs, sodass die Signale vom ELement weiter verarbeitet werden können
+     */
     public void updatePartnerState() {
         if((this.startPartner.getPartnerType() == PartnerType.ELEMENT)&&(this.startPartner.isIsInput())) {
             this.startPartner.getElement().setInput(startPartner.getIndex(), HandleState.getIntFromState(state));
@@ -452,6 +459,11 @@ public class Connection {
         }
         
         return allNodes;
+    }
+    
+    public void addAnchorPoint(AnchorPoint aP) {
+        this.anchorPoints.add(aP);
+        updateLine();
     }
     
     //**********************GET/SET************************/

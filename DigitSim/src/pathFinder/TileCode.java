@@ -75,8 +75,8 @@ public class TileCode {
         if(connections.size() > 1) {
             for(Connection c : connections) {
                 for(int i = 0; i < c.getLineGroup().getChildren().size(); i++) {
-                    Group g = c.getLineGroup();
-                    Line line = (Line) g.getChildren().get(i);
+                    List lineGroup = c.getAllNodesFromLineGroup();
+                    Line line = (Line) lineGroup.get(i);
                     int startX = (int) line.getStartX()/21;
                     int startY = (int) line.getStartY()/21;
 
