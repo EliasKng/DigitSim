@@ -320,12 +320,14 @@ public class DigitSimController extends Pane{
         Stage stage;
         stage = GenFunctions.openFXML(properties.PropertiesController.class, "Properties.fxml", "Einstellungen", "icon.png", StageStyle.DECORATED); //Öffnen des "Einstellungen"-Fensters
         stage.setResizable(false);
+        stage.show();
     }
     public void mItemHelpOnAction(ActionEvent event) { //Hilfe öffnen
         Stage stage;
         stage = GenFunctions.openFXML(help.HelpController.class,"Help.fxml", "Hilfe", "icon.png", StageStyle.DECORATED); //Öffnen des "Hilfe"-Fensters
         stage.setWidth(600);
         stage.setResizable(false);
+        stage.show();
     }
     
     public void clearElements() { //Hilfe öffnen  
