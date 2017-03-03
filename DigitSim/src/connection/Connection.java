@@ -258,6 +258,8 @@ public class Connection {
         Color c = HandleState.getColorFromState(this.state);
         for(AnchorPoint ap : this.anchorPoints) {
             Circle circle = Draw.drawCircle(ap.getCoords().getX()*gridOffset+10.5, ap.getCoords().getY()*gridOffset+10.5, 5, c, 1, true, 1);
+            circle.addEventFilter(MouseEvent.MOUSE_ENTERED, NodeGestures.getOverNodeMouseHanlderEnterCircle(circle));
+            circle.addEventFilter(MouseEvent.MOUSE_EXITED, NodeGestures.getOverNodeMouseHanlderExitCircle(circle));
             pointGroup.getChildren().add(circle);
         }
     }

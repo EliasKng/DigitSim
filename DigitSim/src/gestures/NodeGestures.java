@@ -379,6 +379,32 @@ public class NodeGestures {
             }
         };
     }
+    
+    public static EventHandler<MouseEvent> getOverNodeMouseHanlderEnterCircle(Circle c){
+        return new EventHandler<MouseEvent>(){
+            @Override
+            public void handle(MouseEvent event){
+                if(DigitSimController.isLocked())
+                    return;
+                
+                c.setStroke(Color.DARKORANGE);
+                c.setFill(Color.DARKORANGE);
+            }
+        };
+    }
+    
+    public static EventHandler<MouseEvent> getOverNodeMouseHanlderExitCircle(Circle c){
+        return new EventHandler<MouseEvent>(){
+            @Override
+            public void handle(MouseEvent event){
+                if(DigitSimController.isLocked())
+                    return;
+                
+                c.setStroke(Color.GREEN);
+                c.setFill(Color.GREEN);
+            }
+        };
+    }
         
     public static EventHandler<MouseEvent> getOverInputMouseHanlderClicked(Element e, int inputIndex){
         return new EventHandler<MouseEvent>(){
