@@ -5,6 +5,7 @@
  */
 package connection;
 
+import Gestures.NodeGestures;
 import digitsim.DigitSimController;
 import element.Element;
 import general.Properties;
@@ -12,6 +13,7 @@ import general.Vector2i;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.Group;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
@@ -131,6 +133,13 @@ public class Connection {
         }
     }
     
+    public void setSpecialColor(Color color) {
+        for(javafx.scene.Node n : this.lineGroup.getChildren()){
+            Line l = (Line) n;
+            l.setStroke(color);
+        }
+    }
+    
     /**
      * Aktualisiert die komplette Linie (Farbe & Verlauf)!
      */
@@ -238,6 +247,10 @@ public class Connection {
         } else {
             createDirectLineGroup();
         }
+        
+        //EventFilter hinzufügen (Linie färbt sich orange, wenn man über diese hovert
+        this.lineGroup.addEventFilter(MouseEvent.MOUSE_ENTERED, NodeGestures.getOverNodeMouseHanlderEnterLineGrp(this));
+        this.lineGroup.addEventFilter(MouseEvent.MOUSE_EXITED, NodeGestures.getOverNodeMouseHanlderExitLineGrp(this));
     }
     
     public void createPointGroup() {

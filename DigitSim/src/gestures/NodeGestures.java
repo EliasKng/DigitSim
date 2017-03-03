@@ -5,6 +5,7 @@
  */
 package Gestures;
 
+import connection.Connection;
 import connection.ConnectionHandler;
 import digitsim.DigitSimController;
 import element.Element;
@@ -172,6 +173,7 @@ public class NodeGestures {
             
             //Nur wenn das Element auch wirklich verschoben wurde, die Linie updaten
             if(translXBefore != node.getTranslateX() || translYBefore != node.getTranslateY()) {
+                connection.ConnectionHandler.hideConnectionsRelatedToElement(findElementNum());
                 connection.ConnectionHandler.drawDirectPreLinesRelatedToElement(findElementNum());
                //ConnectionUpdater.updateAllConnectionsRelatedToElement(findElementNum()); //Verbindungen updaten die das Akutelle Element betreffen
             }
@@ -354,38 +356,26 @@ public class NodeGestures {
         };
     }
     
-    public static EventHandler<MouseEvent> getOverNodeMouseHanlderEnterLineGrp(){
+    public static EventHandler<MouseEvent> getOverNodeMouseHanlderEnterLineGrp(Connection c){
         return new EventHandler<MouseEvent>(){
             @Override
             public void handle(MouseEvent event){
                 if(DigitSimController.isLocked())
                     return;
-                Node src = (Node) event.getSource();
-                Group grp = (Group) src;
-                for(int i = 0; i  < grp.getChildren().size(); i++){
-                    Line line = (Line) grp.getChildren().get(i);
-                    line.setStroke(Color.DARKORANGE);
-                    line.getScene().setCursor(Cursor.HAND);
-                }
+                
+                c.setSpecialColor(Color.DARKORANGE);
             }
         };
     }
     
-    public static EventHandler<MouseEvent> getOverNodeMouseHanlderExitLineGrp(){
+    public static EventHandler<MouseEvent> getOverNodeMouseHanlderExitLineGrp(Connection c){
         return new EventHandler<MouseEvent>(){
             @Override
             public void handle(MouseEvent event){
                 if(DigitSimController.isLocked())
                     return;
-                Node src = (Node) event.getSource();
-                Group grp = (Group) src;
-                for(int i = 0; i  < grp.getChildren().size(); i++){
-                    Line line = (Line) grp.getChildren().get(i);
-                    line.setStroke(Color.GREEN);
-                    if(!DigitSimController.getReference().getConnectionPointDragging()){
-                                            line.getScene().setCursor(Cursor.DEFAULT);
-                    }
-                }
+                
+                c.updateColor();
             }
         };
     }
