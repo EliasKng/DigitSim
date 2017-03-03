@@ -373,14 +373,15 @@ public class Connection {
      * Erstellt aus den AnchorPoints eine direkt verlegte Linie
      */
     public void createDirectLineGroup() {
-        Vector2i parentPoint = null;
+        AnchorPoint parentPoint = null;
         Color c = HandleState.getColorFromState(this.state);
         for(AnchorPoint ap : anchorPoints) {
             if(parentPoint != null) {
-                Line l = Draw.drawLine(parentPoint, ap.getCoords(), c, Properties.getLineWidth());
+                Line l = Draw.drawLine(parentPoint.getCoords(), ap.getCoords(), c, Properties.getLineWidth());
+                l.addEventFilter(MouseEvent.MOUSE_CLICKED, NodeGestures.getOverConnectionLinePartClicked(parentPoint, ap));
                 this.lineGroup.getChildren().add(l);
             }
-            parentPoint = ap.getCoords();
+            parentPoint = ap;
         }
     }
     

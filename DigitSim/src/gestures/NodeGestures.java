@@ -5,6 +5,7 @@
  */
 package Gestures;
 
+import connection.AnchorPoint;
 import connection.Connection;
 import connection.ConnectionHandler;
 import digitsim.DigitSimController;
@@ -467,5 +468,23 @@ public class NodeGestures {
             event.consume();
             }  
         };             
-    }            
+    }  
+    
+    public static EventHandler<MouseEvent> getOverConnectionLinePartClicked(AnchorPoint aP0, AnchorPoint aP1){
+        return new EventHandler<MouseEvent>(){
+            @Override
+            public void handle(MouseEvent event){
+            if(DigitSimController.isLocked()){
+               return;   
+            }
+            
+            int indexAP0 = aP0.getIndex();
+            int indexAP1 = aP1.getIndex();
+            
+            System.out.println("The Index of the new AnchorPoint would be between: " +indexAP0 +" and " +indexAP1);
+            
+            event.consume();
+            }  
+        };             
+    }
 }
