@@ -36,7 +36,7 @@ public class Connection {
     //Zum Zeichen relevante Globals
     private Group lineGroup = new Group();                                    //Gruppe von Linien (die die gesamte Linie darstellt)
     private Group pointGroup = new Group();                                   //Gruppe von Punkten (anchorPoints, durch die die Linie verlaufen muss)
-    private Group tempLineGroup = new Group();                                // in dieser gruppe wird die "orangene Linie" gespeichert
+    private Group tempGroup = new Group();                                // in dieser gruppe wird die "orangene Linie" gespeichert
     
 
     //Konstruktoren
@@ -389,14 +389,14 @@ public class Connection {
         }
     }
     
+    
+    /**
+     * erstellt die orangene Verbindungslinie und löscht die Alte
+     */
     public void drawDirectPreLine() {
         processPartners();
         
-        if(this.tempLineGroup != null) {
-            this.dsc.getSimCanvas().getChildren().remove(this.tempLineGroup);
-        }
-        
-        this.tempLineGroup.getChildren().clear();
+        removeTempGroup();
         
         AnchorPoint childPoint = null;
         
@@ -404,12 +404,22 @@ public class Connection {
             if(childPoint != null) {
                 Line l = Draw.drawLine(childPoint.coords, aP.coords, Color.DARKORANGE, 5);
                 l.setOpacity(0.6);
-                this.tempLineGroup.getChildren().add(l);
+                this.tempGroup.getChildren().add(l);
             } 
             childPoint = aP;
         }    
         
-        this.dsc.getSimCanvas().getChildren().add(this.tempLineGroup);
+        this.dsc.getSimCanvas().getChildren().add(this.tempGroup);
+    }
+    
+    /**
+     * entfernt die orangene Verbindungslinie
+     */
+    public void removeTempGroup() {
+        if(this.tempGroup != null) {
+            dsc.getSimCanvas().getChildren().remove(tempGroup);
+            this.tempGroup.getChildren().clear();
+        }
     }
     
     //**********************GET/SET************************/

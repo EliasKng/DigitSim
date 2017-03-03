@@ -184,6 +184,7 @@ public class NodeGestures {
         public void handle(MouseEvent event ) {
             if(dragged == true) {
                 dragged = false;
+                ConnectionHandler.removeDirectPreLinesRelatedToElement(findElementNum());
                 ConnectionHandler.updateAllConnectionsRelatedToElement(findElementNum()); //Verbindungen updaten die das Akutelle Element betreffen
                 Node node = (Node) event.getSource(); //Das betroffene Element bekommen
                 node.setCursor(Cursor.DEFAULT);
