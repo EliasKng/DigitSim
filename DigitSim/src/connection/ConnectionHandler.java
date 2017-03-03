@@ -227,7 +227,7 @@ public class ConnectionHandler {
         }
     }
     
-    public void hideConnectionsRelatedToElement(Element e) {
+    public static void hideConnectionsRelatedToElement(Element e) {
         ArrayList<Connection> connections = getAllConnectionsRelatedToElement(e);
         
         for(Connection c : connections) {
