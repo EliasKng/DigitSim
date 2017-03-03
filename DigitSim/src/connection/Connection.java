@@ -409,7 +409,7 @@ public class Connection {
             childPoint = aP;
         }    
         
-        this.dsc.getChildren().add(this.tempLineGroup);
+        this.dsc.getSimCanvas().getChildren().add(this.tempLineGroup);
     }
     
     //**********************GET/SET************************/
