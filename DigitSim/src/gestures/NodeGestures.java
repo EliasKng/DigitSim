@@ -42,6 +42,7 @@ public class NodeGestures {
     private Group temporaryGroup;
 
     private static boolean dragged;
+    private static boolean draggedAnchorPoint;
     
     private DragContext nodeDragContext = new DragContext(); //Nötige Daten für Berechnungen
 
@@ -188,7 +189,6 @@ public class NodeGestures {
         public void handle(MouseEvent event ) {
             if(dragged == true) {
                 dragged = false;
-                ConnectionHandler.removeDirectPreLinesRelatedToElement(findElementNum());
                 ConnectionHandler.updateAllConnectionsRelatedToElement(findElementNum()); //Verbindungen updaten die das Akutelle Element betreffen
                 Node node = (Node) event.getSource(); //Das betroffene Element bekommen
                 node.setCursor(Cursor.DEFAULT);
@@ -492,6 +492,36 @@ public class NodeGestures {
 
 
                     event.consume();
+                }
+            }  
+        };             
+    }
+    
+    public static EventHandler<MouseEvent> getAnchorPointDraggedEventHandler(AnchorPoint aP, Connection c){
+        return new EventHandler<MouseEvent>(){
+            @Override
+            public void handle(MouseEvent event){
+                if(DigitSimController.isLocked()){
+                   return;   
+                }
+                draggedAnchorPoint = true;
+                aP.setCoords(toolbox.GenFunctions.getXYAdaptGrid(new Vector2i((int) event.getX(), (int) event.getY())));
+                c.moveAnchorPoint(aP);
+                c.drawDirectPreLine();
+            }  
+        };             
+    }
+    
+    public static EventHandler<MouseEvent> getAnchorPointOnDragDoneEventHandler(AnchorPoint aP, Connection c){
+        return new EventHandler<MouseEvent>(){
+            @Override
+            public void handle(MouseEvent event){
+                if(DigitSimController.isLocked()){
+                   return;   
+                }
+                if(draggedAnchorPoint) {
+                    c.removeTempGroup();
+                    c.updateLine();
                 }
             }  
         };             

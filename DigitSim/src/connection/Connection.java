@@ -187,6 +187,9 @@ public class Connection {
             this.dsc.getSimCanvas().getChildren().remove(this.lineGroup);
             this.dsc.getSimCanvas().getChildren().remove(this.pointGroup);
         }
+        if(this.tempGroup != null) {
+            this.dsc.getSimCanvas().getChildren().remove(this.tempGroup);
+        }
     }
     
     /**
@@ -280,6 +283,8 @@ public class Connection {
             Circle circle = Draw.drawCircle(ap.getCoords().getX(), ap.getCoords().getY(), 5, c, 1, true, 1);
             circle.addEventFilter(MouseEvent.MOUSE_ENTERED, NodeGestures.getOverNodeMouseHanlderEnterCircle(circle));
             circle.addEventFilter(MouseEvent.MOUSE_EXITED, NodeGestures.getOverNodeMouseHanlderExitCircle(circle));
+            circle.addEventFilter(MouseEvent.MOUSE_DRAGGED, NodeGestures.getAnchorPointDraggedEventHandler(ap, this));
+            circle.addEventFilter(MouseEvent.MOUSE_RELEASED, NodeGestures.getAnchorPointOnDragDoneEventHandler(ap, this));
             pointGroup.getChildren().add(circle);
         }
     }
@@ -311,7 +316,7 @@ public class Connection {
             }
             AnchorPoint aP0 = this.anchorPoints.get(completePath.indexOf(vertexNodeList));
             AnchorPoint aP1 = this.anchorPoints.get(completePath.indexOf(vertexNodeList)+1);
-            tempGroup.addEventFilter(MouseEvent.MOUSE_CLICKED, NodeGestures.getOverConnectionLinePartClicked(aP0,aP1, this));
+            tempGroup.addEventFilter(MouseEvent.MOUSE_PRESSED, NodeGestures.getOverConnectionLinePartClicked(aP0,aP1, this));
             this.lineGroup.getChildren().add(tempGroup);
         }
     } 
@@ -480,12 +485,19 @@ public class Connection {
         return allNodes;
     }
     
+    /**
+     * Fügt einen AnchorPoint hinzu
+     * @param aP 
+     */
     public void addAnchorPoint(AnchorPoint aP) {
         this.anchorPoints.add(1, aP);
         sortAnchorPoints();
         updateLine();
     }
     
+    /**
+     * Sortiert all anchorPoints und weist ihrem Index ganze Zahlen zu
+     */
     public void sortAnchorPoints() {
         
         Collections.sort(this.anchorPoints, this.anchorPointSprter); //Sortiert anchorPoints nach ihrem Index
@@ -493,10 +505,16 @@ public class Connection {
         List<AnchorPoint> sortedAnchorPoints = new ArrayList();
         
         for(int i = 0; i < this.anchorPoints.size(); i++) {
-            sortedAnchorPoints.add(this.anchorPoints.get(i));
+            AnchorPoint tempAP = this.anchorPoints.get(i);
+            tempAP.setIndex(i);
+            sortedAnchorPoints.add(tempAP);
         }
         
         this.anchorPoints = sortedAnchorPoints;
+    }
+    
+    public void moveAnchorPoint(AnchorPoint aP) {
+        this.anchorPoints.set((int) aP.index, aP);
     }
     
     //**********************GET/SET************************/

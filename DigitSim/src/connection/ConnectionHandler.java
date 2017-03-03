@@ -219,14 +219,6 @@ public class ConnectionHandler {
         }
     }
     
-    public static void removeDirectPreLinesRelatedToElement(Element e) {
-        ArrayList<Connection> connections = getAllConnectionsRelatedToElement(e);
-        
-        for(Connection c : connections) {
-            c.removeTempGroup();
-        }
-    }
-    
     public static void hideConnectionsRelatedToElement(Element e) {
         ArrayList<Connection> connections = getAllConnectionsRelatedToElement(e);
         
