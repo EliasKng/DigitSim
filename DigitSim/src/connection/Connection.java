@@ -215,9 +215,12 @@ public class Connection {
         
         Vector2i startCoords = processPartner(this.startPartner);
         Vector2i endCoords = processPartner(this.endPartner);
+        startCoords.adaptToHalfGrid();
+        endCoords.adaptToHalfGrid();
         
         AnchorPoint start = new AnchorPoint(indexStart, startCoords);
         AnchorPoint end = new AnchorPoint(indexEnd, endCoords);
+        
         
         if(anchorPoints.size() > 1) {
             this.anchorPoints.set(0, start);

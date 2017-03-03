@@ -72,4 +72,14 @@ public class Vector2i {
         if(vec.getX() == this.getX() && vec.getY() == this.getY()) return true;
         return false;
     }
+    
+    public void adaptToHalfGrid() {
+        this.x = ((int)Math.round(this.x / Properties.GetGridOffset() * Properties.GetGridOffset() + 10.5));
+        this.y = ((int)Math.round(this.y / Properties.GetGridOffset() * Properties.GetGridOffset() + 10.5));
+    }
+    
+    public void adaptToGrid() {
+        this.x = ((int)Math.round(this.x / Properties.GetGridOffset() * Properties.GetGridOffset()));
+        this.y = ((int)Math.round(this.y / Properties.GetGridOffset() * Properties.GetGridOffset()));
+    }
 }
