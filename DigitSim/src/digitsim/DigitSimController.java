@@ -415,7 +415,7 @@ public class DigitSimController extends Pane{
                 project.getConIndex()[i][0]  = this.findConnectionIndex(allConnections.get(i).getStartPartner().getconnection());
                 project.getConX()[i][0]  = allConnections.get(i).getStartPartner().getanchorPoint().getCoords().getX();
                 project.getConY()[i][0]  = allConnections.get(i).getStartPartner().getanchorPoint().getCoords().getY();
-                project.getConAnchorIndex()[i][0] = allConnections.get(i).getStartPartner().getanchorPoint().getIndex();
+                project.getConAnchorIndex()[i][0] = (int) allConnections.get(i).getStartPartner().getanchorPoint().getIndex();
             }
             if(allConnections.get(i).getEndPartner().getPartnerType() == PartnerType.ELEMENT){
                 project.getConType()[i][1]  = PartnerType.ELEMENT.name();
@@ -427,7 +427,7 @@ public class DigitSimController extends Pane{
                 project.getConIndex()[i][1] = this.findConnectionIndex(allConnections.get(i).getEndPartner().getconnection());
                 project.getConX()[i][1] = allConnections.get(i).getEndPartner().getanchorPoint().getCoords().getX();
                 project.getConY()[i][1]= allConnections.get(i).getEndPartner().getanchorPoint().getCoords().getY();
-               project.getConAnchorIndex()[i][1] = allConnections.get(i).getEndPartner().getanchorPoint().getIndex();
+               project.getConAnchorIndex()[i][1] = (int) allConnections.get(i).getEndPartner().getanchorPoint().getIndex();
             }
         }
     }

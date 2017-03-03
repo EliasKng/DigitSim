@@ -12,6 +12,7 @@ import digitsim.DigitSimController;
 import element.Element;
 import general.Properties;
 import element.Element_SIGNAL;
+import general.Vector2i;
 import java.util.ArrayList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -470,20 +471,28 @@ public class NodeGestures {
         };             
     }  
     
-    public static EventHandler<MouseEvent> getOverConnectionLinePartClicked(AnchorPoint aP0, AnchorPoint aP1){
+    public static EventHandler<MouseEvent> getOverConnectionLinePartClicked(AnchorPoint aP0, AnchorPoint aP1, Connection c){
         return new EventHandler<MouseEvent>(){
             @Override
             public void handle(MouseEvent event){
-            if(DigitSimController.isLocked()){
-               return;   
-            }
-            
-            int indexAP0 = aP0.getIndex();
-            int indexAP1 = aP1.getIndex();
-            
-            System.out.println("The Index of the new AnchorPoint would be between: " +indexAP0 +" and " +indexAP1);
-            
-            event.consume();
+                if(DigitSimController.isLocked()){
+                   return;   
+                }
+
+                if(event.getButton() == MouseButton.PRIMARY) {
+                    double indexAP0 = aP0.getIndex();
+                    double indexAP1 = aP1.getIndex();
+                    double avgIndex = (indexAP0 + indexAP1) / 2;
+
+                    System.out.println("The Index of the new AnchorPoint would be between: " +indexAP0 +" and " +indexAP1 +" : " +avgIndex);
+
+                    AnchorPoint aPNew = new AnchorPoint(avgIndex, toolbox.GenFunctions.getXYAdaptGrid(new Vector2i((int) event.getX(), (int) event.getY())));
+
+                    c.addAnchorPoint(aPNew);
+
+
+                    event.consume();
+                }
             }  
         };             
     }

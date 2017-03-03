@@ -8,8 +8,8 @@ package toolbox;
 import digitsim.DigitSim;
 import digitsim.DigitSimController;
 import general.Properties;
-import toolbox.ErrorHandler;
 import element.Element;
+import general.Vector2i;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -59,6 +59,17 @@ public class GenFunctions { //Laden der GUI
      */
     public static double getXYAdaptGrid(double d) { 
         return Math.round(d / Properties.GetGridOffset()) * Properties.GetGridOffset();
+    }
+    
+    /**
+     * passt den Vector an das Karomuster an
+     * @param vec
+     * @return 
+     */
+    public static Vector2i getXYAdaptGrid(Vector2i vec) {
+        vec.setX((int)Math.round(vec.getX()/ Properties.GetGridOffset() * Properties.GetGridOffset() + 10.5));
+        vec.setY((int)Math.round(vec.getY()/ Properties.GetGridOffset() * Properties.GetGridOffset() + 10.5));
+        return vec;
     }
     
     /**

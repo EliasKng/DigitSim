@@ -11,6 +11,8 @@ import element.Element;
 import general.Properties;
 import general.Vector2i;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import javafx.scene.Group;
 import javafx.scene.input.MouseEvent;
@@ -39,6 +41,16 @@ public class Connection {
     private Group lineGroup = new Group();                            //Gruppe von Linien (die die gesamte Linie darstellt)
     private Group pointGroup = new Group();                                   //Gruppe von Punkten (anchorPoints, durch die die Linie verlaufen muss)
     private Group tempGroup = new Group();                                // in dieser gruppe wird die "orangene Linie" gespeichert
+    
+    //Dieser Comparator vergleicht den Index von AnchorPoints und sortiert diese
+    private Comparator<AnchorPoint> anchorPointSprter = new Comparator<AnchorPoint>() {
+        @Override
+        public int compare(AnchorPoint aP0, AnchorPoint aP1) {
+            if(aP1.index < aP0.index) return +1;
+            if(aP1.index > aP0.index) return -1;
+            return 0;
+        }
+    };
     
 
     //Konstruktoren
@@ -200,8 +212,10 @@ public class Connection {
         
         Vector2i startCoords = processPartner(this.startPartner);
         Vector2i endCoords = processPartner(this.endPartner);
+        
         AnchorPoint start = new AnchorPoint(indexStart, startCoords);
         AnchorPoint end = new AnchorPoint(indexEnd, endCoords);
+        
         if(anchorPoints.size() > 1) {
             this.anchorPoints.set(0, start);
             this.anchorPoints.set(anchorPoints.size()-1, end);
@@ -297,7 +311,7 @@ public class Connection {
             }
             AnchorPoint aP0 = this.anchorPoints.get(completePath.indexOf(vertexNodeList));
             AnchorPoint aP1 = this.anchorPoints.get(completePath.indexOf(vertexNodeList)+1);
-            tempGroup.addEventFilter(MouseEvent.MOUSE_CLICKED, NodeGestures.getOverConnectionLinePartClicked(aP0,aP1));
+            tempGroup.addEventFilter(MouseEvent.MOUSE_CLICKED, NodeGestures.getOverConnectionLinePartClicked(aP0,aP1, this));
             this.lineGroup.getChildren().add(tempGroup);
         }
     } 
@@ -385,7 +399,7 @@ public class Connection {
         for(AnchorPoint ap : anchorPoints) {
             if(parentPoint != null) {
                 Line l = Draw.drawLine(parentPoint.getCoords(), ap.getCoords(), c, Properties.getLineWidth());
-                l.addEventFilter(MouseEvent.MOUSE_CLICKED, NodeGestures.getOverConnectionLinePartClicked(parentPoint, ap));
+                l.addEventFilter(MouseEvent.MOUSE_CLICKED, NodeGestures.getOverConnectionLinePartClicked(parentPoint, ap, this));
                 this.lineGroup.getChildren().add(new Group(l));
             }
             parentPoint = ap;
@@ -396,7 +410,7 @@ public class Connection {
      * setzt sämtliche Parameter auf die Standartwerte zurück
      */
     public void resetAttributes() {
-        this.anchorPoints = new ArrayList();
+        //this.anchorPoints = new ArrayList();
         this.directLine = false;
         this.lineGroup = new Group();
         this.pointGroup = new Group();
@@ -448,6 +462,11 @@ public class Connection {
         }
     }
     
+    /**
+     * In der lineGroup (globalVariable) werden nicht die Linien direkt gespeichert, sondern Gruppen in denen sich die Linien befinden.
+     * Diese Funktion hold die Linien aus den Untergruppen und gibt diese als Liste zurück
+     * @return 
+     */
     public List<javafx.scene.Node> getAllNodesFromLineGroup() {
         List<javafx.scene.Node> allNodes = new ArrayList();
         
@@ -462,8 +481,22 @@ public class Connection {
     }
     
     public void addAnchorPoint(AnchorPoint aP) {
-        this.anchorPoints.add(aP);
+        this.anchorPoints.add(1, aP);
+        sortAnchorPoints();
         updateLine();
+    }
+    
+    public void sortAnchorPoints() {
+        
+        Collections.sort(this.anchorPoints, this.anchorPointSprter); //Sortiert anchorPoints nach ihrem Index
+        
+        List<AnchorPoint> sortedAnchorPoints = new ArrayList();
+        
+        for(int i = 0; i < this.anchorPoints.size(); i++) {
+            sortedAnchorPoints.add(this.anchorPoints.get(i));
+        }
+        
+        this.anchorPoints = sortedAnchorPoints;
     }
     
     //**********************GET/SET************************/
