@@ -226,4 +226,12 @@ public class ConnectionHandler {
             c.removeTempGroup();
         }
     }
+    
+    public void hideConnectionsRelatedToElement(Element e) {
+        ArrayList<Connection> connections = getAllConnectionsRelatedToElement(e);
+        
+        for(Connection c : connections) {
+            c.removeLine();
+        }
+    }
 }
