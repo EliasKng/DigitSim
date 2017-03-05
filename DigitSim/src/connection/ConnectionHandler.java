@@ -10,6 +10,7 @@ import element.Element;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import javafx.scene.paint.Color;
 
 /**
  *
@@ -79,62 +80,85 @@ public class ConnectionHandler {
         for(Connection c : allConnections) {
             updateConnectionState(c);
         }
+        resetConnectionsUptatedSign();
     }
     
     public static void updateConnectionState(Connection c) {
-        ConnectionPartner cP0 = c.getStartPartner();
-        ConnectionPartner cP1 = c.getEndPartner();
-
-
-        int stateCP0 = -1;
-        int stateCP1 = -1;
         
-        //Wenn ein Teil der Verbindung ein ELement und Output ist, dann...
-        if((cP0.getPartnerType() == PartnerType.ELEMENT) && !(cP0.isIsInput())) {
-            stateCP0 = cP0.getElement().getOutput(cP0.getIndex());
-        } if((cP1.getPartnerType() == PartnerType.ELEMENT) && !(cP1.isIsInput())) {
-            stateCP1 = cP1.getElement().getOutput(cP1.getIndex());
-        } //HIER MUSS SPÄTER NOCH DIE LOGIK FÜR VERBINDUNGEN ZU ANDEREN CONNECTIONS BESCHRIEBEN WERDEN
+    }
+    
+    public static void getAllConnectionsConnectedToHandler(Connection con) {
+        List<Connection> returnList = new ArrayList();
+        List<Connection> toCheckList = new ArrayList();
+        List<Connection> checkedList = new ArrayList();
+        toCheckList.add(con);
         
-        if(stateCP0 != -1 && stateCP1 != -1) {  //Sowohl partner 1 als auch partner 2 ist ein Ouput!
-            if(stateCP0 != stateCP1) {          //Die beiden Outputs sind nicht gleich -> undefiniert!
-                setConnectionState(State.UNDEFINED, c);
-            } else if((stateCP0 == 0) && (stateCP1 == 0)) {     //Die beiden outputs sind gleich & null
-                setConnectionState(State.LOW, c);
-            } else {                                            //Die beiden outputs sind gleich & eins
-                setConnectionState(State.HIGH, c);
+        while(!toCheckList.isEmpty()) {
+            for(Connection c : toCheckList) {
+                if(!c.isChecked()) {
+                    c.setChecked(true);
+                    toCheckList.addAll(getAllConnectionsConnectedTo(c));
+                }
             }
-        } else {
-            switch(stateCP0) {
-                case -1:
-                    break;
-
-                case 0:
-                    setConnectionState(State.LOW, c);
-                    break;
-
-                case 1:
-                    setConnectionState(State.HIGH, c);
-                    break;
-
-                default:
-                    break;
+        }
+        
+        System.out.println("clLength: " +toCheckList.size());
+        
+    }
+    
+    public static List<Connection> getAllConnectionsConnectedTo(Connection c) {
+        List<Connection> connectedTo = new ArrayList();
+        List<Connection> allConnections = DigitSimController.getAllConnections();
+        List<ConnectionPartner> allConnectionPartnersOfTypeConnection = new ArrayList();
+        
+        for(Connection con : allConnections) {
+            if(con.getStartPartner().getPartnerType() == PartnerType.CONNECTION) {
+                allConnectionPartnersOfTypeConnection.add(con.getStartPartner());
             }
-            switch(stateCP1) {
-                case -1:
-                    break;
-
-                case 0:
-                    setConnectionState(State.LOW, c);
-                    break;
-
-                case 1:
-                    setConnectionState(State.HIGH, c);
-                    break;
-
-                default:
-                    break;
+            if(con.getEndPartner().getPartnerType() == PartnerType.CONNECTION) {
+                allConnectionPartnersOfTypeConnection.add(con.getEndPartner());
             }
+        }
+        
+        for(AnchorPoint aP : c.getAnchorPoints()) {
+            for(ConnectionPartner cP : allConnectionPartnersOfTypeConnection) {
+                if(aP.hashCode() == cP.getAnchorPoint().hashCode()) {
+                    if(!cP.getconnection().isAdded()) {
+                        Connection abc = getConnectionFromPartner(cP);
+                        connectedTo.add(abc);
+                        abc.setSpecialColor(Color.CORAL);
+                    }  
+                }
+            }
+        }
+        System.out.println(connectedTo.size());
+        
+        for(Connection cont : connectedTo) {
+            System.out.println("Hash: " +cont.hashCode());
+        }
+        
+        return connectedTo;
+    }
+    
+    public static Connection getConnectionFromPartner(ConnectionPartner cP) {
+        for(Connection c : DigitSimController.getAllConnections()) {
+            if(c.getStartPartner() == cP) {
+                return c;
+            }
+            if(c.getEndPartner() == cP) {
+                return c;
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * Setzt die updated boolean aller Connections auf false
+     */
+    public static void resetConnectionsUptatedSign() {
+        for(Connection c : DigitSimController.getAllConnections()) {
+            c.setUpdated(false);
+            c.setAdded(false);
         }
     }
     

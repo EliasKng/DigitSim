@@ -35,7 +35,12 @@ public class Connection {
     private ConnectionPartner endPartner;                       //VerbindungsLinienPartner (ende)
     private boolean directLine = false;                         // wird die Linie direkt verlegt oder nicht
     private PathFinder pathFinder = new PathFinder();
+    
+    //Zum simulieren relevante Globals
     private State state = State.DEFAULT;                              //Für die Simulation relevant -> gibt den Digitalen Status der Verbindung an (An/Aus/Undefiniert)
+    private boolean updated = false;
+    private boolean added = false;
+    private boolean checked = false;
     
     //Zum Zeichen relevante Globals
     private Group lineGroup = new Group();                            //Gruppe von Linien (die die gesamte Linie darstellt)
@@ -585,5 +590,61 @@ public class Connection {
     public void resetState() {
         this.state = state.DEFAULT;
         updateColor();
+    }
+
+    public boolean isDirectLine() {
+        return directLine;
+    }
+
+    public void setDirectLine(boolean directLine) {
+        this.directLine = directLine;
+    }
+
+    public PathFinder getPathFinder() {
+        return pathFinder;
+    }
+
+    public void setPathFinder(PathFinder pathFinder) {
+        this.pathFinder = pathFinder;
+    }
+
+    public boolean isUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(boolean updated) {
+        this.updated = updated;
+    }
+
+    public Group getTempGroup() {
+        return tempGroup;
+    }
+
+    public void setTempGroup(Group tempGroup) {
+        this.tempGroup = tempGroup;
+    }
+
+    public Comparator<AnchorPoint> getAnchorPointSprter() {
+        return anchorPointSprter;
+    }
+
+    public void setAnchorPointSprter(Comparator<AnchorPoint> anchorPointSprter) {
+        this.anchorPointSprter = anchorPointSprter;
+    }
+
+    public boolean isAdded() {
+        return added;
+    }
+
+    public void setAdded(boolean added) {
+        this.added = added;
+    }
+
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
     }
 }

@@ -456,6 +456,10 @@ public class NodeGestures {
 
                     
                 } else if(event.getButton() == MouseButton.SECONDARY) {
+                    
+                    ConnectionHandler.getAllConnectionsConnectedToHandler(c);
+                    
+                    
                     ContextMenu menu= new ContextMenu();
                     MenuItem deleteItem = new MenuItem("Entfernen");
                     MenuItem resetItem = new MenuItem("Zurücksetzen");
