@@ -28,10 +28,10 @@ public class ConnectionHandler {
             boolean isAlreadyUpdated = false;
             if(c.getStartPartner().getElement() == e) {
                 isAlreadyUpdated = true;
-                c.updateLine();
+                c.updateConnectionLine();
             } if(c.getEndPartner() != null) {
                 if((c.getEndPartner().getElement() == e) && !isAlreadyUpdated) {
-                    c.updateLine();
+                    c.updateConnectionLine();
                 }
             }
         }
@@ -63,6 +63,12 @@ public class ConnectionHandler {
             c = null;       //Objekt wird für dem Garbage-Collector freigegeben (wird gelöscht)
         }
         DigitSimController.clearConnections();
+    }
+    
+    public static void removeConnection(Connection c) {
+        c.removeLine();
+        DigitSimController.removeConnectionFromAllConnections(c);
+        c = null;
     }
     
     /**
@@ -225,5 +231,9 @@ public class ConnectionHandler {
         for(Connection c : connections) {
             c.removeLine();
         }
+    }
+    
+    public static void resetConnection(Connection c) {
+        c.resetConnecion();
     }
 }

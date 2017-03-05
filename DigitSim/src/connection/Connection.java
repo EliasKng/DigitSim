@@ -53,7 +53,8 @@ public class Connection {
     };
     
 
-    //Konstruktoren
+//*************************************KONSTRUKTOREN*****************************************
+    
     public Connection(Vector2i start, Vector2i end, DigitSimController dsc) {
         AnchorPoint startAP = new AnchorPoint(0, start);
         AnchorPoint endAP = new AnchorPoint(1, end);
@@ -83,7 +84,7 @@ public class Connection {
         this.dsc = dsc;
         this.startPartner = startPartner;
         this.endPartner = endPartner;
-        this.updateLine();
+        this.updateConnectionLine();
     }
 
     
@@ -98,7 +99,7 @@ public class Connection {
         dsc.removeTemporaryLine();
         AnchorPoint endAP = new AnchorPoint(1, end);
         this.anchorPoints.add(endAP);
-        this.updateLine();
+        this.updateConnectionLine();
     }
     
     /**
@@ -110,7 +111,7 @@ public class Connection {
     public void finishLine(Element element, boolean isInput, int index) { 
         dsc.removeTemporaryLine();
         this.endPartner = new ConnectionPartner(element, isInput, index);
-        this.updateLine();
+        this.updateConnectionLine();
     }
     
     /**
@@ -121,7 +122,7 @@ public class Connection {
     public void finishLine(Connection connection, AnchorPoint anchorPoint) { 
         dsc.removeTemporaryLine();
         this.endPartner = new ConnectionPartner(connection, anchorPoint);
-        this.updateLine();
+        this.updateConnectionLine();
     }
     
     
@@ -164,7 +165,7 @@ public class Connection {
     /**
      * Aktualisiert die komplette Linie (Farbe & Verlauf)!
      */
-    public void updateLine() {
+    public void updateConnectionLine() {
         removeLine();    //Entfernt die alte Linie
         
         resetAttributes(); //Setzt die Attribute zurück
@@ -282,8 +283,10 @@ public class Connection {
         this.lineGroup.addEventFilter(MouseEvent.MOUSE_EXITED, NodeGestures.getOverNodeMouseHanlderExitLineGrp(this));
     }
     
+    /**
+     * erstellt aus den AnchorPoints Kreise und speichert diese in der pointGroup
+     */
     public void createPointGroup() {
-        int gridOffset = general.Properties.GetGridOffset();
         Color c = HandleState.getColorFromState(this.state);
         
         for(AnchorPoint ap : this.anchorPoints) {
@@ -500,7 +503,7 @@ public class Connection {
     public void addAnchorPoint(AnchorPoint aP) {
         this.anchorPoints.add(1, aP);
         sortAnchorPoints();
-        updateLine();
+        updateConnectionLine();
     }
     
     /**
@@ -521,8 +524,22 @@ public class Connection {
         this.anchorPoints = sortedAnchorPoints;
     }
     
+    /**
+     * Bewegt einen AnchorPoint
+     * @param aP 
+     */
     public void moveAnchorPoint(AnchorPoint aP) {
         this.anchorPoints.set((int) aP.index, aP);
+    }
+    
+    /**
+     * Setzt eine Connection auf ihre Standartwerte zurück
+     */
+    public void resetConnecion() {
+        this.removeLine();
+        this.resetAttributes();
+        this.anchorPoints.clear();
+        this.updateConnectionLine();
     }
     
     //**********************GET/SET************************/

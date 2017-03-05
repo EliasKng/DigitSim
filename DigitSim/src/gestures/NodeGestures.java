@@ -434,43 +434,6 @@ public class NodeGestures {
         };
     }
     
-    public static EventHandler<MouseEvent> getOverConnectionLineClicked(/*ConData d*/){
-        return new EventHandler<MouseEvent>(){
-            @Override
-            public void handle(MouseEvent event){
-            if(DigitSimController.isLocked()){
-               return;   
-            }
-            if(event.getButton() == MouseButton.SECONDARY){
-            ContextMenu menu= new ContextMenu();
-            MenuItem deleteItem = new MenuItem("Entfernen");
-            MenuItem resetItem = new MenuItem("Zurücksetzen");
-            deleteItem.setOnAction(new EventHandler<ActionEvent>() { //Wird ausgelößt wenn man bei einem Element "Entfernen" auswählt
-                
-               public void handle(ActionEvent e) {
-               contextMenu.hide();
-//               DigitSimController.getAllConnectionsOLD().removeConnection(d);
-            }});      
-            resetItem.setOnAction(new EventHandler<ActionEvent>() { //Wird ausgelößt wenn man bei einem Element "Entfernen" auswählt
-               public void handle(ActionEvent e) {
-               contextMenu.hide();
-//               DigitSimController.getAllConnectionsOLD().resetCon(d);
-            }});     
-              menu.getItems().addAll(deleteItem, resetItem);   
-              menu.show((Node)event.getSource(), Side.LEFT, event.getX(), event.getY());
-              
-            }else{
-//                   DigitSimController.getAllConnectionsOLD().resetLastPoint(); //Sorgt dafür dass man mehrere Punkte setzen kann, was buggy ist daher auskommentiert (Kannst es aber gern mal testen!)
-                   DigitSimController.getReference().setConnectionPointDragging(true); 
-//                   DigitSimController.getReference().setCurrentConData(d);
-                   Node n = (Node) event.getSource();
-                   n.getScene().setCursor(Cursor.CLOSED_HAND);
-            }
-            event.consume();
-            }  
-        };             
-    }  
-    
     public static EventHandler<MouseEvent> getOverConnectionLinePartClicked(AnchorPoint aP0, AnchorPoint aP1, Connection c){
         return new EventHandler<MouseEvent>(){
             @Override
@@ -491,8 +454,26 @@ public class NodeGestures {
                     c.addAnchorPoint(aPNew);
 
 
-                    event.consume();
+                    
+                } else if(event.getButton() == MouseButton.SECONDARY) {
+                    ContextMenu menu= new ContextMenu();
+                    MenuItem deleteItem = new MenuItem("Entfernen");
+                    MenuItem resetItem = new MenuItem("Zurücksetzen");
+                    deleteItem.setOnAction(new EventHandler<ActionEvent>() { //Wird ausgelößt wenn man bei einem Element "Entfernen" auswählt
+
+                       public void handle(ActionEvent e) {
+                       contextMenu.hide();
+                       ConnectionHandler.removeConnection(c);
+                    }});      
+                    resetItem.setOnAction(new EventHandler<ActionEvent>() { //Wird ausgelößt wenn man bei einem Element "Entfernen" auswählt
+                       public void handle(ActionEvent e) {
+                       contextMenu.hide();
+                       ConnectionHandler.resetConnection(c);
+                    }});     
+                      menu.getItems().addAll(deleteItem, resetItem);   
+                      menu.show((Node)event.getSource(), Side.LEFT, event.getX(), event.getY());
                 }
+                event.consume();
             }  
         };             
     }
@@ -522,7 +503,7 @@ public class NodeGestures {
                 if(draggedAnchorPoint) {
                     draggedAnchorPoint = false;
                     c.removeTempGroup();
-                    c.updateLine();
+                    c.updateConnectionLine();
                 }
             }  
         };             
