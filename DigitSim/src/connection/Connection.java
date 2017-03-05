@@ -72,6 +72,7 @@ public class Connection {
     public Connection(DigitSimController dsc, Connection partnerConnection, AnchorPoint partnerAnchorPoint) {
         this.startPartner = new ConnectionPartner(partnerConnection, partnerAnchorPoint);
         this.dsc = dsc;
+        this.updateLine();
     }
     
     public Connection(DigitSimController dsc, Element element, boolean isInput, int index) {
@@ -88,7 +89,7 @@ public class Connection {
 
     
     
-    /**************************Methoden*******************************/
+    /**************************FinishLine Methoden*******************************/
     
     /**
      * wenn der LineMouseFollower aktiv ist und auf den Linienpartner geklickt wird, soll diese Funktion aufgerufen werden
@@ -123,6 +124,10 @@ public class Connection {
         this.endPartner = new ConnectionPartner(connection, anchorPoint);
         this.updateLine();
     }
+    
+    
+    
+    /**************************Methoden*******************************/
     
     /**
      * Aktualisiert die Verbindungsfarbe nach der currentColor
@@ -239,8 +244,8 @@ public class Connection {
      * @return 
      */
     public Vector2i processPartner(ConnectionPartner partner) {
-        if(partner.getPartnerType() == PartnerType.CONNECTIONLINE) {    //es handelt sich um eine Verbindungslinie -> Koordinaten des AnchorPoints?
-            Vector2i coords = new Vector2i(partner.getanchorPoint().getCoords().getX(),partner.getanchorPoint().getCoords().getY());//Koordinaten setzen sich aus der x&y koordinate des AnchorPoints zustanden
+        if(partner.getPartnerType() == PartnerType.CONNECTION) {    //es handelt sich um eine Verbindungslinie -> Koordinaten des AnchorPoints?
+            Vector2i coords = new Vector2i(partner.getanchorPoint().getCoords());//Koordinaten setzen sich aus der x&y koordinate des AnchorPoints zustanden
             return coords;
         }
         if(partner.getPartnerType() == PartnerType.ELEMENT) {   //Es handelt sich um ein Element -> In/Output?
@@ -288,6 +293,7 @@ public class Connection {
             circle.addEventFilter(MouseEvent.MOUSE_EXITED, NodeGestures.getOverNodeMouseHanlderExitCircle(circle));
             circle.addEventFilter(MouseEvent.MOUSE_DRAGGED, NodeGestures.getAnchorPointDraggedEventHandler(ap, this));
             circle.addEventFilter(MouseEvent.MOUSE_RELEASED, NodeGestures.getAnchorPointOnDragDoneEventHandler(ap, this));
+            circle.addEventFilter(MouseEvent.MOUSE_CLICKED, NodeGestures.getAnchorPointClickedEventHandler(ap, this));
             pointGroup.getChildren().add(circle);
         }
     }

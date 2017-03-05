@@ -31,7 +31,7 @@ public class ConnectionPartner {
     }
 
     public ConnectionPartner(Connection connection, AnchorPoint anchorPoint) {
-        this.partnerType = PartnerType.CONNECTIONLINE;
+        this.partnerType = PartnerType.CONNECTION;
         this.connection = connection;
         this.anchorPoint = anchorPoint;
     }

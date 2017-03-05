@@ -520,8 +520,24 @@ public class NodeGestures {
                    return;   
                 }
                 if(draggedAnchorPoint) {
+                    draggedAnchorPoint = false;
                     c.removeTempGroup();
                     c.updateLine();
+                }
+            }  
+        };             
+    }
+    
+    public static EventHandler<MouseEvent> getAnchorPointClickedEventHandler(AnchorPoint aP, Connection c){
+        return new EventHandler<MouseEvent>(){
+            @Override
+            public void handle(MouseEvent event){
+                if(DigitSimController.isLocked()){
+                   return;   
+                }
+                if(event.getButton() == MouseButton.PRIMARY) {
+                    DigitSimController dsc = DigitSimController.getReference();
+                    dsc.addConnection(c, aP);
                 }
             }  
         };             

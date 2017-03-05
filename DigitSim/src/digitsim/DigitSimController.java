@@ -413,7 +413,7 @@ public class DigitSimController extends Pane{
                 project.getConInOrOutput()[i][0]  = allConnections.get(i).getStartPartner().isIsInput();
                 project.getConIOIndex()[i][0]  = allConnections.get(i).getStartPartner().getIndex();
             }else{
-                project.getConType()[i][1]  = PartnerType.CONNECTIONLINE.name();
+                project.getConType()[i][1]  = PartnerType.CONNECTION.name();
                 project.getConIndex()[i][0]  = this.findConnectionIndex(allConnections.get(i).getStartPartner().getconnection());
                 project.getConX()[i][0]  = allConnections.get(i).getStartPartner().getanchorPoint().getCoords().getX();
                 project.getConY()[i][0]  = allConnections.get(i).getStartPartner().getanchorPoint().getCoords().getY();
@@ -425,7 +425,7 @@ public class DigitSimController extends Pane{
                 project.getConInOrOutput()[i][1] = allConnections.get(i).getEndPartner().isIsInput();
                 project.getConIOIndex()[i][1] = allConnections.get(i).getEndPartner().getIndex();
             }else{
-                project.getConType()[i][1]  = PartnerType.CONNECTIONLINE.name();
+                project.getConType()[i][1]  = PartnerType.CONNECTION.name();
                 project.getConIndex()[i][1] = this.findConnectionIndex(allConnections.get(i).getEndPartner().getconnection());
                 project.getConX()[i][1] = allConnections.get(i).getEndPartner().getanchorPoint().getCoords().getX();
                 project.getConY()[i][1]= allConnections.get(i).getEndPartner().getanchorPoint().getCoords().getY();
@@ -704,8 +704,21 @@ public class DigitSimController extends Pane{
         } else {
             this.unfinishedConnection = false;
             allConnections.get(allConnections.size()-1).finishLine(e, isInput, index);
-        }
+        }   
+    }
+    
+    public void addConnection(Connection c, AnchorPoint aP) {
         
+        if(allConnections.isEmpty()) {
+            this.unfinishedConnection = true;
+            allConnections.add(new Connection(this, c, aP));
+        } else if (allConnections.get(allConnections.size()-1).getEndPartner() != null) {
+            this.unfinishedConnection = true;
+            allConnections.add(new Connection(this, c, aP));
+        } else {
+            this.unfinishedConnection = false;
+            allConnections.get(allConnections.size()-1).finishLine(c, aP);
+        }   
     }
     
     public void rebuildElement_TEXT(Element e, int fontSize, String content, Color color){

@@ -10,5 +10,5 @@ package connection;
  * @author Elias
  */
 public enum PartnerType{
-    ELEMENT, CONNECTIONLINE
+    ELEMENT, CONNECTION
 };
