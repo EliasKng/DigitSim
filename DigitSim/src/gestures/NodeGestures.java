@@ -536,6 +536,7 @@ public class NodeGestures {
                    return;   
                 }
                 if(event.getButton() == MouseButton.PRIMARY) {
+                    System.out.println("CLICK");
                     DigitSimController dsc = DigitSimController.getReference();
                     dsc.addConnection(c, aP);
                 }

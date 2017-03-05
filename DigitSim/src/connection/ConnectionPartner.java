@@ -78,7 +78,7 @@ public class ConnectionPartner {
         this.connection = connection;
     }
 
-    public AnchorPoint getanchorPoint() {
+    public AnchorPoint getAnchorPoint() {
         return anchorPoint;
     }
 
