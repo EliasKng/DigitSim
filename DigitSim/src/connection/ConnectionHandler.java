@@ -88,53 +88,47 @@ public class ConnectionHandler {
     }
     
     public static void getAllConnectionsConnectedToHandler(Connection con) {
-        List<Connection> returnList = new ArrayList();
         List<Connection> toCheckList = new ArrayList();
         List<Connection> checkedList = new ArrayList();
+        List<Connection> allConnections = DigitSimController.getAllConnections();
+        List<ConnectionPartner> allConnectionPartnersOfTypeConnection = new ArrayList();
         toCheckList.add(con);
         
-        while(!toCheckList.isEmpty()) {
-            for(Connection c : toCheckList) {
-                if(!c.isChecked()) {
-                    c.setChecked(true);
-                    toCheckList.addAll(getAllConnectionsConnectedTo(c));
-                }
+        for(Connection connection : allConnections) {
+            if(connection.getStartPartner().getPartnerType() == PartnerType.CONNECTION) {
+                allConnectionPartnersOfTypeConnection.add(connection.getStartPartner());
+            }
+            if(connection.getEndPartner().getPartnerType() == PartnerType.CONNECTION) {
+                allConnectionPartnersOfTypeConnection.add(connection.getEndPartner());
             }
         }
         
-        System.out.println("clLength: " +toCheckList.size());
+        while(!toCheckList.isEmpty()) {
+            Connection c = toCheckList.get(0);
+            if(!c.isChecked()) {
+                toCheckList.addAll(getAllConnectionsConnectedTo(c, allConnectionPartnersOfTypeConnection));
+                c.setChecked(true);
+            }
+            checkedList.add(c);
+            toCheckList.remove(c);
+        }
+        resetConnectionsUptatedSign();
+        System.out.println("toCHeckLength: " +checkedList.size());
         
     }
     
-    public static List<Connection> getAllConnectionsConnectedTo(Connection c) {
+    public static List<Connection> getAllConnectionsConnectedTo(Connection c, List<ConnectionPartner> allConnectionPartnersOfTypeConnection) {
         List<Connection> connectedTo = new ArrayList();
-        List<Connection> allConnections = DigitSimController.getAllConnections();
-        List<ConnectionPartner> allConnectionPartnersOfTypeConnection = new ArrayList();
         
-        for(Connection con : allConnections) {
-            if(con.getStartPartner().getPartnerType() == PartnerType.CONNECTION) {
-                allConnectionPartnersOfTypeConnection.add(con.getStartPartner());
-            }
-            if(con.getEndPartner().getPartnerType() == PartnerType.CONNECTION) {
-                allConnectionPartnersOfTypeConnection.add(con.getEndPartner());
-            }
-        }
         
         for(AnchorPoint aP : c.getAnchorPoints()) {
             for(ConnectionPartner cP : allConnectionPartnersOfTypeConnection) {
                 if(aP.hashCode() == cP.getAnchorPoint().hashCode()) {
-                    if(!cP.getconnection().isAdded()) {
                         Connection abc = getConnectionFromPartner(cP);
                         connectedTo.add(abc);
-                        abc.setSpecialColor(Color.CORAL);
-                    }  
+                        abc.setSpecialColor(Color.CORAL); 
                 }
             }
-        }
-        System.out.println(connectedTo.size());
-        
-        for(Connection cont : connectedTo) {
-            System.out.println("Hash: " +cont.hashCode());
         }
         
         return connectedTo;
@@ -159,6 +153,7 @@ public class ConnectionHandler {
         for(Connection c : DigitSimController.getAllConnections()) {
             c.setUpdated(false);
             c.setAdded(false);
+            c.setChecked(false);
         }
     }
     
