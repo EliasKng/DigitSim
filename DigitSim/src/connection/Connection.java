@@ -39,8 +39,8 @@ public class Connection {
     //Zum simulieren relevante Globals
     private State state = State.DEFAULT;                              //Für die Simulation relevant -> gibt den Digitalen Status der Verbindung an (An/Aus/Undefiniert)
     private boolean updated = false;
-    private boolean added = false;
     private boolean checked = false;
+    private boolean checkedIfConnectedTo = false;
     
     //Zum Zeichen relevante Globals
     private Group lineGroup = new Group();                            //Gruppe von Linien (die die gesamte Linie darstellt)
@@ -51,8 +51,8 @@ public class Connection {
     private Comparator<AnchorPoint> anchorPointSprter = new Comparator<AnchorPoint>() {
         @Override
         public int compare(AnchorPoint aP0, AnchorPoint aP1) {
-            if(aP1.index < aP0.index) return +1;
-            if(aP1.index > aP0.index) return -1;
+            if(aP1.getIndex() < aP0.getIndex()) return +1;
+            if(aP1.getIndex() > aP0.getIndex()) return -1;
             return 0;
         }
     };
@@ -61,8 +61,8 @@ public class Connection {
 //*************************************KONSTRUKTOREN*****************************************
     
     public Connection(Vector2i start, Vector2i end, DigitSimController dsc) {
-        AnchorPoint startAP = new AnchorPoint(0, start);
-        AnchorPoint endAP = new AnchorPoint(1, end);
+        AnchorPoint startAP = new AnchorPoint(0, start, this);
+        AnchorPoint endAP = new AnchorPoint(1, end, this);
         this.anchorPoints.add(startAP);
         this.anchorPoints.add(endAP);
         
@@ -70,12 +70,13 @@ public class Connection {
     }
     
     public Connection(Vector2i start, DigitSimController dsc) {
-        AnchorPoint startAP = new AnchorPoint(0, start);
+        AnchorPoint startAP = new AnchorPoint(0, start, this);
         this.anchorPoints.add(startAP);
         this.dsc = dsc;
     }
 
     public Connection(DigitSimController dsc, Connection partnerConnection, AnchorPoint partnerAnchorPoint) {
+        partnerAnchorPoint.addToConnectedTo(this);
         this.startPartner = new ConnectionPartner(partnerConnection, partnerAnchorPoint);
         this.dsc = dsc;
     }
@@ -102,7 +103,7 @@ public class Connection {
      */
     public void finishLine(Vector2i end) { 
         dsc.removeTemporaryLine();
-        AnchorPoint endAP = new AnchorPoint(1, end);
+        AnchorPoint endAP = new AnchorPoint(1, end, this);
         this.anchorPoints.add(endAP);
         this.updateConnectionLine();
     }
@@ -125,6 +126,7 @@ public class Connection {
      * @param anchorPoint hier wird der AnchorPoint übergeben (mit dem die Linie verbunden werden wird)
      */
     public void finishLine(Connection connection, AnchorPoint anchorPoint) { 
+        anchorPoint.addToConnectedTo(this);
         dsc.removeTemporaryLine();
         this.endPartner = new ConnectionPartner(connection, anchorPoint);
         this.updateConnectionLine();
@@ -228,8 +230,8 @@ public class Connection {
         startCoords.adaptToHalfGrid();
         endCoords.adaptToHalfGrid();
         
-        AnchorPoint start = new AnchorPoint(indexStart, startCoords);
-        AnchorPoint end = new AnchorPoint(indexEnd, endCoords);
+        AnchorPoint start = new AnchorPoint(indexStart, startCoords, this);
+        AnchorPoint end = new AnchorPoint(indexEnd, endCoords, this);
         
         
         if(anchorPoints.size() > 1) {
@@ -463,7 +465,7 @@ public class Connection {
         
         for(AnchorPoint aP : this.anchorPoints) {
             if(childPoint != null) {
-                Line l = Draw.drawLine(childPoint.coords, aP.coords, Color.DARKORANGE, 5);
+                Line l = Draw.drawLine(childPoint.getCoords(), aP.getCoords(), Color.DARKORANGE, 5);
                 l.setOpacity(0.6);
                 this.tempGroup.getChildren().add(l);
             } 
@@ -506,6 +508,7 @@ public class Connection {
      * @param aP 
      */
     public void addAnchorPoint(AnchorPoint aP) {
+        aP.addToConnectedTo(this);
         this.anchorPoints.add(1, aP);
         sortAnchorPoints();
         updateConnectionLine();
@@ -534,7 +537,7 @@ public class Connection {
      * @param aP 
      */
     public void moveAnchorPoint(AnchorPoint aP) {
-        this.anchorPoints.set((int) aP.index, aP);
+        this.anchorPoints.set((int) aP.getIndex(), aP);
     }
     
     /**
@@ -632,14 +635,6 @@ public class Connection {
         this.anchorPointSprter = anchorPointSprter;
     }
 
-    public boolean isAdded() {
-        return added;
-    }
-
-    public void setAdded(boolean added) {
-        this.added = added;
-    }
-
     public boolean isChecked() {
         return checked;
     }
@@ -647,4 +642,14 @@ public class Connection {
     public void setChecked(boolean checked) {
         this.checked = checked;
     }
+
+    public boolean isCheckedIfConnectedTo() {
+        return checkedIfConnectedTo;
+    }
+
+    public void setCheckedIfConnectedTo(boolean checkedIfConnectedTo) {
+        this.checkedIfConnectedTo = checkedIfConnectedTo;
+    }
+
+    
 }

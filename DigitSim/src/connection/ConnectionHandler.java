@@ -80,7 +80,7 @@ public class ConnectionHandler {
         for(Connection c : allConnections) {
             updateConnectionState(c);
         }
-        resetConnectionsUptatedSign();
+        resetConnectionsUptatedSigns();
     }
     
     public static void updateConnectionState(Connection c) {
@@ -88,49 +88,58 @@ public class ConnectionHandler {
     }
     
     public static void getAllConnectionsConnectedToHandler(Connection con) {
+        
         List<Connection> toCheckList = new ArrayList();
         List<Connection> checkedList = new ArrayList();
-        List<Connection> allConnections = DigitSimController.getAllConnections();
-        List<ConnectionPartner> allConnectionPartnersOfTypeConnection = new ArrayList();
         toCheckList.add(con);
-        
-        for(Connection connection : allConnections) {
-            if(connection.getStartPartner().getPartnerType() == PartnerType.CONNECTION) {
-                allConnectionPartnersOfTypeConnection.add(connection.getStartPartner());
-            }
-            if(connection.getEndPartner().getPartnerType() == PartnerType.CONNECTION) {
-                allConnectionPartnersOfTypeConnection.add(connection.getEndPartner());
-            }
-        }
+        con.setCheckedIfConnectedTo(true);
         
         while(!toCheckList.isEmpty()) {
             Connection c = toCheckList.get(0);
             if(!c.isChecked()) {
-                toCheckList.addAll(getAllConnectionsConnectedTo(c, allConnectionPartnersOfTypeConnection));
+                toCheckList.addAll(getAllConnectionsConnectedTo(c));
                 c.setChecked(true);
             }
             checkedList.add(c);
             toCheckList.remove(c);
         }
-        resetConnectionsUptatedSign();
+        resetConnectionsUptatedSigns();
         System.out.println("toCHeckLength: " +checkedList.size());
         
     }
     
-    public static List<Connection> getAllConnectionsConnectedTo(Connection c, List<ConnectionPartner> allConnectionPartnersOfTypeConnection) {
+    public static List<Connection> getAllConnectionsConnectedTo(Connection c) {
         List<Connection> connectedTo = new ArrayList();
         
-        
         for(AnchorPoint aP : c.getAnchorPoints()) {
-            for(ConnectionPartner cP : allConnectionPartnersOfTypeConnection) {
-                if(aP.hashCode() == cP.getAnchorPoint().hashCode()) {
-                        Connection abc = getConnectionFromPartner(cP);
-                        connectedTo.add(abc);
-                        abc.setSpecialColor(Color.CORAL); 
+            for(Connection con : aP.getConnectedTo()) {
+                System.out.println("AnchorPointNo: " +aP.getIndex() +" ConnectedToSize: " +aP.getConnectedTo().size());
+                if(!con.isCheckedIfConnectedTo()) {
+                    connectedTo.add(con);
+                    con.setCheckedIfConnectedTo(true);
+                    con.setSpecialColor(Color.RED);
                 }
             }
         }
-        
+        ConnectionPartner sP = c.getStartPartner();
+        ConnectionPartner eP = c.getEndPartner();
+        if(sP.getPartnerType() == PartnerType.CONNECTION) {
+            for(Connection con : sP.getAnchorPoint().getConnectedTo()) {
+                if(!con.isCheckedIfConnectedTo()) {
+                    connectedTo.add(con);
+                    con.setCheckedIfConnectedTo(true);
+                    con.setSpecialColor(Color.RED);
+                }
+            }
+        }  if(eP.getPartnerType() == PartnerType.CONNECTION) {
+            for(Connection con : eP.getAnchorPoint().getConnectedTo()) {
+                if(!con.isCheckedIfConnectedTo()) {
+                    connectedTo.add(con);
+                    con.setCheckedIfConnectedTo(true);
+                    con.setSpecialColor(Color.RED);
+                }
+            }
+        }
         return connectedTo;
     }
     
@@ -149,11 +158,11 @@ public class ConnectionHandler {
     /**
      * Setzt die updated boolean aller Connections auf false
      */
-    public static void resetConnectionsUptatedSign() {
+    public static void resetConnectionsUptatedSigns() {
         for(Connection c : DigitSimController.getAllConnections()) {
             c.setUpdated(false);
-            c.setAdded(false);
             c.setChecked(false);
+            c.setCheckedIfConnectedTo(false);
         }
     }
     

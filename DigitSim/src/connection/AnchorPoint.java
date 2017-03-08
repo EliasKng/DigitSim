@@ -6,16 +6,25 @@
 package connection;
 
 import general.Vector2i;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author Elias
  */
 public class AnchorPoint {
-    Vector2i coords;
-    double index;
+    private Vector2i coords;
+    private double index;
+    private List<Connection> connectedTo = new ArrayList();
 
     public AnchorPoint(double index, Vector2i coords) {
+        this.coords = coords;
+        this.index = index;
+    }
+
+    public AnchorPoint(double index, Vector2i coords, Connection c) {
+        addToConnectedTo(c);
         this.coords = coords;
         this.index = index;
     }
@@ -44,5 +53,24 @@ public class AnchorPoint {
     public void setIndex(double index) {
         this.index = index;
     }
+
+    public List<Connection> getConnectedTo() {
+        return connectedTo;
+    }
+
+    public void setConnectedTo(List<Connection> connectedTo) {
+        this.connectedTo = connectedTo;
+    }
     
+    public void addToConnectedTo(Connection c) {
+        this.connectedTo.add(c);
+    }
+    
+    public void removeFromConnectedTo(Connection c) {
+        this.connectedTo.remove(c);
+    }
+    
+    public void removeFromConnectedTo(int index) {
+        this.connectedTo.remove(index);
+    }
 }
