@@ -456,15 +456,12 @@ public class NodeGestures {
 
                     
                 } else if(event.getButton() == MouseButton.SECONDARY) {
-                    
-                    ConnectionHandler.getAllConnectionsConnectedToHandler(c);
-                    
-                    
+                    connection.ConnectionHandler.getAllConnectionsConnectedTo(c);
                     ContextMenu menu= new ContextMenu();
                     MenuItem deleteItem = new MenuItem("Entfernen");
                     MenuItem resetItem = new MenuItem("Zurücksetzen");
                     deleteItem.setOnAction(new EventHandler<ActionEvent>() { //Wird ausgelößt wenn man bei einem Element "Entfernen" auswählt
-
+                        
                        public void handle(ActionEvent e) {
                        contextMenu.hide();
                        ConnectionHandler.removeConnection(c);

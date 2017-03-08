@@ -66,6 +66,10 @@ public class ConnectionHandler {
         DigitSimController.clearConnections();
     }
     
+    /**
+     * entfernt eine Connection komplett
+     * @param c 
+     */
     public static void removeConnection(Connection c) {
         c.removeLine();
         DigitSimController.removeConnectionFromAllConnections(c);
@@ -78,17 +82,83 @@ public class ConnectionHandler {
     public static void updateConnectionStates() {
         List<Connection> allConnections = DigitSimController.getReference().getAllConnections();
         for(Connection c : allConnections) {
-            updateConnectionState(c);
+            if(!c.isUpdated()) {
+                updateConnectionState(c);
+            }
         }
         resetConnectionsUptatedSigns();
     }
     
-    public static void updateConnectionState(Connection c) {
+    /**
+     * Aktualisiert den State einer Connection
+     * @param con 
+     */
+    public static void updateConnectionState(Connection con) {
+        
+        //Findet heraus, mit welchen Linien diese verbunden ist
+        List<Connection> connectedToEachOther = getAllConnectionsConnectedTo(con);
+        
+        //Erstellt eine Liste der Ouput states
+        List<State> outputStates = getOutputStatesFromConnections(connectedToEachOther);
+        if(!doStatesContradict(outputStates)) {
+            setConnectionStates(connectedToEachOther, outputStates.get(0));
+        } else {
+            setConnectionStates(connectedToEachOther, State.UNDEFINED);
+        }
+        
+        for(Connection c : connectedToEachOther) {
+            c.setUpdated(true);
+        }
         
     }
+
+    /**
+     * überprüft, ob sich die verschiedenen States wiedersprechen 
+     * @param states
+     * @return 
+     */
+    public static boolean doStatesContradict(List<State> states) {
+        State firstState = states.get(0);
+        for(State s : states) {
+            if(!(s == firstState)) {
+                return true;
+            }
+        }
+        return false;
+    }
     
-    public static void getAllConnectionsConnectedToHandler(Connection con) {
+    /**
+     * Erstellt eine Liste aus States, von allen Outputs der Connections
+     * @param connections
+     * @return 
+     */
+    public static List<State> getOutputStatesFromConnections(List<Connection> connections) {
+        List<State> outputStates = new ArrayList();
         
+        for(Connection c : connections) {
+            ConnectionPartner cP0 = c.getStartPartner();
+            ConnectionPartner cP1 = c.getEndPartner();
+
+            //Wenn ein Teil der Verbindung ein ELement und Output ist, dann...
+            if((cP0.getPartnerType() == PartnerType.ELEMENT) && !(cP0.isIsInput())) {
+                int stateCP0 = cP0.getElement().getOutput(cP0.getIndex());
+                State s = HandleState.getState(stateCP0);
+                outputStates.add(s);
+            } if((cP1.getPartnerType() == PartnerType.ELEMENT) && !(cP1.isIsInput())) {
+                int stateCP1 = cP1.getElement().getOutput(cP1.getIndex());
+                State s = HandleState.getState(stateCP1);
+                outputStates.add(s);
+            }
+        }
+        return outputStates;
+    }
+    
+    /**
+     * Ermittelt alle Verbindungen, die mit dieser verbunden sind
+     * @param con
+     * @return 
+     */
+    public static List<Connection> getAllConnectionsConnectedTo(Connection con) {
         List<Connection> toCheckList = new ArrayList();
         List<Connection> checkedList = new ArrayList();
         toCheckList.add(con);
@@ -97,27 +167,35 @@ public class ConnectionHandler {
         while(!toCheckList.isEmpty()) {
             Connection c = toCheckList.get(0);
             if(!c.isChecked()) {
-                toCheckList.addAll(getAllConnectionsConnectedTo(c));
+                toCheckList.addAll(getAllConnectionsConnectedToDirectly(c));
                 c.setChecked(true);
             }
             checkedList.add(c);
             toCheckList.remove(c);
         }
-        resetConnectionsUptatedSigns();
-        System.out.println("toCHeckLength: " +checkedList.size());
         
+        
+        for(Connection c : DigitSimController.getAllConnections()) {
+            c.setChecked(false);
+            c.setCheckedIfConnectedTo(false);
+        }
+        
+        return checkedList;
     }
     
-    public static List<Connection> getAllConnectionsConnectedTo(Connection c) {
+    /**
+     * Ermittelt die direkt verbundenen Verbindungen einer Connection
+     * @param c
+     * @return 
+     */
+    public static List<Connection> getAllConnectionsConnectedToDirectly(Connection c) {
         List<Connection> connectedTo = new ArrayList();
         
         for(AnchorPoint aP : c.getAnchorPoints()) {
             for(Connection con : aP.getConnectedTo()) {
-                System.out.println("AnchorPointNo: " +aP.getIndex() +" ConnectedToSize: " +aP.getConnectedTo().size());
                 if(!con.isCheckedIfConnectedTo()) {
                     connectedTo.add(con);
                     con.setCheckedIfConnectedTo(true);
-                    con.setSpecialColor(Color.RED);
                 }
             }
         }
@@ -128,7 +206,6 @@ public class ConnectionHandler {
                 if(!con.isCheckedIfConnectedTo()) {
                     connectedTo.add(con);
                     con.setCheckedIfConnectedTo(true);
-                    con.setSpecialColor(Color.RED);
                 }
             }
         }  if(eP.getPartnerType() == PartnerType.CONNECTION) {
@@ -136,23 +213,10 @@ public class ConnectionHandler {
                 if(!con.isCheckedIfConnectedTo()) {
                     connectedTo.add(con);
                     con.setCheckedIfConnectedTo(true);
-                    con.setSpecialColor(Color.RED);
                 }
             }
         }
         return connectedTo;
-    }
-    
-    public static Connection getConnectionFromPartner(ConnectionPartner cP) {
-        for(Connection c : DigitSimController.getAllConnections()) {
-            if(c.getStartPartner() == cP) {
-                return c;
-            }
-            if(c.getEndPartner() == cP) {
-                return c;
-            }
-        }
-        return null;
     }
     
     /**
@@ -181,6 +245,17 @@ public class ConnectionHandler {
      */
     public static void resetConnectionState(Connection c) {
         c.resetState();
+    }
+    
+    /**
+     * Setzt den State von mehreren Connections
+     * @param connections
+     * @param s 
+     */
+    public static void setConnectionStates(List<Connection> connections, State s) {
+        for(Connection c : connections) {
+            setConnectionState(s, c);
+        }
     }
     
     /**
