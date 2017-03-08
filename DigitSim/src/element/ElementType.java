@@ -12,6 +12,6 @@ package element;
  */
 public interface ElementType { 
     public enum Type{
-        ELEMENT, SEVENSEG, AND, LED, NAND, NOR, NOT, OR, SIGNAL, TEXT, THUMBSWITCH, XNOR, XOR; //SEVENSEG weil man keine Zahlen an den Anfang schreiben darf!!!
+        ELEMENT, SEVENSEG, AND, LED, NAND, NOR, NOT, OR, SIGNAL, TEXT, THUMBSWITCH, XNOR, XOR, SEVENSEGBCD; //SEVENSEG weil man keine Zahlen an den Anfang schreiben darf!!!
     };
 }

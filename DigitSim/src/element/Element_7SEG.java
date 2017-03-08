@@ -107,19 +107,15 @@ public class Element_7SEG extends Element{
     //Diese Methoden müssen überschrieben werden (Beschreibung in der Mutterklasse)
     @Override
     public void update(){
-//        for(int i = 0; i < numInputs; i++){
-//            if(inputs[i] == 0){
-//                inputLines.get(i).setStroke(Color.BLUE);
-//            }else{
-//                inputLines.get(i).setStroke(Color.RED);
-//            }
-//        }
+
+            
+                 
     if(inputs[0] == 1){
             lineSeg0.setStroke(Color.RED);
             }else if (inputs[0] == 0){
                lineSeg0.setStroke(Color.BLACK);
             }               
-     if(inputs[1] == 1){
+    if(inputs[1] == 1){
             lineSeg1.setStroke(Color.RED);
             }else if (inputs[1] == 0){
                lineSeg1.setStroke(Color.BLACK);
