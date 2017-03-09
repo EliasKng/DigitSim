@@ -273,6 +273,17 @@ public class Element_7SEG_BCD extends Element{
     }   
     
     @Override
+    public void reset(){ //Simple reset methode (kann natürlich überschireben werden, für spezielle Bausteine)
+        lineSeg0.setStroke(Color.GREY);
+        lineSeg1.setStroke(Color.GREY);
+        lineSeg2.setStroke(Color.GREY);
+        lineSeg3.setStroke(Color.GREY);
+        lineSeg4.setStroke(Color.GREY);
+        lineSeg5.setStroke(Color.GREY);
+        lineSeg6.setStroke(Color.GREY);
+    }
+    
+    @Override
     public void showProperties(){ //Zeigt das "Eigenschaften"-Fenster für dieses Element
         GenFunctions.showBasicElementProperties(numInputs, thisElement);
     }

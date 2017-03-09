@@ -72,42 +72,42 @@ public class TileCode {
             }
         }
         
-//        if(connections.size() > 1) {
-//            for(Connection c : connections) {
-//                for(int i = 0; i < c.getLineGroup().getChildren().size(); i++) {
-//                    List lineGroup = c.getAllNodesFromLineGroup();
-//                    Line line = (Line) lineGroup.get(i);
-//                    int startX = (int) line.getStartX()/21;
-//                    int startY = (int) line.getStartY()/21;
-//                    
-//                    try {
-//                        if((tileCode[startX][startY] == 0) || 3 < tileCode[startX][startY]) {
-//                                tileCode[startX][startY] = 3;
-//                                if(visualize)
-//                                    visualizeNodes.getChildren().add(Draw.drawCircle(startX*21+11.5, startY*21+11.5, 3, Color.RED, 1, true, 1));
-//                            }
-//                    } catch (Exception e) {
-//                        System.out.println("Fehler beim Erstellen des Arrays (PATHFINDER) (ConnectionToArray)");
-//                    }
-//                }
-//            }
-//        }
-        
         if(connections.size() > 1) {
             for(Connection c : connections) {
-                if(!c.isDirectLine()) {
-                    for(Node n : c.getNodePath()) {
-                        try {
-                            if(tileCode[n.tile.getX()][n.tile.getY()] == 0 || 3 < tileCode[n.tile.getX()][n.tile.getY()]) {
-                                tileCode[n.tile.getX()][n.tile.getY()] = 3;
+                for(int i = 0; i < c.getLineGroup().getChildren().size(); i++) {
+                    List lineGroup = c.getAllNodesFromLineGroup();
+                    Line line = (Line) lineGroup.get(i);
+                    int startX = (int) line.getStartX()/21;
+                    int startY = (int) line.getStartY()/21;
+                    
+                    try {
+                        if((tileCode[startX][startY] == 0) || 3 < tileCode[startX][startY]) {
+                                tileCode[startX][startY] = 3;
+                                if(visualize)
+                                    visualizeNodes.getChildren().add(Draw.drawCircle(startX*21+11.5, startY*21+11.5, 3, Color.RED, 1, true, 1));
                             }
-                        } catch (Exception e) {
+                    } catch (Exception e) {
                         System.out.println("Fehler beim Erstellen des Arrays (PATHFINDER) (ConnectionToArray)");
-                        }
                     }
                 }
             }
         }
+        
+//        if(connections.size() > 1) {
+//            for(Connection c : connections) {
+//                if(!c.isDirectLine()) {
+//                    for(Node n : c.getNodePath()) {
+//                        try {
+//                            if(tileCode[n.tile.getX()][n.tile.getY()] == 0 || 3 < tileCode[n.tile.getX()][n.tile.getY()]) {
+//                                tileCode[n.tile.getX()][n.tile.getY()] = 3;
+//                            }
+//                        } catch (Exception e) {
+//                        System.out.println("Fehler beim Erstellen des Arrays (PATHFINDER) (ConnectionToArray)");
+//                        }
+//                    }
+//                }
+//            }
+//        }
         
         
         
