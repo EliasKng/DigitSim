@@ -51,6 +51,7 @@ public class DigitSimController extends Pane{
     private boolean unfinishedConnection = false;
     private Vector2i mouseCoords = new Vector2i();
     private Line temporaryLine;//In dieser gruppe steckt die orangene halb durchsichtige Linie (beim Verlegen von Connections)
+    private int tmpLoadCounter = 0;
 
      /**
      * FXML OBJEKT-Erstellungs-Bereich:
@@ -388,7 +389,7 @@ public class DigitSimController extends Pane{
     }
     
     public void saveProject(){ //Speichert das Projekt
-        SaveFormat project = new SaveFormat(elements.size(), allConnections.size()); //Format in welcher das Prokekt geschrieben wird
+        SaveFormat project = new SaveFormat(elements.size(), allConnections.size(), findHighestSizeOfConnectedTo()); //Format in welcher das Prokekt geschrieben wird
         project.setSimSizeX(Properties.GetSimSizeX()); //Die Einstellungen Speichern
         project.setSimSizeY(Properties.GetSimSizeY());
         saveElementsToProject(project); //Elemente speichern
@@ -421,6 +422,10 @@ public class DigitSimController extends Pane{
                 project.getConX()[i][0]  = allConnections.get(i).getStartPartner().getAnchorPoint().getCoords().getX();
                 project.getConY()[i][0]  = allConnections.get(i).getStartPartner().getAnchorPoint().getCoords().getY();
                 project.getConAnchorIndex()[i][0] = (int) allConnections.get(i).getStartPartner().getAnchorPoint().getIndex();
+                project.getConAPconnectedToSize()[i][0] = allConnections.get(i).getStartPartner().getAnchorPoint().getConnectedToSize();
+                for(int t = 0; t < allConnections.get(i).getStartPartner().getAnchorPoint().getConnectedToSize(); t++){
+                    project.getConAPconnectedToIndices()[i][0][t] = this.findConnectionIndex(allConnections.get(i).getStartPartner().getAnchorPoint().getConnectedTo().get(t));
+                }
             }
             if(allConnections.get(i).getEndPartner().getPartnerType() == PartnerType.ELEMENT){
                 project.getConType()[i][1]  = PartnerType.ELEMENT.name();
@@ -433,6 +438,10 @@ public class DigitSimController extends Pane{
                 project.getConX()[i][1] = allConnections.get(i).getEndPartner().getAnchorPoint().getCoords().getX();
                 project.getConY()[i][1]= allConnections.get(i).getEndPartner().getAnchorPoint().getCoords().getY();
                project.getConAnchorIndex()[i][1] = (int) allConnections.get(i).getEndPartner().getAnchorPoint().getIndex();
+               project.getConAPconnectedToSize()[i][1] = allConnections.get(i).getEndPartner().getAnchorPoint().getConnectedToSize();
+                for(int t = 0; i < allConnections.get(i).getEndPartner().getAnchorPoint().getConnectedToSize(); i++){
+                    project.getConAPconnectedToIndices()[i][1][t] = this.findConnectionIndex(allConnections.get(i).getEndPartner().getAnchorPoint().getConnectedTo().get(t));
+                }
             }
         }
     }
@@ -448,13 +457,15 @@ public class DigitSimController extends Pane{
         }
         loadElementsFromProject(project); //Elemente laden
         loadConnectionsFromProject(project); //Verbindungen laden
-        if(allConnections.size() < project.getNumConnections()){
-              loadConnectionsFromProject(project); //Neuer Versuch
-              if(allConnections.size() < project.getNumConnections()){
-              outputMessages.add("[WARNING]Nicht alle Verbindungen konnten geladen werden!");
-              return;
-        }
-        }
+        while(allConnections.size() < project.getNumConnections()){
+            loadConnectionsFromProject(project); //Verbindungen laden, so lange bis alle geladen sind
+            if(tmpLoadCounter > 10){
+                outputMessages.add("[WARNING]Nicht alle Verbindungen konnten geladen werden!");
+                return;
+            }
+        }     
+        allConnections.forEach(c -> c.updateConnectionLine());
+        tmpLoadCounter = 0;
         outputMessages.add("[INFO]Erfolgreiches laden!");
     }
     
@@ -499,6 +510,9 @@ public class DigitSimController extends Pane{
             }else if(project.getType()[i].equals(ElementType.Type.SEVENSEGBCD.name())){
                 elements.add(new Element_7SegBCD(project.getePosX()[i], project.getePosY()[i], project.geteNumInputs()[i], nodeGestures));
                  simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
+            }else if(project.getType()[i].equals(ElementType.Type.SEVENSEGBCD.name())){
+                elements.add(new Element_7SegBCD(project.getePosX()[i], project.getePosY()[i], 4, nodeGestures));
+                 simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
             }
         }
     }
@@ -519,18 +533,25 @@ public class DigitSimController extends Pane{
     }
     
     public void loadConnectionsFromProjectAdvanced(SaveFormat project){
+        tmpLoadCounter++;
         for(int i = 0; i < project.getNumConnections(); i++){ //Verbindungen erneut durchgehen und diesmal den rest laden
             if(!(project.getConType()[i][0].equals(PartnerType.ELEMENT.name()) && project.getConType()[i][1].equals(PartnerType.ELEMENT.name()))){ //Alle Verbindungen die noch nicht geladen wurden sollen jetzt geladen werden
                 ConnectionPartner startPartner = null; //Start- und EndPartner werden benötigt um eine Connection zu erstellen
                 ConnectionPartner endPartner = null;
                 boolean unknownCon = false; //Falls sich die Verbindung auf eine Verbindung bezieht die unbekannt ist
-                
                 //StartPartner
                 if(project.getConType()[i][0].equals(PartnerType.ELEMENT)){ //Element
                      startPartner = new ConnectionPartner(elements.get(project.getConElementIndex()[i][0]), project.getConInOrOutput()[i][0], project.getConIOIndex()[i][0]);
                 }else{ //Kein Element 
                     if(allConnections.size() > project.getConIndex()[i][0]){
-                        startPartner = new ConnectionPartner(allConnections.get(project.getConIndex()[i][0]), new AnchorPoint(project.getConAnchorIndex()[i][0] ,new Vector2i(project.getConX()[i][0], project.getConY()[i][0])));
+                        AnchorPoint ap = new AnchorPoint(project.getConAnchorIndex()[i][0] ,new Vector2i(project.getConX()[i][0], project.getConY()[i][0]));
+                        
+                        for(int t = 0; t < project.getConAPconnectedToSize()[i][0]; t++){
+                            if(project.getConAPconnectedToIndices()[i][0][t] < allConnections.size()){
+                                ap.getConnectedTo().add(allConnections.get(project.getConAPconnectedToIndices()[i][0][t]));
+                            }
+                        }
+                        startPartner = new ConnectionPartner(allConnections.get(project.getConIndex()[i][0]), ap);
                     }else{
                         unknownCon = true;
                     }
@@ -541,7 +562,14 @@ public class DigitSimController extends Pane{
                      endPartner = new ConnectionPartner(elements.get(project.getConElementIndex()[i][1]), project.getConInOrOutput()[i][1], project.getConIOIndex()[i][1]);
                 }else{//Kein Element 
                     if(allConnections.size() > project.getConIndex()[i][1]){
-                        endPartner = new ConnectionPartner(allConnections.get(project.getConIndex()[i][1]), new AnchorPoint(project.getConAnchorIndex()[i][1] ,new Vector2i(project.getConX()[i][1], project.getConY()[i][1])));
+                        AnchorPoint ap = new AnchorPoint(project.getConAnchorIndex()[i][1] ,new Vector2i(project.getConX()[i][1], project.getConY()[i][1]));
+                        
+                        for(int t = 0; t < project.getConAPconnectedToSize()[i][1]; t++){
+                            if(project.getConAPconnectedToIndices()[i][1][t] < allConnections.size()){
+                                ap.getConnectedTo().add(allConnections.get(project.getConAPconnectedToIndices()[i][1][t]));
+                            }
+                        }
+                        endPartner = new ConnectionPartner(allConnections.get(project.getConIndex()[i][1]), ap);
                     }else{
                         unknownCon = true;
                     }
@@ -834,5 +862,22 @@ public class DigitSimController extends Pane{
         Stage stage = (Stage) simPane.getScene().getWindow();
         stage.setMinWidth(Properties.GetWindowMinX());
         stage.setMinHeight(Properties.GetWindowMinY());
+    }
+    
+    private int findHighestSizeOfConnectedTo(){
+        int payload = 0;
+        for(Connection c : allConnections){
+            if(c.getStartPartner().getPartnerType() == PartnerType.CONNECTION){
+                if(payload < c.getStartPartner().getAnchorPoint().getConnectedToSize()){
+                    payload = c.getStartPartner().getAnchorPoint().getConnectedToSize();
+                }
+            }
+            if(c.getEndPartner().getPartnerType() == PartnerType.CONNECTION){
+                if(payload < c.getEndPartner().getAnchorPoint().getConnectedToSize()){
+                    payload = c.getEndPartner().getAnchorPoint().getConnectedToSize();
+                }
+            }
+        }
+        return payload;
     }
 }

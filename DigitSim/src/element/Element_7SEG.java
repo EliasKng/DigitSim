@@ -14,6 +14,7 @@ import javafx.scene.effect.Bloom;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import javax.swing.JOptionPane;
 import toolbox.Draw;
 
 /**
@@ -150,7 +151,10 @@ public class Element_7SEG extends Element{
     
     @Override
     public void showProperties(){ //Zeigt das "Eigenschaften"-Fenster für dieses Element
-        GenFunctions.showBasicElementProperties(numInputs, thisElement);
+        JOptionPane.showMessageDialog(null,
+			    "'7Segment' besitzt keine Eigenschaften",
+			    "Info",
+			    JOptionPane.INFORMATION_MESSAGE);
     }
 
     @Override

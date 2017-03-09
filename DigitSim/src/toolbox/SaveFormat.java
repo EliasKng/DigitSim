@@ -36,12 +36,14 @@ public class SaveFormat implements element.ElementType{
     int[][] conX;  //Anchor Point
     int[][] conY; //Anchor Point
     int[][] conAnchorIndex;  //Index des Anchor Points
-    
+    int[][]conAPconnectedToSize;
+    int[][][] conAPconnectedToIndices; //Indizes der "connectedTo"-Liste der AnchorPoints
+            
     public SaveFormat(){
         
     }
     
-    public SaveFormat(int numElements, int numConnections){
+    public SaveFormat(int numElements, int numConnections, int highestConnectedTo){
         this.numElements = numElements;
         this.numConnections = numConnections;
         type = new String[numElements];
@@ -58,6 +60,8 @@ public class SaveFormat implements element.ElementType{
         conX = new int[numConnections][2];
         conY = new int[numConnections][2];
         conAnchorIndex = new int[numConnections][2];
+        conAPconnectedToSize = new int[numConnections][2];
+        conAPconnectedToIndices = new int[numConnections][2][highestConnectedTo];
     }
 
     //Einstellungen
@@ -70,6 +74,22 @@ public class SaveFormat implements element.ElementType{
 
     public void setConAnchorIndex(int[][] conAnchorIndex) {
         this.conAnchorIndex = conAnchorIndex;
+    }
+    @XmlElement
+    public int[][] getConAPconnectedToSize() {
+        return conAPconnectedToSize;
+    }
+
+    public void setConAPconnectedToSize(int[][] conAPconnectedToSize) {
+        this.conAPconnectedToSize = conAPconnectedToSize;
+    }
+    @XmlElement
+    public int[][][] getConAPconnectedToIndices() {
+        return conAPconnectedToIndices;
+    }
+
+    public void setConAPconnectedToIndices(int[][][] conAPconnectedToIndices) {
+        this.conAPconnectedToIndices = conAPconnectedToIndices;
     }
     
     

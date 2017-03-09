@@ -16,6 +16,7 @@ import javafx.scene.effect.Bloom;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import javax.swing.JOptionPane;
 import toolbox.Draw;
 
 /**
@@ -106,7 +107,7 @@ public class Element_7SegBCD extends Element{
     //Diese Methoden müssen überschrieben werden (Beschreibung in der Mutterklasse)
     @Override
     public void update(){
-        System.out.println("hallo leute");
+        //System.out.println("hallo leute");
         resetSegments();
 
         State states[] = new State[4];
@@ -258,7 +259,10 @@ public class Element_7SegBCD extends Element{
     
     @Override
     public void showProperties(){ //Zeigt das "Eigenschaften"-Fenster für dieses Element
-        GenFunctions.showBasicElementProperties(numInputs, thisElement);
+        JOptionPane.showMessageDialog(null,
+			    "'7SegmentBCD' besitzt keine Eigenschaften",
+			    "Info",
+			    JOptionPane.INFORMATION_MESSAGE);
     }
 
     @Override

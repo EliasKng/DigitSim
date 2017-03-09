@@ -73,4 +73,8 @@ public class AnchorPoint {
     public void removeFromConnectedTo(int index) {
         this.connectedTo.remove(index);
     }
+    
+    public int getConnectedToSize(){
+        return connectedTo.size();
+    }
 }
