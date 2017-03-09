@@ -7,6 +7,8 @@ package element;
 
 import toolbox.GenFunctions;
 import Gestures.NodeGestures;
+import connection.HandleState;
+import connection.State;
 import general.Properties;
 import java.util.Arrays;
 import javafx.scene.Group;
@@ -30,13 +32,13 @@ public class Element_7SegBCD extends Element{
     private Element thisElement = this; //Referenz auf sich selbst
     private int elementHeight = 210;
     private int elementWidth = 164;
-    Line lineSeg0;
-    Line lineSeg1;
-    Line lineSeg2;
-    Line lineSeg3;
-    Line lineSeg4;
-    Line lineSeg5;
-    Line lineSeg6;
+    private Line lineSeg0;
+    private Line lineSeg1;
+    private Line lineSeg2;
+    private Line lineSeg3;
+    private Line lineSeg4;
+    private Line lineSeg5;
+    private Line lineSeg6;
     //private ArrayList<Line> segments = new ArrayList<Line>();
             
     //Constructor
@@ -104,136 +106,149 @@ public class Element_7SegBCD extends Element{
     //Diese Methoden müssen überschrieben werden (Beschreibung in der Mutterklasse)
     @Override
     public void update(){
+        System.out.println("hallo leute");
+        resetSegments();
 
-        
-    //0    
-    if(inputs[0] == 0 && inputs[1] == 0 && inputs[2] == 0 && inputs[3] == 0){
-            lineSeg0.setStroke(Color.BLUE);
-            lineSeg1.setStroke(Color.BLUE);
-            lineSeg2.setStroke(Color.BLUE);
-            lineSeg3.setStroke(Color.BLUE);
-            lineSeg4.setStroke(Color.BLUE);
-            lineSeg5.setStroke(Color.BLUE);
+        State states[] = new State[4];
+
+        states[0] = HandleState.getState(inputs[0]);
+        states[1] = HandleState.getState(inputs[1]);
+        states[2] = HandleState.getState(inputs[2]);
+        states[3] = HandleState.getState(inputs[3]);
+
+        if(states[3] == State.HIGH) {
+            if(states[2] == State.HIGH) {
+                if(states[1] == State.HIGH) {
+                    if(states[0] == State.HIGH) {           //1111 - F
+                        lineSeg0.setStroke(Color.LIGHTBLUE);
+                        lineSeg4.setStroke(Color.LIGHTBLUE);
+                        lineSeg5.setStroke(Color.LIGHTBLUE);
+                        lineSeg6.setStroke(Color.LIGHTBLUE);
+                    } else {                                //1110 - E
+                        lineSeg0.setStroke(Color.LIGHTBLUE);
+                        lineSeg3.setStroke(Color.LIGHTBLUE);
+                        lineSeg4.setStroke(Color.LIGHTBLUE);
+                        lineSeg5.setStroke(Color.LIGHTBLUE);
+                        lineSeg6.setStroke(Color.LIGHTBLUE);
+                    }
+                } else {
+                    if(states[0] == State.HIGH) {           //1101 - D
+                        lineSeg1.setStroke(Color.LIGHTBLUE);
+                        lineSeg2.setStroke(Color.LIGHTBLUE);
+                        lineSeg3.setStroke(Color.LIGHTBLUE);
+                        lineSeg4.setStroke(Color.LIGHTBLUE);
+                        lineSeg6.setStroke(Color.LIGHTBLUE);
+                    } else {                                //1100 - C
+                        lineSeg0.setStroke(Color.LIGHTBLUE);
+                        lineSeg3.setStroke(Color.LIGHTBLUE);
+                        lineSeg4.setStroke(Color.LIGHTBLUE);
+                        lineSeg5.setStroke(Color.LIGHTBLUE);
+                    }
+                }
+            } else {
+                if(states[1] == State.HIGH) {
+                    if(states[0] == State.HIGH) {           //1011 - B
+                        lineSeg2.setStroke(Color.LIGHTBLUE);
+                        lineSeg3.setStroke(Color.LIGHTBLUE);
+                        lineSeg4.setStroke(Color.LIGHTBLUE);
+                        lineSeg5.setStroke(Color.LIGHTBLUE);
+                        lineSeg6.setStroke(Color.LIGHTBLUE);
+                    } else {                                //1010 - A
+                        lineSeg0.setStroke(Color.LIGHTBLUE);
+                        lineSeg1.setStroke(Color.LIGHTBLUE);
+                        lineSeg2.setStroke(Color.LIGHTBLUE);
+                        lineSeg4.setStroke(Color.LIGHTBLUE);
+                        lineSeg5.setStroke(Color.LIGHTBLUE);
+                        lineSeg6.setStroke(Color.LIGHTBLUE);
+                    }
+                } else {
+                    if(states[0] == State.HIGH) {           //1001 - 9
+                        lineSeg0.setStroke(Color.LIGHTBLUE);
+                        lineSeg1.setStroke(Color.LIGHTBLUE);
+                        lineSeg2.setStroke(Color.LIGHTBLUE);
+                        lineSeg3.setStroke(Color.LIGHTBLUE);
+                        lineSeg5.setStroke(Color.LIGHTBLUE);
+                        lineSeg6.setStroke(Color.LIGHTBLUE);
+                    } else {                                //1000 - 8
+                        lineSeg0.setStroke(Color.LIGHTBLUE);
+                        lineSeg1.setStroke(Color.LIGHTBLUE);
+                        lineSeg2.setStroke(Color.LIGHTBLUE);
+                        lineSeg3.setStroke(Color.LIGHTBLUE);
+                        lineSeg4.setStroke(Color.LIGHTBLUE);
+                        lineSeg5.setStroke(Color.LIGHTBLUE);
+                        lineSeg6.setStroke(Color.LIGHTBLUE);
+                    }
+                }
+            }
+        } else {
+            if(states[2] == State.HIGH) {
+                if(states[1] == State.HIGH) {
+                    if(states[0] == State.HIGH) {           //0111 - 7
+                        lineSeg0.setStroke(Color.LIGHTBLUE);
+                        lineSeg1.setStroke(Color.LIGHTBLUE);
+                        lineSeg2.setStroke(Color.LIGHTBLUE);
+                    } else {                                //0110 - 6
+                        lineSeg0.setStroke(Color.LIGHTBLUE);
+                        lineSeg2.setStroke(Color.LIGHTBLUE);
+                        lineSeg3.setStroke(Color.LIGHTBLUE);
+                        lineSeg4.setStroke(Color.LIGHTBLUE);
+                        lineSeg5.setStroke(Color.LIGHTBLUE);
+                        lineSeg6.setStroke(Color.LIGHTBLUE);
+                    }
+                } else {
+                    if(states[0] == State.HIGH) {           //0101 - 5
+                        lineSeg0.setStroke(Color.LIGHTBLUE);
+                        lineSeg2.setStroke(Color.LIGHTBLUE);
+                        lineSeg3.setStroke(Color.LIGHTBLUE);
+                        lineSeg5.setStroke(Color.LIGHTBLUE);
+                        lineSeg6.setStroke(Color.LIGHTBLUE);
+                    } else {                                //0100 - 4
+                        lineSeg1.setStroke(Color.LIGHTBLUE);
+                        lineSeg2.setStroke(Color.LIGHTBLUE);
+                        lineSeg5.setStroke(Color.LIGHTBLUE);
+                        lineSeg6.setStroke(Color.LIGHTBLUE);  
+                    }
+                }
+            } else {
+                if(states[1] == State.HIGH) {
+                    if(states[0] == State.HIGH) {           //0011 - 3
+                        lineSeg0.setStroke(Color.LIGHTBLUE);
+                        lineSeg1.setStroke(Color.LIGHTBLUE);
+                        lineSeg2.setStroke(Color.LIGHTBLUE);
+                        lineSeg3.setStroke(Color.LIGHTBLUE);
+                        lineSeg6.setStroke(Color.LIGHTBLUE);
+                    } else {                                //0010 - 2
+                        lineSeg0.setStroke(Color.LIGHTBLUE);
+                        lineSeg1.setStroke(Color.LIGHTBLUE);   
+                        lineSeg3.setStroke(Color.LIGHTBLUE);
+                        lineSeg4.setStroke(Color.LIGHTBLUE);
+                        lineSeg6.setStroke(Color.LIGHTBLUE);  
+                    }
+                } else {
+                    if(states[0] == State.HIGH) {           //0001 - 1
+                        lineSeg1.setStroke(Color.LIGHTBLUE);
+                        lineSeg2.setStroke(Color.LIGHTBLUE);
+                    } else {                                //0000 - 0
+                        lineSeg0.setStroke(Color.LIGHTBLUE);
+                        lineSeg1.setStroke(Color.LIGHTBLUE);
+                        lineSeg2.setStroke(Color.LIGHTBLUE);
+                        lineSeg3.setStroke(Color.LIGHTBLUE);
+                        lineSeg4.setStroke(Color.LIGHTBLUE);
+                        lineSeg5.setStroke(Color.LIGHTBLUE);
+                    }
+                }
+            }
         }
-    //1
-     if(inputs[0] == 0 && inputs[1] == 0 && inputs[2] == 0 && inputs[3] == 1){
-            lineSeg1.setStroke(Color.BLUE);
-            lineSeg2.setStroke(Color.BLUE);
-        }
-    //2
-      if(inputs[0] == 0 && inputs[1] == 0 && inputs[2] == 1 && inputs[3] == 0){
-            lineSeg0.setStroke(Color.BLUE);
-            lineSeg1.setStroke(Color.BLUE);   
-            lineSeg3.setStroke(Color.BLUE);
-            lineSeg4.setStroke(Color.BLUE);
-            lineSeg6.setStroke(Color.BLUE);          
-        } 
-    //3
-       if(inputs[0] == 0 && inputs[1] == 0 && inputs[2] == 1 && inputs[3] == 1){
-            lineSeg0.setStroke(Color.BLUE);
-            lineSeg1.setStroke(Color.BLUE);
-            lineSeg2.setStroke(Color.BLUE);
-            lineSeg3.setStroke(Color.BLUE);
-            lineSeg6.setStroke(Color.BLUE);
-        } 
-    //4  
-       if(inputs[0] == 0 && inputs[1] == 1 && inputs[2] == 0 && inputs[3] == 0){
-            lineSeg1.setStroke(Color.BLUE);
-            lineSeg2.setStroke(Color.BLUE);
-            lineSeg5.setStroke(Color.BLUE);
-            lineSeg6.setStroke(Color.BLUE);  
-        }
-    //5   
-        if(inputs[0] == 0 && inputs[1] == 1 && inputs[2] == 0 && inputs[3] == 1){
-            lineSeg0.setStroke(Color.BLUE);
-            lineSeg2.setStroke(Color.BLUE);
-            lineSeg3.setStroke(Color.BLUE);
-            lineSeg5.setStroke(Color.BLUE);
-            lineSeg6.setStroke(Color.BLUE);    
-        }
-    //6    
-        if(inputs[0] == 0 && inputs[1] == 1 && inputs[2] == 1 && inputs[3] == 0){
-            lineSeg0.setStroke(Color.BLUE);
-            lineSeg2.setStroke(Color.BLUE);
-            lineSeg3.setStroke(Color.BLUE);
-            lineSeg4.setStroke(Color.BLUE);
-            lineSeg5.setStroke(Color.BLUE);
-            lineSeg6.setStroke(Color.BLUE);
-        }
-    //7    
-        if(inputs[0] == 0 && inputs[1] == 1 && inputs[2] == 1 && inputs[3] == 1){
-            lineSeg0.setStroke(Color.BLUE);
-            lineSeg1.setStroke(Color.BLUE);
-            lineSeg2.setStroke(Color.BLUE);
-        }  
-    //8    
-        if(inputs[0] == 1 && inputs[1] == 0 && inputs[2] == 0 && inputs[3] == 0){
-            lineSeg0.setStroke(Color.BLUE);
-            lineSeg1.setStroke(Color.BLUE);
-            lineSeg2.setStroke(Color.BLUE);
-            lineSeg3.setStroke(Color.BLUE);
-            lineSeg4.setStroke(Color.BLUE);
-            lineSeg5.setStroke(Color.BLUE);
-            lineSeg6.setStroke(Color.BLUE);
-        }   
-    //9   
-        if(inputs[0] == 1 && inputs[1] == 0 && inputs[2] == 0 && inputs[3] == 1){
-            lineSeg0.setStroke(Color.BLUE);
-            lineSeg1.setStroke(Color.BLUE);
-            lineSeg2.setStroke(Color.BLUE);
-            lineSeg3.setStroke(Color.BLUE);
-            lineSeg5.setStroke(Color.BLUE);
-            lineSeg6.setStroke(Color.BLUE);
-        } 
-    //A    
-        if(inputs[0] == 1 && inputs[1] == 0 && inputs[2] == 1 && inputs[3] == 0){
-            lineSeg0.setStroke(Color.BLUE);
-            lineSeg1.setStroke(Color.BLUE);
-            lineSeg2.setStroke(Color.BLUE);
-            lineSeg4.setStroke(Color.BLUE);
-            lineSeg5.setStroke(Color.BLUE);
-            lineSeg6.setStroke(Color.BLUE);
-        } 
-    //B    
-        if(inputs[0] == 1 && inputs[1] == 0 && inputs[2] == 1 && inputs[3] == 1){
-            lineSeg2.setStroke(Color.BLUE);
-            lineSeg3.setStroke(Color.BLUE);
-            lineSeg4.setStroke(Color.BLUE);
-            lineSeg5.setStroke(Color.BLUE);
-            lineSeg6.setStroke(Color.BLUE);
-        }
-    //C    
-        if(inputs[0] == 1 && inputs[1] == 1 && inputs[2] == 0 && inputs[3] == 0){
-            lineSeg0.setStroke(Color.BLUE);
-            lineSeg3.setStroke(Color.BLUE);
-            lineSeg4.setStroke(Color.BLUE);
-            lineSeg5.setStroke(Color.BLUE);
-        } 
-    //D    
-        if(inputs[0] == 1 && inputs[1] == 1 && inputs[2] == 0 && inputs[3] == 1){
-            lineSeg1.setStroke(Color.BLUE);
-            lineSeg2.setStroke(Color.BLUE);
-            lineSeg3.setStroke(Color.BLUE);
-            lineSeg4.setStroke(Color.BLUE);
-            lineSeg6.setStroke(Color.BLUE);
-        }
-    //E    
-        if(inputs[0] == 1 && inputs[1] == 1 && inputs[2] == 1 && inputs[3] == 0){
-            lineSeg0.setStroke(Color.BLUE);
-            lineSeg3.setStroke(Color.BLUE);
-            lineSeg4.setStroke(Color.BLUE);
-            lineSeg5.setStroke(Color.BLUE);
-            lineSeg6.setStroke(Color.BLUE);
-        } 
-    //F
-        if(inputs[0] == 1 && inputs[1] == 1 && inputs[2] == 1 && inputs[3] == 1){
-            lineSeg0.setStroke(Color.BLUE);
-            lineSeg4.setStroke(Color.BLUE);
-            lineSeg5.setStroke(Color.BLUE);
-            lineSeg6.setStroke(Color.BLUE);
-        } 
-    
     }   
+    
+    public void resetSegments() {
+        lineSeg0.setStroke(Color.BLACK);
+        lineSeg1.setStroke(Color.BLACK);
+        lineSeg2.setStroke(Color.BLACK);
+        lineSeg3.setStroke(Color.BLACK);
+        lineSeg4.setStroke(Color.BLACK);
+        lineSeg6.setStroke(Color.BLACK);
+    }
     
 
              
