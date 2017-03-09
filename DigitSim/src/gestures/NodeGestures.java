@@ -447,8 +447,6 @@ public class NodeGestures {
                     double indexAP1 = aP1.getIndex();
                     double avgIndex = (indexAP0 + indexAP1) / 2;
 
-                    System.out.println("The Index of the new AnchorPoint would be between: " +indexAP0 +" and " +indexAP1 +" : " +avgIndex);
-
                     AnchorPoint aPNew = new AnchorPoint(avgIndex, toolbox.GenFunctions.getXYAdaptGrid(new Vector2i((int) event.getX(), (int) event.getY())));
 
                     c.addAnchorPoint(aPNew);

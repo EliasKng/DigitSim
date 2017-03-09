@@ -35,6 +35,7 @@ public class Connection {
     private ConnectionPartner endPartner;                       //VerbindungsLinienPartner (ende)
     private boolean directLine = false;                         // wird die Linie direkt verlegt oder nicht
     private PathFinder pathFinder = new PathFinder();
+    private List<Node> nodePath = new ArrayList();      //Hier wird (falls die COnnection mit dem Pathfinder generiert wird) der Pfad gespeichert
     
     //Zum simulieren relevante Globals
     private State state = State.DEFAULT;                              //Für die Simulation relevant -> gibt den Digitalen Status der Verbindung an (An/Aus/Undefiniert)
@@ -280,6 +281,13 @@ public class Connection {
         ArrayList<List<Node>> completePath = getPath();
         
         if(!this.directLine) {
+            
+            for(List<Node> nL : completePath) {
+                for(Node n : nL) {
+                    this.nodePath.add(n);
+                }
+            }
+            
             createLineGroupFromNodeList(completePath);
         } else {
             createDirectLineGroup();
@@ -356,6 +364,7 @@ public class Connection {
                 completePath.add(path);
             }
         }
+        
         return completePath;
     }
     
@@ -649,6 +658,14 @@ public class Connection {
 
     public void setCheckedIfConnectedTo(boolean checkedIfConnectedTo) {
         this.checkedIfConnectedTo = checkedIfConnectedTo;
+    }
+
+    public List<Node> getNodePath() {
+        return nodePath;
+    }
+
+    public void setNodePath(List<Node> nodePath) {
+        this.nodePath = nodePath;
     }
 
     
