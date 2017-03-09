@@ -508,10 +508,10 @@ public class DigitSimController extends Pane{
                 elements.add(new Element_XOR(project.getePosX()[i], project.getePosY()[i], project.geteNumInputs()[i], nodeGestures));
                  simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
             }else if(project.getType()[i].equals(ElementType.Type.SEVENSEGBCD.name())){
-                elements.add(new Element_7SegBCD(project.getePosX()[i], project.getePosY()[i], project.geteNumInputs()[i], nodeGestures));
+                elements.add(new Element_7SEG_BCD(project.getePosX()[i], project.getePosY()[i], project.geteNumInputs()[i], nodeGestures));
                  simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
             }else if(project.getType()[i].equals(ElementType.Type.SEVENSEGBCD.name())){
-                elements.add(new Element_7SegBCD(project.getePosX()[i], project.getePosY()[i], 4, nodeGestures));
+                elements.add(new Element_7SEG_BCD(project.getePosX()[i], project.getePosY()[i], 4, nodeGestures));
                  simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
             }
         }
@@ -632,7 +632,7 @@ public class DigitSimController extends Pane{
           simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
       }
       else if(btn7SegBCD.isSelected()){ //7SegBCD
-          elements.add(new Element_7SegBCD(getXAdaptGrid(event), getYAdaptGrid(event), 4, nodeGestures));
+          elements.add(new Element_7SEG_BCD(getXAdaptGrid(event), getYAdaptGrid(event), 4, nodeGestures));
           simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
       }
       else if(btnTEXT.isSelected()){ //Text

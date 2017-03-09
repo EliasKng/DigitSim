@@ -14,7 +14,6 @@ import javafx.scene.effect.Bloom;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
-import javax.swing.JOptionPane;
 import toolbox.Draw;
 
 /**
@@ -111,50 +110,47 @@ public class Element_7SEG extends Element{
 
             
                  
-    if(inputs[0] == 1){
-            lineSeg0.setStroke(Color.RED);
-            }else if (inputs[0] == 0){
-               lineSeg0.setStroke(Color.BLACK);
-            }               
-    if(inputs[1] == 1){
-            lineSeg1.setStroke(Color.RED);
-            }else if (inputs[1] == 0){
-               lineSeg1.setStroke(Color.BLACK);
-            }               
-        
-    if(inputs[2] == 1){
-            lineSeg2.setStroke(Color.RED);
-            }else if (inputs[2] == 0){
-               lineSeg2.setStroke(Color.BLACK);
-            }               
-    if(inputs[3] == 1){
-            lineSeg3.setStroke(Color.RED);
-            }else if (inputs[3] == 0){
-               lineSeg3.setStroke(Color.BLACK);
-            }               
-    if(inputs[4] == 1){
-            lineSeg4.setStroke(Color.RED);
-            }else if (inputs[4] == 0){
-               lineSeg4.setStroke(Color.BLACK);
-            }               
-    if(inputs[5] == 1){
-            lineSeg5.setStroke(Color.RED);
-            }else if (inputs[5] == 0){
-               lineSeg5.setStroke(Color.BLACK);
-            }   
-    if(inputs[6] == 1){
-            lineSeg6.setStroke(Color.RED);
-            }else if (inputs[6] == 0){
-               lineSeg6.setStroke(Color.BLACK);
-            }                           
-        }
+        if(inputs[0] == 1){
+                lineSeg0.setStroke(Color.RED);
+                }else if (inputs[0] == 0){
+                   lineSeg0.setStroke(Color.GREY);
+                }               
+        if(inputs[1] == 1){
+                lineSeg1.setStroke(Color.RED);
+                }else if (inputs[1] == 0){
+                   lineSeg1.setStroke(Color.GREY);
+                }               
+
+        if(inputs[2] == 1){
+                lineSeg2.setStroke(Color.RED);
+                }else if (inputs[2] == 0){
+                   lineSeg2.setStroke(Color.GREY);
+                }               
+        if(inputs[3] == 1){
+                lineSeg3.setStroke(Color.RED);
+                }else if (inputs[3] == 0){
+                   lineSeg3.setStroke(Color.GREY);
+                }               
+        if(inputs[4] == 1){
+                lineSeg4.setStroke(Color.RED);
+                }else if (inputs[4] == 0){
+                   lineSeg4.setStroke(Color.GREY);
+                }               
+        if(inputs[5] == 1){
+                lineSeg5.setStroke(Color.RED);
+                }else if (inputs[5] == 0){
+                   lineSeg5.setStroke(Color.GREY);
+                }   
+        if(inputs[6] == 1){
+                lineSeg6.setStroke(Color.RED);
+                }else if (inputs[6] == 0){
+                   lineSeg6.setStroke(Color.GREY);
+                }                           
+    }
     
     @Override
     public void showProperties(){ //Zeigt das "Eigenschaften"-Fenster für dieses Element
-        JOptionPane.showMessageDialog(null,
-			    "'7Segment' besitzt keine Eigenschaften",
-			    "Info",
-			    JOptionPane.INFORMATION_MESSAGE);
+        GenFunctions.showBasicElementProperties(numInputs, thisElement);
     }
 
     @Override
