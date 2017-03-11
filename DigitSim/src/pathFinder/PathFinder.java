@@ -34,14 +34,14 @@ public class PathFinder {
         }
     };
 
-    public List<Node> findPath(Vector2i start, Vector2i goal, ArrayList<Element> elements, List<Connection> connections) {
+    public List<Node> findPath(Vector2i start, Vector2i goal, ArrayList<Element> elements, List<Connection> connections, Connection c) {
         int gridOffet = general.Properties.GetGridOffset();
         start.divide(gridOffet);
         goal.divide(gridOffet);
         List<Node> openList = new ArrayList<Node>();
         List<Node> closedList = new ArrayList<Node>();
         
-        TileCode.createTileCode(elements, connections, general.Properties.getVisualizeTileCode());
+        TileCode.createTileCode(elements, connections, general.Properties.getVisualizeTileCode(), c);
         
         if(TileCode.isTileSolid(start.getX(), 0, start.getY(), 0))
             return null;

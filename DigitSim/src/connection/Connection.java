@@ -356,7 +356,7 @@ public class Connection {
         for(int i = 0; i < anchorPoints.size() -1; i++) { //Versuche kompletten Pfad mit dem Pathfinder zu erzeugen
             Vector2i start = new Vector2i(anchorPoints.get(i).getCoords());
             Vector2i end = new Vector2i(anchorPoints.get(i + 1).getCoords());
-            List<Node> path = pathFinder.findPath(start, end, dsc.getElements(), dsc.getAllConnections());
+            List<Node> path = pathFinder.findPath(start, end, dsc.getElements(), dsc.getAllConnections(), this);
             if(path == null) {
                 this.directLine = true;
                 return null;
