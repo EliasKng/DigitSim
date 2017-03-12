@@ -9,6 +9,7 @@ import connection.AnchorPoint;
 import connection.Connection;
 import connection.ConnectionHandler;
 import digitsim.DigitSimController;
+import digitsim.ProgramMode;
 import element.Element;
 import general.Properties;
 import element.Element_SIGNAL;
@@ -413,8 +414,9 @@ public class NodeGestures {
             @Override
             public void handle(MouseEvent event){
                 if(DigitSimController.isLocked()){
-               return;   
-            }
+                    return;   
+                }
+                DigitSimController.setProgramMode(ProgramMode.KABELVERLEGUNG);
                 DigitSimController dsc = DigitSimController.getReference();
                 dsc.addConnection(e, true, inputIndex, event);
             }
@@ -426,8 +428,9 @@ public class NodeGestures {
             @Override
             public void handle(MouseEvent event){
                 if(DigitSimController.isLocked()){
-               return;   
-            }
+                    return;   
+                }
+                DigitSimController.setProgramMode(ProgramMode.KABELVERLEGUNG);
                 DigitSimController dsc = DigitSimController.getReference();
                 dsc.addConnection(e, false, outputIndex, event);
             }
@@ -516,7 +519,6 @@ public class NodeGestures {
                    return;   
                 }
                 if(event.getButton() == MouseButton.PRIMARY) {
-                    System.out.println("CLICK");
                     DigitSimController dsc = DigitSimController.getReference();
                     dsc.addConnection(c, aP);
                 }
