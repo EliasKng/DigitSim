@@ -341,6 +341,7 @@ public class DigitSimController extends Pane{
         ConnectionHandler.removeAllConnections();
     }
     public void btnStartOnAction(ActionEvent event) {   
+        ConnectionHandler.setRebuildBundles(true);
         outputMessages.clear(); //Platz machen für Error meldungen
         btnStart.setDisable(true);
         btnPause.setDisable(false);

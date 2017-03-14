@@ -36,6 +36,7 @@ public class Connection {
     private boolean directLine = false;                         // wird die Linie direkt verlegt oder nicht
     private PathFinder pathFinder = new PathFinder();
     private List<Node> nodePath = new ArrayList();      //Hier wird (falls die COnnection mit dem Pathfinder generiert wird) der Pfad gespeichert
+    private boolean connectionProcessFinished = false;
     
     //Zum simulieren relevante Globals
     private State state = State.DEFAULT;                              //Für die Simulation relevant -> gibt den Digitalen Status der Verbindung an (An/Aus/Undefiniert)
@@ -103,6 +104,7 @@ public class Connection {
      * @param end Die Endkoordinate der Linie (nun bekannt)
      */
     public void finishLine(Vector2i end) { 
+        this.connectionProcessFinished = true;
         dsc.removeTemporaryLine();
         AnchorPoint endAP = new AnchorPoint(1, end, this);
         this.anchorPoints.add(endAP);
@@ -116,6 +118,7 @@ public class Connection {
      * @param index des IN-/Outputs
      */
     public void finishLine(Element element, boolean isInput, int index) { 
+        this.connectionProcessFinished = true;
         dsc.removeTemporaryLine();
         this.endPartner = new ConnectionPartner(element, isInput, index);
         this.updateConnectionLine();
@@ -126,7 +129,8 @@ public class Connection {
      * @param connection hier wird die Verbindungslinie übergeben, mit welcher diese Verbindungslinie verbunden werden soll
      * @param anchorPoint hier wird der AnchorPoint übergeben (mit dem die Linie verbunden werden wird)
      */
-    public void finishLine(Connection connection, AnchorPoint anchorPoint) { 
+    public void finishLine(Connection connection, AnchorPoint anchorPoint) {
+        this.connectionProcessFinished = true;
         anchorPoint.addToConnectedTo(this);
         dsc.removeTemporaryLine();
         this.endPartner = new ConnectionPartner(connection, anchorPoint);
@@ -668,5 +672,11 @@ public class Connection {
         this.nodePath = nodePath;
     }
 
-    
+    public boolean isConnectionProcessFinished() {
+        return connectionProcessFinished;
+    }
+
+    public void setConnectionProcessFinished(boolean connectionProcessFinished) {
+        this.connectionProcessFinished = connectionProcessFinished;
+    }    
 }

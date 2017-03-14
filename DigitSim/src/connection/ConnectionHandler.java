@@ -10,13 +10,14 @@ import element.Element;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import javafx.scene.paint.Color;
 
 /**
  *
  * @author Elias
  */
 public class ConnectionHandler {
+    private static List<List<Connection>> connectionBundles = new ArrayList(); //In dieser Liste werden alle Listen von Connections, die miteinander verbunden sind gespeichert
+    private static boolean rebuildBundles = false;
     
     /**
      * Aktualisiert alle Verbindungen die mit dem Element verbunden Sind
@@ -80,24 +81,30 @@ public class ConnectionHandler {
      * Aktualisiert alle Verbindungen & damit auch die Elemente
      */
     public static void updateConnectionStates() {
-        List<Connection> allConnections = DigitSimController.getReference().getAllConnections();
-        for(Connection c : allConnections) {
-            if(!c.isUpdated()) {
-                updateConnectionState(c);
+        if(rebuildBundles) {
+            rebuildBundles = false;
+            List<Connection> allConnections = DigitSimController.getReference().getAllConnections();
+            for(Connection c : allConnections) {
+                if(!c.isUpdated()) {
+                    //Findet heraus, mit welchen Linien diese verbunden ist
+                    List<Connection> connectedToEachOther = getAllConnectionsConnectedTo(c);
+                    connectionBundles.add(connectedToEachOther);
+                    updateConnectionState(connectedToEachOther);
+                }
+            }
+            resetConnectionsUptatedSigns();
+        } else {
+            for(List<Connection> cL : connectionBundles) {
+                updateConnectionState(cL);
             }
         }
-        resetConnectionsUptatedSigns();
     }
     
     /**
      * Aktualisiert den State einer Connection
      * @param con 
      */
-    public static void updateConnectionState(Connection con) {
-        
-        //Findet heraus, mit welchen Linien diese verbunden ist
-        List<Connection> connectedToEachOther = getAllConnectionsConnectedTo(con);
-        
+    public static void updateConnectionState(List<Connection> connectedToEachOther) {
         //Erstellt eine Liste der Ouput states
         List<State> outputStates = getOutputStatesFromConnections(connectedToEachOther);
         if(!doStatesContradict(outputStates)) {
@@ -338,5 +345,24 @@ public class ConnectionHandler {
     
     public static void resetConnection(Connection c) {
         c.resetConnecion();
+    }
+
+    //********************GET/SET
+    
+    
+    public static List<List<Connection>> getConnectionBundles() {
+        return connectionBundles;
+    }
+
+    public static void setConnectionBundles(List<List<Connection>> connectionBundles) {
+        ConnectionHandler.connectionBundles = connectionBundles;
+    }
+
+    public static boolean isRebuildBundles() {
+        return rebuildBundles;
+    }
+
+    public static void setRebuildBundles(boolean rebuildBundles) {
+        ConnectionHandler.rebuildBundles = rebuildBundles;
     }
 }
