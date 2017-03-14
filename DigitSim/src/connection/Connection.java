@@ -229,27 +229,20 @@ public class Connection {
         Vector2i startCoords = processPartner(this.startPartner);
         Vector2i endCoords = processPartner(this.endPartner);
         startCoords.adaptToHalfGrid();
+        endCoords.adaptToHalfGrid();
+        
         AnchorPoint start = new AnchorPoint(indexStart, startCoords, this);
-        AnchorPoint end = null;
-        if(endCoords != null) {
-            endCoords.adaptToHalfGrid();
-            end = new AnchorPoint(indexEnd, endCoords, this);
-        }
-        
-        
-        
+        AnchorPoint end = new AnchorPoint(indexEnd, endCoords, this);
         
         
         if(anchorPoints.size() > 1) {
             this.anchorPoints.set(0, start);
-            if(end != null)
-                this.anchorPoints.set(anchorPoints.size()-1, end);
+            this.anchorPoints.set(anchorPoints.size()-1, end);
         }
         else {
             this.anchorPoints.clear();
             this.anchorPoints.add(start);
-            if(end != null)
-                this.anchorPoints.add(end);
+            this.anchorPoints.add(end);
         }
     }
     
@@ -259,29 +252,25 @@ public class Connection {
      * @return 
      */
     public Vector2i processPartner(ConnectionPartner partner) {
-        try {
-            if(partner.getPartnerType() == PartnerType.CONNECTION) {    //es handelt sich um eine Verbindungslinie -> Koordinaten des AnchorPoints?
-                Vector2i coords = new Vector2i(partner.getAnchorPoint().getCoords());//Koordinaten setzen sich aus der x&y koordinate des AnchorPoints zustanden
+        if(partner.getPartnerType() == PartnerType.CONNECTION) {    //es handelt sich um eine Verbindungslinie -> Koordinaten des AnchorPoints?
+            Vector2i coords = new Vector2i(partner.getAnchorPoint().getCoords());//Koordinaten setzen sich aus der x&y koordinate des AnchorPoints zustanden
+            return coords;
+        }
+        if(partner.getPartnerType() == PartnerType.ELEMENT) {   //Es handelt sich um ein Element -> In/Output?
+            Element element = partner.getElement();
+            Vector2i coords = new Vector2i();
+            
+            if(partner.isIsInput()) {   //Es handelt sich um einen Input (die Koordinate von einem Inputs wird hier bestimmt)
+                coords.setX((int) element.getInputX(partner.getIndex()));
+                coords.setY((int) element.getInputY(partner.getIndex()));
+                return coords;
+            } else {                    //Es handelt sich um einen Output (die Koordinate von einem Ouputs wird hier bestimmt)
+                coords.setX((int) element.getOutputX(partner.getIndex()));
+                coords.setY((int) element.getOutputY(partner.getIndex()));
                 return coords;
             }
-            if(partner.getPartnerType() == PartnerType.ELEMENT) {   //Es handelt sich um ein Element -> In/Output?
-                Element element = partner.getElement();
-                Vector2i coords = new Vector2i();
-
-                if(partner.isIsInput()) {   //Es handelt sich um einen Input (die Koordinate von einem Inputs wird hier bestimmt)
-                    coords.setX((int) element.getInputX(partner.getIndex()));
-                    coords.setY((int) element.getInputY(partner.getIndex()));
-                    return coords;
-                } else {                    //Es handelt sich um einen Output (die Koordinate von einem Ouputs wird hier bestimmt)
-                    coords.setX((int) element.getOutputX(partner.getIndex()));
-                    coords.setY((int) element.getOutputY(partner.getIndex()));
-                    return coords;
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("Unbekannte Art von Verbindungspartnerart!"); //wenn man hier angelangt, dann wird diese Art von Partner noch nicht unterstützt
-            return null;
         }
+        System.out.println("Unbekannte Art von Verbindungspartnerart!"); //wenn man hier angelangt, dann wird diese Art von Partner noch nicht unterstützt
         return null;
     }
     
@@ -529,20 +518,9 @@ public class Connection {
      */
     public void addAnchorPoint(AnchorPoint aP) {
         aP.addToConnectedTo(this);
-        if(anchorPoints.size() > 0) {
-            this.anchorPoints.add(1, aP);
-        } else {
-            this.anchorPoints.add(0, aP);
-        }
+        this.anchorPoints.add(1, aP);
         sortAnchorPoints();
         updateConnectionLine();
-    }
-    
-    public void addAnchorPointWhileCreatingConnection(MouseEvent event) {
-        Vector2i coords = new Vector2i((int) event.getX(), (int) event.getY());
-        coords.adaptToHalfGrid();
-        AnchorPoint aP = new AnchorPoint(this.anchorPoints.size(),coords);
-        addAnchorPoint(aP);
     }
     
     /**

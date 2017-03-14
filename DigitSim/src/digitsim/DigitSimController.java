@@ -52,7 +52,6 @@ public class DigitSimController extends Pane{
     private Vector2i mouseCoords = new Vector2i();
     private Line temporaryLine;//In dieser gruppe steckt die orangene halb durchsichtige Linie (beim Verlegen von Connections)
     private int tmpLoadCounter = 0;
-    private static ProgramMode programMode;
 
      /**
      * FXML OBJEKT-Erstellungs-Bereich:
@@ -155,11 +154,9 @@ public class DigitSimController extends Pane{
                 if(isLocked()){ //Schauen ob das Programm blokiert ist (erklärung: siehe DigitSimController oben)
                     return;
                 }
-                if(event.isPrimaryButtonDown() && !isMouseOverNode(event) && programMode != ProgramMode.KABELVERLEGUNG){
+                if(event.isPrimaryButtonDown() && !isMouseOverNode(event)){
                     addElement(event); //Neuen Baustein einfügen
-                }  else if(event.isPrimaryButtonDown() && !isMouseOverNode(event) && programMode == ProgramMode.KABELVERLEGUNG) {
-                    allConnections.get(allConnections.size()-1).addAnchorPointWhileCreatingConnection(event);
-                }
+                }  
             }
         };
     }
@@ -171,16 +168,10 @@ public class DigitSimController extends Pane{
             public void handle(MouseEvent event){
                 if(DigitSimController.getReference().isUnfinishedConnection()) {
                     Connection c = allConnections.get(allConnections.size()-1);
-                    Vector2i coords;
-                    if(c.getAnchorPoints().isEmpty()) {
-                        coords = c.processPartner(c.getStartPartner());
-                    } else {
-                        coords = c.getAnchorPoints().get(c.getAnchorPoints().size()-1).getCoords();
-                    }
-                    
+                    Vector2i coords = c.processPartner(c.getStartPartner());
                     Line l = toolbox.Draw.drawLine(coords.getX(), coords.getY(), event.getX(), event.getY(), Color.DARKORANGE, 5);
                     l.setOpacity(0.6);
-                    System.out.println(programMode);
+                    
                     if(temporaryLine != null) {
                         getSimCanvas().getChildren().remove(temporaryLine);
                     }
@@ -751,9 +742,7 @@ public class DigitSimController extends Pane{
         } else {
             this.unfinishedConnection = false;
             allConnections.get(allConnections.size()-1).finishLine(e, isInput, index);
-            this.programMode = ProgramMode.IDLE;
         }   
-        allConnections.get(allConnections.size()-1).updateConnectionLine();
     }
     
     public void addConnection(Connection c, AnchorPoint aP) {
@@ -767,7 +756,6 @@ public class DigitSimController extends Pane{
         } else {
             this.unfinishedConnection = false;
             allConnections.get(allConnections.size()-1).finishLine(c, aP);
-            this.programMode = ProgramMode.IDLE;
         }   
     }
     
@@ -834,14 +822,6 @@ public class DigitSimController extends Pane{
     
     public ArrayList<Element> getElements(){ //Über diese Methode können andere Klassen auf die Elemente zugreifen
         return elements;
-    }
-
-    public static ProgramMode getProgramMode() {
-        return programMode;
-    }
-
-    public static void setProgramMode(ProgramMode programMode) {
-        DigitSimController.programMode = programMode;
     }
     
     public boolean isUnfinishedConnection() {
