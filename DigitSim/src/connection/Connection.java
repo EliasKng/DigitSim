@@ -220,33 +220,45 @@ public class Connection {
      * Erstellt Aus den beiden "Verbindungspartnern" Den start und das Ende der Linie (und speichert diese als AnchorPoint)
      */
     public void processPartners() {
-        int indexStart = 0;
-        int indexEnd;
-        
-        //Suche passenden Index für den Endpunkt -> wenn es sonst keine Punkte gibt, muss er 1 sein und sonst den höchsten Index der Liste haben
-        if(anchorPoints.isEmpty()) {
-            indexEnd = 1;
+        if(this.connectionProcessFinished) {
+            int indexStart = 0;
+            int indexEnd;
+
+            //Suche passenden Index für den Endpunkt -> wenn es sonst keine Punkte gibt, muss er 1 sein und sonst den höchsten Index der Liste haben
+            if(anchorPoints.isEmpty()) {
+                indexEnd = 1;
+            } else {
+                indexEnd = anchorPoints.size()-1;
+            }
+
+            Vector2i startCoords = processPartner(this.startPartner);
+            Vector2i endCoords = processPartner(this.endPartner);
+            startCoords.adaptToHalfGrid();
+            endCoords.adaptToHalfGrid();
+
+            AnchorPoint start = new AnchorPoint(indexStart, startCoords, this);
+            AnchorPoint end = new AnchorPoint(indexEnd, endCoords, this);
+
+
+            if(anchorPoints.size() > 1) {
+                this.anchorPoints.set(0, start);
+                this.anchorPoints.set(anchorPoints.size()-1, end);
+            }
+            else {
+                this.anchorPoints.clear();
+                this.anchorPoints.add(start);
+                this.anchorPoints.add(end);
+            }
         } else {
-            indexEnd = anchorPoints.size()-1;
-        }
-        
-        Vector2i startCoords = processPartner(this.startPartner);
-        Vector2i endCoords = processPartner(this.endPartner);
-        startCoords.adaptToHalfGrid();
-        endCoords.adaptToHalfGrid();
-        
-        AnchorPoint start = new AnchorPoint(indexStart, startCoords, this);
-        AnchorPoint end = new AnchorPoint(indexEnd, endCoords, this);
-        
-        
-        if(anchorPoints.size() > 1) {
-            this.anchorPoints.set(0, start);
-            this.anchorPoints.set(anchorPoints.size()-1, end);
-        }
-        else {
-            this.anchorPoints.clear();
-            this.anchorPoints.add(start);
-            this.anchorPoints.add(end);
+            Vector2i startCoords = processPartner(this.startPartner);
+            startCoords.adaptToHalfGrid();
+            AnchorPoint start = new AnchorPoint(0, startCoords, this);
+            if(anchorPoints.size() > 1) {
+                this.anchorPoints.set(0, start);
+            } else {
+                this.anchorPoints.clear();
+                this.anchorPoints.add(start);
+            }
         }
     }
     
@@ -467,7 +479,7 @@ public class Connection {
     
     
     /**
-     * erstellt die orangene Verbindungslinie und löscht die Alte
+     * erstellt die orangene Verbindungslinie (beim Verschieben) und löscht die Alte
      */
     public void drawDirectPreLine() {
         processPartners();
@@ -486,6 +498,26 @@ public class Connection {
         }    
         
         this.dsc.getSimCanvas().getChildren().add(this.tempGroup);
+    }
+    
+    /**
+     * erstellt die orangene Verbindungslinie und löscht die Alte
+     * @param mouseCoords die Koordinaten der Maus werden hier übergeben
+     */
+    public void drawDirectPreLineToMouse(Vector2i mouseCoords) {
+        processPartners();
+        
+        removeTempGroup(); 
+        
+        AnchorPoint aP = this.anchorPoints.get(this.anchorPoints.size()-1);
+        
+        Line l = Draw.drawLine(mouseCoords, aP.getCoords(), Color.DARKORANGE, 5);
+        l.setOpacity(0.6);
+        
+        this.tempGroup.getChildren().add(l);
+        
+        this.dsc.getSimCanvas().getChildren().add(this.tempGroup);
+        tempGroup.toBack();
     }
     
     /**

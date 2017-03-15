@@ -166,20 +166,26 @@ public class DigitSimController extends Pane{
         return new EventHandler<MouseEvent>(){
             @Override
             public void handle(MouseEvent event){
-                if(DigitSimController.getReference().isUnfinishedConnection()) {
+                if(!allConnections.isEmpty()) {
                     Connection c = allConnections.get(allConnections.size()-1);
-                    Vector2i coords = c.processPartner(c.getStartPartner());
-                    Line l = toolbox.Draw.drawLine(coords.getX(), coords.getY(), event.getX(), event.getY(), Color.DARKORANGE, 5);
-                    l.setOpacity(0.6);
-                    
-                    if(temporaryLine != null) {
-                        getSimCanvas().getChildren().remove(temporaryLine);
+                    if(!c.isConnectionProcessFinished()) {
+                        c.drawDirectPreLineToMouse(new Vector2i((int)event.getX(), (int)event.getY()));
                     }
-                    
-                    temporaryLine = l;
-                    getSimCanvas().getChildren().add(l);
-                    l.toBack();
                 }
+//                if(DigitSimController.getReference().isUnfinishedConnection()) {
+//                    Connection c = allConnections.get(allConnections.size()-1);
+//                    Vector2i coords = c.processPartner(c.getStartPartner());
+//                    Line l = toolbox.Draw.drawLine(coords.getX(), coords.getY(), event.getX(), event.getY(), Color.DARKORANGE, 5);
+//                    l.setOpacity(0.6);
+//                    
+//                    if(temporaryLine != null) {
+//                        getSimCanvas().getChildren().remove(temporaryLine);
+//                    }
+//                    
+//                    temporaryLine = l;
+//                    getSimCanvas().getChildren().add(l);
+//                    l.toBack();
+//                }
             }
         };
     }
