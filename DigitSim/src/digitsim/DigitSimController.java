@@ -46,12 +46,12 @@ public class DigitSimController extends Pane{
     private static boolean locked = false; //Wenn wir das Programm starten setzen wir locked auf True, damit das Programm blokiert wird und man während der Simulation nichts ändern kann!
     private static DigitSimController refThis;
     private static final ObservableList outputMessages = FXCollections.observableArrayList();
-    private static boolean connectionPointDragging = false;
     private String currentProjectPath = "";
     private boolean unfinishedConnection = false;
     private Vector2i mouseCoords = new Vector2i();
     private Line temporaryLine;//In dieser gruppe steckt die orangene halb durchsichtige Linie (beim Verlegen von Connections)
     private int tmpLoadCounter = 0;
+    private static ProgramMode programMode = ProgramMode.IDLE;
 
      /**
      * FXML OBJEKT-Erstellungs-Bereich:
@@ -142,8 +142,6 @@ public class DigitSimController extends Pane{
     private void addSimCanvas() {
         simCanvas.addEventFilter(MouseEvent.MOUSE_PRESSED, getCanvasMouseKlickedEventHandler());
         simCanvas.addEventFilter(MouseEvent.MOUSE_MOVED, getCanvasMouseMovedEventHandler());
-       simCanvas.addEventFilter(MouseEvent.MOUSE_DRAGGED, getCanvasMouseDraggedEventHandler());
-        simCanvas.addEventFilter(MouseEvent.MOUSE_RELEASED, getCanvasMouseReleasedEventHandler());
         simPane.getChildren().addAll(simCanvas); //die Arbeitsfläche auf das Panel setzen
     }    
     
@@ -154,9 +152,16 @@ public class DigitSimController extends Pane{
                 if(isLocked()){ //Schauen ob das Programm blokiert ist (erklärung: siehe DigitSimController oben)
                     return;
                 }
-                if(event.isPrimaryButtonDown() && !isMouseOverNode(event)){
+                if(event.isPrimaryButtonDown() && !isMouseOverNode(event) && programMode != ProgramMode.CONNECTIONEDITING){
                     addElement(event); //Neuen Baustein einfügen
-                }  
+                }  else if(event.isPrimaryButtonDown() && !isMouseOverNode(event) && programMode == ProgramMode.CONNECTIONEDITING) {
+                    Connection c = allConnections.get(allConnections.size()-1);
+                    int index = c.getAnchorPoints().size();
+                    Vector2i coords = new Vector2i((int)event.getX(), (int)event.getY());
+                    coords.adaptToHalfGrid();
+                    AnchorPoint aP = new AnchorPoint(index, coords, c);
+                    allConnections.get(allConnections.size()-1).addAnchorPoint(aP);
+                }
             }
         };
     }
@@ -172,57 +177,8 @@ public class DigitSimController extends Pane{
                         c.drawDirectPreLineToMouse(new Vector2i((int)event.getX(), (int)event.getY()));
                     }
                 }
-//                if(DigitSimController.getReference().isUnfinishedConnection()) {
-//                    Connection c = allConnections.get(allConnections.size()-1);
-//                    Vector2i coords = c.processPartner(c.getStartPartner());
-//                    Line l = toolbox.Draw.drawLine(coords.getX(), coords.getY(), event.getX(), event.getY(), Color.DARKORANGE, 5);
-//                    l.setOpacity(0.6);
-//                    
-//                    if(temporaryLine != null) {
-//                        getSimCanvas().getChildren().remove(temporaryLine);
-//                    }
-//                    
-//                    temporaryLine = l;
-//                    getSimCanvas().getChildren().add(l);
-//                    l.toBack();
-//                }
             }
         };
-    }
-    
-    private EventHandler getCanvasMouseDraggedEventHandler(){ //Falls man bereits einen Input/Output ausgewählt halt erscheint eine Linie, diese Funktion sorgt daüfr das die Linie dem Mauszeiger folgt
-        return new EventHandler<MouseEvent>(){
-            @Override
-            public void handle(MouseEvent event){
-                if(connectionPointDragging){
-//                    allConnectionsOLD.removeLastPoint(currentConData);
-//                    allConnectionsOLD.addPoint(currentConData, event, true);
-                }
-            }
-        };
-    }
-    
-    private EventHandler getCanvasMouseReleasedEventHandler(){ //Falls man bereits einen Input/Output ausgewählt halt erscheint eine Linie, diese Funktion sorgt daüfr das die Linie dem Mauszeiger folgt
-        return new EventHandler<MouseEvent>(){
-            @Override
-            public void handle(MouseEvent event){
-                if(connectionPointDragging){
-//                    allConnectionsOLD.removeLastPoint(currentConData);
-//                    allConnectionsOLD.addPoint(currentConData, event, false);
-                    connectionPointDragging = false;
-                    simCanvas.getScene().setCursor(Cursor.DEFAULT);
-                }
-            }
-        };
-    }
-      
-    
-    public void setConnectionPointDragging(boolean b){
-        connectionPointDragging = b;
-    }
-    
-    public boolean getConnectionPointDragging(){
-        return connectionPointDragging;
     }
     
     /**
@@ -346,7 +302,8 @@ public class DigitSimController extends Pane{
         simCanvas.addGrid(simCanvas.getPrefWidth(), simCanvas.getPrefHeight());
         ConnectionHandler.removeAllConnections();
     }
-    public void btnStartOnAction(ActionEvent event) {   
+    public void btnStartOnAction(ActionEvent event) {  
+        programMode = ProgramMode.SIMULATION;
         ConnectionHandler.setRebuildBundles(true);
         outputMessages.clear(); //Platz machen für Error meldungen
         btnStart.setDisable(true);
@@ -358,6 +315,7 @@ public class DigitSimController extends Pane{
         locked = true; //Programm blockieren (siehe erklärung oben)
   }     
     public void btnPauseOnAction(ActionEvent event) {   
+        programMode = ProgramMode.IDLE;
         runningThread.interrupt(); //Den Thread anhalten
         ConnectionHandler.resetConnectionStates();  //Alle Verbindungen resetten
         resetElements(); //Alle ELemente resetten
@@ -743,12 +701,15 @@ public class DigitSimController extends Pane{
         if(allConnections.isEmpty()) {
             this.unfinishedConnection = true;
             allConnections.add(new Connection(this, e, isInput, index));
-        } else if (allConnections.get(allConnections.size()-1).getEndPartner() != null) {
+            programMode = programMode.CONNECTIONEDITING;
+        } else if (allConnections.get(allConnections.size()-1).isConnectionProcessFinished()) {
             this.unfinishedConnection = true;
             allConnections.add(new Connection(this, e, isInput, index));
+            programMode = programMode.CONNECTIONEDITING;
         } else {
             this.unfinishedConnection = false;
             allConnections.get(allConnections.size()-1).finishLine(e, isInput, index);
+            programMode = programMode.IDLE;
         }   
     }
     
@@ -757,12 +718,15 @@ public class DigitSimController extends Pane{
         if(allConnections.isEmpty()) {
             this.unfinishedConnection = true;
             allConnections.add(new Connection(this, c, aP));
-        } else if (allConnections.get(allConnections.size()-1).getEndPartner() != null) {
+            programMode = programMode.CONNECTIONEDITING;
+        } else if (allConnections.get(allConnections.size()-1).isConnectionProcessFinished()) {
             this.unfinishedConnection = true;
             allConnections.add(new Connection(this, c, aP));
+            programMode = programMode.CONNECTIONEDITING;
         } else {
             this.unfinishedConnection = false;
             allConnections.get(allConnections.size()-1).finishLine(c, aP);
+            programMode = programMode.IDLE;
         }   
     }
     
@@ -845,6 +809,14 @@ public class DigitSimController extends Pane{
     
     public void removeTemporaryLine() {
         getSimCanvas().getChildren().remove(this.temporaryLine);
+    }
+
+    public static ProgramMode getProgramMode() {
+        return programMode;
+    }
+
+    public static void setProgramMode(ProgramMode programMode) {
+        DigitSimController.programMode = programMode;
     }
     
     public int findElementIndex(Element e){
