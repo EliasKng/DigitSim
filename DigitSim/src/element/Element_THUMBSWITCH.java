@@ -279,10 +279,8 @@ public class Element_THUMBSWITCH extends Element{
                                                                       // es wird nacheinander jede Stelle der ReversedNumbString durchgegangen                                                      
             if(Character.getNumericValue(reversedNumbString.charAt(i)) == 1){ //Wenn die Stelle in unserer binären String 1 ist, setzen wir logischerweise auch                 
                 outputs[i] = 1;                                      //den Output auf 1 und die Linie rot
-//                outputLines.get(i).setStroke(Color.RED);
             }else{
                 outputs[i] = 0;
-//                outputLines.get(i).setStroke(Color.BLUE);
             }
         }
     }

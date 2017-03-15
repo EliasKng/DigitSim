@@ -83,6 +83,10 @@ public abstract class Element implements ElementType{ //Abstakte Klasse, nur zur
     public int getOutput(int pOut) { //Liefert den Wert des Outputs an der Stelle pOut
         return outputs[pOut];
     }
+
+    public void setOutput(int pOut, int state) {
+        this.outputs[pOut] = state;
+    }
     
     public double getWidth() { //breite
         return elementWidth;
