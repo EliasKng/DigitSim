@@ -451,7 +451,11 @@ public class NodeGestures {
                     AnchorPoint aPNew = new AnchorPoint(avgIndex, toolbox.GenFunctions.getXYAdaptGrid(new Vector2i((int) event.getX(), (int) event.getY())));
 
                     c.addAnchorPoint(aPNew);
-
+                    
+                    if(DigitSimController.getProgramMode() == ProgramMode.CONNECTIONEDITING) {
+                        DigitSimController dsc = DigitSimController.getReference();
+                        dsc.addConnection(dsc.getAllConnections().get(dsc.getAllConnections().size()-1),aPNew);
+                    }
 
                     
                 } else if(event.getButton() == MouseButton.SECONDARY) {
@@ -487,13 +491,12 @@ public class NodeGestures {
                 }
                 draggedAnchorPoint = true;
                 aP.setCoords(toolbox.GenFunctions.getXYAdaptGrid(new Vector2i((int) event.getX(), (int) event.getY())));
-                c.moveAnchorPoint(aP);
                 c.drawDirectPreLine();
             }  
         };             
     }
     
-    public static EventHandler<MouseEvent> getAnchorPointOnDragDoneEventHandler(AnchorPoint aP, Connection c){
+    public static EventHandler<MouseEvent> getAnchorPointOnDragDoneEventHandler(AnchorPoint aP){
         return new EventHandler<MouseEvent>(){
             @Override
             public void handle(MouseEvent event){
@@ -502,8 +505,10 @@ public class NodeGestures {
                 }
                 if(draggedAnchorPoint) {
                     draggedAnchorPoint = false;
-                    c.removeTempGroup();
-                    c.updateConnectionLine();
+                    for(Connection c : aP.getConnectedTo()) {
+                        c.removeTempGroup();
+                        c.updateConnectionLine();
+                    }
                 }
             }  
         };             

@@ -325,7 +325,7 @@ public class Connection {
             circle.addEventFilter(MouseEvent.MOUSE_ENTERED, NodeGestures.getOverNodeMouseHanlderEnterCircle(circle));
             circle.addEventFilter(MouseEvent.MOUSE_EXITED, NodeGestures.getOverNodeMouseHanlderExitCircle(circle));
             circle.addEventFilter(MouseEvent.MOUSE_DRAGGED, NodeGestures.getAnchorPointDraggedEventHandler(ap, this));
-            circle.addEventFilter(MouseEvent.MOUSE_RELEASED, NodeGestures.getAnchorPointOnDragDoneEventHandler(ap, this));
+            circle.addEventFilter(MouseEvent.MOUSE_RELEASED, NodeGestures.getAnchorPointOnDragDoneEventHandler(ap));
             circle.addEventFilter(MouseEvent.MOUSE_CLICKED, NodeGestures.getAnchorPointClickedEventHandler(ap, this));
             pointGroup.getChildren().add(circle);
         }
@@ -575,14 +575,6 @@ public class Connection {
         }
         
         this.anchorPoints = sortedAnchorPoints;
-    }
-    
-    /**
-     * Bewegt einen AnchorPoint
-     * @param aP 
-     */
-    public void moveAnchorPoint(AnchorPoint aP) {
-        this.anchorPoints.set((int) aP.getIndex(), aP);
     }
     
     /**
