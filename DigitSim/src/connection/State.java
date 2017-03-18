@@ -4,14 +4,11 @@
  * and open the template in the editor.
  */
 package connection;
-
-import javafx.scene.paint.Color;
-
 /**
  *
  * @author Elias
  */
 public enum State{
-    HIGH, LOW, UNDEFINED, DEFAULT
+   LOW, HIGH, UNDEFINED, NULL, DEFAULT
 };
 
