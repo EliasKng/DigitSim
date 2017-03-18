@@ -88,7 +88,7 @@ public class PathFinder {
                 Node node = new Node(a,current, gCost, hCost);
                 
                 if(TileCode.isTileInIOArea(x,xi,y,yi)) {
-                    node.fCost +=50;
+                    node.fCost +=10;
                 }
                 if(TileCode.isTileInElementArea(x,xi,y,yi)) {
                     node.fCost += 5;
