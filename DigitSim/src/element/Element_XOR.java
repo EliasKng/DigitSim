@@ -8,9 +8,11 @@ package element;
 import toolbox.Draw;
 import toolbox.GenFunctions;
 import Gestures.NodeGestures;
+import connection.HandleState;
 import general.Properties;
 import element.Element;
 import static element.Element.elementWidth;
+import general.State;
 import java.util.Arrays;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
@@ -83,30 +85,11 @@ public class Element_XOR extends Element{
     
     //Diese Methoden müssen überschrieben werden (Beschreibung in der Mutterklasse)
     @Override
-    public void update(){
-//        for(int i = 0; i < numInputs; i++){
-//            if(inputs[i] == 0){
-//                inputLines.get(i).setStroke(Color.BLUE);
-//            }else{
-//                inputLines.get(i).setStroke(Color.RED);
-//            }
-//        }
-        boolean allON = true;
-        boolean allOFF = true;
-        for(int i = 0; i < numInputs; i++){ //Eingänge durchiterieren & Logik überprüfen
-            if(inputs[i] == 0){
-                allON = false;
-            }else{
-                allOFF = false;
-            }
-        }
-        if(allON || allOFF){
-            outputs[0] = 0;
-//            outputLines.get(0).setStroke(Color.BLUE);
-        }else{
-            outputs[0] = 1;
-//            outputLines.get(0).setStroke(Color.RED);
-        }  
+    public void update(){ 
+        State s0 = HandleState.getState(inputs[0]);
+        State s1 = HandleState.getState(inputs[1]);
+        State result = HandleState.logicXOR(s0, s1);
+        outputs[0] = HandleState.getIntFromState(result);
     }
     
      @Override

@@ -8,8 +8,10 @@ package element;
 import toolbox.Draw;
 import toolbox.GenFunctions;
 import Gestures.NodeGestures;
+import connection.HandleState;
 import general.Properties;
 import element.Element;
+import general.State;
 import java.util.Arrays;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
@@ -84,28 +86,12 @@ public class Element_OR extends Element{
     }
     
     //Diese Methoden müssen überschrieben werden (Beschreibung in der Mutterklasse)
-    @Override
-    public void update(){
-//        for(int i = 0; i < numInputs; i++){
-//            if(inputs[i] == 0){
-//                inputLines.get(i).setStroke(Color.BLUE);
-//            }else{
-//                inputLines.get(i).setStroke(Color.RED);
-//            }
-//        }
-        boolean logic = false;
-        for(int i = 0; i < numInputs; i++){ //Eingänge durchiterieren & Logik überprüfen
-            if(inputs[i] == 1){
-                logic = true;
-            }
-        }
-        if(logic){                             
-            outputs[0] = 1;
-//            outputLines.get(0).setStroke(Color.RED);
-        }else{
-            outputs[0] = 0;
-//            outputLines.get(0).setStroke(Color.BLUE);
-        }  
+@Override
+    public void update(){ 
+        State s0 = HandleState.getState(inputs[0]);
+        State s1 = HandleState.getState(inputs[1]);
+        State result = HandleState.logicOR(s0, s1);
+        outputs[0] = HandleState.getIntFromState(result);
     }
     
     @Override

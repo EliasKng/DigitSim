@@ -5,6 +5,7 @@
  */
 package connection;
 
+import general.State;
 import javafx.scene.paint.Color;
 
 /**
@@ -101,6 +102,14 @@ public class HandleState {
         return getState(res);
     }
     
+    public static State logicNAND(State s0, State s1) {
+        int sInt0 = getIntFromState(s0);
+        int sInt1 = getIntFromState(s1);
+        int res0 = aND[sInt0][sInt1];
+        int res = nOT[res0];
+        return getState(res);
+    }
+    
     public static State logicOR(State s0, State s1) {
         int sInt0 = getIntFromState(s0);
         int sInt1 = getIntFromState(s1);
@@ -108,7 +117,23 @@ public class HandleState {
         return getState(res);
     }
     
+    public static State logicNOR(State s0, State s1) {
+        int sInt0 = getIntFromState(s0);
+        int sInt1 = getIntFromState(s1);
+        int res0 = oR[sInt0][sInt1];
+        int res = nOT[res0];
+        return getState(res);
+    }
+    
     public static State logicXOR(State s0, State s1) {
+        int sInt0 = getIntFromState(s0);
+        int sInt1 = getIntFromState(s1);
+        int res0 = xOR[sInt0][sInt1];
+        int res = nOT[res0];
+        return getState(res);
+    }
+    
+    public static State logicXNOR(State s0, State s1) {
         int sInt0 = getIntFromState(s0);
         int sInt1 = getIntFromState(s1);
         int res = xOR[sInt0][sInt1];

@@ -5,6 +5,7 @@
  */
 package connection;
 
+import general.State;
 import digitsim.DigitSimController;
 import element.Element;
 import java.util.ArrayList;

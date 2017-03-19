@@ -7,8 +7,10 @@ package element;
 
 import toolbox.Draw;
 import Gestures.NodeGestures;
+import connection.HandleState;
 import general.Properties;
 import static element.Element.elementWidth;
+import general.State;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -83,21 +85,10 @@ public class Element_NOT extends Element{
     
     //Diese Methoden müssen überschrieben werden (Beschreibung in der Mutterklasse) 
     @Override
-    public void update(){
-//        for(int i = 0; i < numInputs; i++){
-//            if(inputs[i] == 0){
-//                inputLines.get(i).setStroke(Color.BLUE);
-//            }else{
-//                inputLines.get(i).setStroke(Color.RED);
-//            }
-//        }
-        if(inputs[0] == 0){
-            outputs[0] = 1;
-//            outputLines.get(0).setStroke(Color.RED);
-        }else{
-            outputs[0] = 0;
-//            outputLines.get(0).setStroke(Color.BLUE);
-        }
+    public void update(){ 
+        State s0 = HandleState.getState(inputs[0]);
+        State result = HandleState.logicNOT(s0);
+        outputs[0] = HandleState.getIntFromState(result);
     }
     
      @Override

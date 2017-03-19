@@ -8,7 +8,7 @@ package element;
 import toolbox.GenFunctions;
 import Gestures.NodeGestures;
 import connection.HandleState;
-import connection.State;
+import general.State;
 import general.Properties;
 import java.util.Arrays;
 import javafx.scene.Group;

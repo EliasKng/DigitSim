@@ -5,6 +5,7 @@
  */
 package connection;
 
+import general.State;
 import Gestures.NodeGestures;
 import digitsim.DigitSimController;
 import element.Element;

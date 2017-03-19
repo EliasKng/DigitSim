@@ -8,6 +8,8 @@ package element;
 import toolbox.Draw;
 import toolbox.GenFunctions;
 import Gestures.NodeGestures;
+import connection.HandleState;
+import general.State;
 import general.Properties;
 import static element.Element.elementWidth;
 import java.util.Arrays;
@@ -50,7 +52,7 @@ public class Element_AND extends Element{
         outputLines.get(0).addEventFilter(MouseEvent.MOUSE_ENTERED, NodeGestures.getOverNodeMouseHanlderEnter());
         outputLines.get(0).addEventFilter(MouseEvent.MOUSE_EXITED, NodeGestures.getOverNodeMouseHanlderExit());
         outputLines.get(0).addEventFilter(MouseEvent.MOUSE_CLICKED, NodeGestures.getOverOutputMouseHanlderClicked(this, 0));
-
+        outputs[0] = 3;
         
             numInputs = pInputs;
             inputs = new int[numInputs];
@@ -63,7 +65,7 @@ public class Element_AND extends Element{
                 // korrekte stelle für jeden eingang berechnen, egal wie viele eingänge
                 // *Überarbeitet von Elias 11.11.16
                 // Bausteine passen sich nun automatisch mit ihrer Höhe an die anzahl der Eingänge an
-                
+                inputs[i] = 3;
                 double gridOffset = (double) Properties.GetGridOffset();
                 
                 if(rec.getHeight() <= (numInputs) * gridOffset) {
@@ -87,26 +89,24 @@ public class Element_AND extends Element{
     //Diese Methoden müssen überschrieben werden (Beschreibung in der Mutterklasse)
     @Override
     public void update(){ 
-//        for(int i = 0; i < numInputs; i++){
+        State s0 = HandleState.getState(inputs[0]);
+        State s1 = HandleState.getState(inputs[1]);
+        State result = HandleState.logicAND(s0, s1);
+        outputs[0] = HandleState.getIntFromState(result);
+        System.out.println("S0: " +s0 +"S1: " +s1 +"result: " +result);
+//        boolean logic = true;
+//        for(int i = 0; i < numInputs; i++){ //Eingänge durchiterieren & Logik überprüfen
 //            if(inputs[i] == 0){
-//                inputLines.get(i).setStroke(Color.BLUE);
-//            }else{
-//                inputLines.get(i).setStroke(Color.RED);
+//                logic = false;
 //            }
 //        }
-        boolean logic = true;
-        for(int i = 0; i < numInputs; i++){ //Eingänge durchiterieren & Logik überprüfen
-            if(inputs[i] == 0){
-                logic = false;
-            }
-        }
-        if(logic){
-            outputs[0] = 1;
-//            outputLines.get(0).setStroke(Color.RED);
-        }else{
-            outputs[0] = 0;
-//            outputLines.get(0).setStroke(Color.BLUE);
-        }      
+//        if(logic){
+//            outputs[0] = 1;
+////            outputLines.get(0).setStroke(Color.RED);
+//        }else{
+//            outputs[0] = 0;
+////            outputLines.get(0).setStroke(Color.BLUE);
+//        }      
     }
     
     @Override

@@ -143,24 +143,27 @@ public abstract class Element implements ElementType{ //Abstakte Klasse, nur zur
     public void setInput(int pInput, int pValue) { //Einen Input setzen, mit pInput den zu setzenden Input auswählen und pValue der Wert (0 o. 1)
         if(pInput >= 0 && pInput < numInputs){
             inputs[pInput] = pValue;
-            if(pValue == 1){
-                //inputLines.get(pInput).setStroke(Color.RED);
-            }else{
-                inputLines.get(pInput).setStroke(Color.BLACK);
-            }
+//            if(pValue == 1){
+//                //inputLines.get(pInput).setStroke(Color.RED);
+//            }else{
+////                inputLines.get(pInput).setStroke(Color.BLACK);
+//            }
         }
     }
     
     public void reset(){ //Simple reset methode (kann natürlich überschireben werden, für spezielle Bausteine)
         for(int i = 0; i < getInputCount(); i++){
-                setInput(i, 0);
-            }
-        update();
-                for(int i = 0; i < getInputCount(); i++){
-                inputLines.get(i).setStroke(Color.BLACK);
-            }
-        for(int i = 0; i < getOutputCount(); i++){
-            outputLines.get(i).setStroke(Color.BLACK);
+            setInput(i, 3);
         }
+        for(int i = 0; i < getOutputCount(); i++) {
+            setOutput(i, 3);
+        }
+        update();
+//                for(int i = 0; i < getInputCount(); i++){
+//                inputLines.get(i).setStroke(Color.BLACK);
+//            }
+//        for(int i = 0; i < getOutputCount(); i++){
+//            outputLines.get(i).setStroke(Color.BLACK);
+//        }
     }
 }
