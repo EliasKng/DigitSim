@@ -29,6 +29,10 @@ public class Element_DTFF extends Element {
     private final Label lblDTFF;
     private final Label lblD;
     private final Label lblCLK;
+    private final Label lblQ;
+    private final Label lblNotQ;
+    private int lastClockState = 0;
+    private int currentClockState = 3;
     private final Element thisElement = this; //Referenz auf sich selbst
     
     private int currentSavedValue = 0;
@@ -47,15 +51,17 @@ public class Element_DTFF extends Element {
         rec.addEventFilter(MouseEvent.MOUSE_ENTERED, NodeGestures.getOverNodeMouseHanlderEnterRec());
         rec.addEventFilter(MouseEvent.MOUSE_EXITED, NodeGestures.getOverNodeMouseHanlderExitRec());
         lblDTFF = Draw.drawLabel((pX + 15), (pY), "DTFF", Color.BLACK, false, 20);
-        lblD = Draw.drawLabel((pX + 10), gridOffset - 12.5, "D", Color.BLACK, false, 25);
-        lblCLK = Draw.drawLabel((pX + 10), 3 * gridOffset + gridOffset - 12.5, "CLK", Color.BLACK, false, 25);
+        lblD = Draw.drawLabel((pX + 10), pY + 35, "D", Color.BLACK, false, 18);
+        lblCLK = Draw.drawLabel((pX + 10), pY + 90, "CLK", Color.BLACK, false, 18);
+        lblQ = Draw.drawLabel((pX + 60), pY + 35, "Q", Color.BLACK, false, 18);
+        lblNotQ = Draw.drawLabel((pX + 60), pY + 90, "!Q", Color.BLACK, false, 18);
         outputs[0] = 3;
         outputs[1] = 3;
         
             numInputs = 2;
             inputs = new int[numInputs];
             Arrays.fill(inputs, 0); //Setzt alle Inputs auf '0'
-            grp = new Group(lblDTFF, lblD, lblCLK, rec);
+            grp = new Group(lblDTFF, lblD, lblCLK, lblQ, lblNotQ, rec);
             for(int i = 0; i < numInputs; i++)
             {
                 //  * Überarbeitet von Tim 23.03.17
@@ -66,7 +72,7 @@ public class Element_DTFF extends Element {
                     rec.setHeight((numInputs) * gridOffset);
                 }
                 
-                // angepasst für immer 2 inputs ohne hardcoding
+                // angepasst für immer 2 inputs
                 double offsetY = (2 + i) * i * gridOffset + gridOffset - 12.5;
                 
                 
@@ -98,9 +104,17 @@ public class Element_DTFF extends Element {
         State result = HandleState.logicOR(s0, s1);
         int orTrue = HandleState.getIntFromState(result);
 
+        // rausfinden, ob es sich um eine taktflanke handelt oder nicht
+        lastClockState = currentClockState;
+        currentClockState = inputs[1];
+        boolean clockPulseEdge = (lastClockState != currentClockState); 
+        
         if(orTrue == 1) {
-            if(inputs[1] == 1) {
+            if(inputs[1] == 1 && clockPulseEdge) {
                 currentSavedValue = inputs[0];
+                
+                // taktflankensteuerung
+                lastClockState = currentClockState;
             }
         }
         if(orTrue > 1) {        
@@ -109,7 +123,7 @@ public class Element_DTFF extends Element {
             outputLines.get(0).setStroke(Color.GREY);
             outputLines.get(1).setStroke(Color.GREY); 
             return;
-        }
+        } 
         
         outputs[0] = currentSavedValue;
         outputs[1] = currentSavedValue == 0 ? 1 : 0;
