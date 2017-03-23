@@ -20,58 +20,68 @@ import toolbox.GenFunctions;
 
 /**
  *
- * @author Elias
+ * @author Tim
  */
 public class Element_DTFF extends Element {
      //Globals
     public static final ElementType.Type TYPE = ElementType.Type.DTFF; //Der Typ des Bausteines
    //Die Elemente aus denen der Baustein zusammengestezt ist
-    private Label lbl;
-    private Element thisElement = this; //Referenz auf sich selbst
+    private final Label lblDTFF;
+    private final Label lblD;
+    private final Label lblCLK;
+    private final Element thisElement = this; //Referenz auf sich selbst
     
+    private int currentSavedValue = 0;
     //Constructor
-    public Element_DTFF(double pX, double pY, int pInputs, NodeGestures dNodeGestures){ //Baustein zeichnen
-        outputs = new int[]{0}; //Outputs
+    public Element_DTFF(double pX, double pY, NodeGestures dNodeGestures){ //Baustein zeichnen
+        outputs = new int[2]; //Outputs
 
+        double gridOffset = (double) Properties.GetGridOffset();
+        
         //Überarbeitet von Elias
         //Der Baustein wird nun (egal bei welcher BausteinWeite/Höhe) plaziert mit der Maus als Mittelpunkt
         pX = pX-elementWidth/2;
         pY = pY-elementHeight/2;
-        numOutputs = 1;
-        rec = Draw.drawRectangle(pX, pY, elementWidth, elementHeight, 10, 10, Color.BLACK, Properties.getElementOpacity(), 5);           //das AND zeichnen
+        numOutputs = 2;
+        rec = Draw.drawRectangle(pX, pY, elementWidth, elementHeight + 70, 10, 10, Color.BLACK, Properties.getElementOpacity(), 5);           //das AND zeichnen
         rec.addEventFilter(MouseEvent.MOUSE_ENTERED, NodeGestures.getOverNodeMouseHanlderEnterRec());
         rec.addEventFilter(MouseEvent.MOUSE_EXITED, NodeGestures.getOverNodeMouseHanlderExitRec());
-        lbl = Draw.drawLabel((pX + 10), (pY - 15), "&", Color.BLACK, false, 75);
-        outputLines.add(Draw.drawLine((pX + 85), (pY + 29.5), (pX + 90), (pY + 29.5), Color.BLACK, 5));
-        outputLines.get(0).addEventFilter(MouseEvent.MOUSE_ENTERED, NodeGestures.getOverNodeMouseHanlderEnter());
-        outputLines.get(0).addEventFilter(MouseEvent.MOUSE_EXITED, NodeGestures.getOverNodeMouseHanlderExit());
-        outputLines.get(0).addEventFilter(MouseEvent.MOUSE_CLICKED, NodeGestures.getOverOutputMouseHanlderClicked(this, 0));
+        lblDTFF = Draw.drawLabel((pX + 15), (pY), "DTFF", Color.BLACK, false, 20);
+        lblD = Draw.drawLabel((pX + 10), gridOffset - 12.5, "D", Color.BLACK, false, 25);
+        lblCLK = Draw.drawLabel((pX + 10), 3 * gridOffset + gridOffset - 12.5, "CLK", Color.BLACK, false, 25);
         outputs[0] = 3;
+        outputs[1] = 3;
         
-            numInputs = pInputs;
+            numInputs = 2;
             inputs = new int[numInputs];
             Arrays.fill(inputs, 0); //Setzt alle Inputs auf '0'
-            grp = new Group(lbl, rec, outputLines.get(0));
+            grp = new Group(lblDTFF, lblD, lblCLK, rec);
             for(int i = 0; i < numInputs; i++)
             {
-                //  * Überarbeitet von Tim 05.11.16
-                //  * Überarbeitet von Tim 21.11.16
-                // korrekte stelle für jeden eingang berechnen, egal wie viele eingänge
-                // *Überarbeitet von Elias 11.11.16
+                //  * Überarbeitet von Tim 23.03.17
                 // Bausteine passen sich nun automatisch mit ihrer Höhe an die anzahl der Eingänge an
                 inputs[i] = 3;
-                double gridOffset = (double) Properties.GetGridOffset();
                 
                 if(rec.getHeight() <= (numInputs) * gridOffset) {
                     rec.setHeight((numInputs) * gridOffset);
                 }
-                double offsetY = i * gridOffset + gridOffset - 12.5;
                 
-                inputLines.add(Draw.drawLine((pX - 5), pY + offsetY, (pX - 10), pY + offsetY, Color.BLACK, 5)); //Linie zeichnen
+                // angepasst für immer 2 inputs ohne hardcoding
+                double offsetY = (2 + i) * i * gridOffset + gridOffset - 12.5;
+                
+                
+  
+                outputLines.add(Draw.drawLine((pX + 85), pY + offsetY + 40, (pX + 90), pY + offsetY + 40, Color.BLACK, 5));
+                outputLines.get(0).addEventFilter(MouseEvent.MOUSE_ENTERED, NodeGestures.getOverNodeMouseHanlderEnter());
+                outputLines.get(0).addEventFilter(MouseEvent.MOUSE_EXITED, NodeGestures.getOverNodeMouseHanlderExit());
+                outputLines.get(0).addEventFilter(MouseEvent.MOUSE_CLICKED, NodeGestures.getOverOutputMouseHanlderClicked(this, 0));              
+                
+                inputLines.add(Draw.drawLine((pX - 5), pY + offsetY + 40, (pX - 10), pY + offsetY + 40, Color.BLACK, 5)); //Linie zeichnen
                 inputLines.get(i).addEventFilter(MouseEvent.MOUSE_ENTERED, NodeGestures.getOverNodeMouseHanlderEnter());
                 inputLines.get(i).addEventFilter(MouseEvent.MOUSE_EXITED, NodeGestures.getOverNodeMouseHanlderExit());
                 inputLines.get(i).addEventFilter(MouseEvent.MOUSE_CLICKED, NodeGestures.getOverInputMouseHanlderClicked(this, i));
                 grp.getChildren().add(inputLines.get(i)); //Linie hinzufügen
+                grp.getChildren().add(outputLines.get(i)); //Linie hinzufügen
             }
             
           //Die Hanlder hinzufügenn (Beschreibung der Hander in  DraggableCanvas.java)
@@ -85,22 +95,27 @@ public class Element_DTFF extends Element {
     public void update(){ 
         State s0 = HandleState.getState(inputs[0]);
         State s1 = HandleState.getState(inputs[1]);
-        State result = HandleState.logicAND(s0, s1);
-        outputs[0] = HandleState.getIntFromState(result);
-        System.out.println("S0: " +s0 +"S1: " +s1 +"result: " +result);
-//        boolean logic = true;
-//        for(int i = 0; i < numInputs; i++){ //Eingänge durchiterieren & Logik überprüfen
-//            if(inputs[i] == 0){
-//                logic = false;
-//            }
-//        }
-//        if(logic){
-//            outputs[0] = 1;
-////            outputLines.get(0).setStroke(Color.RED);
-//        }else{
-//            outputs[0] = 0;
-////            outputLines.get(0).setStroke(Color.BLUE);
-//        }      
+        State result = HandleState.logicOR(s0, s1);
+        int orTrue = HandleState.getIntFromState(result);
+
+        if(orTrue == 1) {
+            if(inputs[1] == 1) {
+                currentSavedValue = inputs[0];
+            }
+        }
+        if(orTrue > 1) {        
+            outputs[0] = 3;
+            outputs[1] = 3;
+            outputLines.get(0).setStroke(Color.GREY);
+            outputLines.get(1).setStroke(Color.GREY); 
+            return;
+        }
+        
+        outputs[0] = currentSavedValue;
+        outputs[1] = currentSavedValue == 0 ? 1 : 0;
+        outputLines.get(0).setStroke(outputs[0] == 1 ? Color.RED : Color.BLUE);
+        outputLines.get(1).setStroke(outputs[1] == 1 ? Color.RED : Color.BLUE);
+     
     }
     
     @Override
