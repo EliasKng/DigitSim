@@ -109,6 +109,8 @@ public class DigitSimController extends Pane{
     private ToggleButton btn7SegBCD;
     @FXML
     private ToggleButton btnCLOCK;
+    @FXML
+    private ToggleButton btnDTFF;
     
     //Constructor (leer)
     public DigitSimController() {
@@ -205,6 +207,7 @@ public class DigitSimController extends Pane{
         btn7SEG.setToggleGroup(group);
         btn7SegBCD.setToggleGroup(group);
         btnCLOCK.setToggleGroup(group);
+        btnDTFF.setToggleGroup(group);
     }
     
     /**
@@ -484,6 +487,9 @@ public class DigitSimController extends Pane{
             } else if(project.getType()[i].equals(ElementType.Type.CLOCK.name())){
                 elements.add(new Element_CLOCK(project.getePosX()[i], project.getePosY()[i], nodeGestures));
                  simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
+            } else if(project.getType()[i].equals(ElementType.Type.DTFF.name())){
+                elements.add(new Element_DTFF(project.getePosX()[i], project.getePosY()[i], project.geteNumInputs()[i], nodeGestures));
+                 simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
             }
         }
     }
@@ -608,6 +614,10 @@ public class DigitSimController extends Pane{
       }
       else if(btnCLOCK.isSelected()){ //CLOCK
           elements.add(new Element_CLOCK(getXAdaptGrid(event), getYAdaptGrid(event), nodeGestures));
+          simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
+      }
+      else if(btnDTFF.isSelected()){ //CLOCK
+          elements.add(new Element_DTFF(getXAdaptGrid(event), getYAdaptGrid(event), (int) inputSlider.getValue(), nodeGestures));
           simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
       }
       else if(btnTEXT.isSelected()){ //Text
