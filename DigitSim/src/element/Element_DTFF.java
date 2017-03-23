@@ -47,14 +47,14 @@ public class Element_DTFF extends Element {
         pX = pX-elementWidth/2;
         pY = pY-elementHeight/2;
         numOutputs = 2;
-        rec = Draw.drawRectangle(pX, pY, elementWidth, elementHeight + 70, 10, 10, Color.BLACK, Properties.getElementOpacity(), 5);           //das AND zeichnen
+        rec = Draw.drawRectangle(pX, pY, elementWidth, elementHeight, 10, 10, Color.BLACK, Properties.getElementOpacity(), 5);           //das AND zeichnen
         rec.addEventFilter(MouseEvent.MOUSE_ENTERED, NodeGestures.getOverNodeMouseHanlderEnterRec());
         rec.addEventFilter(MouseEvent.MOUSE_EXITED, NodeGestures.getOverNodeMouseHanlderExitRec());
-        lblDTFF = Draw.drawLabel((pX + 15), (pY), "DTFF", Color.BLACK, false, 20);
-        lblD = Draw.drawLabel((pX + 10), pY + 35, "D", Color.BLACK, false, 18);
-        lblCLK = Draw.drawLabel((pX + 10), pY + 90, "CLK", Color.BLACK, false, 18);
-        lblQ = Draw.drawLabel((pX + 60), pY + 35, "Q", Color.BLACK, false, 18);
-        lblNotQ = Draw.drawLabel((pX + 60), pY + 90, "!Q", Color.BLACK, false, 18);
+        lblDTFF = Draw.drawLabel((pX + 15), (pY - 2), "DTFF", Color.BLACK, false, 20);
+        lblD = Draw.drawLabel((pX + 10), pY + 17.5, "D", Color.BLACK, false, 18);
+        lblCLK = Draw.drawLabel((pX + 10), pY + 42.5, ">", Color.BLACK, false, 18);
+        lblQ = Draw.drawLabel((pX + 60), pY + 17.5, "Q", Color.BLACK, false, 18);
+        lblNotQ = Draw.drawLabel((pX + 60), pY + 42.5, "!Q", Color.BLACK, false, 18);
         outputs[0] = 3;
         outputs[1] = 3;
         
@@ -73,16 +73,16 @@ public class Element_DTFF extends Element {
                 }
                 
                 // angepasst für immer 2 inputs
-                double offsetY = (2 + i) * i * gridOffset + gridOffset - 12.5;
+                double offsetY = i * gridOffset + gridOffset - 12.5;
                 
                 
   
-                outputLines.add(Draw.drawLine((pX + 85), pY + offsetY + 40, (pX + 90), pY + offsetY + 40, Color.BLACK, 5));
+                outputLines.add(Draw.drawLine((pX + 85), pY + offsetY + 20, (pX + 90), pY + offsetY + 20, Color.BLACK, 5));
                 outputLines.get(0).addEventFilter(MouseEvent.MOUSE_ENTERED, NodeGestures.getOverNodeMouseHanlderEnter());
                 outputLines.get(0).addEventFilter(MouseEvent.MOUSE_EXITED, NodeGestures.getOverNodeMouseHanlderExit());
                 outputLines.get(0).addEventFilter(MouseEvent.MOUSE_CLICKED, NodeGestures.getOverOutputMouseHanlderClicked(this, 0));              
                 
-                inputLines.add(Draw.drawLine((pX - 5), pY + offsetY + 40, (pX - 10), pY + offsetY + 40, Color.BLACK, 5)); //Linie zeichnen
+                inputLines.add(Draw.drawLine((pX - 5), pY + offsetY + 20, (pX - 10), pY + offsetY + 20, Color.BLACK, 5)); //Linie zeichnen
                 inputLines.get(i).addEventFilter(MouseEvent.MOUSE_ENTERED, NodeGestures.getOverNodeMouseHanlderEnter());
                 inputLines.get(i).addEventFilter(MouseEvent.MOUSE_EXITED, NodeGestures.getOverNodeMouseHanlderExit());
                 inputLines.get(i).addEventFilter(MouseEvent.MOUSE_CLICKED, NodeGestures.getOverInputMouseHanlderClicked(this, i));
