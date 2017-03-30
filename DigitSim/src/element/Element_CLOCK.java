@@ -37,6 +37,7 @@ public class Element_CLOCK extends Element{
 //Globals
     public static final ElementType.Type TYPE = ElementType.Type.CLOCK; //Der Typ des Bausteines
     public int clock = 1;
+    public int baseCLK = Properties.GetThreadDurationMS();
     public int updateEvery = 5;
     public int count = 0;
     //Die Elemente aus denen der Baustein zusammengestezt ist
@@ -74,6 +75,11 @@ public class Element_CLOCK extends Element{
     
     @Override
     public void update(){  
+        if(baseCLK != Properties.GetThreadDurationMS()){ //Falls der Benutzer den Takt umstellt muss der Takt der clock erneut angepasst werden!
+            adaptClock(clock);
+            baseCLK = Properties.GetThreadDurationMS();
+        }
+        
         count++;
         if(count >= updateEvery) {
             count = 0;
@@ -82,8 +88,7 @@ public class Element_CLOCK extends Element{
             } else {
                 this.setOutput(0, 0);
             }
-        }
-        
+        }  
     }    
     
     @Override
