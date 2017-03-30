@@ -8,7 +8,7 @@
     <red>0.8274509906768799</red>
     <simSizeX>4000</simSizeX>
     <simSizeY>4000</simSizeY>
-    <threadDurationMS>1</threadDurationMS>
+    <threadDurationMS>5</threadDurationMS>
     <windowMinX>800</windowMinX>
     <windowMinY>600</windowMinY>
 </propertiesXmlFormat>

@@ -78,9 +78,9 @@ public class Element_DTFF extends Element {
                 
   
                 outputLines.add(Draw.drawLine((pX + 85), pY + offsetY + 20, (pX + 90), pY + offsetY + 20, Color.BLACK, 5));
-                outputLines.get(0).addEventFilter(MouseEvent.MOUSE_ENTERED, NodeGestures.getOverNodeMouseHanlderEnter());
-                outputLines.get(0).addEventFilter(MouseEvent.MOUSE_EXITED, NodeGestures.getOverNodeMouseHanlderExit());
-                outputLines.get(0).addEventFilter(MouseEvent.MOUSE_CLICKED, NodeGestures.getOverOutputMouseHanlderClicked(this, 0));              
+                outputLines.get(i).addEventFilter(MouseEvent.MOUSE_ENTERED, NodeGestures.getOverNodeMouseHanlderEnter());
+                outputLines.get(i).addEventFilter(MouseEvent.MOUSE_EXITED, NodeGestures.getOverNodeMouseHanlderExit());
+                outputLines.get(i).addEventFilter(MouseEvent.MOUSE_CLICKED, NodeGestures.getOverOutputMouseHanlderClicked(this, 0));              
                 
                 inputLines.add(Draw.drawLine((pX - 5), pY + offsetY + 20, (pX - 10), pY + offsetY + 20, Color.BLACK, 5)); //Linie zeichnen
                 inputLines.get(i).addEventFilter(MouseEvent.MOUSE_ENTERED, NodeGestures.getOverNodeMouseHanlderEnter());

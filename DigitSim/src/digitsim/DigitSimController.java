@@ -52,6 +52,7 @@ public class DigitSimController extends Pane{
     private Line temporaryLine;//In dieser gruppe steckt die orangene halb durchsichtige Linie (beim Verlegen von Connections)
     private int tmpLoadCounter = 0;
     private static ProgramMode programMode = ProgramMode.IDLE;
+    public boolean intThread = false;
 
      /**
      * FXML OBJEKT-Erstellungs-Bereich:
@@ -309,6 +310,7 @@ public class DigitSimController extends Pane{
         ConnectionHandler.removeAllConnections();
     }
     public void btnStartOnAction(ActionEvent event) {  
+        intThread = false;
         programMode = ProgramMode.SIMULATION;
         ConnectionHandler.setRebuildBundles(true);
         outputMessages.clear(); //Platz machen für Error meldungen
@@ -321,6 +323,7 @@ public class DigitSimController extends Pane{
         locked = true; //Programm blockieren (siehe erklärung oben)
   }     
     public void btnPauseOnAction(ActionEvent event) {   
+        intThread = true;
         programMode = ProgramMode.IDLE;
         runningThread.interrupt(); //Den Thread anhalten
         ConnectionHandler.resetConnectionStates();  //Alle Verbindungen resetten
@@ -488,7 +491,7 @@ public class DigitSimController extends Pane{
                 elements.add(new Element_CLOCK(project.getePosX()[i], project.getePosY()[i], nodeGestures));
                  simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
             } else if(project.getType()[i].equals(ElementType.Type.DTFF.name())){
-                elements.add(new Element_DTFF(project.getePosX()[i], project.getePosY()[i], project.geteNumInputs()[i], nodeGestures));
+                elements.add(new Element_DTFF(project.getePosX()[i], project.getePosY()[i], nodeGestures));
                  simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
             }
         }
@@ -617,7 +620,7 @@ public class DigitSimController extends Pane{
           simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
       }
       else if(btnDTFF.isSelected()){ //CLOCK
-          elements.add(new Element_DTFF(getXAdaptGrid(event), getYAdaptGrid(event), (int) inputSlider.getValue(), nodeGestures));
+          elements.add(new Element_DTFF(getXAdaptGrid(event), getYAdaptGrid(event), nodeGestures));
           simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
       }
       else if(btnTEXT.isSelected()){ //Text
@@ -766,6 +769,10 @@ public class DigitSimController extends Pane{
     public void run(){
         elements.forEach(e -> e.update()); //Geht alle Elemente durch und Updaten sie. ACHTUNG: Lambda schreibweise! Infos -> https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html   
         ConnectionHandler.updateConnectionStates();
+    }
+    
+    public void outputMessage(String msg){
+        outputMessages.add(msg);
     }
     
     //Methode und Boolean sind jetzt static für LED (und signal vlcht?) *Lukas*

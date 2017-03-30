@@ -25,7 +25,7 @@ public class Element_CLOCK extends Element{
 //Globals
     public static final ElementType.Type TYPE = ElementType.Type.CLOCK; //Der Typ des Bausteines
     public int hertz = 1;
-    public int updateEvery = 10000;
+    public int updateEvery = 5;
     public int count = 0;
     //Die Elemente aus denen der Baustein zusammengestezt ist
 
