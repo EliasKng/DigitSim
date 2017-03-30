@@ -13,7 +13,7 @@ import java.lang.Thread;
  */
 public class SimThread extends Thread { //Ein Thread kann nebenbei laufen (auf einem andren Prozessorkern), sprich er blockiert nicht unser Hauptprogramm während er läuft und hat eine bessere performance
 
-    private int rounds = 0;
+    private int rounds = 0; //Falls der Thread zu oft die duration überschreitet (takt) wird eine Warnung ausgegeben.
     private boolean sendMessage = false;
     private DigitSimController dsController;
 
@@ -24,7 +24,7 @@ public class SimThread extends Thread { //Ein Thread kann nebenbei laufen (auf e
     @Override
     public void run() { //Diese Funktion arbeitet der Thread ab
         int duration = 1000 / Properties.GetThreadDurationMS();
-        while (!this.isInterrupted() && !dsController.intThread) { //Man kann den Thread mit thread.interrupt() den befehl zum stoppen geben, hier wird geprüft ob dies passiert ist
+        while (!this.isInterrupted() && !dsController.isIntThread()) { //Man kann den Thread mit thread.interrupt() den befehl zum stoppen geben, hier wird geprüft ob dies passiert ist
             Long diff = System.currentTimeMillis(); //Die Aktuelle zeit in Millis auslesen
             dsController.run(); //Alle Elemente updaten etc.
             diff = Math.abs((diff -= System.currentTimeMillis())); //Rausfinden wieviel Zeit vergangen ist (Differenz)
@@ -34,9 +34,9 @@ public class SimThread extends Thread { //Ein Thread kann nebenbei laufen (auf e
                    System.out.println(tmp);
                    Thread.sleep(tmp); //50ms Warten, Wir ziehen die Differenz ab, damit wir IMMER 50ms haben SPRICH: Unser Simulator läuft im Normalfall mit einer Frequenz von 20Hz 
                    if(rounds > 0)
-                       rounds--;
+                       rounds--; //Die Variable muss auch abgebaut werden, denn läuft der Thread unendlich wird es immer momente geben in denen der Takt aus der Reihe fällt...
                 }else if(tmp < 0){
-                    rounds += 2;
+                    rounds += 2; //Takt zu schnell
                 }
             }catch(Exception e){
                 //Nichts tun! Es wird abgebrochen sobald die 50s vorbei sind.

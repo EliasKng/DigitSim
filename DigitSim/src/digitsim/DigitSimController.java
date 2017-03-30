@@ -52,7 +52,7 @@ public class DigitSimController extends Pane{
     private Line temporaryLine;//In dieser gruppe steckt die orangene halb durchsichtige Linie (beim Verlegen von Connections)
     private int tmpLoadCounter = 0;
     private static ProgramMode programMode = ProgramMode.IDLE;
-    public boolean intThread = false;
+    private boolean intThread = false;
 
      /**
      * FXML OBJEKT-Erstellungs-Bereich:
@@ -488,7 +488,7 @@ public class DigitSimController extends Pane{
                 elements.add(new Element_7SEG_BCD(project.getePosX()[i], project.getePosY()[i], 4, nodeGestures));
                  simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
             } else if(project.getType()[i].equals(ElementType.Type.CLOCK.name())){
-                elements.add(new Element_CLOCK(project.getePosX()[i], project.getePosY()[i], nodeGestures));
+                elements.add(new Element_CLOCK(project.getePosX()[i], project.getePosY()[i],project.getPayload()[i], nodeGestures));
                  simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
             } else if(project.getType()[i].equals(ElementType.Type.DTFF.name())){
                 elements.add(new Element_DTFF(project.getePosX()[i], project.getePosY()[i], nodeGestures));
@@ -616,7 +616,7 @@ public class DigitSimController extends Pane{
           simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
       }
       else if(btnCLOCK.isSelected()){ //CLOCK
-          elements.add(new Element_CLOCK(getXAdaptGrid(event), getYAdaptGrid(event), nodeGestures));
+          elements.add(new Element_CLOCK(getXAdaptGrid(event), getYAdaptGrid(event), "1", nodeGestures));
           simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
       }
       else if(btnDTFF.isSelected()){ //CLOCK
@@ -828,6 +828,10 @@ public class DigitSimController extends Pane{
 
     public Vector2i getMouseCoords() {
         return mouseCoords;
+    }
+    
+    public boolean isIntThread(){
+        return intThread;
     }
 
     public void setMouseCoords(Vector2i mouseCoords) {
