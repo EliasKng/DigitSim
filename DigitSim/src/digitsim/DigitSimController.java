@@ -771,8 +771,19 @@ public class DigitSimController extends Pane{
         ConnectionHandler.updateConnectionStates();
     }
     
-    public void outputMessage(String msg){
-        outputMessages.add(msg);
+    public static void outputMessage(String msg){
+        String s = (String) outputMessages.get(outputMessages.size()-1);
+        if(!s.equals(msg)) {
+            outputMessages.add(msg);
+        }
+    }
+    
+    public static void outputMessage_UNDEFINED(){
+        String msg = "Undefinierter zustand ist aufgetreten";
+        String s = (String) outputMessages.get(outputMessages.size()-1);
+        if(!s.equals(msg)) {
+            outputMessages.add(msg);
+        }
     }
     
     //Methode und Boolean sind jetzt static für LED (und signal vlcht?) *Lukas*

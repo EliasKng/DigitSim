@@ -6,6 +6,7 @@
 package connection;
 
 import general.State;
+import javafx.application.Platform;
 import javafx.scene.paint.Color;
 
 /**
@@ -31,6 +32,7 @@ public class HandleState {
                 return State.HIGH;
                 
             case 2:
+                Platform.runLater(digitsim.DigitSimController::outputMessage_UNDEFINED);
                 return State.UNDEFINED;
                 
             case 3:

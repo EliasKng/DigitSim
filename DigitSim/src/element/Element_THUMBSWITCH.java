@@ -208,7 +208,7 @@ public class Element_THUMBSWITCH extends Element{
     }
     
     public void properties(){
-    TextInputDialog dialog = new TextInputDialog("2");
+        TextInputDialog dialog = new TextInputDialog("2");
         dialog.setTitle("Thumbswitch");
         dialog.setHeaderText("Ausgänge");
         dialog.setContentText("Anzahl:");
