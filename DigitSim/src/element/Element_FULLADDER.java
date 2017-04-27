@@ -5,88 +5,91 @@
  */
 package element;
 
-import toolbox.Draw;
-import toolbox.GenFunctions;
 import Gestures.NodeGestures;
 import connection.HandleState;
-import general.Properties;
 import element.Element;
-import static element.Element.elementWidth;
+import general.Properties;
 import general.State;
 import java.util.Arrays;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
+import toolbox.Draw;
+import toolbox.GenFunctions;
 
 /**
  *
- * @author Dominik
- * -Überarbeitet von Dome 06.11.2016
- * -Überarbeitet von Dome 11.11.2016
- * -Überarbeitet von Dome 13.11.2016
+ * @author Tim
  */
-public class Element_FULLADDER extends Element{
-
-    //Globals
-    public static final ElementType.Type TYPE = ElementType.Type.VA; //Der Typ des Bausteines
+public class Element_FULLADDER extends Element {
+     //Globals
+    public static final ElementType.Type TYPE = ElementType.Type.DTFF; //Der Typ des Bausteines
    //Die Elemente aus denen der Baustein zusammengestezt ist
-    private Circle cOutput;
-    private Label lbl;
-    private Element thisElement = this; //Referenz auf sich selbst
-    
+    private final Label lblX;
+    private final Label lblY;
+    private final Label lblCI;
+    private final Label lblCO;
+    private final Label lblS;
+    private final Label lblVA;
+    private final Element thisElement = this; //Referenz auf sich selbst
+
     //Constructor
-    public Element_FULLADDER(double pX, double pY, NodeGestures dNodeGestures){//Baustein zeichnen
-        outputs = new int[]{0, 0}; //Outputs
+    public Element_FULLADDER(double pX, double pY, NodeGestures dNodeGestures){ //Baustein zeichnen
+        outputs = new int[2]; //Outputs
+
+        double gridOffset = (double) Properties.GetGridOffset();
         
-        //Überarbeitet von Elias
-        //Der Baustein wird nun (egal bei welcher BausteinWeite/Höhe) plaziert mit der Maus als Mittelpunkt
         pX = pX-elementWidth/2;
         pY = pY-elementHeight/2;
         numOutputs = 2;
         rec = Draw.drawRectangle(pX, pY, elementWidth, elementHeight, 10, 10, Color.BLACK, Properties.getElementOpacity(), 5);           //das AND zeichnen
         rec.addEventFilter(MouseEvent.MOUSE_ENTERED, NodeGestures.getOverNodeMouseHanlderEnterRec(this));
         rec.addEventFilter(MouseEvent.MOUSE_EXITED, NodeGestures.getOverNodeMouseHanlderExitRec(this));
-        lbl = Draw.drawLabel((pX), (pY - 15), "VA", Color.BLACK, false, 75);                         //Das Ausrufezeichen Brauchwn wir nicht, da wir ja einen Kreis hinter das Bauteil setzten (damit es wie ein NOT aussieht)
-        
-        
-        outputLines.add(Draw.drawLine((pX + 95), (pY + 29.5), (pX + 95), (pY + 29.5), Color.BLACK, 5));
-        //outputLines.get(0).setVisible(false);
-        
-        outputLines.get(0).addEventFilter(MouseEvent.MOUSE_ENTERED, NodeGestures.getOverNodeMouseHanlderEnterCircle());
-        outputLines.get(0).addEventFilter(MouseEvent.MOUSE_EXITED, NodeGestures.getOverNodeMouseHanlderExitCircle());
-        outputLines.get(0).addEventFilter(MouseEvent.MOUSE_CLICKED, NodeGestures.getOverOutputMouseHanlderClicked(this, 0));
-
-        cOutput = Draw.drawCircle(pX+88, pY+29.5, 5, Color.BLACK, 5, false, 5);
+        lblVA = Draw.drawLabel((pX + 15), (pY - 2), "VA", Color.BLACK, false, 20);
+        lblX = Draw.drawLabel((pX + 10), pY + 17.5, "X", Color.BLACK, false, 18);
+        lblY = Draw.drawLabel((pX + 10), pY + 40, "Y", Color.BLACK, false, 18);
+        lblCI = Draw.drawLabel((pX + 10), pY + 41 + 16.5, "CI", Color.BLACK, false, 18);
+        lblS = Draw.drawLabel((pX + 60), pY + 17.5, "S", Color.BLACK, false, 18);
+        lblCO = Draw.drawLabel((pX + 55), pY + 42.5, "CO", Color.BLACK, false, 18);
+        outputs[0] = 3;
+        outputs[1] = 3;
         
             numInputs = 3;
             inputs = new int[numInputs];
-            Arrays.fill(inputs, 0); //Setzt alle Inputs auf '0
-            grp = new Group(lbl, outputLines.get(0), cOutput, rec);
+            Arrays.fill(inputs, 0); //Setzt alle Inputs auf '0'
+            grp = new Group(lblVA, lblX, lblY, lblCO, lblS, lblCI, rec);
             for(int i = 0; i < numInputs; i++)
             {
-                //  * Überarbeitet von Tim 05.11.16
-                //  * Überarbeitet von Tim 21.11.16
-                // korrekte stelle für jeden eingang berechnen, egal wie viele eingänge
-                // *Überarbeitet von Elias 11.11.16
+                //  * Überarbeitet von Tim 23.03.17
                 // Bausteine passen sich nun automatisch mit ihrer Höhe an die anzahl der Eingänge an
-                
-                double gridOffset = (double) Properties.GetGridOffset();
+                inputs[i] = 3;
                 
                 if(rec.getHeight() <= (numInputs) * gridOffset) {
                     rec.setHeight((numInputs) * gridOffset);
                 }
+                
+                // angepasst für immer 2 inputs
                 double offsetY = i * gridOffset + gridOffset - 12.5;
                 
-                inputLines.add(Draw.drawLine((pX - 5), pY + offsetY, (pX - 10), pY + offsetY, Color.BLACK, 5)); //Linie zeichnen
+                
+                if ( i < numOutputs ){
+                  outputLines.add(Draw.drawLine((pX + 85), pY + offsetY * 1.1 + 20, (pX + 90), pY + offsetY * 1.1 + 20, Color.BLACK, 5));
+                  outputLines.get(i).addEventFilter(MouseEvent.MOUSE_ENTERED, NodeGestures.getOverNodeMouseHanlderEnter());
+                  outputLines.get(i).addEventFilter(MouseEvent.MOUSE_EXITED, NodeGestures.getOverNodeMouseHanlderExit());
+                  outputLines.get(i).addEventFilter(MouseEvent.MOUSE_CLICKED, NodeGestures.getOverOutputMouseHanlderClicked(this, i));  
+                  grp.getChildren().add(outputLines.get(i)); //Linie hinzufügen
+                }
+             
+                
+                inputLines.add(Draw.drawLine((pX - 5), pY + offsetY + 20, (pX - 10), pY + offsetY + 20, Color.BLACK, 5)); //Linie zeichnen
                 inputLines.get(i).addEventFilter(MouseEvent.MOUSE_ENTERED, NodeGestures.getOverNodeMouseHanlderEnter());
                 inputLines.get(i).addEventFilter(MouseEvent.MOUSE_EXITED, NodeGestures.getOverNodeMouseHanlderExit());
                 inputLines.get(i).addEventFilter(MouseEvent.MOUSE_CLICKED, NodeGestures.getOverInputMouseHanlderClicked(this, i));
-                grp.getChildren().add(inputLines.get(i));
+                grp.getChildren().add(inputLines.get(i)); //Linie hinzufügen
             }
             
-           //Die Hanlder hinzufügenn (Beschreibung der Hander in  DraggableCanvas.java)
+          //Die Hanlder hinzufügenn (Beschreibung der Hander in  DraggableCanvas.java)
         grp.addEventFilter( MouseEvent.MOUSE_PRESSED, dNodeGestures.getOnMousePressedEventHandler());
         grp.addEventFilter( MouseEvent.MOUSE_DRAGGED, dNodeGestures.getOnMouseDraggedEventHandler());
         grp.addEventFilter( MouseEvent.MOUSE_RELEASED, dNodeGestures.getOnMouseReleasedEventHandler());
@@ -103,16 +106,19 @@ public class Element_FULLADDER extends Element{
         
         if(resultStateInt > 1) {
             outputs[0] = HandleState.getIntFromState(result);
+            outputs[1] = HandleState.getIntFromState(result);
             return;
         }
         
-        outputs[0] = (inputs[0] == 0 && inputs[1] == 1 && inputs[2] == 1) || 
+        // Carry Out
+        outputs[1] = (inputs[0] == 0 && inputs[1] == 1 && inputs[2] == 1) || 
                 (inputs[0] == 1 && inputs[1] == 0 && inputs[2] == 1) || 
                 (inputs[0] == 1 && inputs[1] == 1 && inputs[2] == 0) || 
                 (inputs[0] == 1 && inputs[1] == 1 && inputs[2] == 1) 
                 ? 1 : 0;
         
-        outputs[1] = (inputs[0] == 0 && inputs[1] == 0 && inputs[2] == 1) || 
+        // Sum out
+        outputs[0] = (inputs[0] == 0 && inputs[1] == 0 && inputs[2] == 1) || 
                 (inputs[0] == 0 && inputs[1] == 1 && inputs[2] == 0) || 
                 (inputs[0] == 1 && inputs[1] == 0 && inputs[2] == 0) || 
                 (inputs[0] == 1 && inputs[1] == 1 && inputs[2] == 1) 
@@ -120,7 +126,7 @@ public class Element_FULLADDER extends Element{
         
     }
     
-   @Override
+    @Override
     public void showProperties(){ //Zeigt das "Eigenschaften"-Fenster für dieses Element
         GenFunctions.showBasicElementProperties(numInputs, thisElement);
     }
