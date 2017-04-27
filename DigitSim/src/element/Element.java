@@ -34,6 +34,7 @@ public abstract class Element implements ElementType{ //Abstakte Klasse, nur zur
     protected ArrayList<Line> inputLines = new ArrayList<>(); //Die linien der inputs
     protected ArrayList<Line> outputLines = new ArrayList<>(); //Die linien der outputs
     protected Rectangle rec; //Jeder Baustein wird ein Recheck als "Hülle" haben.
+    protected boolean hovered; //Die maus befindet sich aktuell über dem Element
 
     public String getPayload() {
         return payload;
@@ -95,6 +96,16 @@ public abstract class Element implements ElementType{ //Abstakte Klasse, nur zur
     public double getHeight() { //Hähe
         return elementHeight;
     }
+
+    public boolean isHovered() {
+        return hovered;
+    }
+
+    public void setHovered(boolean hovered) {
+        this.hovered = hovered;
+    }
+    
+    
     
     public double getInputX(int pInput) { //Gibt die X-Koordinate eines Inputs zurück (also von der Linie)
         if(pInput < numInputs && pInput >= 0){

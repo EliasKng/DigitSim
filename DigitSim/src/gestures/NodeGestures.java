@@ -275,7 +275,7 @@ public class NodeGestures {
         };
     }
     
-    public static EventHandler<MouseEvent> getOverNodeMouseHanlderEnterRec(){
+    public static EventHandler<MouseEvent> getOverNodeMouseHanlderEnterRec(Element e){
         return new EventHandler<MouseEvent>(){
             @Override
             public void handle(MouseEvent event){
@@ -285,11 +285,12 @@ public class NodeGestures {
                 Rectangle rec = (Rectangle) src;
                 rec.setStroke(Color.DARKORANGE);
                 rec.setCursor(Cursor.MOVE);
+                e.setHovered(true);
             }
         };
     }
     
-    public static EventHandler<MouseEvent> getOverNodeMouseHanlderExitRec(){
+    public static EventHandler<MouseEvent> getOverNodeMouseHanlderExitRec(Element e){
         return new EventHandler<MouseEvent>(){
             @Override
             public void handle(MouseEvent event){
@@ -299,6 +300,7 @@ public class NodeGestures {
                 Rectangle rec = (Rectangle) src;
                 rec.setStroke(Color.BLACK);
                 rec.setCursor(Cursor.DEFAULT);
+                e.setHovered(false);
             }
         };
     }

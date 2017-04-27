@@ -16,8 +16,8 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Cursor;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
@@ -350,6 +350,49 @@ public class DigitSimController extends Pane{
         value = Math.round(value);
         inputSlider.setValue(value);
     }
+    
+    public void onKeyPressed(KeyEvent event) {
+        String key = event.getCode().toString();
+        if(key == "ESCAPE") {
+            if(programMode == ProgramMode.CONNECTIONEDITING) {
+                Connection c =allConnections.get(allConnections.size()-1);
+                c.removeTempGroup();
+                c.removeLine();
+                allConnections.remove(c);
+                c = null;
+                programMode = ProgramMode.IDLE;
+            }
+        }
+        if(key == "DELETE") {
+            if(programMode == ProgramMode.CONNECTIONEDITING) {
+                Connection c =allConnections.get(allConnections.size()-1);
+                c.removeTempGroup();
+                c.removeLine();
+                allConnections.remove(c);
+                c = null;
+                programMode = ProgramMode.IDLE;
+            }
+            Element selectedElement = null;
+            for(Element e : elements) {
+                if(e.isHovered()) {
+                    selectedElement = e;
+                    break;
+                }
+            }
+            
+            if(selectedElement != null) {
+                simCanvas.getChildren().remove(selectedElement.getGroup());
+                ConnectionHandler.removeAllConnectionsRelatedToElement(selectedElement);
+                elements.remove(selectedElement);
+            }
+            
+        }
+    }
+    
+    public void onKeyReleased(KeyEvent event) {
+        
+    }
+    
     public File chooseFile(String description, String extension){ //Die Funktion öffnet einen Filebrowser um eine Datei auszuwählen und lädt dise anschließend.
         FileChooser fc = new FileChooser();
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(description, extension);
@@ -800,6 +843,8 @@ public class DigitSimController extends Pane{
             outputMessages.add(msg);
         }
     }
+    
+    
     
     //Methode und Boolean sind jetzt static für LED (und signal vlcht?) *Lukas*
     public static boolean isLocked(){ //Schauen ob das Programm blokiert ist (erklärung: siehe DigitSimController oben)

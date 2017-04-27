@@ -48,8 +48,8 @@ public class Element_DTFF extends Element {
         pY = pY-elementHeight/2;
         numOutputs = 2;
         rec = Draw.drawRectangle(pX, pY, elementWidth, elementHeight, 10, 10, Color.BLACK, Properties.getElementOpacity(), 5);           //das AND zeichnen
-        rec.addEventFilter(MouseEvent.MOUSE_ENTERED, NodeGestures.getOverNodeMouseHanlderEnterRec());
-        rec.addEventFilter(MouseEvent.MOUSE_EXITED, NodeGestures.getOverNodeMouseHanlderExitRec());
+        rec.addEventFilter(MouseEvent.MOUSE_ENTERED, NodeGestures.getOverNodeMouseHanlderEnterRec(this));
+        rec.addEventFilter(MouseEvent.MOUSE_EXITED, NodeGestures.getOverNodeMouseHanlderExitRec(this));
         lblDTFF = Draw.drawLabel((pX + 15), (pY - 2), "DTFF", Color.BLACK, false, 20);
         lblD = Draw.drawLabel((pX + 10), pY + 17.5, "D", Color.BLACK, false, 18);
         lblCLK = Draw.drawLabel((pX + 10), pY + 42.5, ">", Color.BLACK, false, 18);
