@@ -30,7 +30,7 @@ import javafx.scene.shape.Circle;
 public class Element_FULLADDER extends Element{
 
     //Globals
-    public static final ElementType.Type TYPE = ElementType.Type.NAND; //Der Typ des Bausteines
+    public static final ElementType.Type TYPE = ElementType.Type.VA; //Der Typ des Bausteines
    //Die Elemente aus denen der Baustein zusammengestezt ist
     private Circle cOutput;
     private Label lbl;
@@ -48,7 +48,7 @@ public class Element_FULLADDER extends Element{
         rec = Draw.drawRectangle(pX, pY, elementWidth, elementHeight, 10, 10, Color.BLACK, Properties.getElementOpacity(), 5);           //das AND zeichnen
         rec.addEventFilter(MouseEvent.MOUSE_ENTERED, NodeGestures.getOverNodeMouseHanlderEnterRec());
         rec.addEventFilter(MouseEvent.MOUSE_EXITED, NodeGestures.getOverNodeMouseHanlderExitRec());
-        lbl = Draw.drawLabel((pX), (pY - 15), "ADDER", Color.BLACK, false, 75);                         //Das Ausrufezeichen Brauchwn wir nicht, da wir ja einen Kreis hinter das Bauteil setzten (damit es wie ein NOT aussieht)
+        lbl = Draw.drawLabel((pX), (pY - 15), "VA", Color.BLACK, false, 75);                         //Das Ausrufezeichen Brauchwn wir nicht, da wir ja einen Kreis hinter das Bauteil setzten (damit es wie ein NOT aussieht)
         
         
         outputLines.add(Draw.drawLine((pX + 95), (pY + 29.5), (pX + 95), (pY + 29.5), Color.BLACK, 5));

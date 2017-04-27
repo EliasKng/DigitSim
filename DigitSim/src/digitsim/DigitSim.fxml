@@ -150,6 +150,8 @@
                     <Label alignment="CENTER" layoutX="106.0" layoutY="370.0" prefHeight="27.0" prefWidth="85.0" text="CLOCK" />
                     <ToggleButton id="btnTHUMBSWITCH" fx:id="btnDTFF" layoutX="21.0" layoutY="394.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/THUMBSWITCH.png');" />
                     <Label alignment="CENTER" layoutX="9.0" layoutY="444.0" prefHeight="27.0" prefWidth="85.0" text="DTFF" />
+                    <ToggleButton id="btnTHUMBSWITCH" fx:id="btnVA" layoutX="118.0" layoutY="397.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/THUMBSWITCH.png');" />
+                    <Label alignment="CENTER" layoutX="106.0" layoutY="447.0" prefHeight="27.0" prefWidth="85.0" text="VA" />
                   </children>
                 </AnchorPane>
               </content>

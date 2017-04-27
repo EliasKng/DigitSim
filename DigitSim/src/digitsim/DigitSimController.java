@@ -112,6 +112,8 @@ public class DigitSimController extends Pane{
     private ToggleButton btnCLOCK;
     @FXML
     private ToggleButton btnDTFF;
+    @FXML
+    private ToggleButton btnVA;
     
     //Constructor (leer)
     public DigitSimController() {
@@ -209,6 +211,7 @@ public class DigitSimController extends Pane{
         btn7SegBCD.setToggleGroup(group);
         btnCLOCK.setToggleGroup(group);
         btnDTFF.setToggleGroup(group);
+        btnVA.setToggleGroup(group);
     }
     
     /**
@@ -493,6 +496,9 @@ public class DigitSimController extends Pane{
             } else if(project.getType()[i].equals(ElementType.Type.DTFF.name())){
                 elements.add(new Element_DTFF(project.getePosX()[i], project.getePosY()[i], nodeGestures));
                  simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
+            } else if(project.getType()[i].equals(ElementType.Type.VA.name())){
+                elements.add(new Element_FULLADDER(project.getePosX()[i], project.getePosY()[i], nodeGestures));
+                 simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
             }
         }
     }
@@ -619,8 +625,12 @@ public class DigitSimController extends Pane{
           elements.add(new Element_CLOCK(getXAdaptGrid(event), getYAdaptGrid(event), "1", nodeGestures));
           simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
       }
-      else if(btnDTFF.isSelected()){ //CLOCK
+      else if(btnDTFF.isSelected()){ //DTFF
           elements.add(new Element_DTFF(getXAdaptGrid(event), getYAdaptGrid(event), nodeGestures));
+          simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
+      }
+      else if(btnVA.isSelected()){ //FullAdder
+          elements.add(new Element_FULLADDER(getXAdaptGrid(event), getYAdaptGrid(event), nodeGestures));
           simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
       }
       else if(btnTEXT.isSelected()){ //Text
@@ -713,6 +723,11 @@ public class DigitSimController extends Pane{
               elements.remove(e);    
           }else if(e.getClass().equals(Element_THUMBSWITCH.class)){
               elements.add(new Element_THUMBSWITCH(e.getX() + (e.getWidth() / 2), e.getY() + (e.getHeight() / 2), nodeGestures));
+              simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
+              simCanvas.getChildren().remove(e.getGroup());
+              elements.remove(e);    
+          }else if(e.getClass().equals(Element_FULLADDER.class)){
+              elements.add(new Element_FULLADDER(e.getX() + (e.getWidth() / 2), e.getY() + (e.getHeight() / 2), nodeGestures));
               simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
               simCanvas.getChildren().remove(e.getGroup());
               elements.remove(e);    
