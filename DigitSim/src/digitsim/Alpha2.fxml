@@ -101,7 +101,7 @@
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
               <children>
                         <Separator layoutX="219.0" orientation="VERTICAL" prefHeight="168.0" prefWidth="6.0" />
-                        <TabPane layoutX="219.0" prefHeight="197.0" prefWidth="803.0" tabClosingPolicy="UNAVAILABLE">
+                        <TabPane layoutX="225.0" prefHeight="197.0" prefWidth="803.0" tabClosingPolicy="UNAVAILABLE">
                           <tabs>
                             <Tab text="Elementare Grundbausteine">
                               <content>
@@ -109,22 +109,22 @@
                                        <children>
                                 <Group id="Group" layoutX="47.0" layoutY="14.0">
                                   <children>
-                                    <ToggleButton fx:id="btnAND" layoutX="-11.0" layoutY="1.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-image: url('/digitsim/data/UND.png')" />
-                                    <ToggleButton fx:id="btnOR" layoutX="56.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-image: url('/digitsim/data/OR.png')" />
+                                    <ToggleButton fx:id="btnAND" layoutX="0.0" layoutY="0.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-image: url('/digitsim/data/UND.png')" />
+                                    <ToggleButton fx:id="btnOR" layoutX="60.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-image: url('/digitsim/data/OR.png')" />
                                   </children>
                                 </Group>
-                              <Label alignment="CENTER" layoutX="180.0" layoutY="69.0" prefHeight="27.0" prefWidth="60.0" text="NOT" />
-                              <Label alignment="CENTER" layoutX="259.0" layoutY="70.0" prefHeight="27.0" prefWidth="60.0" text="NOR" />
-                              <Label alignment="CENTER" layoutX="335.0" layoutY="69.0" prefHeight="27.0" prefWidth="60.0" text="XOR" />
-                              <Label alignment="CENTER" layoutX="415.0" layoutY="69.0" prefHeight="27.0" prefWidth="60.0" text="NAND" />
-                              <Label alignment="CENTER" layoutX="496.0" layoutY="69.0" prefHeight="27.0" prefWidth="60.0" text="XNOR" />
-                              <ToggleButton fx:id="btnNOT" layoutX="179.0" layoutY="14.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/NOT_3.png')" />
-                              <ToggleButton fx:id="btnXOR" layoutX="263.0" layoutY="14.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-image: url('/digitsim/data/XOR.png')" />
-                              <ToggleButton fx:id="btnNOR" layoutX="334.0" layoutY="14.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/NOR_3.png')" />
-                              <ToggleButton fx:id="btnNAND" layoutX="415.0" layoutY="14.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/NAND_3.png')" />
-                              <ToggleButton fx:id="btnXNOR" layoutX="501.0" layoutY="14.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-image: url('/digitsim/data/XNOR.png');" />
-                              <Label alignment="CENTER" layoutX="33.0" layoutY="69.0" prefHeight="27.0" prefWidth="50.0" text="AND" />
-                              <Label alignment="CENTER" layoutX="106.0" layoutY="69.0" prefHeight="27.0" prefWidth="50.0" text="OR" />
+                              <Label alignment="CENTER" layoutX="197.0" layoutY="68.0" prefHeight="27.0" prefWidth="60.0" text="NOT" />
+                              <Label alignment="CENTER" layoutX="276.0" layoutY="69.0" prefHeight="27.0" prefWidth="60.0" text="NOR" />
+                              <Label alignment="CENTER" layoutX="352.0" layoutY="68.0" prefHeight="27.0" prefWidth="60.0" text="XOR" />
+                              <Label alignment="CENTER" layoutX="433.0" layoutY="69.0" prefHeight="27.0" prefWidth="60.0" text="NAND" />
+                              <Label alignment="CENTER" layoutX="514.0" layoutY="69.0" prefHeight="27.0" prefWidth="60.0" text="XNOR" />
+                              <ToggleButton fx:id="btnNOT" layoutX="196.0" layoutY="13.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/NOT_3.png')" />
+                              <ToggleButton fx:id="btnXOR" layoutX="280.0" layoutY="13.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-image: url('/digitsim/data/XOR.png')" />
+                              <ToggleButton fx:id="btnNOR" layoutX="351.0" layoutY="13.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/NOR_3.png')" />
+                              <ToggleButton fx:id="btnNAND" layoutX="432.0" layoutY="17.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/NAND_3.png')" />
+                              <ToggleButton fx:id="btnXNOR" layoutX="518.0" layoutY="17.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-image: url('/digitsim/data/XNOR.png');" />
+                              <Label alignment="CENTER" layoutX="33.0" layoutY="69.0" prefHeight="27.0" prefWidth="60.0" text="AND" />
+                              <Label alignment="CENTER" layoutX="106.0" layoutY="69.0" prefHeight="27.0" prefWidth="60.0" text="OR" />
                                 <Slider fx:id="inputSlider" layoutX="11.0" layoutY="96.0" onMouseReleased="#inputSliderOnDragDone" prefWidth="182.0" />
                                        </children>
                                     </AnchorPane>
@@ -134,30 +134,30 @@
                               <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
-                                          <ScrollPane layoutY="-1.0" prefHeight="136.0" prefWidth="803.0">
+                                          <ScrollPane layoutY="14.0" prefHeight="121.0" prefWidth="766.0">
                                             <content>
-                                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="114.0" prefWidth="1064.0">
+                                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="104.0" prefWidth="892.0">
                                                    <children>
-                                            <Label alignment="CENTER" layoutX="14.0" layoutY="81.0" prefHeight="27.0" prefWidth="85.0" text="SUBCIRCUIT" />
-                                            <Label alignment="CENTER" layoutX="106.0" layoutY="81.0" prefHeight="27.0" prefWidth="85.0" text="TEXTFELD" />
-                                            <ToggleButton fx:id="btnAND21" layoutX="27.0" layoutY="21.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/SUBCIRCUIT.png');" />
-                                            <ToggleButton fx:id="btnTEXT" layoutX="119.0" layoutY="21.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/Textfeld.png');" />
-                                            <Label alignment="CENTER" layoutX="191.0" layoutY="82.0" prefHeight="27.0" prefWidth="85.0" text="LED" />
-                                            <Label alignment="CENTER" layoutX="283.0" layoutY="82.0" prefHeight="27.0" prefWidth="85.0" text="SIGNAL" />
-                                            <ToggleButton fx:id="btnLED" layoutX="209.0" layoutY="24.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-image: url('/digitsim/data/LED.png');" />
-                                            <ToggleButton fx:id="btnSIGNAL" layoutX="295.0" layoutY="24.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/signal.png');" />
-                                            <Label alignment="CENTER" layoutX="456.0" layoutY="81.0" prefHeight="27.0" prefWidth="110.0" text="7 Segment" />
-                                            <Label alignment="CENTER" layoutX="364.0" layoutY="81.0" prefHeight="27.0" prefWidth="110.0" text="7 Segment BCD" />
-                                            <ToggleButton fx:id="btn7SEG" layoutX="481.0" layoutY="5.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/7Seg.png');" />
-                                            <ToggleButton fx:id="btn7SegBCD" layoutX="389.0" layoutY="5.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/BCD.jpg');" />
-                                            <Label alignment="CENTER" layoutX="555.0" layoutY="83.0" prefHeight="27.0" prefWidth="110.0" text="THUMBSWITCH" />
-                                            <ToggleButton fx:id="btnTHUMBSWITCH" layoutX="580.0" layoutY="33.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/THUMBSWITCH.png');" />
-                                            <ToggleButton id="btnTHUMBSWITCH" fx:id="btnCLOCK" layoutX="671.0" layoutY="33.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/THUMBSWITCH.png');" />
-                                            <Label alignment="CENTER" layoutX="659.0" layoutY="83.0" prefHeight="27.0" prefWidth="85.0" text="CLOCK" />
-                                            <ToggleButton id="btnTHUMBSWITCH" fx:id="btnDTFF" layoutX="743.0" layoutY="33.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/THUMBSWITCH.png');" />
-                                            <Label alignment="CENTER" layoutX="731.0" layoutY="83.0" prefHeight="27.0" prefWidth="85.0" text="DTFF" />
-                                            <ToggleButton id="btnTHUMBSWITCH" fx:id="btnVA" layoutX="841.0" layoutY="33.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/THUMBSWITCH.png');" />
-                                            <Label alignment="CENTER" layoutX="828.0" layoutY="83.0" prefHeight="27.0" prefWidth="85.0" text="VA" />
+                                            <Label alignment="CENTER" layoutX="3.0" layoutY="67.0" prefHeight="27.0" prefWidth="85.0" text="SUBCIRCUIT" />
+                                            <Label alignment="CENTER" layoutX="95.0" layoutY="67.0" prefHeight="27.0" prefWidth="85.0" text="TEXTFELD" />
+                                            <ToggleButton fx:id="btnAND21" layoutX="16.0" layoutY="7.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/SUBCIRCUIT.png');" />
+                                            <ToggleButton fx:id="btnTEXT" layoutX="108.0" layoutY="7.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/Textfeld.png');" />
+                                            <Label alignment="CENTER" layoutX="180.0" layoutY="68.0" prefHeight="27.0" prefWidth="85.0" text="LED" />
+                                            <Label alignment="CENTER" layoutX="272.0" layoutY="68.0" prefHeight="27.0" prefWidth="85.0" text="SIGNAL" />
+                                            <ToggleButton fx:id="btnLED" layoutX="198.0" layoutY="10.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-image: url('/digitsim/data/LED.png');" />
+                                            <ToggleButton fx:id="btnSIGNAL" layoutX="284.0" layoutY="10.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/signal.png');" />
+                                            <Label alignment="CENTER" layoutX="445.0" layoutY="67.0" prefHeight="27.0" prefWidth="110.0" text="7 Segment" />
+                                            <Label alignment="CENTER" layoutX="353.0" layoutY="67.0" prefHeight="27.0" prefWidth="110.0" text="7 Segment BCD" />
+                                            <ToggleButton fx:id="btn7SEG" layoutX="470.0" layoutY="-9.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/7Seg.png');" />
+                                            <ToggleButton fx:id="btn7SegBCD" layoutX="378.0" layoutY="-9.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/BCD.jpg');" />
+                                            <Label alignment="CENTER" layoutX="544.0" layoutY="69.0" prefHeight="27.0" prefWidth="110.0" text="THUMBSWITCH" />
+                                            <ToggleButton fx:id="btnTHUMBSWITCH" layoutX="569.0" layoutY="19.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/THUMBSWITCH.png');" />
+                                            <ToggleButton id="btnTHUMBSWITCH" fx:id="btnCLOCK" layoutX="660.0" layoutY="19.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/THUMBSWITCH.png');" />
+                                            <Label alignment="CENTER" layoutX="648.0" layoutY="69.0" prefHeight="27.0" prefWidth="85.0" text="CLOCK" />
+                                            <ToggleButton id="btnTHUMBSWITCH" fx:id="btnDTFF" layoutX="732.0" layoutY="19.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/THUMBSWITCH.png');" />
+                                            <Label alignment="CENTER" layoutX="720.0" layoutY="69.0" prefHeight="27.0" prefWidth="85.0" text="DTFF" />
+                                            <ToggleButton id="btnTHUMBSWITCH" fx:id="btnVA" layoutX="830.0" layoutY="19.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/THUMBSWITCH.png');" />
+                                            <Label alignment="CENTER" layoutX="817.0" layoutY="69.0" prefHeight="27.0" prefWidth="85.0" text="VA" />
                                                    </children>
                                                 </AnchorPane>
                                             </content>
