@@ -248,7 +248,7 @@ public class DigitSimController extends Pane{
     }
     public void enableAllButtons() {
         for(ToggleButton tB : this.toggleBtnList) {
-            tB.setDisable(true);
+            tB.setDisable(false);
         }
     }
     
