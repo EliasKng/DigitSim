@@ -16,6 +16,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Group;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
@@ -53,6 +54,7 @@ public class DigitSimController extends Pane{
     private int tmpLoadCounter = 0;
     private static ProgramMode programMode = ProgramMode.IDLE;
     private boolean intThread = false;
+    private List<ToggleButton> toggleBtnList = new ArrayList(); //In dieser Gruppe stecken alle ToggleButtons
 
      /**
      * FXML OBJEKT-Erstellungs-Bereich:
@@ -212,6 +214,42 @@ public class DigitSimController extends Pane{
         btnCLOCK.setToggleGroup(group);
         btnDTFF.setToggleGroup(group);
         btnVA.setToggleGroup(group);
+
+        this.toggleBtnList.add(btnAND);
+        this.toggleBtnList.add(btnOR);
+        this.toggleBtnList.add(btnNOT);
+        this.toggleBtnList.add(btnNAND);
+        this.toggleBtnList.add(btnNOR);
+        this.toggleBtnList.add(btnXOR);
+        this.toggleBtnList.add(btnXNOR);
+        this.toggleBtnList.add(btnLED);
+        this.toggleBtnList.add(btnSIGNAL);
+        this.toggleBtnList.add(btnTEXT);
+        this.toggleBtnList.add(btnTHUMBSWITCH);
+        this.toggleBtnList.add(btn7SEG);
+        this.toggleBtnList.add( btn7SegBCD);
+        this.toggleBtnList.add(btnCLOCK);
+        this.toggleBtnList.add(btnDTFF);
+        this.toggleBtnList.add(btnVA);
+        
+        
+    }
+    
+    public void unselectAllButtons() {
+        for(ToggleButton tB : this.toggleBtnList) {
+            tB.setSelected(false);
+        }
+    }
+    
+    public void disableAllButtons() {
+        for(ToggleButton tB : this.toggleBtnList) {
+            tB.setDisable(true);
+        }
+    }
+    public void enableAllButtons() {
+        for(ToggleButton tB : this.toggleBtnList) {
+            tB.setDisable(true);
+        }
     }
     
     /**
@@ -322,7 +360,7 @@ public class DigitSimController extends Pane{
         runningThread = new SimThread(this);
         outputMessages.add("[INFO] Starten der Simulation.");
         runningThread.start(); //Den Thread starten, d.h alle Elemente & Connections werden regelmäßig geupdated
-        
+        disableAllButtons();
         locked = true; //Programm blockieren (siehe erklärung oben)
   }     
     public void btnPauseOnAction(ActionEvent event) {   
@@ -334,6 +372,7 @@ public class DigitSimController extends Pane{
         btnPause.setDisable(true);
         btnStart.setDisable(false);
         outputMessages.add("[INFO]Simulation beendet!");
+        enableAllButtons();
         locked = false;
     }
     
@@ -361,6 +400,9 @@ public class DigitSimController extends Pane{
                 allConnections.remove(c);
                 c = null;
                 programMode = ProgramMode.IDLE;
+            }
+            if(programMode == ProgramMode.IDLE) {
+                unselectAllButtons();
             }
         }
         if(key == "DELETE") {
