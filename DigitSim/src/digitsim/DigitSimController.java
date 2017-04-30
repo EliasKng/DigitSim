@@ -53,6 +53,7 @@ public class DigitSimController extends Pane{
     private Line temporaryLine;//In dieser gruppe steckt die orangene halb durchsichtige Linie (beim Verlegen von Connections)
     private int tmpLoadCounter = 0;
     private static ProgramMode programMode = ProgramMode.IDLE;
+    private static boolean elementHovered = false;
     private boolean intThread = false;
     private List<ToggleButton> toggleBtnList = new ArrayList(); //In dieser Gruppe stecken alle ToggleButtons
 
@@ -161,7 +162,7 @@ public class DigitSimController extends Pane{
                 if(isLocked()){ //Schauen ob das Programm blokiert ist (erklärung: siehe DigitSimController oben)
                     return;
                 }
-                if(event.isPrimaryButtonDown() && !isMouseOverNode(event) && programMode != ProgramMode.CONNECTIONEDITING){
+                if(event.isPrimaryButtonDown() && !isMouseOverNode(event) && programMode != ProgramMode.CONNECTIONEDITING && !elementHovered){
                     addElement(event); //Neuen Baustein einfügen
                 }  else if(event.isPrimaryButtonDown() && !isMouseOverNode(event) && programMode == ProgramMode.CONNECTIONEDITING) {
                     Connection c = allConnections.get(allConnections.size()-1);
@@ -961,6 +962,14 @@ public class DigitSimController extends Pane{
 
     public static void setProgramMode(ProgramMode programMode) {
         DigitSimController.programMode = programMode;
+    }
+
+    public static boolean isElementHovered() {
+        return elementHovered;
+    }
+
+    public static void setElementHovered(boolean elementHovered) {
+        DigitSimController.elementHovered = elementHovered;
     }
     
     public int findElementIndex(Element e){

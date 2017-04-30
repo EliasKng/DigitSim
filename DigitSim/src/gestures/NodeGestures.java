@@ -281,6 +281,7 @@ public class NodeGestures {
             public void handle(MouseEvent event){
                 if(DigitSimController.isLocked())
                     return;
+                DigitSimController.setElementHovered(true);
                 Node src = (Node) event.getSource();
                 Rectangle rec = (Rectangle) src;
                 rec.setStroke(Color.DARKORANGE);
@@ -296,6 +297,7 @@ public class NodeGestures {
             public void handle(MouseEvent event){
                 if(DigitSimController.isLocked())
                     return;
+                DigitSimController.setElementHovered(false);
                 Node src = (Node) event.getSource();
                 Rectangle rec = (Rectangle) src;
                 rec.setStroke(Color.BLACK);
