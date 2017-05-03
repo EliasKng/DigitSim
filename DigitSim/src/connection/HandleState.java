@@ -148,4 +148,11 @@ public class HandleState {
         return getState(res);
     }
     
+    public static State cplState(State s) {
+        if(s == State.HIGH)
+            return State.LOW;
+        else
+            return State.HIGH;
+    }
+    
 }

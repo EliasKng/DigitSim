@@ -27,30 +27,30 @@
 <?scenebuilder-stylesheet ../stylesheets/digitsim.css?>
 <?scenebuilder-stylesheet ../stylesheets/outputList.css?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="digitsim.DigitSimController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" prefHeight="768.0" prefWidth="1024.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="digitsim.DigitSimController">
   <children>
     <Separator layoutX="216.0" layoutY="14.0" orientation="VERTICAL" prefHeight="754.0" prefWidth="6.0" />
     <MenuBar layoutY="-1.0" prefHeight="24.0" prefWidth="1024.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
       <menus>
         <Menu mnemonicParsing="false" text="Datei">
           <items>
-            <MenuItem fx:id="mItemNewFile" mnemonicParsing="false" onAction="#mItemNewFileAction" text="Neu">
+            <MenuItem mnemonicParsing="false" onAction="#mItemNewFileAction" text="Neu" fx:id="mItemNewFile">
               <accelerator>
                 <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
               </accelerator>
             </MenuItem>
-            <MenuItem id="mItemOpenFile" fx:id="mItemOpenFile" mnemonicParsing="false" onAction="#mItemOpenFileAction" text="Öffnen">
+            <MenuItem id="mItemOpenFile" mnemonicParsing="false" onAction="#mItemOpenFileAction" text="Öffnen" fx:id="mItemOpenFile">
               <accelerator>
                 <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
               </accelerator>
             </MenuItem>
-            <MenuItem fx:id="mItemSaveFile" mnemonicParsing="false" onAction="#mItemSaveFileAction" text="Speichern">
+            <MenuItem mnemonicParsing="false" onAction="#mItemSaveFileAction" text="Speichern" fx:id="mItemSaveFile">
               <accelerator>
                 <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
               </accelerator>
             </MenuItem>
-            <MenuItem fx:id="mItemSaveFileAs" mnemonicParsing="false" onAction="#mItemSaveFileAsAction" text="Speichern als..." />
-            <MenuItem fx:id="mItemClose" mnemonicParsing="false" onAction="#mItemCloseAction" text="Schließen">
+            <MenuItem mnemonicParsing="false" onAction="#mItemSaveFileAsAction" text="Speichern als..." fx:id="mItemSaveFileAs" />
+            <MenuItem mnemonicParsing="false" onAction="#mItemCloseAction" text="Schließen" fx:id="mItemClose">
               <accelerator>
                 <KeyCodeCombination alt="UP" code="C" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
               </accelerator>
@@ -64,7 +64,7 @@
                 <KeyCodeCombination alt="UP" code="DELETE" control="UP" meta="UP" shift="UP" shortcut="ANY" />
               </accelerator>
             </MenuItem>
-            <MenuItem fx:id="mItemProperties" mnemonicParsing="false" onAction="#mItemPropertiesOnAction" text="Einstellungen">
+            <MenuItem mnemonicParsing="false" onAction="#mItemPropertiesOnAction" text="Einstellungen" fx:id="mItemProperties">
               <accelerator>
                 <KeyCodeCombination alt="UP" code="P" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
               </accelerator>
@@ -73,12 +73,12 @@
         </Menu>
         <Menu mnemonicParsing="false" text="Simulation">
           <items>
-            <MenuItem fx:id="MenuSimuRun" mnemonicParsing="false" onAction="#mItemSimRunOnAction" text="Run">
+            <MenuItem mnemonicParsing="false" onAction="#mItemSimRunOnAction" text="Run" fx:id="MenuSimuRun">
               <accelerator>
                 <KeyCodeCombination alt="UP" code="R" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
               </accelerator>
             </MenuItem>
-            <MenuItem fx:id="MenuSimuStop" mnemonicParsing="false" onAction="#mItemSimStopOnAction" text="Stop">
+            <MenuItem mnemonicParsing="false" onAction="#mItemSimStopOnAction" text="Stop" fx:id="MenuSimuStop">
               <accelerator>
                 <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
               </accelerator>
@@ -88,99 +88,101 @@
         <Menu mnemonicParsing="false" text="Hilfe">
           <items>
             <MenuItem mnemonicParsing="false" text="Über den Seminator" />
-            <MenuItem fx:id="mItemHelp" mnemonicParsing="false" onAction="#mItemHelpOnAction" text="Hilfe" />
+            <MenuItem mnemonicParsing="false" onAction="#mItemHelpOnAction" text="Hilfe" fx:id="mItemHelp" />
           </items>
         </Menu>
       </menus>
     </MenuBar>
     <AnchorPane prefHeight="744.0" prefWidth="813.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="215.0" AnchorPane.rightAnchor="-4.0" AnchorPane.topAnchor="24.0">
       <children>
-        <SplitPane dividerPositions="0.7681940700808625" focusTraversable="true" layoutX="-215.0" orientation="VERTICAL" prefHeight="744.0" prefWidth="1024.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-215.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="0.0">
+        <SplitPane dividerPositions="0.7681940700808625" focusTraversable="true" orientation="VERTICAL" prefHeight="744.0" prefWidth="1024.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-215.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="0.0">
           <items>
             <AnchorPane fx:id="simPane" minHeight="0.0" minWidth="0.0" prefHeight="573.0" prefWidth="674.0" />
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
               <children>
-                        <Separator layoutX="219.0" orientation="VERTICAL" prefHeight="168.0" prefWidth="6.0" />
-                        <TabPane layoutX="219.0" prefHeight="197.0" prefWidth="803.0" tabClosingPolicy="UNAVAILABLE">
-                          <tabs>
-                            <Tab text="Elementare Grundbausteine">
+                <Separator layoutX="219.0" orientation="VERTICAL" prefHeight="168.0" prefWidth="6.0" />
+                <TabPane prefHeight="168.0" prefWidth="803.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="219.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <tabs>
+                    <Tab text="Elementare Grundbausteine">
+                      <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                          <children>
+                            <Group id="Group" layoutX="47.0" layoutY="14.0">
+                              <children>
+                                <ToggleButton fx:id="btnAND" layoutX="-11.0" layoutY="1.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-image: url('/digitsim/data/UND.png')" />
+                                <ToggleButton fx:id="btnOR" layoutX="56.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-image: url('/digitsim/data/OR.png')" />
+                              </children>
+                            </Group>
+                            <Label alignment="CENTER" layoutX="180.0" layoutY="69.0" prefHeight="27.0" prefWidth="60.0" text="NOT" />
+                            <Label alignment="CENTER" layoutX="259.0" layoutY="70.0" prefHeight="27.0" prefWidth="60.0" text="NOR" />
+                            <Label alignment="CENTER" layoutX="335.0" layoutY="69.0" prefHeight="27.0" prefWidth="60.0" text="XOR" />
+                            <Label alignment="CENTER" layoutX="415.0" layoutY="69.0" prefHeight="27.0" prefWidth="60.0" text="NAND" />
+                            <Label alignment="CENTER" layoutX="496.0" layoutY="69.0" prefHeight="27.0" prefWidth="60.0" text="XNOR" />
+                            <ToggleButton fx:id="btnNOT" layoutX="179.0" layoutY="14.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/NOT_3.png')" />
+                            <ToggleButton fx:id="btnXOR" layoutX="263.0" layoutY="14.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-image: url('/digitsim/data/XOR.png')" />
+                            <ToggleButton fx:id="btnNOR" layoutX="334.0" layoutY="14.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/NOR_3.png')" />
+                            <ToggleButton fx:id="btnNAND" layoutX="415.0" layoutY="14.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/NAND_3.png')" />
+                            <ToggleButton fx:id="btnXNOR" layoutX="501.0" layoutY="14.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-image: url('/digitsim/data/XNOR.png');" />
+                            <Label alignment="CENTER" layoutX="33.0" layoutY="69.0" prefHeight="27.0" prefWidth="50.0" text="AND" />
+                            <Label alignment="CENTER" layoutX="106.0" layoutY="69.0" prefHeight="27.0" prefWidth="50.0" text="OR" />
+                            <Slider fx:id="inputSlider" layoutX="11.0" layoutY="96.0" onMouseReleased="#inputSliderOnDragDone" prefWidth="182.0" />
+                          </children>
+                        </AnchorPane>
+                      </content>
+                    </Tab>
+                    <Tab text="weitere Bausteine">
+                      <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="123.0" prefWidth="803.0">
+                          <children>
+                            <ScrollPane layoutX="0.0" layoutY="0.0" prefHeight="136.0" prefWidth="803.0">
                               <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                       <children>
-                                <Group id="Group" layoutX="47.0" layoutY="14.0">
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="114.0" prefWidth="1064.0">
                                   <children>
-                                    <ToggleButton fx:id="btnAND" layoutX="-11.0" layoutY="1.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-image: url('/digitsim/data/UND.png')" />
-                                    <ToggleButton fx:id="btnOR" layoutX="56.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-image: url('/digitsim/data/OR.png')" />
+                                    <Label alignment="CENTER" layoutX="14.0" layoutY="81.0" prefHeight="27.0" prefWidth="85.0" text="SUBCIRCUIT" />
+                                    <Label alignment="CENTER" layoutX="106.0" layoutY="81.0" prefHeight="27.0" prefWidth="85.0" text="TEXTFELD" />
+                                    <ToggleButton fx:id="btnAND21" layoutX="27.0" layoutY="21.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/SUBCIRCUIT.png');" />
+                                    <ToggleButton fx:id="btnTEXT" layoutX="119.0" layoutY="21.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/Textfeld.png');" />
+                                    <Label alignment="CENTER" layoutX="191.0" layoutY="82.0" prefHeight="27.0" prefWidth="85.0" text="LED" />
+                                    <Label alignment="CENTER" layoutX="283.0" layoutY="82.0" prefHeight="27.0" prefWidth="85.0" text="SIGNAL" />
+                                    <ToggleButton fx:id="btnLED" layoutX="209.0" layoutY="24.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-image: url('/digitsim/data/LED.png');" />
+                                    <ToggleButton fx:id="btnSIGNAL" layoutX="295.0" layoutY="24.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/signal.png');" />
+                                    <Label alignment="CENTER" layoutX="456.0" layoutY="81.0" prefHeight="27.0" prefWidth="110.0" text="7 Segment" />
+                                    <Label alignment="CENTER" layoutX="364.0" layoutY="81.0" prefHeight="27.0" prefWidth="110.0" text="7 Segment BCD" />
+                                    <ToggleButton fx:id="btn7SEG" layoutX="481.0" layoutY="5.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/7Seg.png');" />
+                                    <ToggleButton fx:id="btn7SegBCD" layoutX="389.0" layoutY="5.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/BCD.jpg');" />
+                                    <Label alignment="CENTER" layoutX="555.0" layoutY="83.0" prefHeight="27.0" prefWidth="110.0" text="THUMBSWITCH" />
+                                    <ToggleButton fx:id="btnTHUMBSWITCH" layoutX="580.0" layoutY="33.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/THUMBSWITCH.png');" />
+                                    <ToggleButton id="btnTHUMBSWITCH" fx:id="btnCLOCK" layoutX="671.0" layoutY="33.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/THUMBSWITCH.png');" />
+                                    <Label alignment="CENTER" layoutX="659.0" layoutY="83.0" prefHeight="27.0" prefWidth="85.0" text="CLOCK" />
+                                    <ToggleButton id="btnTHUMBSWITCH" fx:id="btnDTFF" layoutX="743.0" layoutY="33.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/THUMBSWITCH.png');" />
+                                    <Label alignment="CENTER" layoutX="731.0" layoutY="83.0" prefHeight="27.0" prefWidth="85.0" text="DTFF" />
+                                    <ToggleButton id="btnTHUMBSWITCH" fx:id="btnVA" layoutX="841.0" layoutY="33.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/THUMBSWITCH.png');" />
+                                    <Label alignment="CENTER" layoutX="828.0" layoutY="83.0" prefHeight="27.0" prefWidth="85.0" text="VA" />
+                                    <ToggleButton id="btnTHUMBSWITCH" fx:id="btnJKFF" layoutX="926.0" layoutY="33.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/THUMBSWITCH.png');" />
+                                    <Label alignment="CENTER" layoutX="913.0" layoutY="83.0" prefHeight="27.0" prefWidth="85.0" text="JKFF" />
                                   </children>
-                                </Group>
-                              <Label alignment="CENTER" layoutX="180.0" layoutY="69.0" prefHeight="27.0" prefWidth="60.0" text="NOT" />
-                              <Label alignment="CENTER" layoutX="259.0" layoutY="70.0" prefHeight="27.0" prefWidth="60.0" text="NOR" />
-                              <Label alignment="CENTER" layoutX="335.0" layoutY="69.0" prefHeight="27.0" prefWidth="60.0" text="XOR" />
-                              <Label alignment="CENTER" layoutX="415.0" layoutY="69.0" prefHeight="27.0" prefWidth="60.0" text="NAND" />
-                              <Label alignment="CENTER" layoutX="496.0" layoutY="69.0" prefHeight="27.0" prefWidth="60.0" text="XNOR" />
-                              <ToggleButton fx:id="btnNOT" layoutX="179.0" layoutY="14.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/NOT_3.png')" />
-                              <ToggleButton fx:id="btnXOR" layoutX="263.0" layoutY="14.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-image: url('/digitsim/data/XOR.png')" />
-                              <ToggleButton fx:id="btnNOR" layoutX="334.0" layoutY="14.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/NOR_3.png')" />
-                              <ToggleButton fx:id="btnNAND" layoutX="415.0" layoutY="14.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/NAND_3.png')" />
-                              <ToggleButton fx:id="btnXNOR" layoutX="501.0" layoutY="14.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-image: url('/digitsim/data/XNOR.png');" />
-                              <Label alignment="CENTER" layoutX="33.0" layoutY="69.0" prefHeight="27.0" prefWidth="50.0" text="AND" />
-                              <Label alignment="CENTER" layoutX="106.0" layoutY="69.0" prefHeight="27.0" prefWidth="50.0" text="OR" />
-                                <Slider fx:id="inputSlider" layoutX="11.0" layoutY="96.0" onMouseReleased="#inputSliderOnDragDone" prefWidth="182.0" />
-                                       </children>
-                                    </AnchorPane>
+                                </AnchorPane>
                               </content>
-                            </Tab>
-                            <Tab text="weitere Bausteine">
-                              <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                       <children>
-                                          <ScrollPane layoutY="-1.0" prefHeight="136.0" prefWidth="803.0">
-                                            <content>
-                                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="114.0" prefWidth="1064.0">
-                                                   <children>
-                                            <Label alignment="CENTER" layoutX="14.0" layoutY="81.0" prefHeight="27.0" prefWidth="85.0" text="SUBCIRCUIT" />
-                                            <Label alignment="CENTER" layoutX="106.0" layoutY="81.0" prefHeight="27.0" prefWidth="85.0" text="TEXTFELD" />
-                                            <ToggleButton fx:id="btnAND21" layoutX="27.0" layoutY="21.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/SUBCIRCUIT.png');" />
-                                            <ToggleButton fx:id="btnTEXT" layoutX="119.0" layoutY="21.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/Textfeld.png');" />
-                                            <Label alignment="CENTER" layoutX="191.0" layoutY="82.0" prefHeight="27.0" prefWidth="85.0" text="LED" />
-                                            <Label alignment="CENTER" layoutX="283.0" layoutY="82.0" prefHeight="27.0" prefWidth="85.0" text="SIGNAL" />
-                                            <ToggleButton fx:id="btnLED" layoutX="209.0" layoutY="24.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-image: url('/digitsim/data/LED.png');" />
-                                            <ToggleButton fx:id="btnSIGNAL" layoutX="295.0" layoutY="24.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/signal.png');" />
-                                            <Label alignment="CENTER" layoutX="456.0" layoutY="81.0" prefHeight="27.0" prefWidth="110.0" text="7 Segment" />
-                                            <Label alignment="CENTER" layoutX="364.0" layoutY="81.0" prefHeight="27.0" prefWidth="110.0" text="7 Segment BCD" />
-                                            <ToggleButton fx:id="btn7SEG" layoutX="481.0" layoutY="5.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/7Seg.png');" />
-                                            <ToggleButton fx:id="btn7SegBCD" layoutX="389.0" layoutY="5.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/BCD.jpg');" />
-                                            <Label alignment="CENTER" layoutX="555.0" layoutY="83.0" prefHeight="27.0" prefWidth="110.0" text="THUMBSWITCH" />
-                                            <ToggleButton fx:id="btnTHUMBSWITCH" layoutX="580.0" layoutY="33.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/THUMBSWITCH.png');" />
-                                            <ToggleButton id="btnTHUMBSWITCH" fx:id="btnCLOCK" layoutX="671.0" layoutY="33.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/THUMBSWITCH.png');" />
-                                            <Label alignment="CENTER" layoutX="659.0" layoutY="83.0" prefHeight="27.0" prefWidth="85.0" text="CLOCK" />
-                                            <ToggleButton id="btnTHUMBSWITCH" fx:id="btnDTFF" layoutX="743.0" layoutY="33.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/THUMBSWITCH.png');" />
-                                            <Label alignment="CENTER" layoutX="731.0" layoutY="83.0" prefHeight="27.0" prefWidth="85.0" text="DTFF" />
-                                            <ToggleButton id="btnTHUMBSWITCH" fx:id="btnVA" layoutX="841.0" layoutY="33.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/THUMBSWITCH.png');" />
-                                            <Label alignment="CENTER" layoutX="828.0" layoutY="83.0" prefHeight="27.0" prefWidth="85.0" text="VA" />
-                                                   </children>
-                                                </AnchorPane>
-                                            </content>
-                                          </ScrollPane>
-                                       </children>
-                                    </AnchorPane>
-                              </content>
-                            </Tab>
-                              <Tab text="Console">
-                                <content>
-                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                       <children>
-                                  <ListView fx:id="outputList" prefHeight="169.0" prefWidth="807.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                    <stylesheets>
-                                      <URL value="@../stylesheets/outputList.css" />
-                                    </stylesheets>
-                                  </ListView>
-                                       </children>
-                                    </AnchorPane>
-                                </content>
-                              </Tab>
-                          </tabs>
-                        </TabPane>
+                            </ScrollPane>
+                          </children>
+                        </AnchorPane>
+                      </content>
+                    </Tab>
+                    <Tab text="Console">
+                      <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                          <children>
+                            <ListView fx:id="outputList" prefHeight="169.0" prefWidth="807.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <stylesheets>
+                                <URL value="@../stylesheets/outputList.css" />
+                              </stylesheets>
+                            </ListView>
+                          </children>
+                        </AnchorPane>
+                      </content>
+                    </Tab>
+                  </tabs>
+                </TabPane>
               </children>
             </AnchorPane>
           </items>

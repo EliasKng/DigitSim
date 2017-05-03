@@ -31,7 +31,6 @@ public class SimThread extends Thread { //Ein Thread kann nebenbei laufen (auf e
             try{
                 long tmp = duration - diff;        
                 if(tmp > 0){
-                   System.out.println(tmp);
                    Thread.sleep(tmp); //50ms Warten, Wir ziehen die Differenz ab, damit wir IMMER 50ms haben SPRICH: Unser Simulator läuft im Normalfall mit einer Frequenz von 20Hz 
                    if(rounds > 0)
                        rounds--; //Die Variable muss auch abgebaut werden, denn läuft der Thread unendlich wird es immer momente geben in denen der Takt aus der Reihe fällt...

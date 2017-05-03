@@ -93,7 +93,6 @@ public class Element_AND extends Element{
         State s1 = HandleState.getState(inputs[1]);
         State result = HandleState.logicAND(s0, s1);
         outputs[0] = HandleState.getIntFromState(result);
-        System.out.println("S0: " +s0 +"S1: " +s1 +"result: " +result);
 //        boolean logic = true;
 //        for(int i = 0; i < numInputs; i++){ //Eingänge durchiterieren & Logik überprüfen
 //            if(inputs[i] == 0){
