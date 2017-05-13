@@ -152,7 +152,6 @@ public class DigitSimController extends Pane{
         outputMessages.add("[INFO]Neues Projekt erstellt!");
     }
     
-    
     @FXML
     private void addSimCanvas() {
         simCanvas.addEventFilter(MouseEvent.MOUSE_PRESSED, getCanvasMouseKlickedEventHandler());
@@ -160,6 +159,10 @@ public class DigitSimController extends Pane{
         simPane.getChildren().addAll(simCanvas); //die Arbeitsfläche auf das Panel setzen
     }    
     
+    /**
+     * Handler für Klick auf die Arbeitfläche (SimCanvas)
+     * @return 
+     */
     private EventHandler getCanvasMouseKlickedEventHandler(){ //Wenn auf der Arbeitsfläche geklickt wird
         return new EventHandler<MouseEvent>(){
             @Override
@@ -181,7 +184,10 @@ public class DigitSimController extends Pane{
         };
     }
     
-    
+    /**
+     * Handler, der für die "vor"-Linie zustöndig ist (beim verlegen einer Connection)
+     * @return 
+     */
     private EventHandler getCanvasMouseMovedEventHandler(){ //Falls man bereits einen Input/Output ausgewählt halt erscheint eine Linie, diese Funktion sorgt daüfr das die Linie dem Mauszeiger folgt
         return new EventHandler<MouseEvent>(){
             @Override
@@ -244,17 +250,27 @@ public class DigitSimController extends Pane{
         
     }
     
+    /**
+     * Deselektiert alle ToggleButtons
+     */
     public void unselectAllButtons() {
         for(ToggleButton tB : this.toggleBtnList) {
             tB.setSelected(false);
         }
     }
     
+    /**
+     * Deaktiviert alle ToggleButtons
+     */
     public void disableAllButtons() {
         for(ToggleButton tB : this.toggleBtnList) {
             tB.setDisable(true);
         }
     }
+    
+    /**
+     * Aktiviert alle ToggleButtons
+     */
     public void enableAllButtons() {
         for(ToggleButton tB : this.toggleBtnList) {
             tB.setDisable(false);
@@ -285,7 +301,7 @@ public class DigitSimController extends Pane{
     * -Bearbeitet von Dominik 31.10.16
     * -Bearbeitet von Dominik 12.11.16
     */  
-        
+    
     public void btnLogicToggleOnAction(ActionEvent event) {
         //Für Tests
         //TEST:
@@ -353,12 +369,20 @@ public class DigitSimController extends Pane{
         stage.show();
     }
     
-    public void clearElements() { //Hilfe öffnen  
+    /**
+     * Neue Arbeitsfläche erstellen
+     */
+    public void clearElements() {
         elements.clear();
         simCanvas.getChildren().clear();
         simCanvas.addGrid(simCanvas.getPrefWidth(), simCanvas.getPrefHeight());
         ConnectionHandler.removeAllConnections();
     }
+    
+    /**
+     * btnStart wurde angeklickt
+     * @param event 
+     */
     public void btnStartOnAction(ActionEvent event) {  
         intThread = false;
         programMode = ProgramMode.SIMULATION;
@@ -371,7 +395,12 @@ public class DigitSimController extends Pane{
         runningThread.start(); //Den Thread starten, d.h alle Elemente & Connections werden regelmäßig geupdated
         disableAllButtons();
         locked = true; //Programm blockieren (siehe erklärung oben)
-  }     
+    }
+    
+    /**
+     * btnPause wurde angeklickt
+     * @param event 
+     */
     public void btnPauseOnAction(ActionEvent event) {   
         intThread = true;
         programMode = ProgramMode.IDLE;
@@ -393,12 +422,19 @@ public class DigitSimController extends Pane{
         btnPause.fire();
     }
     
+    /**
+     * Wenn der slider verschoben wurde
+     */
     public void inputSliderOnDragDone() { //Den Wert vom Slider runden
         double value = inputSlider.getValue();
         value = Math.round(value);
         inputSlider.setValue(value);
     }
     
+    /**
+     * Wenn eine Taste gedrückt wird
+     * @param event 
+     */
     public void onKeyPressed(KeyEvent event) {
         String key = event.getCode().toString();
         if(key == "ESCAPE") {
@@ -444,6 +480,12 @@ public class DigitSimController extends Pane{
         
     }
     
+    /**
+     * Öffne Filebrowser
+     * @param description
+     * @param extension
+     * @return 
+     */
     public File chooseFile(String description, String extension){ //Die Funktion öffnet einen Filebrowser um eine Datei auszuwählen und lädt dise anschließend.
         FileChooser fc = new FileChooser();
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(description, extension);
@@ -451,7 +493,14 @@ public class DigitSimController extends Pane{
         File selectedFile = fc.showOpenDialog(null);  
         return selectedFile;
     }
-    public File getFilePath(String description, String extension){ //Die Funktion öffnet einen Filebrowser um eine Datei auszuwählen und lädt dise anschließend.
+    
+    /**
+     * Ermittelt den Pfad einer ausgewählten Datei
+     * @param description
+     * @param extension
+     * @return 
+     */
+    public File getFilePath(String description, String extension){ 
         FileChooser fc = new FileChooser();
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(description, extension);
         fc.getExtensionFilters().add(extFilter);

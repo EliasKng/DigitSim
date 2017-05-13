@@ -328,6 +328,10 @@ public class ConnectionHandler {
         return connections;
     }
     
+    /**
+     * Malt die die direkte "vor"-Linie (die Orangene) zwischen Maus und Element beim erstellen einer Connection
+     * @param e 
+     */
     public static void drawDirectPreLinesRelatedToElement(Element e) {
         ArrayList<Connection> connections = getAllConnectionsRelatedToElement(e);
         
@@ -336,6 +340,11 @@ public class ConnectionHandler {
         }
     }
     
+    /**
+     * "Versteckt" alle Verbindungen die mit dem Element verbunden sind
+     * -wird gebraucht, beim verschieben vom ELement
+     * @param e 
+     */
     public static void hideConnectionsRelatedToElement(Element e) {
         ArrayList<Connection> connections = getAllConnectionsRelatedToElement(e);
         
@@ -344,6 +353,10 @@ public class ConnectionHandler {
         }
     }
     
+    /**
+     * Setzt eine Verbindung zurück (berechnet den weg neu ec.)
+     * @param c 
+     */
     public static void resetConnection(Connection c) {
         c.resetConnecion();
     }

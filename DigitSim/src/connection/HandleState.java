@@ -97,6 +97,12 @@ public class HandleState {
         }
     }
     
+    /**
+     * Verknupft zwei States logisch mit "And"
+     * @param s0
+     * @param s1
+     * @return 
+     */
     public static State logicAND(State s0, State s1) {
         int sInt0 = getIntFromState(s0);
         int sInt1 = getIntFromState(s1);
@@ -104,6 +110,12 @@ public class HandleState {
         return getState(res);
     }
     
+    /**
+     * Verknupft zwei States logisch mit "NAND"
+     * @param s0
+     * @param s1
+     * @return 
+     */
     public static State logicNAND(State s0, State s1) {
         int sInt0 = getIntFromState(s0);
         int sInt1 = getIntFromState(s1);
@@ -112,6 +124,12 @@ public class HandleState {
         return getState(res);
     }
     
+    /**
+     * Verknupft zwei States logisch mit "OR"
+     * @param s0
+     * @param s1
+     * @return 
+     */
     public static State logicOR(State s0, State s1) {
         int sInt0 = getIntFromState(s0);
         int sInt1 = getIntFromState(s1);
@@ -119,6 +137,12 @@ public class HandleState {
         return getState(res);
     }
     
+    /**
+     * Verknupft zwei States logisch mit "NOR"
+     * @param s0
+     * @param s1
+     * @return 
+     */
     public static State logicNOR(State s0, State s1) {
         int sInt0 = getIntFromState(s0);
         int sInt1 = getIntFromState(s1);
@@ -127,6 +151,12 @@ public class HandleState {
         return getState(res);
     }
     
+    /**
+     * Verknupft zwei States logisch mit "XOR"
+     * @param s0
+     * @param s1
+     * @return 
+     */
     public static State logicXOR(State s0, State s1) {
         int sInt0 = getIntFromState(s0);
         int sInt1 = getIntFromState(s1);
@@ -135,6 +165,12 @@ public class HandleState {
         return getState(res);
     }
     
+    /**
+     * Verknupft zwei States logisch mit "XNOR"
+     * @param s0
+     * @param s1
+     * @return 
+     */
     public static State logicXNOR(State s0, State s1) {
         int sInt0 = getIntFromState(s0);
         int sInt1 = getIntFromState(s1);
@@ -142,12 +178,22 @@ public class HandleState {
         return getState(res);
     }
     
+    /**
+     * Verknupft einen State logisch mit "Not"
+     * @param s
+     * @return 
+     */
     public static State logicNOT(State s) {
         int sInt = getIntFromState(s);
         int res = nOT[sInt];
         return getState(res);
     }
     
+    /**
+     * Komplementiert einen State
+     * @param s
+     * @return 
+     */
     public static State cplState(State s) {
         if(s == State.HIGH)
             return State.LOW;
