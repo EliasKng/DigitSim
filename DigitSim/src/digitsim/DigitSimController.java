@@ -119,6 +119,9 @@ public class DigitSimController extends Pane{
     private ToggleButton btnVA;
     @FXML
     private ToggleButton btnJKFF;
+    @FXML
+    private ToggleButton btnSRFF;
+    
     
     //Constructor (leer)
     public DigitSimController() {
@@ -218,6 +221,7 @@ public class DigitSimController extends Pane{
         btnDTFF.setToggleGroup(group);
         btnVA.setToggleGroup(group);
         btnJKFF.setToggleGroup(group);
+        btnSRFF.setToggleGroup(group);
 
         this.toggleBtnList.add(btnAND);
         this.toggleBtnList.add(btnOR);
@@ -236,7 +240,7 @@ public class DigitSimController extends Pane{
         this.toggleBtnList.add(btnDTFF);
         this.toggleBtnList.add(btnVA);
         this.toggleBtnList.add(btnJKFF);
-        
+        this.toggleBtnList.add(btnSRFF);
         
     }
     
@@ -592,6 +596,9 @@ public class DigitSimController extends Pane{
             } else if(project.getType()[i].equals(ElementType.Type.JKFF.name())){
                 elements.add(new Element_JKFF(project.getePosX()[i], project.getePosY()[i], nodeGestures));
                  simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
+            } else if(project.getType()[i].equals(ElementType.Type.SRFF.name())){
+                elements.add(new Element_SRFF(project.getePosX()[i], project.getePosY()[i], nodeGestures));
+                 simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
             }
         }
     }
@@ -730,6 +737,10 @@ public class DigitSimController extends Pane{
           elements.add(new Element_JKFF(getXAdaptGrid(event), getYAdaptGrid(event), nodeGestures));
           simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
       }
+      else if(btnSRFF.isSelected()){ //SRFF
+          elements.add(new Element_SRFF(getXAdaptGrid(event), getYAdaptGrid(event), nodeGestures));
+          simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
+      }
       else if(btnTEXT.isSelected()){ //Text
           TextInputDialog dialog = new TextInputDialog("");    //Eingabefesnster 
           dialog.setTitle("Textfeld");                            
@@ -830,6 +841,11 @@ public class DigitSimController extends Pane{
               elements.remove(e);    
           }else if(e.getClass().equals(Element_JKFF.class)){
               elements.add(new Element_JKFF(e.getX() + (e.getWidth() / 2), e.getY() + (e.getHeight() / 2), nodeGestures));
+              simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
+              simCanvas.getChildren().remove(e.getGroup());
+              elements.remove(e);    
+          }else if(e.getClass().equals(Element_SRFF.class)){
+              elements.add(new Element_SRFF(e.getX() + (e.getWidth() / 2), e.getY() + (e.getHeight() / 2), nodeGestures));
               simCanvas.getChildren().add(elements.get(elements.size() - 1).getGroup());
               simCanvas.getChildren().remove(e.getGroup());
               elements.remove(e);    

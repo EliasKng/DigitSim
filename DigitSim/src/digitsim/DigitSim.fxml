@@ -134,7 +134,7 @@
                       <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="123.0" prefWidth="803.0">
                           <children>
-                            <ScrollPane layoutX="0.0" layoutY="0.0" prefHeight="136.0" prefWidth="803.0">
+                            <ScrollPane prefHeight="139.0" prefWidth="803.0" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-1.0">
                               <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="114.0" prefWidth="1064.0">
                                   <children>
@@ -160,6 +160,8 @@
                                     <Label alignment="CENTER" layoutX="828.0" layoutY="83.0" prefHeight="27.0" prefWidth="85.0" text="VA" />
                                     <ToggleButton id="btnTHUMBSWITCH" fx:id="btnJKFF" layoutX="926.0" layoutY="33.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/THUMBSWITCH.png');" />
                                     <Label alignment="CENTER" layoutX="913.0" layoutY="83.0" prefHeight="27.0" prefWidth="85.0" text="JKFF" />
+                                    <ToggleButton id="btnTHUMBSWITCH" fx:id="btnSRFF" layoutX="1035.0" layoutY="31.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/THUMBSWITCH.png');" />
+                                    <Label alignment="CENTER" layoutX="1022.0" layoutY="81.0" prefHeight="27.0" prefWidth="85.0" text="SRFF" />
                                   </children>
                                 </AnchorPane>
                               </content>

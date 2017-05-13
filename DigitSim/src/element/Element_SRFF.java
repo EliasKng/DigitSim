@@ -23,7 +23,7 @@ import toolbox.GenFunctions;
  *
  * @author Tim
  */
-public class Element_JKFF extends Element {
+public class Element_SRFF extends Element {
      //Globals
     public static final ElementType.Type TYPE = ElementType.Type.JKFF; //Der Typ des Bausteines
    //Die Elemente aus denen der Baustein zusammengestezt ist
@@ -37,7 +37,7 @@ public class Element_JKFF extends Element {
     private final Element thisElement = this; //Referenz auf sich selbst
 
     //Constructor
-    public Element_JKFF(double pX, double pY, NodeGestures dNodeGestures){ //Baustein zeichnen
+    public Element_SRFF(double pX, double pY, NodeGestures dNodeGestures){ //Baustein zeichnen
         outputs = new int[2]; //Outputs
 
         double gridOffset = (double) Properties.GetGridOffset();
@@ -48,10 +48,10 @@ public class Element_JKFF extends Element {
         rec = Draw.drawRectangle(pX, pY, elementWidth, elementHeight, 10, 10, Color.BLACK, Properties.getElementOpacity(), 5);           //das AND zeichnen
         rec.addEventFilter(MouseEvent.MOUSE_ENTERED, NodeGestures.getOverNodeMouseHanlderEnterRec(this));
         rec.addEventFilter(MouseEvent.MOUSE_EXITED, NodeGestures.getOverNodeMouseHanlderExitRec(this));
-        lblVA = Draw.drawLabel((pX + 25), (pY - 2), "JK", Color.BLACK, false, 20);
-        lblX = Draw.drawLabel((pX + 10), pY + 15.5, "J", Color.BLACK, false, 18);
+        lblVA = Draw.drawLabel((pX + 25), (pY - 2), "SR", Color.BLACK, false, 20);
+        lblX = Draw.drawLabel((pX + 10), pY + 15.5, "S", Color.BLACK, false, 18);
         lblY = Draw.drawLabel((pX + 10), pY + 38, "C", Color.BLACK, false, 18);
-        lblCI = Draw.drawLabel((pX + 10), pY +39 + 16.5, "K", Color.BLACK, false, 18);
+        lblCI = Draw.drawLabel((pX + 10), pY +39 + 16.5, "R", Color.BLACK, false, 18);
         lblS = Draw.drawLabel((pX + 60), pY + 17.5, "Q", Color.BLACK, false, 18);
         lblCO = Draw.drawLabel((pX + 55), pY + 42.5, "!Q", Color.BLACK, false, 18);
         outputs[0] = 3;
@@ -111,13 +111,7 @@ public class Element_JKFF extends Element {
             lastClockState = currentClockState;
             return;
         }
-        //Komplementieren
-        if(inputs[0] == 1 && inputs[2] == 1) {
-            outputs[0] = HandleState.getIntFromState(HandleState.cplState(HandleState.getState(outputs[0])));
-            outputs[1] = HandleState.getIntFromState(HandleState.logicNOT(HandleState.getState(outputs[0])));
-            lastClockState = currentClockState;
-            return;
-        } else if(inputs[0] == 1 && inputs[2] == 0) { //Set
+        if(inputs[0] == 1 && inputs[2] == 0) { //Set
             outputs[0] = 1;
             outputs[1] = HandleState.getIntFromState(HandleState.logicNOT(HandleState.getState(outputs[0])));
             lastClockState = currentClockState;
