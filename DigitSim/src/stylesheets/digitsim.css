@@ -31,3 +31,8 @@
 .slider:focused {
     /*-fx-shadow-highlight-color: transparent;*/
 }
+
+/*---TAB---*/
+.tab-pane .tab-header-area .tab-header-background {
+    -fx-opacity: 0;
+}

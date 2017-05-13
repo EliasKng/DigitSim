@@ -390,6 +390,7 @@ public class DigitSimController extends Pane{
         outputMessages.clear(); //Platz machen für Error meldungen
         btnStart.setDisable(true);
         btnPause.setDisable(false);
+        inputSlider.setDisable(true);
         runningThread = new SimThread(this);
         outputMessages.add("[INFO] Starten der Simulation.");
         runningThread.start(); //Den Thread starten, d.h alle Elemente & Connections werden regelmäßig geupdated
@@ -409,6 +410,7 @@ public class DigitSimController extends Pane{
         resetElements(); //Alle ELemente resetten
         btnPause.setDisable(true);
         btnStart.setDisable(false);
+        inputSlider.setDisable(false);
         outputMessages.add("[INFO]Simulation beendet!");
         enableAllButtons();
         locked = false;
