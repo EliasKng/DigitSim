@@ -27,71 +27,8 @@
 <?scenebuilder-stylesheet ../stylesheets/digitsim.css?>
 <?scenebuilder-stylesheet ../stylesheets/outputList.css?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" prefHeight="768.0" prefWidth="1024.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="digitsim.DigitSimController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="digitsim.DigitSimController">
   <children>
-    <MenuBar layoutY="-1.0" prefHeight="24.0" prefWidth="1024.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-      <menus>
-        <Menu mnemonicParsing="false" text="Datei">
-          <items>
-            <MenuItem mnemonicParsing="false" onAction="#mItemNewFileAction" text="Neu" fx:id="mItemNewFile">
-              <accelerator>
-                <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-              </accelerator>
-            </MenuItem>
-            <MenuItem id="mItemOpenFile" mnemonicParsing="false" onAction="#mItemOpenFileAction" text="Öffnen" fx:id="mItemOpenFile">
-              <accelerator>
-                <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-              </accelerator>
-            </MenuItem>
-            <MenuItem mnemonicParsing="false" onAction="#mItemSaveFileAction" text="Speichern" fx:id="mItemSaveFile">
-              <accelerator>
-                <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-              </accelerator>
-            </MenuItem>
-            <MenuItem mnemonicParsing="false" onAction="#mItemSaveFileAsAction" text="Speichern als..." fx:id="mItemSaveFileAs" />
-            <MenuItem mnemonicParsing="false" onAction="#mItemCloseAction" text="Schließen" fx:id="mItemClose">
-              <accelerator>
-                <KeyCodeCombination alt="UP" code="C" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-              </accelerator>
-            </MenuItem>
-          </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="Bearbeiten">
-          <items>
-            <MenuItem mnemonicParsing="false" text="Ausgewähltes Löschen">
-              <accelerator>
-                <KeyCodeCombination alt="UP" code="DELETE" control="UP" meta="UP" shift="UP" shortcut="ANY" />
-              </accelerator>
-            </MenuItem>
-            <MenuItem mnemonicParsing="false" onAction="#mItemPropertiesOnAction" text="Einstellungen" fx:id="mItemProperties">
-              <accelerator>
-                <KeyCodeCombination alt="UP" code="P" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-              </accelerator>
-            </MenuItem>
-          </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="Simulation">
-          <items>
-            <MenuItem mnemonicParsing="false" onAction="#mItemSimRunOnAction" text="Run" fx:id="MenuSimuRun">
-              <accelerator>
-                <KeyCodeCombination alt="UP" code="R" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-              </accelerator>
-            </MenuItem>
-            <MenuItem mnemonicParsing="false" onAction="#mItemSimStopOnAction" text="Stop" fx:id="MenuSimuStop">
-              <accelerator>
-                <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-              </accelerator>
-            </MenuItem>
-          </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="Hilfe">
-          <items>
-            <MenuItem mnemonicParsing="false" text="Über den Seminator" />
-            <MenuItem mnemonicParsing="false" onAction="#mItemHelpOnAction" text="Hilfe" fx:id="mItemHelp" />
-          </items>
-        </Menu>
-      </menus>
-    </MenuBar>
     <AnchorPane prefHeight="744.0" prefWidth="1028.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-4.0" AnchorPane.topAnchor="24.0">
       <children>
         <AnchorPane fx:id="simPane" layoutX="0.0" layoutY="-1.0" minHeight="0.0" minWidth="0.0" prefHeight="232.0" prefWidth="1024.0" />
@@ -152,15 +89,15 @@
                                 <ToggleButton fx:id="btn7SegBCD" layoutX="389.0" layoutY="5.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/BCD.jpg');" />
                                 <Label alignment="CENTER" layoutX="555.0" layoutY="83.0" prefHeight="27.0" prefWidth="110.0" text="THUMBSWITCH" />
                                 <ToggleButton fx:id="btnTHUMBSWITCH" layoutX="580.0" layoutY="33.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/THUMBSWITCH.png');" />
-                                <ToggleButton id="btnTHUMBSWITCH" fx:id="btnCLOCK" layoutX="671.0" layoutY="33.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/THUMBSWITCH.png');" />
+                                <ToggleButton id="btnTHUMBSWITCH" fx:id="btnCLOCK" layoutX="671.0" layoutY="33.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/clock.png');" />
                                 <Label alignment="CENTER" layoutX="659.0" layoutY="83.0" prefHeight="27.0" prefWidth="85.0" text="CLOCK" />
-                                <ToggleButton id="btnTHUMBSWITCH" fx:id="btnDTFF" layoutX="743.0" layoutY="33.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/THUMBSWITCH.png');" />
+                                <ToggleButton id="btnTHUMBSWITCH" fx:id="btnDTFF" layoutX="743.0" layoutY="3.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/dff.png');" />
                                 <Label alignment="CENTER" layoutX="731.0" layoutY="83.0" prefHeight="27.0" prefWidth="85.0" text="DTFF" />
-                                <ToggleButton id="btnTHUMBSWITCH" fx:id="btnVA" layoutX="841.0" layoutY="33.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/THUMBSWITCH.png');" />
+                                <ToggleButton id="btnTHUMBSWITCH" fx:id="btnVA" layoutX="841.0" layoutY="33.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/va.png');" />
                                 <Label alignment="CENTER" layoutX="828.0" layoutY="83.0" prefHeight="27.0" prefWidth="85.0" text="VA" />
-                                <ToggleButton id="btnTHUMBSWITCH" fx:id="btnJKFF" layoutX="926.0" layoutY="33.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/THUMBSWITCH.png');" />
+                                <ToggleButton id="btnTHUMBSWITCH" fx:id="btnJKFF" layoutX="926.0" layoutY="3.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/jkff.png');" />
                                 <Label alignment="CENTER" layoutX="913.0" layoutY="83.0" prefHeight="27.0" prefWidth="85.0" text="JKFF" />
-                                <ToggleButton id="btnTHUMBSWITCH" fx:id="btnSRFF" layoutX="1035.0" layoutY="31.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/THUMBSWITCH.png');" />
+                                <ToggleButton id="btnTHUMBSWITCH" fx:id="btnSRFF" layoutX="1035.0" layoutY="3.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="60.0" style="-fx-background-image: url('/digitsim/data/srff.png');" />
                                 <Label alignment="CENTER" layoutX="1022.0" layoutY="81.0" prefHeight="27.0" prefWidth="85.0" text="SRFF" />
                               </children>
                             </AnchorPane>
@@ -199,6 +136,69 @@
         </AnchorPane>
       </children>
     </AnchorPane>
+    <MenuBar prefHeight="24.0" prefWidth="1024.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <menus>
+        <Menu mnemonicParsing="false" text="Datei">
+          <items>
+            <MenuItem fx:id="mItemNewFile" mnemonicParsing="false" onAction="#mItemNewFileAction" text="Neu">
+              <accelerator>
+                <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+              </accelerator>
+            </MenuItem>
+            <MenuItem id="mItemOpenFile" fx:id="mItemOpenFile" mnemonicParsing="false" onAction="#mItemOpenFileAction" text="Öffnen">
+              <accelerator>
+                <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+              </accelerator>
+            </MenuItem>
+            <MenuItem fx:id="mItemSaveFile" mnemonicParsing="false" onAction="#mItemSaveFileAction" text="Speichern">
+              <accelerator>
+                <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+              </accelerator>
+            </MenuItem>
+            <MenuItem fx:id="mItemSaveFileAs" mnemonicParsing="false" onAction="#mItemSaveFileAsAction" text="Speichern als..." />
+            <MenuItem fx:id="mItemClose" mnemonicParsing="false" onAction="#mItemCloseAction" text="Schließen">
+              <accelerator>
+                <KeyCodeCombination alt="UP" code="C" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+              </accelerator>
+            </MenuItem>
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Bearbeiten">
+          <items>
+            <MenuItem mnemonicParsing="false" text="Ausgewähltes Löschen">
+              <accelerator>
+                <KeyCodeCombination alt="UP" code="DELETE" control="UP" meta="UP" shift="UP" shortcut="ANY" />
+              </accelerator>
+            </MenuItem>
+            <MenuItem fx:id="mItemProperties" mnemonicParsing="false" onAction="#mItemPropertiesOnAction" text="Einstellungen">
+              <accelerator>
+                <KeyCodeCombination alt="UP" code="P" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+              </accelerator>
+            </MenuItem>
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Simulation">
+          <items>
+            <MenuItem fx:id="MenuSimuRun" mnemonicParsing="false" onAction="#mItemSimRunOnAction" text="Run">
+              <accelerator>
+                <KeyCodeCombination alt="UP" code="R" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+              </accelerator>
+            </MenuItem>
+            <MenuItem fx:id="MenuSimuStop" mnemonicParsing="false" onAction="#mItemSimStopOnAction" text="Stop">
+              <accelerator>
+                <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+              </accelerator>
+            </MenuItem>
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Hilfe">
+          <items>
+            <MenuItem mnemonicParsing="false" text="Über den Seminator" />
+            <MenuItem fx:id="mItemHelp" mnemonicParsing="false" onAction="#mItemHelpOnAction" text="Hilfe" />
+          </items>
+        </Menu>
+      </menus>
+    </MenuBar>
   </children>
   <stylesheets>
     <URL value="@../stylesheets/digitsim.css" />
