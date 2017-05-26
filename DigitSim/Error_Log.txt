@@ -15,3 +15,7 @@
 (Thu Feb 16 17:57:50 CET 2017)[ERROR IN <class java.lang.Class>] JAXB-Error beim abbilden
 (Thu Feb 16 17:59:43 CET 2017)[ERROR IN <class java.lang.Class>] JAXB-Error beim abbilden
 (Wed Mar 08 16:25:37 CET 2017)[ERROR IN <class java.lang.Class>] Fehler beim laden von DigitSim.fxml & Seminator & icon.png
+(Fri May 26 13:43:24 CEST 2017)[ERROR IN <class java.lang.Class>] Fehler beim laden von DigitSim.fxml & Seminator & icon.png
+(Fri May 26 14:15:29 CEST 2017)[ERROR IN <class java.lang.Class>] Fehler beim laden von Help.fxml & Hilfe & icon.png
+(Fri May 26 14:17:08 CEST 2017)[ERROR IN <class java.lang.Class>] Fehler beim laden von Help.fxml & Hilfe & icon.png
+(Fri May 26 14:17:45 CEST 2017)[ERROR IN <class java.lang.Class>] Fehler beim laden von Help.fxml & Hilfe & icon.png
