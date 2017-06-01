@@ -6,6 +6,7 @@
 package connection;
 
 import general.State;
+import java.util.List;
 import javafx.application.Platform;
 import javafx.scene.paint.Color;
 
@@ -108,6 +109,36 @@ public class HandleState {
         int sInt1 = getIntFromState(s1);
         int res = aND[sInt0][sInt1];
         return getState(res);
+    }
+    
+    /**
+     * Verknupft zwei States logisch mit "And"
+     * @param s0
+     * @param s1
+     * @return 
+     */
+    public static State logicAND(List<State> states) {
+//        int finalState = getIntFromState(states[0]);
+//        for(int i = 1; i < states.length -1; i++) {
+//            finalState = aND[finalState][getIntFromState(states[i])];
+//        }
+//      S
+        State finalState = null;
+        for(State s : states) {
+            if(finalState == null) {
+                finalState = s;
+                continue;
+            }
+            
+                System.out.println(finalState);
+                System.out.println(s);
+                System.out.println();
+                finalState = getState(aND[getIntFromState(finalState)][getIntFromState(s)]);
+            
+        }
+
+        
+        return finalState;
     }
     
     /**
