@@ -16,8 +16,8 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Group;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
 import javafx.scene.input.MouseEvent;
@@ -134,14 +134,15 @@ public class DigitSimController extends Pane{
         setSliderProperties(); //Einstellungen für den Silder zum einstellen der Eingange von Grundbausteinen
         outputList.setItems(outputMessages);
         outputList.setFocusTraversable(false);
+        addLogo();
         simCanvas.addGrid(simCanvas.getPrefWidth(), simCanvas.getPrefHeight()); //Gitter zeichnen
         loadBtnGroup(); //Alle Buttons die ein Element auswählen in eine Gruppe packen, damit immer nur einer ausgewählt ist
-
+ 
                
         //Handler für funktionen wie Drag, Zoom etc.
         nodeGestures = new NodeGestures( simCanvas);
         sceneGestures = new SceneGestures(simCanvas, simPane);            
-        
+       
         //EVENT FILTER (Diese werden ausgelöst sobald ein gewisses Ereignis eintritt)
         simPane.addEventFilter( MouseEvent.MOUSE_PRESSED, sceneGestures.getOnMousePressedEventHandler()); //Wenn z.b die Maus gedrückt wird, wird der getOnMousePressedEventHanlder ausgeführt
         simPane.addEventFilter( MouseEvent.MOUSE_DRAGGED, sceneGestures.getOnMouseDraggedEventHandler());
@@ -150,6 +151,12 @@ public class DigitSimController extends Pane{
         elements = new ArrayList<Element>(); //Beschreibung oben
         //Klasse für die Verbindungen    
         outputMessages.add("[INFO]Neues Projekt erstellt!");
+    }
+   
+    private void addLogo() {
+        ImageView image = new ImageView("/digitsim/data/aeslogo1.png");
+        simPane.getChildren().add(image);
+        image.toFront();
     }
     
     @FXML

@@ -19,3 +19,4 @@
 (Fri May 26 14:15:29 CEST 2017)[ERROR IN <class java.lang.Class>] Fehler beim laden von Help.fxml & Hilfe & icon.png
 (Fri May 26 14:17:08 CEST 2017)[ERROR IN <class java.lang.Class>] Fehler beim laden von Help.fxml & Hilfe & icon.png
 (Fri May 26 14:17:45 CEST 2017)[ERROR IN <class java.lang.Class>] Fehler beim laden von Help.fxml & Hilfe & icon.png
+(Thu Jun 01 18:03:05 CEST 2017)[ERROR IN <class java.lang.Class>] Fehler beim laden von DigitSim.fxml & Seminator & icon.png
