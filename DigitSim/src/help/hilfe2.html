@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+	<head>
+		<title>Seminator</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Kuribo.de</title>
+    <!-- Bootstrap stylesheets -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" />
+	<link rel="stylesheet" href="stylesheet.css">
+    <!-- Jquery -->
+    <script src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
+    <!-- Bootstrap Javascript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- Bootstrap Javascript -->
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="util.js"></script>
+
+	</head>
+
+	<body>
+	
+		<nav id="header" class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menubar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="index.html">Seminator</a>
+        </div>
+        <div class="collapse navbar-collapse" id="menubar">
+          <ul class="nav navbar-nav">
+            <li><a href="index.html">Über den Seminator</a></li>
+                <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="hilfe.html">Hilfe
+        <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+	  <li><a href="hilfe3.html">Die Basics</a></li>
+          <li><a href="hilfe.html">Elementare Grundbausteine</a></li>
+          <li><a href="hilfe2.html">weitere Bausteine</a></li>
+        </ul>
+      </li>
+          </ul>
+         </div>
+      </div>
+    </nav>
+	<br></br>
+
+	
+	<div class="container">
+	<div class="page-header">
+	
+<div class="alert alert-info alert-dismissable">
+  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  <strong><span class="glyphicon glyphicon-info-sign"> </span> Mitteilung!</strong> Der Seminator befindet sich zur Zeit in der Alpha.
+</div>
+<h1 align="center">Weitere Bausteine</h1>
+	</div>
+
+
+<div class="panel-group" id="accordion">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+        Textfeld</a>
+      </h4>
+    </div>
+    <div id="collapse1" class="panel-collapse collapse in">
+      <div class="panel-body">
+	<img src="Bilder/Textfeld.png" style="float: left;"></img>
+	 <div style="margin-left: 60px; height: 50px; padding-left: 10px;">
+Das Textfeld bietet die Möglichkeit ihre Schaltung mit Kommentaren/Bemerkungen in verschiedenen Farben und Schriftgrößen zu schmücken.</div>
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+        LED</a>
+      </h4>
+    </div>
+    <div id="collapse2" class="panel-collapse collapse">
+     <div class="panel-body">
+      <img src="Bilder/LED.png" style="float: left;"></img>
+	 <div style="margin-left: 60px; height: 50px; padding-left: 10px;">
+Die LED zeigt den aktuellen Zustand einer Leitung/eines Kabels.</div>
+<br></br>	
+<table class="table">
+	 <thead>
+	  <tr>
+		<td class="info"><b>Logisch 0: </b>Es liegt ein Signal ohne Spannung oder kein Signal an.</th>
+	  </tr>
+	  <tr>
+		<td class="danger"><b>Logisch 1: </b>Es liegt ein Signal mit Spannung an</th>
+	  </tr>
+	  <tr>
+		<td class="success"><b>undefiniert: </b>Der Zustand ist nicht definiert</th>
+	  </tr>
+	</table>
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+       Signal</a>
+      </h4>
+    </div>
+    <div id="collapse3" class="panel-collapse collapse">
+      <div class="panel-body"> <img src="Bilder/signal.png" style="float: left;"></img>
+	 <div style="margin-left: 60px; height: 50px; padding-left: 10px;">
+Das Singal gibt ein Signal aus. Entweder Logisch 1 oder Logisch 0 (Spannung oder keine Spannung).</div>
+<br></br>	
+<table class="table">
+	 <thead>
+	  <tr>
+		<td class="info"><b>Logisch 0: </b>Es wird ein Signal ohne Spannung ausgegeben.</th>
+	  </tr>
+	  <tr>
+		<td class="danger"><b>Logisch 1: </b>Es wird ein Signal mit Spannung ausgegeben</th>
+	  </tr>
+	</table>
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">
+       7-Segment BCD-Anzeige</a>
+      </h4>
+    </div>
+    <div id="collapse4" class="panel-collapse collapse">
+      <div class="panel-body"> <img src="Bilder/BCD.png" style="float: left;"></img>
+	 <div style="margin-left: 60px; height: 50px; padding-left: 10px;">
+Die 7-Segment BCD-Anzeige zeigt eine Zahl aus dem Hexadezimalsystem an (0 bis F), indem es eine 4-Bit Binärzahl umcodiert.</div>
+<br></br>	
+<table class="table">
+<thead>
+<tr>
+  <th><center>X3</center></th>
+  <th><center>X2</center></th>
+  <th><center>X1</center></th>
+  <th><center>X0</center></th>
+  <th><center>Y</center></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><center>0</center></td>
+  <td><center>0</center></td>
+  <td><center>0</center></td>
+  <td><center>0</center></td>
+  <td class="info"><center>0</center></td>
+</tr>
+<tr>
+  <td><center>0</center></td>
+  <td><center>0</center></td>
+  <td><center>0</center></td>
+  <td><center>1</center></td>
+  <td class="info"><center>1</center></td>
+</tr>
+<tr>
+  <td><center>0</center></td>
+  <td><center>0</center></td>
+  <td><center>1</center></td>
+  <td><center>0</center></td>
+  <td class="info"><center>2</center></td>
+</tr>
+<tr>
+  <td><center>0</center></td>
+  <td><center>0</center></td>
+  <td><center>1</center></td>
+  <td><center>1</center></td>
+  <td class="info"><center>3</center></td>
+</tr>
+<tr>
+  <td><center>0</center></td>
+  <td><center>1</center></td>
+  <td><center>0</center></td>
+  <td><center>0</center></td>
+  <td class="info"><center>4</center></td>
+</tr>
+<tr>
+  <td><center>0</center></td>
+  <td><center>1</center></td>
+  <td><center>0</center></td>
+  <td><center>1</center></td>
+  <td class="info"><center>5</center></td>
+</tr>
+<tr>
+  <td><center>0</center></td>
+  <td><center>1</center></td>
+  <td><center>1</center></td>
+  <td><center>0</center></td>
+  <td class="info"><center>6</center></td>
+</tr>
+<tr>
+  <td><center>0</center></td>
+  <td><center>1</center></td>
+  <td><center>1</center></td>
+  <td><center>1</center></td>
+  <td class="info"><center>7</center></td>
+</tr>
+<tr>
+  <td><center>1</center></td>
+  <td><center>0</center></td>
+  <td><center>0</center></td>
+  <td><center>0</center></td>
+  <td class="info"><center>8</center></td>
+</tr>
+<tr>
+  <td><center>1</center></td>
+  <td><center>0</center></td>
+  <td><center>0</center></td>
+  <td><center>1</center></td>
+  <td class="info"><center>9</center></td>
+</tr>
+<tr>
+  <td><center>1</center></td>
+  <td><center>0</center></td>
+  <td><center>1</center></td>
+  <td><center>0</center></td>
+  <td class="info"><center>A</center></td>
+</tr>
+<tr>
+  <td><center>1</center></td>
+  <td><center>0</center></td>
+  <td><center>1</center></td>
+  <td><center>1</center></td>
+  <td class="info"><center>B</center></td>
+</tr>
+<tr>
+  <td><center>1</center></td>
+  <td><center>1</center></td>
+  <td><center>0</center></td>
+  <td><center>0</center></td>
+  <td class="info"><center>C</center></td>
+</tr>
+<tr>
+  <td><center>1</center></td>
+  <td><center>1</center></td>
+  <td><center>0</center></td>
+  <td><center>1</center></td>
+  <td class="info"><center>D</center></td>
+</tr>
+<tr>
+  <td><center>1</center></td>
+  <td><center>1</center></td>
+  <td><center>1</center></td>
+  <td><center>0</center></td>
+  <td class="info"><center>E</center></td>
+</tr>
+<tr>
+  <td><center>1</center></td>
+  <td><center>1</center></td>
+  <td><center>1</center></td>
+  <td><center>1</center></td>
+  <td class="info"><center>F</center></td>
+</tr>
+</tbody>
+</table>
+</div></div>
+    </div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapse5">
+        7 Segment-Anzeige</a>
+      </h4>
+    </div>
+    <div id="collapse5" class="panel-collapse collapse">
+     <div class="panel-body">
+      <img src="Bilder/7seg.png" style="float: left;"></img>
+	<img src="Bilder/7sega.png" style="float: left;"></img>
+	 <div style="margin-left: 110px; height: 50px; padding-left: 20px;">
+Bei der 7-Segment-Anzeige wird jedes Segment einzeln angesteuert (siehe Tabelle).</div>
+<br></br>	
+<table class="table">
+<thead>
+<tr>
+  <th><center>X</center></th>
+  <th><center>Segment</center></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><center>X6</center></td>
+  <td><center>g</center></td>
+</tr>
+<tr>
+  <td><center>X5</center></td>
+  <td><center>f</center></td>
+</tr>
+<tr>
+  <td><center>X4</center></td>
+  <td><center>e</center></td>
+</tr>
+<tr>
+  <td><center>X3</center></td>
+  <td><center>d</center></td>
+</tr>
+<tr>
+  <td><center>X2</center></td>
+  <td><center>c</center></td>
+</tr>
+<tr>
+  <td><center>X1</center></td>
+  <td><center>b</center></td>
+</tr>
+<tr>
+  <td><center>X0</center></td>
+  <td><center>a</center></td>
+</tr>
+</tbody>
+</table>
+</div></div>
+    </div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapse6">
+        Thumbswitch</a>
+      </h4>
+    </div>
+    <div id="collapse6" class="panel-collapse collapse">
+     <div class="panel-body">
+      <img src="Bilder/THUMBSWITCH.png" style="float: left;"></img>
+	 <div style="margin-left: 60px; height: 50px; padding-left: 10px;">
+Der Thumbswitch gibt die Hexadezimalzahlen 0-F (bei 4-Bit) als Binärcodierung aus.</div>
+	
+<table class="table">
+<thead>
+<tr>
+  <th><center>Hex-Zahl</center></th>
+  <th><center>Y3</center></th>
+  <th><center>Y2</center></th>
+  <th><center>Y1</center></th>
+  <th><center>Y0</center></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><center>0</center></td>
+  <td><center>0</center></td>
+  <td><center>0</center></td>
+  <td><center>0</center></td>
+  <td><center>0</center></td>
+</tr>
+<tr>
+  <td><center>1</center></td>
+  <td><center>0</center></td>
+  <td><center>0</center></td>
+  <td><center>0</center></td>
+  <td><center>1</center></td>
+</tr>
+<tr>
+  <td><center>2</center></td>
+  <td><center>0</center></td>
+  <td><center>0</center></td>
+  <td><center>1</center></td>
+  <td><center>0</center></td>
+</tr>
+<tr>
+  <td><center>3</center></td>
+  <td><center>0</center></td>
+  <td><center>0</center></td>
+  <td><center>1</center></td>
+  <td><center>1</center></td>
+</tr>
+<tr>
+  <td><center>4</center></td>
+  <td><center>0</center></td>
+  <td><center>1</center></td>
+  <td><center>0</center></td>
+  <td><center>0</center></td>
+</tr>
+<tr>
+  <td><center>5</center></td>
+  <td><center>0</center></td>
+  <td><center>1</center></td>
+  <td><center>0</center></td>
+  <td><center>1</center></td>
+</tr>
+<tr>
+  <td><center>6</center></td>
+  <td><center>0</center></td>
+  <td><center>1</center></td>
+  <td><center>1</center></td>
+  <td><center>0</center></td>
+</tr>
+<tr>
+  <td><center>7</center></td>
+  <td><center>0</center></td>
+  <td><center>1</center></td>
+  <td><center>1</center></td>
+  <td><center>1</center></td>
+</tr>
+<tr>
+  <td><center>8</center></td>
+  <td><center>1</center></td>
+  <td><center>0</center></td>
+  <td><center>0</center></td>
+  <td><center>0</center></td>
+</tr>
+<tr>
+  <td><center>9</center></td>
+  <td><center>1</center></td>
+  <td><center>0</center></td>
+  <td><center>0</center></td>
+  <td><center>1</center></td>
+</tr>
+<tr>
+  <td><center>A</center></td>
+  <td><center>1</center></td>
+  <td><center>0</center></td>
+  <td><center>1</center></td>
+  <td><center>0</center></td>
+</tr>
+<tr>
+  <td><center>B</center></td>
+  <td><center>1</center></td>
+  <td><center>0</center></td>
+  <td><center>1</center></td>
+  <td><center>1</center></td>
+</tr>
+<tr>
+  <td><center>C</center></td>
+  <td><center>1</center></td>
+  <td><center>1</center></td>
+  <td><center>0</center></td>
+  <td><center>0</center></td>
+</tr>
+<tr>
+  <td><center>D</center></td>
+  <td><center>1</center></td>
+  <td><center>1</center></td>
+  <td><center>0</center></td>
+  <td><center>1</center></td>
+</tr>
+<tr>
+  <td><center>E</center></td>
+  <td><center>1</center></td>
+  <td><center>1</center></td>
+  <td><center>1</center></td>
+  <td><center>0</center></td>
+</tr>
+<tr>
+  <td><center>F</center></td>
+  <td><center>1</center></td>
+  <td><center>1</center></td>
+  <td><center>1</center></td>
+  <td><center>1</center></td>
+</tr>
+</tbody>
+</table>
+</div></div>
+    </div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapse7">
+        Clock</a>
+      </h4>
+    </div>
+    <div id="collapse7" class="panel-collapse collapse">
+     <div class="panel-body">
+      <img src="Bilder/clock.png" style="float: left;"></img>
+	 <div style="margin-left: 60px; height: 50px; padding-left: 10px;">
+Die Clock gibt in einer Geschwindigkeit, welche abhängig von der eingestellten Frequenz ist, einen Signal logisch 1 aus (z.B. bei 0.2Hz —> alle 5 Sekunden).</div>	
+
+</div></div>
+    </div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapse8">
+        Volladierer</a>
+      </h4>
+    </div>
+    <div id="collapse8" class="panel-collapse collapse">
+     <div class="panel-body">
+      <img src="Bilder/VA.png" style="float: left;"></img>
+	 <div style="margin-left: 60px; height: 50px; padding-left: 10px;">
+TEXT.</div>	
+
+</div></div>
+    </div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapse9">
+        D-Flip-Flop</a>
+      </h4>
+    </div>
+    <div id="collapse9" class="panel-collapse collapse">
+     <div class="panel-body">
+      <img src="Bilder/DFF.png" style="float: left;"></img>
+	 <div style="margin-left: 60px; height: 50px; padding-left: 10px;">
+TEXT.</div>	
+
+</div></div>
+    </div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapse10">
+        JK-Flip_Flop</a>
+      </h4>
+    </div>
+    <div id="collapse10" class="panel-collapse collapse">
+     <div class="panel-body">
+      <img src="Bilder/JKFF.png" style="float: left;"></img>
+	 <div style="margin-left: 60px; height: 50px; padding-left: 10px;">
+TEXT.</div>	
+
+</div></div>
+    </div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapse11">
+        SR-Flip-Flop</a>
+      </h4>
+    </div>
+    <div id="collapse11" class="panel-collapse collapse">
+     <div class="panel-body">
+      <img src="Bilder/SRFF.png" style="float: left;"></img>
+	 <div style="margin-left: 60px; height: 50px; padding-left: 10px;">
+TEXT.</div>	
+
+</div></div>
+    </div>
+	</body>
+</html>

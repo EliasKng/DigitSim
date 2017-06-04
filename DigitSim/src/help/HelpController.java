@@ -5,20 +5,10 @@
  */
 package help;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-import javafx.fxml.Initializable;
-
 /**
  *
- * @author Elias
+ * @author camillo
  */
-public class HelpController implements Initializable {
-    /**
-     * Initializes the controller class.
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }  
+public class HelpController {
+    
 }

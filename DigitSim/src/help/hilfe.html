@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+	<head>
+		<title>Seminator</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Kuribo.de</title>
+    <!-- Bootstrap stylesheets -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" />
+	<link rel="stylesheet" href="stylesheet.css">
+    <!-- Jquery -->
+    <script src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
+    <!-- Bootstrap Javascript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- Bootstrap Javascript -->
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="util.js"></script>
+
+	</head>
+
+	<body>
+	
+		<nav id="header" class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menubar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="index.html">Seminator</a>
+        </div>
+        <div class="collapse navbar-collapse" id="menubar">
+          <ul class="nav navbar-nav">
+            <li><a href="index.html">Über den Seminator</a></li>
+                <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="hilfe.html">Hilfe
+        <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+	  <li><a href="hilfe3.html">Die Basics</a></li>
+          <li><a href="hilfe.html">Elementare Grundbausteine</a></li>
+          <li><a href="hilfe2.html">weitere Bausteine</a></li>
+        </ul>
+      </li>
+          </ul>
+         </div>
+      </div>
+    </nav>
+	<br></br>
+
+	
+	<div class="container">
+	<div class="page-header">
+	
+<div class="alert alert-info alert-dismissable">
+  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  <strong><span class="glyphicon glyphicon-info-sign"> </span> Mitteilung!</strong> Der Seminator befindet sich zur Zeit in der Alpha und kann daher noch Fehler und Bugs beinhalten.
+</div>
+	<h1 align="center">Elementare Grundbausteine</h1>
+	</div>
+	
+
+
+<div class="panel-group" id="accordion">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+        AND</a>
+      </h4>
+    </div>
+    <div id="collapse1" class="panel-collapse collapse in">
+      <div class="panel-body"><img src="Bilder/AND.png" style="float: left;"></img>
+<div style="margin-left: 60px; height: 50px; padding-left: 5px;">
+Der And Baustein liefert ein aktives Ausgangssignal, wenn alle Eingänge logisch 1 sind.</div>
+<div class="table-responsive">
+  <table class="table">
+<thead>
+<tr>
+  <th><center>X1</center></th>
+  <th><center>X0</center></th>
+  <th><center>Y</center></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><center>0</center></td>
+  <td><center>0</center></td>
+  <td class="danger"><center>0</center></td>
+</tr>
+<tr>
+  <td><center>0</center></td>
+  <td><center>1</center></td>
+  <td class="danger"><center>0</center></td>
+</tr>
+<tr>
+  <td><center>1</center></td>
+  <td><center>0</center></td>
+  <td class="danger"><center>0</center></td>
+</tr>
+<tr>
+  <td><center>0</center></td>
+  <td><center>0</center></td>
+  <td class="success"><center>0</center></td>
+</tr>
+</tbody>
+</table>
+</div></div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+        OR</a>
+      </h4>
+    </div>
+    <div id="collapse2" class="panel-collapse collapse">
+      <div class="panel-body"><img src="Bilder/OR.png" style="float: left;"></img>
+<div style="margin-left: 60px; height: 50px; padding-left: 5px;">
+Der OR Baustein liefert ein aktives Ausgangssignal, wenn mindestens ein Eingang logisch 1 ist.</div><div class="table-responsive">
+  <table class="table">
+<thead>
+<tr>
+  <th><center>X1</center></th>
+  <th><center>X0</center></th>
+  <th><center>Y</center></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><center>0</center></td>
+  <td><center>0</center></td>
+  <td class="danger"><center>0</center></td>
+</tr>
+<tr>
+  <td><center>0</center></td>
+  <td><center>1</center></td>
+  <td class="success"><center>1</center></td>
+</tr>
+<tr>
+  <td><center>1</center></td>
+  <td><center>0</center></td>
+  <td class="success"><center>1</center></td>
+</tr>
+<tr>
+  <td><center>0</center></td>
+  <td><center>0</center></td>
+  <td class="success"><center>1</center></td>
+</tr>
+</tbody>
+</table>
+</div></div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+       NOT</a>
+      </h4>
+    </div>
+    <div id="collapse3" class="panel-collapse collapse">
+      <div class="panel-body"><img src="Bilder/NOT.png" style="float: left;"></img>
+<div style="margin-left: 60px; height: 50px; padding-left: 5px;">
+Der NOT Baustein dreht das kommende Signal um.</div><div class="table-responsive">
+  <table class="table">
+<thead>
+<tr>
+
+  <th><center>X0</center></th>
+  <th><center>Y</center></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+
+  <td><center>0</center></td>
+  <td class="success"><center>1</center></td>
+</tr>
+<tr>
+
+  <td><center>1</center></td>
+  <td class="danger"><center>0</center></td>
+</tr>
+
+</tbody>
+</table>
+</div></div>
+    </div>
+  </div>  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">
+        NOR</a>
+      </h4>
+    </div>
+    <div id="collapse4" class="panel-collapse collapse">
+     <div class="panel-body"><img src="Bilder/NOR.png" style="float: left;"></img>
+<div style="margin-left: 60px; height: 50px; padding-left: 5px;">
+Der NOR Baustein liefert ein aktives Ausgangssignal, wenn kein Ausgang logisch 1 ist (Ein negiertes OR).</div><div class="table-responsive">
+  <table class="table">
+<thead>
+<tr>
+  <th><center>X1</center></th>
+  <th><center>X0</center></th>
+  <th><center>Y</center></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><center>0</center></td>
+  <td><center>0</center></td>
+  <td class="success"><center>1</center></td>
+</tr>
+<tr>
+  <td><center>0</center></td>
+  <td><center>1</center></td>
+  <td class="danger"><center>0</center></td>
+</tr>
+<tr>
+  <td><center>1</center></td>
+  <td><center>0</center></td>
+  <td class="danger"><center>0</center></td>
+</tr>
+<tr>
+  <td><center>0</center></td>
+  <td><center>0</center></td>
+  <td class="danger"><center>0</center></td>
+</tr>
+</tbody>
+</table>
+</div></div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapse5">
+        XOR</a>
+      </h4>
+    </div>
+    <div id="collapse5" class="panel-collapse collapse">
+      <div class="panel-body"><img src="Bilder/XOR.png" style="float: left;"></img>
+<div style="margin-left: 60px; height: 50px; padding-left: 5px;">
+Der XOR Baustein liefert ein aktives Ausgangssignal, wenn genau ein Eingang logisch 1 ist.</div><div class="table-responsive">
+  <table class="table">
+<thead>
+<tr>
+  <th><center>X1</center></th>
+  <th><center>X0</center></th>
+  <th><center>Y</center></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><center>0</center></td>
+  <td><center>0</center></td>
+  <td class="danger"><center>0</center></td>
+</tr>
+<tr>
+  <td><center>0</center></td>
+  <td><center>1</center></td>
+  <td class="success"><center>1</center></td>
+</tr>
+<tr>
+  <td><center>1</center></td>
+  <td><center>0</center></td>
+  <td class="success"><center>1</center></td>
+</tr>
+<tr>
+  <td><center>0</center></td>
+  <td><center>0</center></td>
+  <td class="danger"><center>0</center></td>
+</tr>
+</tbody>
+</table>
+</div></div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapse6">
+        NAND</a>
+      </h4>
+    </div>
+    <div id="collapse6" class="panel-collapse collapse">
+      <div class="panel-body"><img src="Bilder/NAND.png" style="float: left;"></img>
+<div style="margin-left: 60px; height: 50px; padding-left: 5px;">
+Der NAND Baustein liefert ein aktives Ausgangssignal, wenn nicht alle Eingänge logisch 1 sind (Ein negiertes AND).</div><div class="table-responsive">
+  <table class="table">
+<thead>
+<tr>
+  <th><center>X1</center></th>
+  <th><center>X0</center></th>
+  <th><center>Y</center></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><center>0</center></td>
+  <td><center>0</center></td>
+  <td class="success"><center>1</center></td>
+</tr>
+<tr>
+  <td><center>0</center></td>
+  <td><center>1</center></td>
+  <td class="success"><center>1</center></td>
+</tr>
+<tr>
+  <td><center>1</center></td>
+  <td><center>0</center></td>
+  <td class="success"><center>1</center></td>
+</tr>
+<tr>
+  <td><center>0</center></td>
+  <td><center>0</center></td>
+  <td class="danger"><center>0</center></td>
+</tr>
+</tbody>
+</table>
+</div></div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapse7">
+        XNOR</a>
+      </h4>
+    </div>
+    <div id="collapse7" class="panel-collapse collapse">
+      <div class="panel-body"><img src="Bilder/XNOR.png" style="float: left;"></img>
+<div style="margin-left: 60px; height: 50px; padding-left: 5px;">
+Der XNOR Baustein liefert ein aktives Ausgangssignal, wenn alle Eingänge gleich sind (Ein negiertes XOR).</div><div class="table-responsive">
+  <table class="table">
+<thead>
+<tr>
+  <th><center>X1</center></th>
+  <th><center>X0</center></th>
+  <th><center>Y</center></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><center>0</center></td>
+  <td><center>0</center></td>
+  <td class="success"><center>1</center></td>
+</tr>
+<tr>
+  <td><center>0</center></td>
+  <td><center>1</center></td>
+  <td class="danger"><center>0</center></td>
+</tr>
+<tr>
+  <td><center>1</center></td>
+  <td><center>0</center></td>
+  <td class="danger"><center>0</center></td>
+</tr>
+<tr>
+  <td><center>0</center></td>
+  <td><center>0</center></td>
+  <td class="success"><center>1</center></td>
+</tr>
+</tbody>
+</table>
+</div></div>
+    </div>
+  </div>
+</div>
+
+
+	</body>
+</html>

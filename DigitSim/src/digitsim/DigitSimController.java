@@ -7,7 +7,9 @@ import Gestures.SceneGestures;
 import connection.*;
 import element.*;
 import general.Vector2i;
+import java.awt.Desktop;
 import java.io.File;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -154,7 +156,7 @@ public class DigitSimController extends Pane{
     }
    
     private void addLogo() {
-        ImageView image = new ImageView("/digitsim/data/aeslogo1.png");
+        ImageView image = new ImageView("/digitsim/data/aeslogo2.png");
         simPane.getChildren().add(image);
         image.toFront();
     }
@@ -369,12 +371,23 @@ public class DigitSimController extends Pane{
         stage.show();
     }
     public void mItemHelpOnAction(ActionEvent event) { //Hilfe öffnen
-        Stage stage;
-        stage = GenFunctions.openFXML(help.HelpController.class,"Help.fxml", "Hilfe", "icon.png", StageStyle.DECORATED); //Öffnen des "Hilfe"-Fensters
-        stage.setWidth(600);
-        stage.setResizable(false);
-        stage.show();
+        String location = new File(help.HelpController.class.getResource("index.html").toString()).toURI().toString();
+
+        Desktop desktop = Desktop.getDesktop();
+
+        // Adresse mit Standardbrowser anzeigen
+        URI uri;
+        try
+        {
+            uri = new URI(location);
+            desktop.browse(uri);
+        } catch (Exception oError)
+        {
+            // Fehler
+            System.out.println("Seite kann nicht geöffnet werden.");
+        }
     }
+    
     
     /**
      * Neue Arbeitsfläche erstellen

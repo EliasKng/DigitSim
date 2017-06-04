@@ -1,0 +1,20 @@
+#header {
+  margin-bottom: 0;
+}
+
+.zoom {
+  max-height: 800px;
+  overflow: hidden;
+}
+
+.zoom img {
+  position: relative;
+  -ms-interpolation-mode: bicubic;
+}
+
+.container .text-muted {
+  margin: 20px 0px;
+}
+#underline{
+	color: black;
+}
