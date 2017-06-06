@@ -20,6 +20,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -129,6 +130,11 @@ public class GenFunctions { //Laden der GUI
                 stage.close();
             }         
         });
+        tf.setOnKeyPressed(e -> {if(e.getCode() == KeyCode.ENTER){
+        btn.fire();}});
+        btn.requestFocus();
+         btn.setOnKeyPressed(e -> {if(e.getCode() == KeyCode.ENTER){
+        btn.fire();}});
        Scene scene = new Scene(new Group(lbl, tf, btn));
        stage.setScene(scene);
        stage.show();//Fenster zeigen

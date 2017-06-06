@@ -19,6 +19,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -151,6 +152,10 @@ public class Element_CLOCK extends Element{
                 stage.close();
             }         
         });
+        tf.setOnKeyPressed(e -> {if(e.getCode() == KeyCode.ENTER){
+        btn.fire();}});
+        btn.setOnKeyPressed(e -> {if(e.getCode() == KeyCode.ENTER){
+        btn.fire();}});
        Scene scene = new Scene(new Group(lbl, tf, btn));
        stage.setScene(scene);
        stage.show();//Fenster zeigen

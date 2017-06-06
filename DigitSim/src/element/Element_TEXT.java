@@ -21,6 +21,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -190,6 +191,13 @@ public class Element_TEXT extends Element{
                 stage.close();
             }         
         });
+         tf.setOnKeyPressed(e -> {if(e.getCode() == KeyCode.ENTER){
+        btn.fire();}});
+          tf2.setOnKeyPressed(e -> {if(e.getCode() == KeyCode.ENTER){
+        btn.fire();}});
+        btn.requestFocus();
+         btn.setOnKeyPressed(e -> {if(e.getCode() == KeyCode.ENTER){
+        btn.fire();}});
        Scene scene = new Scene(new Group(lbl, lbl2, tf, tf2, btn, lbl3, cb));
        stage.setScene(scene);
        stage.show();//Fenster zeigen
