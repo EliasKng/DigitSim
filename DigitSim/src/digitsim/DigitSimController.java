@@ -371,7 +371,7 @@ public class DigitSimController extends Pane{
         stage.show();
     }
     public void mItemHelpOnAction(ActionEvent event) { //Hilfe öffnen
-        String location = new File(help.HelpController.class.getResource("index.html").toString()).toURI().toString();
+        String location = new File("Help/index.html").toURI().toString();
 
         Desktop desktop = Desktop.getDesktop();
 
