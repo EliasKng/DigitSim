@@ -10,10 +10,11 @@ import toolbox.GenFunctions;
 import Gestures.NodeGestures;
 import connection.HandleState;
 import general.Properties;
-import element.Element;
 import static element.Element.elementWidth;
 import general.State;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -54,8 +55,8 @@ public class Element_NAND extends Element{
         outputLines.add(Draw.drawLine((pX + 95), (pY + 29.5), (pX + 95), (pY + 29.5), Color.BLACK, 5));
         //outputLines.get(0).setVisible(false);
         
-        outputLines.get(0).addEventFilter(MouseEvent.MOUSE_ENTERED, NodeGestures.getOverNodeMouseHanlderEnterCircle());
-        outputLines.get(0).addEventFilter(MouseEvent.MOUSE_EXITED, NodeGestures.getOverNodeMouseHanlderExitCircle());
+        outputLines.get(0).addEventFilter(MouseEvent.MOUSE_ENTERED, NodeGestures.getOverNodeMouseHanlderEnter());
+        outputLines.get(0).addEventFilter(MouseEvent.MOUSE_EXITED, NodeGestures.getOverNodeMouseHanlderExit());
         outputLines.get(0).addEventFilter(MouseEvent.MOUSE_CLICKED, NodeGestures.getOverOutputMouseHanlderClicked(this, 0));
 
         cOutput = Draw.drawCircle(pX+88, pY+29.5, 5, Color.BLACK, 5, false, 5);
@@ -95,9 +96,14 @@ public class Element_NAND extends Element{
    //Diese Methoden müssen überschrieben werden (Beschreibung in der Mutterklasse)
     @Override
     public void update(){ 
-        State s0 = HandleState.getState(inputs[0]);
-        State s1 = HandleState.getState(inputs[1]);
-        State result = HandleState.logicNAND(s0, s1);
+        List<State> states = new ArrayList();
+        
+        for(int input : inputs) {
+            states.add(HandleState.getState(input));
+        }
+    
+        
+        State result = HandleState.logicNAND(states);
         outputs[0] = HandleState.getIntFromState(result);
     }
     

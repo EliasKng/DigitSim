@@ -101,7 +101,7 @@ public class Element_DTFF extends Element {
     public void update(){ 
         State s0 = HandleState.getState(inputs[0]);
         State s1 = HandleState.getState(inputs[1]);
-        State result = HandleState.logicOR(s0, s1);
+        State result = HandleState.logicDTFF(s0, s1);
         int orTrue = HandleState.getIntFromState(result);
 
         // rausfinden, ob es sich um eine taktflanke handelt oder nicht

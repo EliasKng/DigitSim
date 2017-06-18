@@ -13,7 +13,9 @@ import general.Properties;
 import element.Element;
 import static element.Element.elementWidth;
 import general.State;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -89,9 +91,14 @@ public class Element_XNOR extends Element{
     //Diese Methoden müssen überschrieben werden (Beschreibung in der Mutterklasse)
     @Override
     public void update(){ 
-        State s0 = HandleState.getState(inputs[0]);
-        State s1 = HandleState.getState(inputs[1]);
-        State result = HandleState.logicXNOR(s0, s1);
+        List<State> states = new ArrayList();
+        
+        for(int input : inputs) {
+            states.add(HandleState.getState(input));
+        }
+    
+        
+        State result = HandleState.logicXNOR(states);
         outputs[0] = HandleState.getIntFromState(result);
     }
     

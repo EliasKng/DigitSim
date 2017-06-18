@@ -112,17 +112,39 @@ public class HandleState {
     }
     
     /**
-     * Verknupft zwei States logisch mit "And"
-     * @param s0
-     * @param s1
-     * @return 
+     * Verknuepft saemtliche States logisch mit "And"
      */
-    public static State logicAND(List<State> states) {
+    public static State logicNAND(List<State> states) {
 //        int finalState = getIntFromState(states[0]);
 //        for(int i = 1; i < states.length -1; i++) {
 //            finalState = aND[finalState][getIntFromState(states[i])];
 //        }
 //      S
+        State finalState = null;
+        State interimresult = null;
+        for(State s : states) {
+            if(interimresult == null) {
+                interimresult = s;
+                continue;
+            }
+            
+                System.out.println(finalState);
+                System.out.println(s);
+                System.out.println();
+                interimresult = getState(aND[getIntFromState(finalState)][getIntFromState(s)]);
+                finalState = getState(nOT[getIntFromState(interimresult)]);
+            
+        }
+
+        
+        return finalState;
+    }
+    
+    /**
+     * Verknuepft saemtliche States logisch mit "And"
+     * Danach invertiert es das Ergebnis die NAND Logik wird zurueckgegeben
+     */
+    public static State logicAND(List<State> states) {
         State finalState = null;
         for(State s : states) {
             if(finalState == null) {
@@ -142,71 +164,97 @@ public class HandleState {
     }
     
     /**
-     * Verknupft zwei States logisch mit "NAND"
-     * @param s0
-     * @param s1
-     * @return 
+     * Verknuepft saemtliche States logisch mit "OR"
+     * Danach invertiert es das Ergebnis die NOR Logik wird zurueckgegeben
      */
-    public static State logicNAND(State s0, State s1) {
-        int sInt0 = getIntFromState(s0);
-        int sInt1 = getIntFromState(s1);
-        int res0 = aND[sInt0][sInt1];
-        int res = nOT[res0];
-        return getState(res);
+    public static State logicNOR(List<State> states) {
+      State finalState = null;
+      State interimresult = null;
+        for(State s : states) {
+            if(interimresult == null) {
+                interimresult = s;
+                continue;
+            }
+            
+                System.out.println(finalState);
+                System.out.println(s);
+                System.out.println();
+                interimresult = getState(oR[getIntFromState(finalState)][getIntFromState(s)]);
+                finalState = getState(nOT[getIntFromState(interimresult)]);
+            
+        }
+
+        
+        return finalState;  
     }
     
     /**
-     * Verknupft zwei States logisch mit "OR"
-     * @param s0
-     * @param s1
-     * @return 
+     * Verknuepft saemtliche States logisch mit "OR"
      */
-    public static State logicOR(State s0, State s1) {
-        int sInt0 = getIntFromState(s0);
-        int sInt1 = getIntFromState(s1);
-        int res = oR[sInt0][sInt1];
-        return getState(res);
+    public static State logicOR(List<State> states) {
+        State finalState = null;
+        for(State s : states) {
+            if(finalState == null) {
+                finalState = s;
+                continue;
+            }
+            
+                System.out.println(finalState);
+                System.out.println(s);
+                System.out.println();
+                finalState = getState(oR[getIntFromState(finalState)][getIntFromState(s)]);
+            
+        }
+
+        
+        return finalState; 
     }
     
     /**
-     * Verknupft zwei States logisch mit "NOR"
-     * @param s0
-     * @param s1
-     * @return 
+     * Verknuepft saemtliche States logisch mit "XOR"
      */
-    public static State logicNOR(State s0, State s1) {
-        int sInt0 = getIntFromState(s0);
-        int sInt1 = getIntFromState(s1);
-        int res0 = oR[sInt0][sInt1];
-        int res = nOT[res0];
-        return getState(res);
+    public static State logicXOR(List<State> states) {
+        State finalState = null;
+        for(State s : states) {
+            if(finalState == null) {
+                finalState = s;
+                continue;
+            }
+            
+                System.out.println(finalState);
+                System.out.println(s);
+                System.out.println();
+                finalState = getState(xOR[getIntFromState(finalState)][getIntFromState(s)]);
+            
+        }
+
+        
+        return finalState;
     }
     
     /**
-     * Verknupft zwei States logisch mit "XOR"
-     * @param s0
-     * @param s1
-     * @return 
+     * Verknuepft saemtliche States logisch mit "XOR"
+     * Danach invertiert es das Ergebnis die XNOR Logik wird zurueckgegeben
      */
-    public static State logicXOR(State s0, State s1) {
-        int sInt0 = getIntFromState(s0);
-        int sInt1 = getIntFromState(s1);
-        int res0 = xOR[sInt0][sInt1];
-        int res = nOT[res0];
-        return getState(res);
-    }
-    
-    /**
-     * Verknupft zwei States logisch mit "XNOR"
-     * @param s0
-     * @param s1
-     * @return 
-     */
-    public static State logicXNOR(State s0, State s1) {
-        int sInt0 = getIntFromState(s0);
-        int sInt1 = getIntFromState(s1);
-        int res = xOR[sInt0][sInt1];
-        return getState(res);
+    public static State logicXNOR(List<State> states) {
+        State finalState = null;
+        State interimresult = null;
+        for(State s : states) {
+            if(interimresult == null) {
+                interimresult = s;
+                continue;
+            }
+            
+                System.out.println(finalState);
+                System.out.println(s);
+                System.out.println();
+                interimresult = getState(xOR[getIntFromState(finalState)][getIntFromState(s)]);
+                finalState = getState(nOT[getIntFromState(interimresult)]);
+            
+        }
+
+        
+        return finalState;
     }
     
     /**
@@ -231,5 +279,16 @@ public class HandleState {
         else
             return State.HIGH;
     }
-    
+    public static State logicDTFF(State s0, State s1) {
+        int sInt0 = getIntFromState(s0);
+        int sInt1 = getIntFromState(s1);
+        int res = oR[sInt0][sInt1];
+        return getState(res);
+    }
+    public static State logicFULLADDER(State s0, State s1) {
+        int sInt0 = getIntFromState(s0);
+        int sInt1 = getIntFromState(s1);
+        int res = oR[sInt0][sInt1];
+        return getState(res);
+    }
 }

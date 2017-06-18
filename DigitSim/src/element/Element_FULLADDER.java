@@ -100,7 +100,7 @@ public class Element_FULLADDER extends Element {
     public void update(){ 
         State s0 = HandleState.getState(inputs[0]);
         State s1 = HandleState.getState(inputs[1]);
-        State result = HandleState.logicOR(s0, s1);
+        State result = HandleState.logicFULLADDER(s0, s1);
         
         int resultStateInt = HandleState.getIntFromState(result);
         
