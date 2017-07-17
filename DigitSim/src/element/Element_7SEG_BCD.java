@@ -247,7 +247,8 @@ public class Element_7SEG_BCD extends Element{
                         lineSeg2.setStroke(Color.GREY);
                         lineSeg3.setStroke(Color.RED);
                         lineSeg4.setStroke(Color.RED);
-                        lineSeg6.setStroke(Color.RED);  
+                        lineSeg5.setStroke(Color.GREY);
+                        lineSeg6.setStroke(Color.RED); 
                     }
                 } else {
                     if(states[0] == State.HIGH) {           //0001 - 1
