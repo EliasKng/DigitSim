@@ -169,19 +169,17 @@ public class HandleState {
      */
     public static State logicNOR(List<State> states) {
       State finalState = null;
-      State interimresult = null;
         for(State s : states) {
-            if(interimresult == null) {
-                interimresult = s;
+            if(finalState == null) {
+                finalState = s;
                 continue;
             }
             
                 System.out.println(finalState);
                 System.out.println(s);
                 System.out.println();
-                interimresult = getState(oR[getIntFromState(finalState)][getIntFromState(s)]);
-                finalState = getState(nOT[getIntFromState(interimresult)]);
-            
+                finalState = getState(oR[getIntFromState(finalState)][getIntFromState(s)]);
+                finalState = getState(nOT[getIntFromState(finalState)]);
         }
 
         
